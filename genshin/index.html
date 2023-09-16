@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>自动播放视频并跳转</title>
+  <style>
+    body {
+      background-color: white; /* 设置背景颜色为纯白色 */
+      margin: 0;
+      overflow: hidden; /* 隐藏滚动条 */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    video {
+      max-width: 100%;
+      max-height: 100%;
+    }
+  </style>
+</head>
+<body>
+  <video autoplay muted loop>
+    <source src="start.mp4" type="video/mp4">
+  </video>
+
+  <script>
+    var video = document.querySelector('video');
+
+    // 当视频播放完毕时，跳转到另一个网站
+    video.addEventListener('ended', function() {
+      window.location.href = 'https://yhsome.github.io/';
+    });
+  </script>
+</body>
+</html>
