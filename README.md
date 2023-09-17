@@ -1,9 +1,13 @@
-resources:
+# 
 
-[Blog](https://yhsome.github.io/blog/)
+Go to [parent directory](../..md)
 
-[PinballChallenge](https://yhsome.github.io/PinballChallenge/)
+## Subdirectories
 
-[r18](https://yhsome.github.io/r18)
+- [image](.\image)
+- [PinballChallenge](.\PinballChallenge)
+- [r18](.\r18)
+## Files
 
-[genshin](https://yhsome.github.io/genshin)
+- [n.py](.\n.py) 
+- [README.md](.\README.md) 
