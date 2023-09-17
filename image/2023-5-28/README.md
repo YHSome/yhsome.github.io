@@ -1,8 +1,7 @@
 # 2023-5-28
 
-Go to [parent directory](../image.md)
+Go to [parent directory](../)
 
 ## Files
 
-- [DreamOfRedMansion.zip](image\2023-5-28\DreamOfRedMansion.zip) 
-- [README.md](image\2023-5-28\README.md) 
+- [DreamOfRedMansion.zip](2023-5-28\DreamOfRedMansion.zip)

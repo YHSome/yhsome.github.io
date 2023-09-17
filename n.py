@@ -6,6 +6,10 @@ def generate_folder_readme(folder_path):
         if 'index.html' in files:
             continue  # 跳过生成 README.md 文件
 
+        # 忽略 README.md 文件
+        if 'README.md' in files:
+            files.remove('README.md')
+
         # 排除 .git 文件夹
         if '.git' in dirs:
             dirs.remove('.git')
@@ -21,11 +25,12 @@ def generate_folder_readme(folder_path):
 
         # 创建 README.md 文件
         with open(readme_path, 'w') as readme_file:
-            # 添加标题和链接
+            # 添加标题
             readme_file.write('# {}\n\n'.format(os.path.basename(root)))
 
-            # 添加返回链接到父文件夹
-            readme_file.write('Go to [parent directory](../{}.md)\n\n'.format(parent_path))
+            if rel_path != '.':
+                # 添加返回链接到父文件夹的 README.md，排除根目录的情况
+                readme_file.write('Go to [parent directory](../)\n\n')
 
             if dirs:
                 readme_file.write('## Subdirectories\n\n')
@@ -39,7 +44,7 @@ def generate_folder_readme(folder_path):
                 for file_name in files:
                     # 添加文件下载链接
                     file_path = os.path.join(rel_path, file_name)
-                    readme_file.write('- [{}]({}) \n'.format(file_name, file_path))
-                    
-folder_path = './'
+                    readme_file.write('- [{}]({})\n'.format(file_name, file_path))
+
+folder_path = './image'
 generate_folder_readme(folder_path)

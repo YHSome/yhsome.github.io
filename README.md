@@ -1,7 +1,5 @@
 # 
 
-Go to [parent directory](../..md)
-
 ## Subdirectories
 
 - [image](.\image)
@@ -9,5 +7,5 @@ Go to [parent directory](../..md)
 - [r18](.\r18)
 ## Files
 
-- [n.py](.\n.py) 
-- [README.md](.\README.md) 
+- [n.py](.\n.py)
+- [py](.\py)
