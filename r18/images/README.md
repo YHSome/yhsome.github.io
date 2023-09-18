@@ -1,7 +1,7 @@
 # images
 
-Go to [parent directory](../r18.md)
+Go to [parent directory](../)
 
 ## Files
 
-- [bg.webp](r18\images\bg.webp)
+- [bg.webp](bg.webp)

@@ -36,7 +36,7 @@ def generate_folder_readme(folder_path):
                 readme_file.write('## Subdirectories\n\n')
                 for directory in dirs:
                     # 添加子文件夹链接
-                    dir_path = os.path.join(rel_path, directory)
+                    dir_path = os.path.join(directory+'/')
                     readme_file.write('- [{}]({})\n'.format(directory, dir_path))
 
             if files:
@@ -44,7 +44,7 @@ def generate_folder_readme(folder_path):
                 for file_name in files:
                     # 添加文件下载链接
                     file_path = os.path.join(rel_path, file_name)
-                    readme_file.write('- [{}]({})\n'.format(file_name, file_path))
+                    readme_file.write('- [{}]({})\n'.format(file_name, file_name))
 
-folder_path = './image'
+folder_path = './'
 generate_folder_readme(folder_path)

@@ -4,7 +4,7 @@ Go to [parent directory](../)
 
 ## Files
 
-- [cryout.pdf](2023-8-12\cryout.pdf)
-- [DistortedFate.pdf](2023-8-12\DistortedFate.pdf)
-- [WATER.pdf](2023-8-12\WATER.pdf)
-- [WithYou.pdf](2023-8-12\WithYou.pdf)
+- [cryout.pdf](cryout.pdf)
+- [DistortedFate.pdf](DistortedFate.pdf)
+- [WATER.pdf](WATER.pdf)
+- [WithYou.pdf](WithYou.pdf)
