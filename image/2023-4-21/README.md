@@ -1,8 +1,8 @@
 # 2023-4-21
 
-Go to [parent directory](../)
+返回 [父文件夹](../)
 
-## Files
+## 文件
 
 - [1.webp](1.webp)
 - [2.jpg](2.jpg)

@@ -1,7 +1,7 @@
 # 2023-7-25
 
-Go to [parent directory](../)
+返回 [父文件夹](../)
 
-## Files
+## 文件
 
 - [BandiCam.zip](BandiCam.zip)

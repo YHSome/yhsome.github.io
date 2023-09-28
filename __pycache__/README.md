@@ -1,7 +1,7 @@
 # __pycache__
 
-Go to [parent directory](../)
+返回 [父文件夹](../)
 
-## Subdirectories
+## 子目录
 
 - [preview](preview/)

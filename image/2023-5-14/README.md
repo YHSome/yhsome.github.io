@@ -1,8 +1,8 @@
 # 2023-5-14
 
-Go to [parent directory](../)
+返回 [父文件夹](../)
 
-## Files
+## 文件
 
 - [1.jpg](1.jpg)
 - [10.jpg](10.jpg)

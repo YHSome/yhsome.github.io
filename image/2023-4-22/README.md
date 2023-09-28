@@ -1,8 +1,8 @@
 # 2023-4-22
 
-Go to [parent directory](../)
+返回 [父文件夹](../)
 
-## Files
+## 文件
 
 - [0.png](0.png)
 - [1.png](1.png)

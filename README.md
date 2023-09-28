@@ -1,12 +1,12 @@
 # 
 
-## Subdirectories
+## 子目录
 
+- [genshin](genshin/)
 - [image](image/)
 - [PinballChallenge](PinballChallenge/)
 - [r18](r18/)
-- [__pycache__](__pycache__/)
-## Files
+## 文件
 
 - [n.py](n.py)
 - [py](py)

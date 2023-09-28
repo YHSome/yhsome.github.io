@@ -1,8 +1,8 @@
 # assets
 
-Go to [parent directory](../)
+返回 [父文件夹](../)
 
-## Files
+## 文件
 
 - [15864fac7d38bb94c1ec3a199de96c26.svg](15864fac7d38bb94c1ec3a199de96c26.svg)
 - [2792ba808874371f87567a2a2c0c8928.png](2792ba808874371f87567a2a2c0c8928.png)

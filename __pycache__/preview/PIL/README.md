@@ -1,4 +1,4 @@
 # PIL
 
-Go to [parent directory](../)
+·µ»Ø [¸¸ÎÄ¼þ¼Ð](../)
 
