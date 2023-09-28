@@ -1,8 +1,8 @@
 # 2023-8-12
 
-返回 [父文件夹](../)
+ Go to [parent directory](../)
 
-## 文件
+## Files
 
 - [cryout.pdf](cryout.pdf)
 - [DistortedFate.pdf](DistortedFate.pdf)

@@ -1,7 +1,7 @@
 # 2023-5-28
 
-返回 [父文件夹](../)
+ Go to [parent directory](../)
 
-## 文件
+## Files
 
 - [DreamOfRedMansion.zip](DreamOfRedMansion.zip)

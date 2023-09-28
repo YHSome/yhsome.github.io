@@ -169,9 +169,9 @@
         <h1>获取年龄验证页面 URL</h1>
         <p>
             点击“已满18岁”后跳转的 URL：<br />
-            <input type="text" id="Yi" value=""  placeholder="https://yhsome.github.io/R18/publish.html" /><br />
+            <input type="text" id="Yi" value=""  placeholder="https://yhsome.github.io/r18/publish.html" /><br />
             点击“未满18岁”后跳转的 URL：<br />
-            <input type="text" id="Ni" value=""  placeholder="https://yhsome.github.io/R18/set.html" /><br />
+            <input type="text" id="Ni" value=""  placeholder="https://yhsome.github.io/r18/set.html" /><br />
             网页的标题：<input type="text" id="Ti" value=""  placeholder="❤️站❤️长❤️推❤️荐❤️" /><br />
             背景图片 URL：<input type="text" id="Bi" value=""  placeholder="https://www.loliapi.com/acg/" /><br />
             获得图片 URL 可用图床：<a href="https://imgurl.org/" target="_blank">ImgURL免费图床</a> <a href="https://www.hualigs.cn/" target="_blank">遇见图床</a><br />
@@ -214,7 +214,7 @@
             return value;
         }
         function show_url1() {
-            let url = "https://yhsome.github.io/R18/?f=set" + get_value("Y",Yi) + get_value("N",Ni) + get_value("T",Ti) + get_value("B",Bi) + "#";
+            let url = "https://yhsome.github.io/r18/?f=set" + get_value("Y",Yi) + get_value("N",Ni) + get_value("T",Ti) + get_value("B",Bi) + "#";
             aURL1.textContent = url;
             aURL1.href = url;
             copy_textarea1.style.display = "";
@@ -223,7 +223,7 @@
             document.execCommand("copy"); // 执行浏览器复制命令
         }
         function show_url2() {
-            let url = "https://yhsome.github.io/R18/publish.html?f=set" + get_value("G",Gi) + get_value("U",Ui) + "#";
+            let url = "https://yhsome.github.io/r18/publish.html?f=set" + get_value("G",Gi) + get_value("U",Ui) + "#";
             aURL2.textContent = url;
             aURL2.href = url;
             copy_textarea2.style.display = "";

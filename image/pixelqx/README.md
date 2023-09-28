@@ -1,8 +1,8 @@
 # pixelqx
 
-返回 [父文件夹](../)
+ Go to [parent directory](../)
 
-## 文件
+## Files
 
 - [1.png](1.png)
 - [10.png](10.png)

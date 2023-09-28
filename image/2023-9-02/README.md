@@ -1,8 +1,8 @@
 # 2023-9-02
 
-返回 [父文件夹](../)
+ Go to [parent directory](../)
 
-## 文件
+## Files
 
 - [PineballChallenge.png](PineballChallenge.png)
 - [PineballChallenge2.png](PineballChallenge2.png)

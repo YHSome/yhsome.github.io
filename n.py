@@ -36,17 +36,17 @@ def generate_folder_readme(folder_path):
 
             if rel_path != '.':
                 # 添加返回链接到父文件夹的 README.md，排除根目录的情况
-                readme_file.write('返回 [父文件夹](../)\n\n')
+                readme_file.write(' Go to [parent directory](../)\n\n')
 
             if dirs:
-                readme_file.write('## 子目录\n\n')
+                readme_file.write('## Subdirectories\n\n')
                 for directory in dirs:
                     # 添加子文件夹链接
                     dir_path = os.path.join(directory+'/')
                     readme_file.write('- [{}]({})\n'.format(directory, dir_path))
 
             if files:
-                readme_file.write('## 文件\n\n')
+                readme_file.write('## Files\n\n')
                 for file_name in files:
                     # 添加文件下载链接
                     file_path = os.path.join(rel_path, file_name)
