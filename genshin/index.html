@@ -21,8 +21,7 @@
       max-height: 100%;
       opacity: 0;
       display: none; /* 在页面初始化时隐藏logo2 */
-      animation: fade-in 3s linear forwards 3s;
-      animation-delay: 3s;
+      animation: fade-in 3s linear forwards;
     }
     @keyframes fade-in {
       0% { opacity: 0; }
@@ -40,7 +39,7 @@
         // 在此处添加页面重定向的代码
         setTimeout(() => {
           window.location.href = 'index2.html';
-        }, 7500); // 5000 毫秒
+        }, 5000); // 5000 毫秒
       });
     });
   </script>
