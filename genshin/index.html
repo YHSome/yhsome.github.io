@@ -2,6 +2,8 @@
 <html>
 <head>
   <style>
+    /* 获取url变量，名称为link，如果没有该变量，则设置link=index2.html */
+
     body {
       background-color: white;
       display: flex;
@@ -29,23 +31,38 @@
     }
   </style>
   <script>
-    window.addEventListener('DOMContentLoaded', (event) => {
-      const logo1 = document.getElementById('startup');
-      logo1.addEventListener('animationend', () => {
-        logo1.style.display = 'none';
-        const logo2 = document.getElementById('logo2');
-        logo2.style.display = 'initial';
+    // 获取 URL 参数值的函数
+    function getParameterByName(name, defaultValue) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(name) || defaultValue;
+    }
 
-        // 在此处添加页面重定向的代码
-        setTimeout(() => {
-          window.location.href = 'index2.html';
-        }, 5000); // 5000 毫秒
+    // 在页面加载完成后执行的函数
+    window.addEventListener('load', function() {
+      // 获取名为 'link' 的 URL 参数值，并设置默认值为 'index2.html'
+      var linkValue = getParameterByName('link', 'index2.html');
+      // 在控制台输出获取的值（可选）
+      console.log('Link value:', linkValue);
+
+      // 延迟跳转页面
+      setTimeout(() => {
+        window.location.href = linkValue;
+      }, 7000);
+    });
+
+    // 在动画完成后显示logo2
+    window.addEventListener('DOMContentLoaded', function() {
+      var logo1 = document.getElementById('startup');
+      logo1.addEventListener('animationend', function() {
+        logo1.style.display = 'none';
+        var logo2 = document.getElementById('logo2');
+        logo2.style.display = 'initial';
       });
     });
   </script>
 </head>
 <body>
   <img id="startup" src="logo1.png" alt="Startup Image">
-  <img id="logo2" src="logo2.png" alt="Logo 2">
+  <img id="logo2" src="logo2.png" alt="Logo 2" style="display: none;">
 </body>
 </html>

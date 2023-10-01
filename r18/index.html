@@ -175,20 +175,28 @@
         const acceptButton = document.getElementById("accept-button");
         //encodeURIComponent(url); 转码
 	    //unescape , decodeURI , decodeURIComponent  解码
-        var url = "";
+       var url = "";
         function buttonClickY(event) {
+            // 获取url变量
             url = getQueryVariable("Y");
+            // 如果url变量不存在
             if(url == false) {
+		        // 跳转到指定页面
 		        window.location.href = "https://yhsome.github.io/genshin/";
             } else {
+                // 跳转到指定页面
                 window.location.href = decodeURIComponent(url);
             }
         }
         function buttonClickN(event) {
+            // 获取url变量
             url = getQueryVariable("N");
+            // 如果url变量不存在
             if (url == false) {
+                // 跳转到指定页面
                 window.location.href = "https://yhsome.github.io/PinballChallenge/";
             } else {
+                // 跳转到指定页面
                 window.location.href = decodeURIComponent(url);
             }
         }
