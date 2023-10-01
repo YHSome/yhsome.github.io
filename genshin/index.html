@@ -2,8 +2,6 @@
 <html>
 <head>
   <style>
-    /* 获取url变量，名称为link，如果没有该变量，则设置link=index2.html */
-
     body {
       background-color: white;
       display: flex;
@@ -36,11 +34,30 @@
       const urlParams = new URLSearchParams(window.location.search);
       return urlParams.get(name) || defaultValue;
     }
+    
+    function caesarShift(text, shift) {
+      var result = "";
+      for (var i = 0; i < text.length; i++) {
+        var charCode = text.charCodeAt(i);
+        if (charCode >= 65 && charCode <= 90) {
+          // 大写字
+          result += String.fromCharCode(((charCode - 65 + shift) % 26) + 65);
+        } else if (charCode >= 97 && charCode <= 122) {
+          // 小写字母
+          result += String.fromCharCode(((charCode - 97 + shift) % 26) + 97);
+        } else {
+          // 非字母字符，直接拼接
+          result += text.charAt(i);
+        }
+      }
+      return result;
+    }
+    linkShift = caesarShift(getParameterByName('link', 'joefy2.iunm'),-1)
 
     // 在页面加载完成后执行的函数
     window.addEventListener('load', function() {
       // 获取名为 'link' 的 URL 参数值，并设置默认值为 'index2.html'
-      var linkValue = getParameterByName('link', 'index2.html');
+      var linkValue = linkShift;
       // 在控制台输出获取的值（可选）
       console.log('Link value:', linkValue);
 
