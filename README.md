@@ -2,6 +2,7 @@
 
 ## Subdirectories
 
+- [fakemail](fakemail/)
 - [genshin](genshin/)
 - [image](image/)
 - [PinballChallenge](PinballChallenge/)
