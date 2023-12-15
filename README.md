@@ -6,6 +6,7 @@
 - [genshin](genshin/)
 - [image](image/)
 - [PinballChallenge](PinballChallenge/)
+- [projects](projects/)
 - [r18](r18/)
 ## Files
 
