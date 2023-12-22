@@ -8,6 +8,10 @@ def generate_folder_readme(folder_path):
         if 'index.html' in files:
             continue  # 跳过生成 README.md 文件
 
+                # 检查是否存在 pyignore 文件
+        if 'pyignore' in files:
+            continue  # 跳过生成 README.md 文件
+
         # 忽略 README.md 文件
         if 'README.md' in files:
             files.remove('README.md')
