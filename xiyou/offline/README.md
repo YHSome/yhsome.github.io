@@ -1,6 +1,6 @@
 # 西柚搜索工具
 
- 返回 [网页版西柚搜索工具](./index.html)
+ 返回 [网页版西柚搜索工具](https://yhsome.github.io/xiyou)
 
 ## 离线版安装及说明
 
