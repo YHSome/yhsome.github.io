@@ -15,12 +15,26 @@
   
 <input type="text" id="search-input" placeholder="输入关键词以搜索...">  
 <button onclick="searchCSV()">点击搜索</button>  
-<button onclick="window.location.href='./info/';">使用帮助</button>
+<button id="highlight" onclick="window.location.href='./info/';">使用帮助</button>
 <br>状态：
 <results id="results">请输入关键词以搜索...</results>  
  
 
 <script>  
+//酷炫的按钮渐变
+document.addEventListener("DOMContentLoaded", function() {  
+    var button = document.getElementById("highlight");  
+    var colors = ["red", "orange", "yellow", "green", "blue", "indigo", "violet"];  
+    var index = 0;  
+
+    setInterval(function() {  
+        button.style.backgroundColor = colors[index];  
+        index = (index + 1) % colors.length;  // 循环到第一个颜色时重新开始  
+    }, 100);  // 每秒改变一次颜色  
+});  
+
+
+//搜索的逻辑
 let csvData = []; // 用于存储CSV数据的数组  
   
   const data = `#####
