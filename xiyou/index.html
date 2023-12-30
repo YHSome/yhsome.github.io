@@ -8,17 +8,17 @@
         /* 添加一些基本样式 */  
         body { font-family: Arial, sans-serif; }  
         #search-box { margin-bottom: 10px; }  
-        #results { border: 1px solid #ccc; padding: 10px; }  
-        #infopg{position: fixed;left: 50%;top: 1%;transform: translate(-50%, 0); }
+        #results { border: 1px solid #ccc; padding: 3; }  
     </style>  
 </head>  
 <body>  
   
 <input type="text" id="search-input" placeholder="输入关键词以搜索...">  
 <button onclick="searchCSV()">点击搜索</button>  
-状态：
-<results id="results"></results>  
-<button id=infopg onclick="window.location.href='./offline/';">离线版下载</button>  
+<button onclick="window.location.href='./info/';">使用帮助</button>
+<br>状态：
+<results id="results">请输入关键词以搜索...</results>  
+ 
 
 <script>  
 let csvData = []; // 用于存储CSV数据的数组  
@@ -5605,7 +5605,10 @@ Dr. Brown's department has a history of more than eighty years.
     function searchCSV() {  
         const searchTerm = document.getElementById('search-input').value.toLowerCase();  
         const resultsDiv = document.getElementById('results');  
-        resultsDiv.innerHTML = ''; // 清空之前的结果  
+        resultsDiv.innerHTML = '请输入关键词以搜索...'; // 清空之前的结果  
+  
+        if (searchTerm.trim() === '') return; // 如果搜索词为空，则退出函数  
+
         // 获取要删除的元素的选择器，这里假设要删除类名为"myDivClass"的元素  
         var selector = "div.results";  
         // 使用querySelectorAll方法获取所有匹配的元素  
@@ -5614,9 +5617,7 @@ Dr. Brown's department has a history of more than eighty years.
         for (var i = 0; i < elements.length; i++) {  
             elements[i].parentNode.removeChild(elements[i]);  
         }
-  
-        if (searchTerm.trim() === '') return; // 如果搜索词为空，则退出函数  
-  
+
         let matchCount = 0; // 用于跟踪匹配的数量  
         csvData.forEach(row => {  
             const rowAsText = row.join(',').toLowerCase(); // 将行转换为文本并转换为小写以便比较  
