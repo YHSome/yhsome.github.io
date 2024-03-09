@@ -1,0 +1,4 @@
+/* 添加一些基本样式 */
+body { font-family: Arial, sans-serif; }
+#search-box { margin-bottom: 10px; }
+#results { border: 1px solid #ccc; padding: 3; }
