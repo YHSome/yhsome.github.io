@@ -9,6 +9,7 @@
 - [projects](projects/)
 - [r18](r18/)
 - [xiyou](xiyou/)
+- [sgsrecord](sgsrecord/)
 ## Files
 
 - [n.py](n.py)
