@@ -7,10 +7,12 @@
     <title>西柚搜索工具</title>
 </head>
 <body>
-    <input type="text" id="search-input" placeholder="输入关键词以搜索...">
-    <button onclick="searchCSV()">点击搜索</button>
-    <button id="highlight" onclick="window.location.href='./info/';">使用帮助</button>
-    <br>状态：<results id="results">请输入关键词以搜索...</results>
+    <div id="search-container">
+        <input type="text" id="search-input" placeholder="输入关键词以搜索...">
+        <button onclick="searchCSV()">点击搜索</button>
+        <button id="highlight" onclick="window.location.href='./info/';">使用帮助</button>
+        <br>状态：<results id="results">请输入关键词以搜索...</results>
+    </div>
     <script src="scripts.js"></script>
 </body>
 </html>
