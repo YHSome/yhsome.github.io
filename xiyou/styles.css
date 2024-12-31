@@ -2,3 +2,23 @@
 body { font-family: Arial, sans-serif; }
 #search-box { margin-bottom: 10px; }
 #results { border: 1px solid #ccc; padding: 3; }
+
+#results.loading {
+    background: url('loading.gif') center center no-repeat;
+    min-height: 50px; /* 确保加载动画可见 */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#loading-indicator.loading {
+    background: url('loading.gif') center center no-repeat;
+    min-height: 250px; /* 确保加载动画可见 */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 250px; /* 根据需要调整宽度 */
+    height: 250px; /* 根据需要调整高度 */
+}

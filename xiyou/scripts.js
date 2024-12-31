@@ -18,6 +18,8 @@ document.addEventListener("DOMContentLoaded", function() {
     }, 100);
 });  
 
+let loadingAnimationInterval; // 移到顶部，确保在使用前已初始化
+
 function toggleSearchContainer() {
     const searchContainer = document.getElementById('search-container');
     if (searchContainer.style.display === 'none') {
@@ -40,6 +42,9 @@ let csvData = []; // 用于存储CSV数据的数组
 
 async function fetchData() {
     const resultsDiv = document.getElementById('results');
+    const loadingIndicator = document.getElementById('loading-indicator');
+    loadingIndicator.classList.add('loading'); // 添加加载动画
+    startLoadingAnimation(); // 开始加载动画
     resultsDiv.innerHTML = '数据正在加载...'; // 显示加载提示
 
     try {
@@ -57,10 +62,29 @@ async function fetchData() {
     } catch (error) {
         console.error('发生错误：', error);
         resultsDiv.innerHTML = '加载数据失败，请稍后再试。'; // 显示错误提示
+    } finally {
+        setTimeout(() => {
+            loadingIndicator.classList.remove('loading'); // 延迟0.5秒移除加载动画
+            stopLoadingAnimation(); // 停止加载动画
+            loadingIndicator.remove(); // 删除加载动画元素
+        }, 500);
     }
 }
 
 fetchData();
+
+function startLoadingAnimation() {
+    const loadingIndicator = document.getElementById('loading-indicator');
+    let index = 1;
+    loadingAnimationInterval = setInterval(() => {
+        loadingIndicator.style.backgroundImage = `url('./gif/${index}.png')`;
+        index = (index % 8) + 1; // 循环切换1至8.png
+    }, 200); // 每100毫秒切换一次图片
+}
+
+function stopLoadingAnimation() {
+    clearInterval(loadingAnimationInterval);
+}
 
 // 搜索CSV并显示结果  
 function searchCSV() {  
