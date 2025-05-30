@@ -1,5 +1,5 @@
 # Introduction
-  YHSome:This is a rather simple website for saving my online pages, which doesn't even support Chinese. Click the link below to access related content. I will update the UI after my high school graduation.
+  YHSome:This is a rather simple website for saving my online pages, which doesn't even support Chinese. Click the link below to access related content. I will update the UI after my senior high school graduation.
 
 ## Subdirectories
 
