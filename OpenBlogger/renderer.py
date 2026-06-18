@@ -363,7 +363,8 @@ class BlogRenderer:
             return stats
 
         # Step 3: 按时间排序（最新在前）
-        self.posts.sort(key=lambda p: p["metadata"]["time"], reverse=True)
+        # 按日期排序（解析为元组避免字符串比较 "10" < "4" 的问题）
+        self.posts.sort(key=lambda p: _parse_date_tuple(p["metadata"]["time"]), reverse=True)
 
         # Step 4: 渲染文章页
         RENDERED_DIR.mkdir(parents=True, exist_ok=True)
@@ -723,6 +724,14 @@ class BlogRenderer:
 
 
 # ── 工具函数 ──
+
+def _parse_date_tuple(date_str: str) -> tuple:
+    """将 'YYYY.M.D' 字符串解析为 (year, month, day) 元组用于正确排序。"""
+    m = re.match(r'(\d{4})\D+(\d{1,2})\D+(\d{1,2})', str(date_str))
+    if m:
+        return (int(m.group(1)), int(m.group(2)), int(m.group(3)))
+    return (0, 0, 0)
+
 
 def _url_encode(s: str) -> str:
     """URL 编码（保留中文等非 ASCII 字符）。"""
