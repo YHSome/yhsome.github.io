@@ -447,7 +447,8 @@ class BlogRenderer:
             "excerpt": meta.get("excerpt", ""),   # 给评论区做文章标识
             "total_posts": len(self.posts),        # 侧栏统计
             "total_words": self._count_total_words(),  # 全站总字数
-            "all_tags": self._collect_tags(),      # 侧栏标签
+            "all_tags": self._collect_tags(),      # 侧栏标签（全量，目录页用）
+            "sidebar_tags": self._random_sidebar_tags(),  # 精选标签（侧栏展示）
             "max_page_id": max(self._page_ids.values()) if self._page_ids else 0,
             **self._viewer_context(out_path),      # Viewer: page_id + 配置
         }
@@ -461,6 +462,7 @@ class BlogRenderer:
             "site_description": self.config["site_description"],
             "recent_posts": [self._summary(p) for p in recent],
             "all_tags": all_tags,
+            "sidebar_tags": self._random_sidebar_tags(),  # 精选标签（侧栏展示）
             "total_posts": len(self.posts),       # 全站文章总数（侧栏统计用）
             "total_words": self._count_total_words(),  # 全站总字数
             "max_page_id": max(self._page_ids.values()) if self._page_ids else 0,  # 弹幕用
@@ -523,6 +525,14 @@ class BlogRenderer:
             for tag in post["metadata"].get("tags", []):
                 tag_counts[tag] = tag_counts.get(tag, 0) + 1
         return [{"name": k, "count": v} for k, v in sorted(tag_counts.items(), key=lambda x: (-x[1], x[0]))]
+
+    def _random_sidebar_tags(self, count: int = 10) -> list[dict]:
+        """从全站标签中随机选取若干，供侧栏精选展示。"""
+        import random
+        all_tags = self._collect_tags()
+        if len(all_tags) <= count:
+            return all_tags
+        return random.sample(all_tags, count)
 
     def _summary(self, post: dict) -> dict:
         """生成文章摘要数据。"""

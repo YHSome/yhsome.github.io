@@ -412,11 +412,11 @@
                         <div class="stat-row"><span>总字数</span><strong>{{ "{:,}".format(total_words) }}</strong></div>
                     </div>
                 </div>
-                {% if all_tags %}
+                {% if sidebar_tags %}
                 <div class="sidebar-widget">
-                    <div class="widget-title">🏷️ 标签</div>
+                    <div class="widget-title">🏷️ 精选标签</div>
                     <div class="widget-tags">
-                        {% for tag in all_tags %}
+                        {% for tag in sidebar_tags %}
                         <a href="{{ relative_root }}directory.html?tag={{ tag.name | urlencode }}" class="tag-pill">
                             {{ tag.name }}
                         </a>
