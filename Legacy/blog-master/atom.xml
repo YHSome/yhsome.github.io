@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>森的神秘空间</title>
+  
+  <subtitle>“科技改变生活”</subtitle>
+  <link href="https://yhsome.github.io/blog/atom.xml" rel="self"/>
+  
+  <link href="https://yhsome.github.io/blog/"/>
+  <updated>2023-12-19T12:25:53.410Z</updated>
+  <id>https://yhsome.github.io/blog/</id>
+  
+  <author>
+    <name>YHSome</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>笔记-快速写简化电子排布式</title>
+    <link href="https://yhsome.github.io/blog/2023/12/19/%E7%AC%94%E8%AE%B0-%E5%BF%AB%E9%80%9F%E5%86%99%E7%AE%80%E5%8C%96%E7%94%B5%E5%AD%90%E6%8E%92%E5%B8%83%E5%BC%8F/"/>
+    <id>https://yhsome.github.io/blog/2023/12/19/%E7%AC%94%E8%AE%B0-%E5%BF%AB%E9%80%9F%E5%86%99%E7%AE%80%E5%8C%96%E7%94%B5%E5%AD%90%E6%8E%92%E5%B8%83%E5%BC%8F/</id>
+    <published>2023-12-19T11:56:10.000Z</published>
+    <updated>2023-12-19T12:25:53.410Z</updated>
+    
+    
+    <summary type="html">&lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;刚学选修二化学，电子排布式写得我快吐血了。两页作业做了我一个多小时。刚刚看网课时，灵光乍现，悟到了一个快速写简化电子排布式的办法。且听我娓娓道来。&lt;br&gt;&lt;img src=&quot;/blog/../blog/image/2023-12-19/5.png&quot;&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    
+    <category term="笔记" scheme="https://yhsome.github.io/blog/tags/%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>免费的office全家桶</title>
+    <link href="https://yhsome.github.io/blog/2023/10/28/%E5%85%8D%E8%B4%B9%E7%9A%84office%E5%85%A8%E5%AE%B6%E6%A1%B6/"/>
+    <id>https://yhsome.github.io/blog/2023/10/28/%E5%85%8D%E8%B4%B9%E7%9A%84office%E5%85%A8%E5%AE%B6%E6%A1%B6/</id>
+    <published>2023-10-28T08:39:29.000Z</published>
+    <updated>2023-10-28T08:48:06.410Z</updated>
+    
+    
+    <summary type="html">&lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;如题，这个是office全家桶的下载，自动激活，真正实现一键破解&lt;/p&gt;
+&lt;h2 id=&quot;下载链接&quot;&gt;&lt;a href=&quot;#下载链接&quot; class=&quot;headerlink&quot; title=&quot;下载链接&quot;&gt;&lt;/a&gt;下载链接&lt;/h2&gt;</summary>
+    
+    
+    
+    
+    <category term="实用软件" scheme="https://yhsome.github.io/blog/tags/%E5%AE%9E%E7%94%A8%E8%BD%AF%E4%BB%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>实验报告-固体酒精</title>
+    <link href="https://yhsome.github.io/blog/2023/09/23/%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A-%E5%9B%BA%E4%BD%93%E9%85%92%E7%B2%BE/"/>
+    <id>https://yhsome.github.io/blog/2023/09/23/%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A-%E5%9B%BA%E4%BD%93%E9%85%92%E7%B2%BE/</id>
+    <published>2023-09-23T09:29:11.000Z</published>
+    <updated>2023-09-23T10:08:55.950Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;固体酒精&quot;&gt;&lt;a href=&quot;#固体酒精&quot; class=&quot;headerlink&quot; title=&quot;固体酒精&quot;&gt;&lt;/a&gt;固体酒精&lt;/h1&gt;&lt;p&gt;&lt;em&gt;策划人：欧阳天为、杨浩森 实验地点：化学实验室六     指导老师：梁敏霞&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;实验原理：&lt;/strong&gt;固体酒精通常是由水和酒精混合后，通过凝固剂作用形成的一种固态混合物。醋酸钙易溶于水而难溶于酒精，当两种溶液相混合时，醋酸钙在酒精中成为凝胶析出。液体便逐渐从浑浊到稠厚，最后凝聚为一整块，就得到固体酒精。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;实验工具：&lt;/strong&gt;烧杯、玻璃棒、药匙（或燃烧匙）、打火机、天平、量筒&lt;br&gt;实验药品：二水醋酸钙[Ca(CH₃COO)₂·2H₂O]、无水乙醇（或浓度较高的酒精）、水&lt;/p&gt;
+&lt;h2 id=&quot;实验步骤：&quot;&gt;&lt;a href=&quot;#实验步骤：&quot; class=&quot;headerlink&quot; title=&quot;实验步骤：&quot;&gt;&lt;/a&gt;实验步骤：&lt;/h2&gt;</summary>
+    
+    
+    
+    
+    <category term="化学社" scheme="https://yhsome.github.io/blog/tags/%E5%8C%96%E5%AD%A6%E7%A4%BE/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>我的第一个html网页实战</title>
+    <link href="https://yhsome.github.io/blog/2023/09/10/myhtml/"/>
+    <id>https://yhsome.github.io/blog/2023/09/10/myhtml/</id>
+    <published>2023-09-09T16:43:45.000Z</published>
+    <updated>2023-09-16T10:13:14.943Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;html&quot;&gt;&lt;a href=&quot;#html&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    
+    <category term="我的项目" scheme="https://yhsome.github.io/blog/tags/%E6%88%91%E7%9A%84%E9%A1%B9%E7%9B%AE/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>随笔-重新注册白鲸加速器</title>
+    <link href="https://yhsome.github.io/blog/2023/09/10/%E9%9A%8F%E7%AC%94-%E9%87%8D%E6%96%B0%E6%B3%A8%E5%86%8C%E7%99%BD%E9%B2%B8%E5%8A%A0%E9%80%9F%E5%99%A8/"/>
+    <id>https://yhsome.github.io/blog/2023/09/10/%E9%9A%8F%E7%AC%94-%E9%87%8D%E6%96%B0%E6%B3%A8%E5%86%8C%E7%99%BD%E9%B2%B8%E5%8A%A0%E9%80%9F%E5%99%A8/</id>
+    <published>2023-09-09T16:38:16.000Z</published>
+    <updated>2023-09-16T10:13:15.033Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;白鲸加速器是一个比较稳定的vpn，可以允许你通过它访问外网。但是存在诸多限制，新账号三十天的免费试用期过后需要收费就很难受，接下来我将介绍如何重新注册账号，无限白嫖白鲸加速器。&lt;/p&gt;</summary>
+    
+    
+    
+    
+    <category term="随笔" scheme="https://yhsome.github.io/blog/tags/%E9%9A%8F%E7%AC%94/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>弹球挑战</title>
+    <link href="https://yhsome.github.io/blog/2023/09/02/PinballChallenge/"/>
+    <id>https://yhsome.github.io/blog/2023/09/02/PinballChallenge/</id>
+    <published>2023-09-01T16:58:33.000Z</published>
+    <updated>2023-09-16T10:13:14.943Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;弹球挑战&quot;&gt;&lt;a href=&quot;#弹球挑战&quot; class=&quot;headerlink&quot; title=&quot;弹球挑战&quot;&gt;&lt;/a&gt;弹球挑战&lt;/h1&gt;&lt;p&gt;这里是弹球挑战，只需30得分即挑战成功！&lt;/p&gt;
+&lt;p&gt;然而，难度将会越来越大。&lt;/p&gt;
+&lt;p&gt;祝君好运！&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/blog/../blog/image/2023-9-02/PineballChallenge3.png&quot; alt=&quot;logo&quot;&gt;&lt;/p&gt;
+&lt;h1 id=&quot;挑战成功有奖励！&quot;&gt;&lt;a href=&quot;#挑战成功有奖励！&quot; class=&quot;headerlink&quot; title=&quot;挑战成功有奖励！&quot;&gt;&lt;/a&gt;挑战成功有奖励！&lt;/h1&gt;&lt;p&gt;只要你使用Windows系统在挑战中得到了30分，并且给予我全程（从打开网页开始算起）的挑战录像即为挑战成功，截图发给我，我会给予第一位挑战成功并符合要求的玩家10元红包奖励！&lt;/p&gt;
+&lt;h3 id=&quot;挑战链接&quot;&gt;&lt;a href=&quot;#挑战链接&quot; class=&quot;headerlink&quot; title=&quot;挑战链接&quot;&gt;&lt;/a&gt;挑战链接&lt;/h3&gt;</summary>
+    
+    
+    
+    
+    <category term="我的项目" scheme="https://yhsome.github.io/blog/tags/%E6%88%91%E7%9A%84%E9%A1%B9%E7%9B%AE/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>随笔-台风？停课！</title>
+    <link href="https://yhsome.github.io/blog/2023/09/01/%E9%9A%8F%E7%AC%94-%E5%8F%B0%E9%A3%8E%EF%BC%9F%E5%81%9C%E8%AF%BE%EF%BC%81/"/>
+    <id>https://yhsome.github.io/blog/2023/09/01/%E9%9A%8F%E7%AC%94-%E5%8F%B0%E9%A3%8E%EF%BC%9F%E5%81%9C%E8%AF%BE%EF%BC%81/</id>
+    <published>2023-08-31T16:38:59.000Z</published>
+    <updated>2023-09-16T10:13:15.023Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;按照惯例先写个开头，2023年8月31日由于台风登陆粤东，众多学校停课至九月四日开学。&lt;/p&gt;</summary>
+    
+    
+    
+    
+    <category term="随笔" scheme="https://yhsome.github.io/blog/tags/%E9%9A%8F%E7%AC%94/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>随笔-文心一言使用感受</title>
+    <link href="https://yhsome.github.io/blog/2023/08/29/%E9%9A%8F%E7%AC%94-%E6%96%87%E5%BF%83%E4%B8%80%E8%A8%80%E4%BD%BF%E7%94%A8%E6%84%9F%E5%8F%97/"/>
+    <id>https://yhsome.github.io/blog/2023/08/29/%E9%9A%8F%E7%AC%94-%E6%96%87%E5%BF%83%E4%B8%80%E8%A8%80%E4%BD%BF%E7%94%A8%E6%84%9F%E5%8F%97/</id>
+    <published>2023-08-28T17:00:38.000Z</published>
+    <updated>2023-09-16T10:13:15.023Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;这个文心一言光是在申请这一栏就拦住我了。捏麻申请给我拖了大半年才通过，在这期间我都不知道换了多少个chatgpt的镜像网站了。&lt;/p&gt;</summary>
+    
+    
+    
+    
+    <category term="随笔" scheme="https://yhsome.github.io/blog/tags/%E9%9A%8F%E7%AC%94/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>PixelQX：像素桥兴计划</title>
+    <link href="https://yhsome.github.io/blog/2023/08/28/pixelqx/"/>
+    <id>https://yhsome.github.io/blog/2023/08/28/pixelqx/</id>
+    <published>2023-08-28T09:24:59.000Z</published>
+    <updated>2023-09-16T10:13:14.943Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;前段时间和朋友吹水时，偶尔提到了桥兴中学的事儿，突然灵光一闪：万一我们真的能在我的世界里面还原桥兴中学呢？&lt;/p&gt;
+&lt;p&gt;心动不如行动，于是就有了这个计划。并且，&lt;strong&gt;我为此还开设了一个服务器，大家也可以随时进入参观玩耍。&lt;/strong&gt;&lt;br&gt;&lt;img src=&quot;/blog/../blog/image/2023-6-06/1.jpg&quot; alt=&quot;2023年6月6日早上路拍桥兴&quot;&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    
+    <category term="PixelQX" scheme="https://yhsome.github.io/blog/tags/PixelQX/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>西柚朗读者（西柚英语辅助）</title>
+    <link href="https://yhsome.github.io/blog/2023/08/23/xiyouspeaker/"/>
+    <id>https://yhsome.github.io/blog/2023/08/23/xiyouspeaker/</id>
+    <published>2023-08-22T17:07:13.000Z</published>
+    <updated>2023-09-16T10:13:14.963Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;&lt;strong&gt;此文章同步保存在以下网站&lt;/strong&gt; &lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://yhsome.github.io/2023/08/23/xiyouspeaker&quot;&gt;森的神秘空间&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/YHSome/xiyouspeaker/&quot;&gt;github&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&quot;功能简介&quot;&gt;&lt;a href=&quot;#功能简介&quot; class=&quot;headerlink&quot; title=&quot;功能简介&quot;&gt;&lt;/a&gt;功能简介&lt;/h1&gt;&lt;p&gt;该脚本可以帮助你完成 &lt;a href=&quot;https://student.xiyouyingyu.com/&quot;&gt;西柚英语&lt;/a&gt; 中烦人的单词朗读。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/YHSome/xiyouspeaker/&quot;&gt;github项目地址&amp;#x2F;下载地址&lt;/a&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    
+    <category term="我的项目" scheme="https://yhsome.github.io/blog/tags/%E6%88%91%E7%9A%84%E9%A1%B9%E7%9B%AE/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>西柚选择者（西柚英语辅助）</title>
+    <link href="https://yhsome.github.io/blog/2023/08/19/xiyouchooser/"/>
+    <id>https://yhsome.github.io/blog/2023/08/19/xiyouchooser/</id>
+    <published>2023-08-19T15:58:27.000Z</published>
+    <updated>2023-09-16T10:13:14.963Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;&lt;strong&gt;此文章同步保存在以下网站&lt;/strong&gt; &lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://yhsome.github.io/2023/08/19/xiyouchooser&quot;&gt;森的神秘空间&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/YHSome/xiyouchooser/&quot;&gt;github&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&quot;功能简介&quot;&gt;&lt;a href=&quot;#功能简介&quot; class=&quot;headerlink&quot; title=&quot;功能简介&quot;&gt;&lt;/a&gt;功能简介&lt;/h1&gt;&lt;p&gt;该脚本可以帮助你完成 &lt;a href=&quot;https://student.xiyouyingyu.com/&quot;&gt;西柚英语&lt;/a&gt; 中烦人的看词选义和看义选词。&lt;br&gt;&lt;a href=&quot;https://github.com/YHSome/xiyouchooser/&quot;&gt;github项目地址&amp;#x2F;下载地址&lt;/a&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    
+    <category term="我的项目" scheme="https://yhsome.github.io/blog/tags/%E6%88%91%E7%9A%84%E9%A1%B9%E7%9B%AE/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>随笔-论网络诈骗</title>
+    <link href="https://yhsome.github.io/blog/2023/08/14/%E9%9A%8F%E7%AC%94-%E8%AE%BA%E7%BD%91%E7%BB%9C%E8%AF%88%E9%AA%97/"/>
+    <id>https://yhsome.github.io/blog/2023/08/14/%E9%9A%8F%E7%AC%94-%E8%AE%BA%E7%BD%91%E7%BB%9C%E8%AF%88%E9%AA%97/</id>
+    <published>2023-08-13T16:56:40.000Z</published>
+    <updated>2023-09-16T10:13:15.033Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;今天下午，我利用匿名邮箱向几个好友发送了一份伪装‘学考不通过’和‘学考作弊清除成绩’的邮件，并附上了钓鱼链接。星宇因此上钩&lt;/p&gt;
+&lt;h1 id=&quot;远在天边，近在眼前&quot;&gt;&lt;a href=&quot;#远在天边，近在眼前&quot; class=&quot;headerlink&quot; title=&quot;远在天边，近在眼前&quot;&gt;&lt;/a&gt;远在天边，近在眼前&lt;/h1&gt;</summary>
+    
+    
+    
+    
+    <category term="随笔" scheme="https://yhsome.github.io/blog/tags/%E9%9A%8F%E7%AC%94/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>一些钢琴谱下载</title>
+    <link href="https://yhsome.github.io/blog/2023/08/12/%E4%B8%80%E4%BA%9B%E9%92%A2%E7%90%B4%E8%B0%B1%E4%B8%8B%E8%BD%BD/"/>
+    <id>https://yhsome.github.io/blog/2023/08/12/%E4%B8%80%E4%BA%9B%E9%92%A2%E7%90%B4%E8%B0%B1%E4%B8%8B%E8%BD%BD/</id>
+    <published>2023-08-12T11:32:18.000Z</published>
+    <updated>2023-09-16T10:13:14.963Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;b站收集的一些钢琴谱，主要都是著名电子音乐改编，有需要可以自行下载。&lt;br&gt;&lt;a href=&quot;../blog/image/2023-8-06/altale.pdf&quot;&gt;altale钢琴谱&lt;/a&gt;&lt;br&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>随笔-一些给新高一的资料</title>
+    <link href="https://yhsome.github.io/blog/2023/08/10/%E9%9A%8F%E7%AC%94-%E4%B8%80%E4%BA%9B%E7%BB%99%E6%96%B0%E9%AB%98%E4%B8%80%E7%9A%84%E8%B5%84%E6%96%99%E5%92%8C%E5%BB%BA%E8%AE%AE/"/>
+    <id>https://yhsome.github.io/blog/2023/08/10/%E9%9A%8F%E7%AC%94-%E4%B8%80%E4%BA%9B%E7%BB%99%E6%96%B0%E9%AB%98%E4%B8%80%E7%9A%84%E8%B5%84%E6%96%99%E5%92%8C%E5%BB%BA%E8%AE%AE/</id>
+    <published>2023-08-09T18:22:09.000Z</published>
+    <updated>2023-09-16T10:13:15.023Z</updated>
+    
+    
+    <summary type="html">&lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;送给新高一的好东西，如果你是番中的那么这些网页将很适合你。&lt;/p&gt;</summary>
+    
+    
+    
+    
+    <category term="随笔" scheme="https://yhsome.github.io/blog/tags/%E9%9A%8F%E7%AC%94/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>随笔-平价零食超市真的平价吗</title>
+    <link href="https://yhsome.github.io/blog/2023/08/10/%E9%9A%8F%E7%AC%94-%E5%B9%B3%E4%BB%B7%E9%9B%B6%E9%A3%9F%E8%B6%85%E5%B8%82%E7%9C%9F%E7%9A%84%E5%B9%B3%E4%BB%B7%E5%90%97/"/>
+    <id>https://yhsome.github.io/blog/2023/08/10/%E9%9A%8F%E7%AC%94-%E5%B9%B3%E4%BB%B7%E9%9B%B6%E9%A3%9F%E8%B6%85%E5%B8%82%E7%9C%9F%E7%9A%84%E5%B9%B3%E4%BB%B7%E5%90%97/</id>
+    <published>2023-08-09T17:25:38.000Z</published>
+    <updated>2023-09-16T10:13:15.023Z</updated>
+    
+    
+    <summary type="html">&lt;h2 id=&quot;背景&quot;&gt;&lt;a href=&quot;#背景&quot; class=&quot;headerlink&quot; title=&quot;背景&quot;&gt;&lt;/a&gt;背景&lt;/h2&gt;&lt;p&gt;今天被我妈强行拉去‘赵一鸣’零食店买零食了。观察店面可知，其装修风格极具现代化，大幅度使用led灯，似乎与其‘平价’产生了反差。这不免令我产生疑惑：其所标榜的‘平价’是真真切切的还是换种套路割韭菜呢？&lt;/p&gt;
+&lt;h2 id=&quot;1-为何火遍大江南北？&quot;&gt;&lt;a href=&quot;#1-为何火遍大江南北？&quot; class=&quot;headerlink&quot; title=&quot;1.为何火遍大江南北？&quot;&gt;&lt;/a&gt;1.为何火遍大江南北？&lt;/h2&gt;</summary>
+    
+    
+    
+    
+    <category term="随笔" scheme="https://yhsome.github.io/blog/tags/%E9%9A%8F%E7%AC%94/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Bandizip专业版解锁及去除更新</title>
+    <link href="https://yhsome.github.io/blog/2023/08/08/bandizip/"/>
+    <id>https://yhsome.github.io/blog/2023/08/08/bandizip/</id>
+    <published>2023-08-08T08:28:26.000Z</published>
+    <updated>2023-09-16T10:13:14.923Z</updated>
+    
+    
+    <summary type="html">&lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;对于电脑使用者来说，压缩&amp;#x2F;解压缩软件是必不可少的，今天给大家推荐的Bandizip是一款免费优秀的文件压缩&amp;#x2F;解压缩软件，界面简洁，功能明了，免费纯净无广告。它支持多国语言，解压后不会出现乱码，Bandizip拥有非常快速的压缩和解压缩的算法，适用于多核心压缩、快速拖拽、高速压缩等功能。&lt;/p&gt;</summary>
+    
+    
+    
+    
+    <category term="实用软件" scheme="https://yhsome.github.io/blog/tags/%E5%AE%9E%E7%94%A8%E8%BD%AF%E4%BB%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>altale五线谱</title>
+    <link href="https://yhsome.github.io/blog/2023/08/06/altale/"/>
+    <id>https://yhsome.github.io/blog/2023/08/06/altale/</id>
+    <published>2023-08-06T13:42:33.000Z</published>
+    <updated>2023-09-16T10:13:14.913Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;作者不是我，仅搬运&lt;br&gt;下载链接：&lt;a href=&quot;../blog/image/2023-8-06/altale.pdf&quot;&gt;点击下载&lt;/a&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>喜德盛rc200改装实例</title>
+    <link href="https://yhsome.github.io/blog/2023/08/06/rc200tools/"/>
+    <id>https://yhsome.github.io/blog/2023/08/06/rc200tools/</id>
+    <published>2023-08-06T11:59:34.000Z</published>
+    <updated>2023-09-16T10:13:14.953Z</updated>
+    
+    
+    <summary type="html">&lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;&lt;img src=&quot;/blog/../blog/image/2023-8-06/1.jpg&quot;&gt;&lt;br&gt;RC200，作为一辆入门级的公路车，性价比是1000~2000中比较高的。我骑了半年，接下来按重要性高低介绍一下rc200这辆车有哪些便宜的配件能够提高骑行体验&lt;/p&gt;</summary>
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>录屏软件bandicam下载</title>
+    <link href="https://yhsome.github.io/blog/2023/07/25/bandicam/"/>
+    <id>https://yhsome.github.io/blog/2023/07/25/bandicam/</id>
+    <published>2023-07-25T14:58:28.000Z</published>
+    <updated>2023-09-16T10:13:14.923Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;下载地址：&lt;a href=&quot;../blog/image/2023-7-25/BandiCam.zip&quot;&gt;点击下载&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Bandicam（班迪录屏）一款简单好用的电脑屏幕录制软件，录屏幕，录游戏，录视频的功能强大的录屏工具，比起其他软件其性能更加卓越。</summary>
+        
+      
+    
+    
+    
+    
+    <category term="实用软件" scheme="https://yhsome.github.io/blog/tags/%E5%AE%9E%E7%94%A8%E8%BD%AF%E4%BB%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>猫猫桌宠BongoCat下载</title>
+    <link href="https://yhsome.github.io/blog/2023/07/09/BongoCat/"/>
+    <id>https://yhsome.github.io/blog/2023/07/09/BongoCat/</id>
+    <published>2023-07-09T12:49:03.000Z</published>
+    <updated>2023-09-16T10:13:14.923Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;简述&quot;&gt;&lt;a href=&quot;#简述&quot; class=&quot;headerlink&quot; title=&quot;简述&quot;&gt;&lt;/a&gt;简述&lt;/h3&gt;&lt;p&gt;B站的up用爱发电做的，可以实时反馈鼠标及键盘的操作&lt;br&gt;&lt;del&gt;猫猫好可爱&lt;/del&gt;&lt;/p&gt;
+&lt;h3 id=&quot;安装&quot;&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    
+    <category term="实用软件" scheme="https://yhsome.github.io/blog/tags/%E5%AE%9E%E7%94%A8%E8%BD%AF%E4%BB%B6/"/>
+    
+  </entry>
+  
+</feed>
