@@ -19,7 +19,10 @@ title: 西柚朗读者（西柚英语辅助）
 下面是演示视频  
   
   
-Your browser does not support the video tag.  
+<video width="640" controls>
+  <source src="https://raw.githubusercontent.com/YHSome/xiyouspeaker/main/example.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>  
 
 
 ## 第一步：安装python以及相应库
