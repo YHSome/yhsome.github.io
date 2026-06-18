@@ -4,162 +4,99 @@ title: 西柚朗读者（西柚英语辅助）
 
 **此文章同步保存在以下网站**
 
-[森的神秘空间](<https://yhsome.github.io/2023/08/23/xiyouspeaker>)
+[森的神秘空间](https://yhsome.github.io/2023/08/23/xiyouspeaker)
 
-[github](<https://github.com/YHSome/xiyouspeaker/>)
+[github](https://github.com/YHSome/xiyouspeaker/)
 
 # 功能简介
 
-该脚本可以帮助你完成 [西柚英语](<https://student.xiyouyingyu.com/>) 中烦人的单词朗读。
+该脚本可以帮助你完成 [西柚英语](https://student.xiyouyingyu.com/) 中的朗读部分。
 
-[github项目地址/下载地址](<https://github.com/YHSome/xiyouspeaker/>)
+西柚朗读者由上一代的西柚选择者改制而来，两者并不兼容
+
+[github项目地址/下载地址](https://github.com/YHSome/xiyouspeaker/)
 
 # 使用方法
 
-下面是演示视频  
-  
-  
+下面是演示视频
+
 <video width="640" controls>
   <source src="https://raw.githubusercontent.com/YHSome/xiyouspeaker/main/example.mp4" type="video/mp4">
   Your browser does not support the video tag.
-</video>  
-
+</video>
 
 ## 第一步：安装python以及相应库
 
 你需要安装的python库有
-    
-    
-    1  
-    2  
-    3  
-    
 
-| 
-    
-    
-    sounddevice  
-    soundfile  
-    pyautogui  
-      
-  
----|---  
-  
-> 要安装sounddevice、soundfile和pyautogui这三个Python库，可以按照以下步骤进行：
-> 
->   1. 安装Python：  
-> 首先，确保你的计算机上已经安装了Python。你可以从Python官方网站下载并安装最新版本的Python。
->   2. 安装pip：  
-> pip是Python的包管理工具，用于安装和管理Python库。如果你还没有安装pip，可以通过以下命令在命令提示符或终端中安装：
->          
->          1  
->          > 
-> 
-> | 
->          
->          python -m ensurepip --upgrade  
->          >   
->   
-> ---|---  
->   3. 安装sounddevice库：  
-> 在命令提示符或终端中运行以下命令来安装sounddevice库：
->          
->          1  
->          > 
-> 
-> | 
->          
->          pip install sounddevice  
->          >   
->   
-> ---|---  
->   4. 安装soundfile库：  
-> 在命令提示符或终端中运行以下命令来安装soundfile库：
->          
->          1  
->          > 
-> 
-> | 
->          
->          pip install soundfile  
->          >   
->   
-> ---|---  
->   5. 安装pyautogui库：  
-> 在命令提示符或终端中运行以下命令来安装pyautogui库：
->          
->          1  
->          > 
-> 
-> | 
->          
->          pip install pyautogui  
->          >   
->   
-> ---|---  
-> 这样，你就可以使用这些库来运行该程序了。
-> 
+```
+pyaudio
+SpeechRecognition
+pyautogui
+```
 
+> 1. 首先，确保你的计算机上已经安装了Python。
+> 2. 安装pip：
+> ```
+> python -m ensurepip --upgrade
+> ```
+> 3. 安装pyaudio：`pip install pyaudio`
+>    - 如果你使用的是Windows操作系统且安装失败，请尝试 `pip install pipwin && pipwin install pyaudio`
+> 4. 安装SpeechRecognition：`pip install SpeechRecognition`
+> 5. 安装pyautogui：`pip install pyautogui`
 
-## 第二步：完成相应设置
+## 第二步：完成相应配置
 
-### 设置默认录制设备（十分重要！）
+打开 `./config.json` ，填写相应配置。**提示：** 你可以使用 `./快速配置.py` 快速完成配置
 
-**使用前请将系统默认录制设备改成“立体声混音”，否则无法录音**
+> "screensize": 屏幕分辨率【x,y】
+> "startpos": 朗读开始按钮的坐标【x,y】
+> "startcolor": 记录按钮的颜色（rgb格式）【r,g,b】
+> "shotrange": 朗读文本的范围（宽高）【宽,高】
+> "clickpos": 朗读文本的坐标【x,y】
 
-### 打开 `./config.json` ，填写相应配置。
+这个是1600x900分辨率下，谷歌浏览器全屏打开的设置示例
 
-以下是配置文件的相关释义  
-**提示：** 你可以使用 `./快速配置.py` 快速完成配置
+```json
+{
+  "screensize": [1600,900],
+  "startpos": [546,410],
+  "startcolor": [252,177,68],
+  "shotrange": [665,70],
+  "clickpos": [720,380]
+}
+```
 
-> “screensize”: 屏幕分辨率【x,y】
+这个是1600x900分辨率下，谷歌浏览器（左）半屏打开向右拉到底的设置示例
 
-> “nextpos”: ‘下一个’按钮的坐标【x,y】
+```json
+{
+  "screensize": [1600,900],
+  "startpos": [350,410],
+  "startcolor": [252,177,68],
+  "shotrange": [665,70],
+  "clickpos": [525,380]
+}
+```
 
-> “input_icon”: 左下角’立即录音’按钮的坐标【x,y】
-
-> “input_icon”: 单词下方英式发言右边的小喇叭的坐标【x,y】
-
-这个是这个是1600x900分辨率下，谷歌浏览器（左）半屏打开向右拉到底的设置示例
-    
-    
-    1  
-    2  
-    3  
-    4  
-    5  
-    6  
-    
-
-| 
-    
-    
-    {  
-      "screensize": [1600,900],  
-      "nextpos": [1025,820],  
-      "input_icon": [340,800],  
-      "example_icon": [333,250]  
-    }  
-      
-  
----|---  
-  
-## 第三步：启动程序
+## 第三步：启动程序与故障排除
 
 你可以用cmd运行，也可以用vscode等ide运行文件
-    
-    
-    1  
-    
 
-| 
-    
-    
-    $ python 朗读练习v1.0.py  
-      
-  
----|---  
-  
-# 未来的展望
+```
+python speake rV1.0.py
+```
 
-目前只做了几个功能，会考虑以后更多功能的开发
+**注意：首次启动时会下载语音识别模型，需要耐心等待，如果出现服务器拒绝连接的问题，请重新运行程序或选择适合的代理**
+
+### 出现了录入了但是没有反应的状况？
+
+请检查你的config.json配置文件的clickpos参数是否正确，以及是否关闭了其他可能占用麦克风的程序
+
+### 如果依然无法使用？
+
+请尝试重启程序，或者重启电脑
+
+# 此脚本的不足
+
+由于基于本地的语音识别模型，识别速度和准确度会随着电脑性能而有所不同。我的便携电脑cpu不太好加上未针对模型进行训练和优化，识别准确率不太高（可能也是因为我发音不准吧）。麦克风的质量也会影响识别准确率。
