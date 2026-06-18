@@ -443,6 +443,7 @@ class BlogRenderer:
             "site_description": self.config["site_description"],
             "recent_posts": [self._summary(p) for p in recent],
             "all_tags": all_tags,
+            "total_posts": len(self.posts),       # 全站文章总数（侧栏统计用）
             "current_year": datetime.now().year,
             "relative_root": "",                  # 首页在根目录
         }
