@@ -446,6 +446,7 @@ class BlogRenderer:
             "next_post": self._nav_post(next_post) if next_post else None,
             "excerpt": meta.get("excerpt", ""),   # 给评论区做文章标识
             "total_posts": len(self.posts),        # 侧栏统计
+            "total_words": self._count_total_words(),  # 全站总字数
             "all_tags": self._collect_tags(),      # 侧栏标签
             "max_page_id": max(self._page_ids.values()) if self._page_ids else 0,
             **self._viewer_context(out_path),      # Viewer: page_id + 配置
@@ -461,6 +462,7 @@ class BlogRenderer:
             "recent_posts": [self._summary(p) for p in recent],
             "all_tags": all_tags,
             "total_posts": len(self.posts),       # 全站文章总数（侧栏统计用）
+            "total_words": self._count_total_words(),  # 全站总字数
             "max_page_id": max(self._page_ids.values()) if self._page_ids else 0,  # 弹幕用
             "current_year": datetime.now().year,
             "relative_root": "",                  # 首页在根目录
@@ -503,6 +505,16 @@ class BlogRenderer:
             "current_year": datetime.now().year,
             "relative_root": "",                  # 标签页在根目录
         }
+
+    def _count_total_words(self) -> int:
+        """统计全站文章总字数（去除 Markdown 标记后的纯文本字数）。"""
+        total = 0
+        for post in self.posts:
+            # 用简易方式剥 markdown，统计有效字符数
+            clean = re.sub(r'[#*>`~\[\]()!_|`\-]', ' ', post.get("body_md", ""))
+            clean = re.sub(r'\s+', '', clean)  # 去掉所有空白
+            total += len(clean)
+        return total
 
     def _collect_tags(self) -> list[dict]:
         """收集所有标签并统计出现次数（按数量降序排列）。"""
