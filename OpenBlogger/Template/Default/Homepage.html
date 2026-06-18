@@ -601,43 +601,41 @@
                 });
             });
         }
-        function pickRandom(arr,n){
-            var copy=arr.slice(),result=[];
-            for(var i=0;i<n&&copy.length;i++){
-                var idx=Math.floor(Math.random()*copy.length);
-                result.push(copy.splice(idx,1)[0]);
-            }
-            return result;
-        }
         function render(){
             if(!allComments.length){
                 scroll.innerHTML='<div class="danmaku-item"><div class="dm-author">还没有评论…</div><div class="dm-body">去文章页说点什么吧</div></div>';
                 return;
             }
-            // 随机抽一批，翻倍以无缝循环
-            var pool=allComments.length<8?allComments.slice():pickRandom(allComments,Math.max(8,allComments.length));
-            var doubled=pool.concat(pool);  // 两份相同副本 → CSS translateY(-50%) 无缝循环
+            // 全量展示，翻倍以无缝循环
+            var doubled=allComments.concat(allComments);
             scroll.innerHTML=doubled.map(function(c){
                 var name=(c.name||'匿名').replace(/</g,'&lt;');
                 var body=(c.content||'').replace(/</g,'&lt;').substring(0,80);
                 return '<div class="danmaku-item"><div class="dm-author">'+name+'</div><div class="dm-body">'+body+'</div></div>';
             }).join('');
         }
-        // 随机选几个页面来抓评论
-        var pids=[], sampleSize=Math.min(maxPid,12);
-        while(pids.length<sampleSize){
-            var r=Math.floor(Math.random()*maxPid)+1;
-            if(pids.indexOf(r)<0)pids.push(r);
-        }
-        Promise.all(pids.map(function(pid){return loadCommentsForPage(pid).catch(function(){return[]})}))
-            .then(function(results){
-                results.forEach(function(cs){allComments=allComments.concat(cs)});
+        // 遍历所有页面加载评论
+        var pidQueue=[];
+        for(var i=1;i<=maxPid;i++) pidQueue.push(i);
+        // 分批加载（每批 5 个并发），避免过多请求
+        function loadBatch(idx){
+            if(idx>=pidQueue.length){
                 render();
-            });
-        // 每 60 秒刷新一次弹幕内容
+                return;
+            }
+            var batch=pidQueue.slice(idx,idx+5);
+            Promise.all(batch.map(function(pid){return loadCommentsForPage(pid).catch(function(){return[]})}))
+                .then(function(results){
+                    results.forEach(function(cs){allComments=allComments.concat(cs)});
+                    loadBatch(idx+5);
+                });
+        }
+        loadBatch(0);
+        // 每 3 分钟刷新一次弹幕
         setInterval(function(){
-            if(allComments.length)render();
-        },60000);
+            allComments=[];
+            loadBatch(0);
+        },180000);
     })();
     </script>
     {% endif %}
