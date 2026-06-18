@@ -8,5 +8,13 @@
     "date_format": "%Y年%m月%d日",
     "enable_rss": true,
     "enable_sitemap": true,
-    "excerpt_length": 150
+    "excerpt_length": 150,
+    "viewer": {
+        "enable_counter": true,
+        "enable_unique": true,
+        "enable_global": true,
+        "enable_comment": true,
+        "user": "aaaaa",
+        "secret": "d1bdf09a"
+    }
 }

@@ -2,6 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
+    <meta name="x-viewer-page-id" content="{{ page_id }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script>(function(){var s=localStorage.getItem('blog-theme');if(s==='dark'||(!s&&matchMedia('(prefers-color-scheme:dark)').matches)){document.documentElement.classList.add('dark')}})();</script>
     <title>{{ title }} — {{ site_title }}</title>
@@ -158,6 +159,60 @@
 
         .footer { text-align: center; padding: 2rem 1.5rem; color: var(--text-secondary); font-size: 0.85rem; border-top: 1px solid var(--border); margin-top: auto; position: relative; z-index: 1; transition: border 0.4s; }
         .footer span { color: var(--accent); }
+        .footer-stats {
+            display: flex; justify-content: center; align-items: center; gap: 0.6rem;
+            flex-wrap: wrap; margin-bottom: 0.4rem; font-size: 0.85rem; color: var(--text-secondary);
+        }
+        .footer-stats .stat { display: inline-flex; align-items: center; gap: 0.2rem; }
+        .footer-stats .stat strong { color: var(--accent); font-weight: 700; }
+        .footer-stats .stat-divider { color: var(--border); }
+
+        /* ── 评论区 ── */
+        .comment-section {
+            max-width: var(--max-width); margin: 0 auto 2rem; padding: 0 1.5rem;
+            position: relative; z-index: 1;
+        }
+        .comment-section h3 {
+            font-size: 1.2rem; font-weight: 700; margin-bottom: 1rem;
+            padding-bottom: 0.5rem; border-bottom: 2px solid var(--border);
+            transition: border 0.4s;
+        }
+        .comment-form { display: flex; flex-direction: column; gap: 0.7rem; margin-bottom: 2rem; }
+        .comment-form .row { display: flex; gap: 0.7rem; }
+        .comment-form input, .comment-form textarea {
+            flex: 1; padding: 0.65rem 1rem; font-size: 0.95rem; font-family: inherit;
+            border: 1px solid var(--border); border-radius: var(--radius);
+            background: var(--card-bg); color: var(--text); outline: none;
+            transition: all 0.3s;
+        }
+        .comment-form input:focus, .comment-form textarea:focus {
+            border-color: var(--accent); box-shadow: 0 0 0 3px rgba(177,116,62,0.08);
+        }
+        .comment-form textarea { min-height: 100px; resize: vertical; }
+        .comment-form button {
+            align-self: flex-end; padding: 0.6rem 1.8rem;
+            background: var(--accent); color: #fff; border: none;
+            border-radius: 100px; font-size: 0.95rem; cursor: pointer;
+            transition: all 0.3s; font-weight: 600;
+        }
+        .comment-form button:hover { background: var(--accent-hover); transform: translateY(-1px); }
+        .comment-form button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+        .comment-list { display: flex; flex-direction: column; gap: 1rem; }
+        .comment-card {
+            background: var(--card-bg); border: 1px solid var(--border);
+            border-radius: var(--radius); padding: 1rem 1.25rem;
+            transition: background 0.4s, border 0.4s;
+        }
+        .comment-card .comment-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 0.4rem; flex-wrap: wrap; gap: 0.5rem;
+        }
+        .comment-card .comment-author { font-weight: 700; color: var(--accent); font-size: 0.95rem; }
+        .comment-card .comment-time { font-size: 0.8rem; color: var(--text-secondary); }
+        .comment-card .comment-body { font-size: 0.95rem; color: var(--text); line-height: 1.6; }
+        .comment-empty { text-align: center; color: var(--text-secondary); padding: 2rem 0; font-size: 0.95rem; }
+        .comment-error { text-align: center; color: #c44; padding: 1rem; font-size: 0.9rem; }
 
         @media (max-width: 600px) {
             .article-header h1 { font-size: 1.6rem; }
@@ -270,7 +325,32 @@
 
     <button class="back-to-top" id="backToTop" title="返回顶部" aria-label="返回顶部">↑</button>
 
-    <footer class="footer"><p>Powered by <span>OpenBlogger</span> &copy; {{ current_year }}</p></footer>
+    {% if viewer_comment %}
+    <!-- 评论区 -->
+    <section class="comment-section">
+        <h3>💬 评论 (<span id="commentCount">0</span>)</h3>
+        <div class="comment-form" id="commentForm">
+            <div class="row">
+                <input type="text" id="cName" placeholder="昵称" maxlength="30">
+                <input type="email" id="cEmail" placeholder="邮箱（选填）">
+            </div>
+            <textarea id="cContent" placeholder="说点什么吧…" maxlength="1000"></textarea>
+            <button id="cSubmit">发表评论</button>
+        </div>
+        <div class="comment-list" id="commentList">
+            <div class="comment-empty">加载中…</div>
+        </div>
+    </section>
+    {% endif %}
+
+    <footer class="footer">
+        <div class="footer-stats" id="footerStats">
+            {% if viewer_global %}<span class="stat">🌐 <strong id="vGlobal">…</strong> 次全站浏览</span><span class="stat-divider">|</span>{% endif %}
+            {% if viewer_counter %}<span class="stat">👁️ <strong id="vCounter">…</strong> 次阅读</span><span class="stat-divider">|</span>{% endif %}
+            {% if viewer_unique %}<span class="stat">👤 <strong id="vUnique">…</strong> 位访客</span>{% endif %}
+        </div>
+        <p>Powered by <span>OpenBlogger</span> &copy; {{ current_year }}</p>
+    </footer>
 
     <script>
     /* ═══════════ 粒子背景 ═══════════ */
@@ -289,5 +369,49 @@
     !function(){document.body.classList.add('page-entering');addEventListener('load',function(){setTimeout(function(){document.body.classList.remove('page-entering')},700)})}();
     !function(){document.addEventListener('click',function(e){var a=e.target.closest('a');if(!a)return;var h=a.getAttribute('href');if(!h||h[0]==='#'||h.indexOf('://')>0||h.indexOf('//')===0||a.target==='_blank')return;e.preventDefault();document.body.classList.add('page-exiting');setTimeout(function(){location.assign(h)},360)})}();
     </script>
+
+    {% if viewer_counter or viewer_unique or viewer_global or viewer_comment %}
+    <script>window.ViewerConfig={user:'{{ viewer_user }}',secret:'{{ viewer_secret }}'};</script>
+    {% if viewer_counter %}<script src="{{ relative_root }}js/viewer/counter.js"></script>{% endif %}
+    {% if viewer_unique %}<script src="{{ relative_root }}js/viewer/unique.js"></script>{% endif %}
+    {% if viewer_global %}<script src="{{ relative_root }}js/viewer/global.js"></script>{% endif %}
+    {% if viewer_comment %}<script src="{{ relative_root }}js/viewer/comment.js"></script>{% endif %}
+    <script>
+    (function(){
+        {% if viewer_global %}Viewer.getGlobalCount().then(function(n){var e=document.getElementById('vGlobal');if(e)e.innerHTML=n.toLocaleString()});{% endif %}
+        {% if viewer_counter %}getVisitCount().then(function(n){var e=document.getElementById('vCounter');if(e)e.innerHTML=n.toLocaleString()});{% endif %}
+        {% if viewer_unique %}Viewer.getUniqueCount().then(function(r){var e=document.getElementById('vUnique');if(e)e.innerHTML=r.count.toLocaleString()});{% endif %}
+        {% if viewer_comment %}
+        /* ═══════════ 评论系统 ═══════════ */
+        var list=document.getElementById('commentList'),countEl=document.getElementById('commentCount'),
+            form=document.getElementById('commentForm'),nameEl=document.getElementById('cName'),
+            emailEl=document.getElementById('cEmail'),contentEl=document.getElementById('cContent'),
+            submitBtn=document.getElementById('cSubmit');
+        function fmtTime(iso){var d=new Date(iso),p=function(n){return n<10?'0'+n:n};
+            return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())+' '+p(d.getHours())+':'+p(d.getMinutes());}
+        function renderComments(comments){
+            if(!comments||!comments.length){list.innerHTML='<div class="comment-empty">还没有评论，来说点什么吧 🎉</div>';countEl.textContent='0';return}
+            countEl.textContent=comments.length;
+            list.innerHTML=comments.slice().reverse().map(function(c){
+                return '<div class="comment-card"><div class="comment-header"><span class="comment-author">'+
+                    (c.name||'匿名').replace(/</g,'&lt;')+'</span><span class="comment-time">'+fmtTime(c.time)+'</span></div>'+
+                    '<div class="comment-body">'+(c.content||'').replace(/</g,'&lt;').replace(/\n/g,'<br>')+'</div></div>';
+            }).join('');
+        }
+        Viewer.loadComments().then(renderComments).catch(function(){list.innerHTML='<div class="comment-error">评论加载失败，请稍后再试</div>'});
+        submitBtn.addEventListener('click',function(){
+            var name=nameEl.value.trim(),content=contentEl.value.trim();
+            if(!name){nameEl.focus();return}
+            if(!content){contentEl.focus();return}
+            submitBtn.disabled=true;submitBtn.textContent='提交中…';
+            Viewer.submitComment({name:name,email:emailEl.value.trim(),content:content}).then(function(c){
+                contentEl.value='';submitBtn.disabled=false;submitBtn.textContent='发表评论';
+                Viewer.loadComments().then(renderComments);
+            }).catch(function(){submitBtn.disabled=false;submitBtn.textContent='发表评论';alert('提交失败，请稍后重试')});
+        });
+        {% endif %}
+    })();
+    </script>
+    {% endif %}
 </body>
 </html>

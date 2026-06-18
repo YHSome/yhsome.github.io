@@ -2,6 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
+    <meta name="x-viewer-page-id" content="{{ page_id }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script>(function(){var s=localStorage.getItem('blog-theme');if(s==='dark'||(!s&&matchMedia('(prefers-color-scheme:dark)').matches)){document.documentElement.classList.add('dark')}})();</script>
     <title>标签 — {{ site_title }}</title>
@@ -98,6 +99,13 @@
 
         .footer { text-align: center; padding: 2rem 1.5rem; color: var(--text-secondary); font-size: 0.85rem; border-top: 1px solid var(--border); margin-top: auto; position: relative; z-index: 1; transition: border 0.4s; }
         .footer span { color: var(--accent); }
+        .footer-stats {
+            display: flex; justify-content: center; align-items: center; gap: 0.6rem;
+            flex-wrap: wrap; margin-bottom: 0.4rem; font-size: 0.85rem; color: var(--text-secondary);
+        }
+        .footer-stats .stat { display: inline-flex; align-items: center; gap: 0.2rem; }
+        .footer-stats .stat strong { color: var(--accent); font-weight: 700; }
+        .footer-stats .stat-divider { color: var(--border); }
         .empty-state { text-align: center; color: var(--text-secondary); padding: 4rem 0; font-size: 1.05rem; }
 
         @media (max-width: 600px) {
@@ -198,7 +206,14 @@
 
     <button class="back-to-top" id="backToTop" title="返回顶部" aria-label="返回顶部">↑</button>
 
-    <footer class="footer"><p>Powered by <span>OpenBlogger</span> &copy; {{ current_year }}</p></footer>
+    <footer class="footer">
+        <div class="footer-stats" id="footerStats">
+            {% if viewer_global %}<span class="stat">🌐 <strong id="vGlobal">…</strong> 次全站浏览</span><span class="stat-divider">|</span>{% endif %}
+            {% if viewer_counter %}<span class="stat">👁️ <strong id="vCounter">…</strong> 次阅读</span><span class="stat-divider">|</span>{% endif %}
+            {% if viewer_unique %}<span class="stat">👤 <strong id="vUnique">…</strong> 位访客</span>{% endif %}
+        </div>
+        <p>Powered by <span>OpenBlogger</span> &copy; {{ current_year }}</p>
+    </footer>
 
     <script>
     /* ═══════════ 粒子背景 ═══════════ */
@@ -210,5 +225,18 @@
     !function(){document.body.classList.add('page-entering');addEventListener('load',function(){setTimeout(function(){document.body.classList.remove('page-entering')},700)})}();
     !function(){document.addEventListener('click',function(e){var a=e.target.closest('a');if(!a)return;var h=a.getAttribute('href');if(!h||h[0]==='#'||h.indexOf('://')>0||h.indexOf('//')===0||a.target==='_blank')return;e.preventDefault();document.body.classList.add('page-exiting');setTimeout(function(){location.assign(h)},360)})}();
     </script>
+    {% if viewer_counter or viewer_unique or viewer_global %}
+    <script>window.ViewerConfig={user:'{{ viewer_user }}',secret:'{{ viewer_secret }}'};</script>
+    {% if viewer_counter %}<script src="{{ relative_root }}js/viewer/counter.js"></script>{% endif %}
+    {% if viewer_unique %}<script src="{{ relative_root }}js/viewer/unique.js"></script>{% endif %}
+    {% if viewer_global %}<script src="{{ relative_root }}js/viewer/global.js"></script>{% endif %}
+    <script>
+    (function(){
+    {% if viewer_global %}Viewer.getGlobalCount().then(function(n){var e=document.getElementById('vGlobal');if(e)e.innerHTML=n.toLocaleString()});{% endif %}
+    {% if viewer_counter %}getVisitCount().then(function(n){var e=document.getElementById('vCounter');if(e)e.innerHTML=n.toLocaleString()});{% endif %}
+    {% if viewer_unique %}Viewer.getUniqueCount().then(function(r){var e=document.getElementById('vUnique');if(e)e.innerHTML=r.count.toLocaleString()});{% endif %}
+    })();
+    </script>
+    {% endif %}
 </body>
 </html>

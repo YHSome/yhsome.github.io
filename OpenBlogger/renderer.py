@@ -29,6 +29,8 @@ RENDERED_DIR = PROJECT_ROOT / "Rendered"
 TEMPLATE_ROOT = PROJECT_ROOT / "OpenBlogger" / "Template"
 IMAGES_DIR = PROJECT_ROOT / "Images"
 PLUGINS_DIR = PROJECT_ROOT / "OpenBlogger" / "Plugins"
+VIEWER_JS_DIR = PLUGINS_DIR / "Viewer" / "js"
+PAGE_ID_FILE = PROJECT_ROOT / "OpenBlogger" / ".viewer_pages.json"
 CACHE_FILE = PROJECT_ROOT / "OpenBlogger" / ".render_cache.json"
 
 # ── 默认站点配置 ──
@@ -43,6 +45,14 @@ DEFAULT_CONFIG = {
     "enable_sitemap": True,
     "date_format": "%Y年%m月%d日",
     "excerpt_length": 150,
+    "viewer": {
+        "enable_counter": True,
+        "enable_unique": True,
+        "enable_global": True,
+        "enable_comment": True,
+        "user": "aaaaa",
+        "secret": "d1bdf09a",
+    },
 }
 
 
@@ -67,6 +77,7 @@ class BlogRenderer:
 
         self.posts: list[dict] = []
         self.cache: dict = self._load_cache()
+        self._page_ids: dict[str, int] = self._load_page_ids()    # Viewer 页面编号记录
 
     # ═══════════════════════════════════════════════
     #  缓存管理
@@ -98,6 +109,37 @@ class BlogRenderer:
             self.cache[key] = current_hash
             return True
         return False
+
+    # ═══════════════════════════════════════════════
+    #  Viewer 页面编号管理
+    # ═══════════════════════════════════════════════
+
+    def _load_page_ids(self) -> dict[str, int]:
+        """加载 Viewer 页面编号记录（永不重用已删页面的 ID）。"""
+        if PAGE_ID_FILE.exists():
+            try:
+                return json.loads(PAGE_ID_FILE.read_text(encoding="utf-8"))
+            except (json.JSONDecodeError, OSError):
+                return {}
+        return {}
+
+    def _save_page_ids(self):
+        """保存页面编号记录。"""
+        PAGE_ID_FILE.parent.mkdir(parents=True, exist_ok=True)
+        PAGE_ID_FILE.write_text(json.dumps(self._page_ids, ensure_ascii=False, indent=2), encoding="utf-8")
+
+    def _next_page_id(self) -> int:
+        """获取下一个可用编号（永不重用）。"""
+        return max(self._page_ids.values()) + 1 if self._page_ids else 1
+
+    def _get_page_id(self, out_path: Path) -> int:
+        """为指定输出文件获取或分配 Viewer 页面编号。"""
+        key = str(out_path.relative_to(RENDERED_DIR))
+        if key in self._page_ids:
+            return self._page_ids[key]
+        pid = self._next_page_id()
+        self._page_ids[key] = pid
+        return pid
 
     # ═══════════════════════════════════════════════
     #  Markdown 解析
@@ -320,10 +362,10 @@ class BlogRenderer:
                 prev_post = self.posts[i - 1] if i > 0 else None
                 next_post = self.posts[i + 1] if i < len(self.posts) - 1 else None
 
-                context = self._build_post_context(post, prev_post, next_post)
+                out_path = posts_dir / f"{post['slug']}.html"
+                context = self._build_post_context(post, prev_post, next_post, out_path)
                 html = self._render_template("Post.html", context)
 
-                out_path = posts_dir / f"{post['slug']}.html"
                 out_path.write_text(html, encoding="utf-8")
                 post["url"] = f"posts/{post['slug']}.html"
 
@@ -340,8 +382,10 @@ class BlogRenderer:
 
         for filename, template, context in list_pages:
             try:
+                out_path = RENDERED_DIR / filename
+                context.update(self._viewer_context(out_path))
                 html = self._render_template(template, context)
-                (RENDERED_DIR / filename).write_text(html, encoding="utf-8")
+                out_path.write_text(html, encoding="utf-8")
                 stats["rendered"] += 1
             except TemplateNotFound:
                 print(f"⚠️  模板 {template} 不存在，跳过")
@@ -358,8 +402,12 @@ class BlogRenderer:
         # Step 7: 复制图片
         self._copy_images()
 
-        # Step 8: 保存缓存
+        # Step 8: 复制 Viewer 插件 JS
+        self._copy_viewer_js()
+
+        # Step 9: 保存缓存 & 页面编号
         self._save_cache()
+        self._save_page_ids()
 
         return stats
 
@@ -367,7 +415,8 @@ class BlogRenderer:
     #  上下文构建
     # ═══════════════════════════════════════════════
 
-    def _build_post_context(self, post: dict, prev_post: Optional[dict], next_post: Optional[dict]) -> dict:
+    def _build_post_context(self, post: dict, prev_post: Optional[dict],
+                             next_post: Optional[dict], out_path: Path) -> dict:
         """构建文章页的模板上下文（位于 posts/ 子目录）。"""
         meta = post["metadata"]
         return {
@@ -381,6 +430,8 @@ class BlogRenderer:
             "relative_root": "../",               # 文章页需要 ../ 回到根目录
             "prev_post": self._nav_post(prev_post) if prev_post else None,
             "next_post": self._nav_post(next_post) if next_post else None,
+            "excerpt": meta.get("excerpt", ""),   # 给评论区做文章标识
+            **self._viewer_context(out_path),      # Viewer: page_id + 配置
         }
 
     def _build_homepage_context(self) -> dict:
@@ -572,6 +623,42 @@ class BlogRenderer:
             print(f"🖼️  复制了 {count} 个图片文件 → images/")
         except Exception as e:
             print(f"⚠️  图片复制失败: {e}")
+
+    # ═══════════════════════════════════════════════
+    #  Viewer 插件支持
+    # ═══════════════════════════════════════════════
+
+    def _copy_viewer_js(self):
+        """将 Viewer 插件的 JS 文件复制到 Rendered/js/viewer/。"""
+        if not VIEWER_JS_DIR.exists():
+            return
+        dest = RENDERED_DIR / "js" / "viewer"
+        if dest.exists():
+            shutil.rmtree(dest)
+        try:
+            shutil.copytree(VIEWER_JS_DIR, dest)
+            count = len(list(dest.rglob("*.js")))
+            print(f"📊 Viewer 插件: {count} 个 JS 文件 → js/viewer/")
+        except Exception as e:
+            print(f"⚠️  Viewer 插件复制失败: {e}")
+
+    def _viewer_config(self) -> dict:
+        """获取 Viewer 插件配置。"""
+        return self.config.get("viewer", DEFAULT_CONFIG["viewer"])
+
+    def _viewer_context(self, out_path: Path) -> dict:
+        """构建 Viewer 相关的模板上下文。"""
+        vc = self._viewer_config()
+        pid = self._get_page_id(out_path)
+        return {
+            "page_id": pid,
+            "viewer_user": vc.get("user", "aaaaa"),
+            "viewer_secret": vc.get("secret", "d1bdf09a"),
+            "viewer_counter": vc.get("enable_counter", True),
+            "viewer_unique": vc.get("enable_unique", True),
+            "viewer_global": vc.get("enable_global", True),
+            "viewer_comment": vc.get("enable_comment", True),
+        }
 
     # ═══════════════════════════════════════════════
     #  清理

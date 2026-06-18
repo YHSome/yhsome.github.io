@@ -2,6 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
+    <meta name="x-viewer-page-id" content="{{ page_id }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script>(function(){var s=localStorage.getItem('blog-theme');if(s==='dark'||(!s&&matchMedia('(prefers-color-scheme:dark)').matches)){document.documentElement.classList.add('dark')}})();</script>
     <title>{{ site_title }}</title>
@@ -244,6 +245,13 @@
             position: relative; z-index: 1; transition: border 0.4s;
         }
         .footer span { color: var(--accent); }
+        .footer-stats {
+            display: flex; justify-content: center; align-items: center; gap: 0.6rem;
+            flex-wrap: wrap; margin-bottom: 0.4rem; font-size: 0.85rem; color: var(--text-secondary);
+        }
+        .footer-stats .stat { display: inline-flex; align-items: center; gap: 0.2rem; }
+        .footer-stats .stat strong { color: var(--accent); font-weight: 700; }
+        .footer-stats .stat-divider { color: var(--border); }
 
         .empty-state { text-align: center; color: var(--text-secondary); padding: 3rem 0; font-size: 1.05rem; }
 
@@ -378,6 +386,11 @@
 
     <!-- 页脚 -->
     <footer class="footer">
+        <div class="footer-stats" id="footerStats">
+            {% if viewer_global %}<span class="stat">🌐 <strong id="vGlobal">…</strong> 次全站浏览</span><span class="stat-divider">|</span>{% endif %}
+            {% if viewer_counter %}<span class="stat">👁️ <strong id="vCounter">…</strong> 次阅读</span><span class="stat-divider">|</span>{% endif %}
+            {% if viewer_unique %}<span class="stat">👤 <strong id="vUnique">…</strong> 位访客</span>{% endif %}
+        </div>
         <p>Powered by <span>OpenBlogger</span> &copy; {{ current_year }}</p>
     </footer>
 
@@ -501,5 +514,22 @@
         });
     })();
     </script>
+
+    {% if viewer_counter or viewer_unique or viewer_global or viewer_comment %}
+    <!-- Viewer 插件：配置 -->
+    <script>window.ViewerConfig={user:'{{ viewer_user }}',secret:'{{ viewer_secret }}'};</script>
+    {% if viewer_counter %}<script src="{{ relative_root }}js/viewer/counter.js"></script>{% endif %}
+    {% if viewer_unique %}<script src="{{ relative_root }}js/viewer/unique.js"></script>{% endif %}
+    {% if viewer_global %}<script src="{{ relative_root }}js/viewer/global.js"></script>{% endif %}
+    {% if viewer_comment %}<script src="{{ relative_root }}js/viewer/comment.js"></script>{% endif %}
+    <!-- Viewer 插件：计数器更新 -->
+    <script>
+    (function(){
+        {% if viewer_global %}Viewer.getGlobalCount().then(function(n){var e=document.getElementById('vGlobal');if(e)e.innerHTML=n.toLocaleString()});{% endif %}
+        {% if viewer_counter %}getVisitCount().then(function(n){var e=document.getElementById('vCounter');if(e)e.innerHTML=n.toLocaleString()});{% endif %}
+        {% if viewer_unique %}Viewer.getUniqueCount().then(function(r){var e=document.getElementById('vUnique');if(e)e.innerHTML=r.count.toLocaleString()});{% endif %}
+    })();
+    </script>
+    {% endif %}
 </body>
 </html>
