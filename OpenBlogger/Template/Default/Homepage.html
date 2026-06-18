@@ -260,7 +260,7 @@
             mask-image: linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%);
         }
         .danmaku-col .danmaku-scroll {
-            animation: danmakuFlow 45s linear infinite;
+            animation: danmakuFlow 22s linear infinite;
         }
         .danmaku-col .danmaku-scroll:hover { animation-play-state: paused; }
         .danmaku-col .danmaku-item {
@@ -413,7 +413,7 @@
         <aside class="danmaku-col" id="danmakuBar" data-max-pid="{{ max_page_id }}">
             <div class="danmaku-sticky">
                 <div class="danmaku-widget">
-                    <div class="widget-title">💬 最新碎碎念</div>
+                    <div class="widget-title">💬 精选发言</div>
                     <div class="danmaku-track">
                         <div class="danmaku-scroll" id="danmakuScroll">
                             <div class="danmaku-item"><div class="dm-author">加载中…</div></div>
@@ -614,10 +614,9 @@
                 scroll.innerHTML='<div class="danmaku-item"><div class="dm-author">还没有评论…</div><div class="dm-body">去文章页说点什么吧</div></div>';
                 return;
             }
-            // 随机抽一批，加一点变体（名字时间不同）看起来更丰富
+            // 随机抽一批，翻倍以无缝循环
             var pool=allComments.length<8?allComments.slice():pickRandom(allComments,Math.max(8,allComments.length));
-            // 翻倍并混洗以填充循环
-            var doubled=pool.concat(pool.slice().sort(function(){return Math.random()-.5}));
+            var doubled=pool.concat(pool);  // 两份相同副本 → CSS translateY(-50%) 无缝循环
             scroll.innerHTML=doubled.map(function(c){
                 var name=(c.name||'匿名').replace(/</g,'&lt;');
                 var body=(c.content||'').replace(/</g,'&lt;').substring(0,80);
