@@ -287,7 +287,6 @@ class BlogRenderer:
             "extra",              # 表格、定义列表、脚注、缩写等
             "codehilite",         # 代码语法高亮
             "toc",                # 目录
-            "nl2br",              # 换行转 <br>
             "sane_lists",         # 更合理的列表处理
             "smarty",             # 智能引号
         ]
@@ -298,7 +297,7 @@ class BlogRenderer:
                 "use_pygments": True,
             },
             "toc": {
-                "permalink": " ¶",
+                "permalink": "#",
                 "permalink_class": "toc-link",
             },
         }
