@@ -66,7 +66,7 @@
             font-size: 0.95rem;
             transition: color 0.2s;
         }
-        .nav-links a:hover { color: var(--accent); }
+        .nav-links a:hover, .nav-links a.active { color: var(--accent); }
 
         /* ── Hero 区域 ── */
         .hero {
@@ -96,6 +96,39 @@
             margin: 1.5rem auto;
             border-radius: 2px;
         }
+
+        /* ── 搜索栏 ── */
+        .search-bar {
+            max-width: var(--max-width);
+            margin: 0 auto 1.5rem;
+            padding: 0 1.5rem;
+        }
+        .search-bar input {
+            width: 100%;
+            padding: 0.75rem 1.25rem;
+            font-size: 1rem;
+            border: 2px solid var(--border);
+            border-radius: 100px;
+            background: var(--card-bg);
+            color: var(--text);
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .search-bar input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(177, 116, 62, 0.1);
+        }
+        .search-bar input::placeholder { color: #b8a88c; }
+
+        .search-result-count {
+            max-width: var(--max-width);
+            margin: 0 auto 0.75rem;
+            padding: 0 1.5rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            display: none;
+        }
+        .search-result-count.visible { display: block; }
 
         /* ── 文章列表 ── */
         .container {
@@ -131,6 +164,7 @@
             box-shadow: var(--shadow-hover);
             transform: translateY(-1px);
         }
+        .post-card.hidden { display: none; }
         .post-card .post-date {
             font-size: 0.85rem;
             color: var(--text-secondary);
@@ -228,7 +262,7 @@
         <div class="navbar-inner">
             <a href="{{ relative_root }}index.html" class="brand">{{ site_title }}</a>
             <ul class="nav-links">
-                <li><a href="{{ relative_root }}index.html">首页</a></li>
+                <li><a href="{{ relative_root }}index.html" class="active">首页</a></li>
                 <li><a href="{{ relative_root }}directory.html">目录</a></li>
                 <li><a href="{{ relative_root }}tags.html">标签</a></li>
             </ul>
@@ -242,12 +276,18 @@
         <p class="subtitle">{{ site_description }}</p>
     </section>
 
+    <!-- 搜索栏 -->
+    <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="搜索文章标题、内容或标签…" autocomplete="off">
+    </div>
+    <div class="search-result-count" id="searchCount"></div>
+
     <!-- 最近文章 -->
-    <div class="container">
+    <div class="container" id="postList">
         <div class="section-title">📝 最近文章</div>
         {% if recent_posts %}
             {% for post in recent_posts %}
-            <a href="{{ post.url }}" class="post-card">
+            <a href="{{ post.url }}" class="post-card" data-search-text="{{ post.title }} {{ post.excerpt }} {{ post.tags | join(' ') }}">
                 <div class="post-date">{{ post.date }}</div>
                 <div class="post-title">{{ post.title }}</div>
                 {% if post.excerpt %}
@@ -287,5 +327,36 @@
     <footer class="footer">
         <p>Powered by <span>OpenBlogger</span> &copy; {{ current_year }}</p>
     </footer>
+
+    <!-- 搜索 JS -->
+    <script>
+    (function() {
+        const searchInput = document.getElementById('searchInput');
+        const postList = document.getElementById('postList');
+        const searchCount = document.getElementById('searchCount');
+        const cards = postList.querySelectorAll('.post-card');
+
+        searchInput.addEventListener('input', function() {
+            const query = this.value.toLowerCase().trim();
+            let visible = 0;
+
+            cards.forEach(card => {
+                const text = (card.dataset.searchText || '').toLowerCase();
+                const match = !query || text.includes(query);
+                card.classList.toggle('hidden', !match);
+                if (match) visible++;
+            });
+
+            if (query) {
+                searchCount.textContent = visible > 0
+                    ? `找到 ${visible} 篇相关文章`
+                    : '没有匹配的文章，换个关键词试试？';
+                searchCount.classList.add('visible');
+            } else {
+                searchCount.classList.remove('visible');
+            }
+        });
+    })();
+    </script>
 </body>
 </html>
