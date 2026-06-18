@@ -1,1 +1,219 @@
-// 本页为标签页，用于存放用户的博文的**所有**标签，点击标签即可跳转到包含该标签的所有文章的目录页
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>标签 — {{ site_title }}</title>
+    <style>
+        :root {
+            --bg: #fdfbf7;
+            --card-bg: #ffffff;
+            --text: #2c2416;
+            --text-secondary: #6b5e4a;
+            --accent: #b1743e;
+            --accent-hover: #8b5a2e;
+            --border: #e5ddd0;
+            --tag-bg: #f5efe3;
+            --shadow: 0 1px 3px rgba(44, 36, 22, 0.06);
+            --shadow-hover: 0 4px 16px rgba(44, 36, 22, 0.1);
+            --radius: 8px;
+            --max-width: 720px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ── 导航栏 ── */
+        .navbar {
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--border);
+            padding: 0 1.5rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow);
+        }
+        .navbar-inner {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 56px;
+        }
+        .navbar .brand {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text);
+            text-decoration: none;
+            letter-spacing: -0.02em;
+        }
+        .navbar .brand:hover { color: var(--accent); }
+        .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+
+        /* ── 页面头部 ── */
+        .page-header {
+            text-align: center;
+            padding: 3rem 1.5rem 2rem;
+            max-width: var(--max-width);
+            margin: 0 auto;
+        }
+        .page-header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.5rem;
+        }
+        .page-header .tag-count {
+            font-size: 1rem;
+            color: var(--text-secondary);
+        }
+
+        /* ── 标签分组列表 ── */
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 1.5rem 2rem;
+            flex: 1;
+            width: 100%;
+        }
+        .tag-group {
+            margin-bottom: 2.5rem;
+        }
+        .tag-group-header {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.4rem;
+            border-bottom: 2px solid var(--border);
+        }
+        .tag-group-items {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .tag-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.6rem 1rem;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            text-decoration: none;
+            color: var(--text);
+            transition: all 0.2s;
+        }
+        .tag-row:hover {
+            border-color: var(--accent);
+            box-shadow: var(--shadow-hover);
+            background: #fefaf5;
+        }
+        .tag-row .tag-name {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+        .tag-row:hover .tag-name { color: var(--accent); }
+        .tag-row .tag-meta {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+        .tag-row .post-count {
+            background: var(--tag-bg);
+            color: var(--accent);
+            padding: 0.15rem 0.6rem;
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .empty-state {
+            text-align: center;
+            color: var(--text-secondary);
+            padding: 4rem 0;
+            font-size: 1.05rem;
+        }
+
+        /* ── 页脚 ── */
+        .footer {
+            text-align: center;
+            padding: 2rem 1.5rem;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border);
+            margin-top: auto;
+        }
+        .footer span { color: var(--accent); }
+
+        @media (max-width: 600px) {
+            .page-header h1 { font-size: 1.6rem; }
+            .tag-row { padding: 0.5rem 0.75rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="navbar-inner">
+            <a href="index.html" class="brand">{{ site_title }}</a>
+            <ul class="nav-links">
+                <li><a href="index.html">首页</a></li>
+                <li><a href="directory.html">目录</a></li>
+                <li><a href="tags.html" class="active">标签</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 页面头部 -->
+    <div class="page-header">
+        <h1>🏷️ 所有标签</h1>
+        <p class="tag-count">共 {{ tags_with_count | length }} 个标签</p>
+    </div>
+
+    <!-- 标签列表 -->
+    <div class="container">
+        {% if tags_with_count %}
+        <div class="tag-group">
+            <div class="tag-group-items">
+                {% for tag in tags_with_count %}
+                <a href="directory.html?tag={{ tag.name | urlencode }}" class="tag-row">
+                    <span class="tag-name">{{ tag.name }}</span>
+                    <div class="tag-meta">
+                        <span class="post-count">{{ tag.count }} 篇</span>
+                        <span>→</span>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+        {% else %}
+        <div class="empty-state">🏜️ 还没有任何标签，去给你的文章加个标签吧！</div>
+        {% endif %}
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <p>Powered by <span>OpenBlogger</span> &copy; {{ current_year }}</p>
+    </footer>
+</body>
+</html>

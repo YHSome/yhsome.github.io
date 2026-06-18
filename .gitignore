@@ -1,0 +1,29 @@
+# OpenBlogger 渲染输出
+Rendered/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+dist/
+build/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# 系统文件
+Thumbs.db
+.DS_Store
+
+# 虚拟环境
+venv/
+.venv/
+env/
+
+# 渲染缓存
+OpenBlogger/.render_cache.json
