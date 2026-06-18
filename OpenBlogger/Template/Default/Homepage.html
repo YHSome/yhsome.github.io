@@ -541,6 +541,7 @@
     (function(){
         document.body.classList.add('page-entering');
         addEventListener('load',function(){setTimeout(function(){document.body.classList.remove('page-entering')},700)});
+        if(location.protocol==='file:')return;  // file:// 下不做转场动画
         document.addEventListener('click',function(e){
             var a=e.target.closest('a');
             if(!a)return;
