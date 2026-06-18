@@ -293,7 +293,6 @@
         body.page-exiting .search-bar { animation: exitLeft 0.28s 0.05s cubic-bezier(0.55,0,1,0.45) forwards; }
         body.page-exiting .sidebar    { animation: exitLeft  0.28s 0.07s cubic-bezier(0.55,0,1,0.45) forwards; }
         body.page-exiting .danmaku-col{ animation: exitRight 0.28s 0.07s cubic-bezier(0.55,0,1,0.45) forwards; }
-        body.page-exiting .stats-bar   { animation: exitUp   0.26s 0.06s cubic-bezier(0.55,0,1,0.45) forwards; }
         body.page-exiting .content-main{animation: exitDown  0.30s 0.09s cubic-bezier(0.55,0,1,0.45) forwards; }
         body.page-exiting .footer     { animation: exitDown 0.28s 0.09s cubic-bezier(0.55,0,1,0.45) forwards; }
         body.page-exiting .back-to-top{ animation: exitDown 0.20s cubic-bezier(0.55,0,1,0.45) forwards; }
@@ -371,14 +370,32 @@
     </div>
     <div class="search-result-count" id="searchCount"></div>
 
-    <!-- 站点统计横条 -->
-    <div class="stats-bar">
-        <span class="stats-item">📝 <strong>{{ total_posts }}</strong> 篇文章</span>
-        <span class="stats-divider">·</span>
-        <span class="stats-item">🏷️ <strong>{{ all_tags | length if all_tags else 0 }}</strong> 个标签</span>
-    </div>
-
     <div class="main-layout">
+        <!-- 左栏：标签侧边栏 -->
+        <aside class="sidebar">
+            <div class="sidebar-sticky">
+                <div class="sidebar-widget">
+                    <div class="widget-title">📊 站点统计</div>
+                    <div class="widget-stats">
+                        <div class="stat-row"><span>文章总数</span><strong>{{ total_posts }} 篇</strong></div>
+                        <div class="stat-row"><span>标签</span><strong>{{ all_tags | length if all_tags else 0 }} 个</strong></div>
+                    </div>
+                </div>
+                {% if all_tags %}
+                <div class="sidebar-widget">
+                    <div class="widget-title">🏷️ 标签</div>
+                    <div class="widget-tags">
+                        {% for tag in all_tags %}
+                        <a href="{{ relative_root }}directory.html?tag={{ tag.name | urlencode }}" class="tag-pill">
+                            {{ tag.name }}<span class="count">{{ tag.count }}</span>
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </aside>
+
         <!-- 文章列表 -->
         <main class="content-main" id="postList">
             <div class="section-title">📝 最近文章</div>
