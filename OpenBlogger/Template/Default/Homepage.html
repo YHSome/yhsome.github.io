@@ -253,6 +253,59 @@
             .nav-links { gap: 0.8rem; }
             .back-to-top { bottom: 1.2rem; right: 1.2rem; width: 38px; height: 38px; }
         }
+
+        /* ═══════════ 页面转场 ═══════════ */
+        /* 退场：元素朝最近边缘飞走 + 渐隐 (加速运动 ease-in) */
+        body.page-exiting .navbar { animation: exitUp   0.32s cubic-bezier(0.55,0,1,0.45) forwards; }
+        body.page-exiting .hero   { animation: exitUp   0.30s 0.04s cubic-bezier(0.55,0,1,0.45) forwards; }
+        body.page-exiting .search-bar   { animation: exitLeft 0.28s 0.06s cubic-bezier(0.55,0,1,0.45) forwards; }
+        body.page-exiting .container    { animation: exitDown 0.30s 0.08s cubic-bezier(0.55,0,1,0.45) forwards; }
+        body.page-exiting .footer       { animation: exitDown 0.28s 0.10s cubic-bezier(0.55,0,1,0.45) forwards; }
+        body.page-exiting .back-to-top  { animation: exitDown 0.20s cubic-bezier(0.55,0,1,0.45) forwards; }
+        body.page-exiting::after { content:''; position:fixed; inset:0; background:var(--bg); z-index:9999; animation: fadeIn 0.25s 0.2s both; }
+
+        @keyframes exitUp    { to { opacity:0; transform:translateY(-130%); } }
+        @keyframes exitDown  { to { opacity:0; transform:translateY(130%); } }
+        @keyframes exitLeft  { to { opacity:0; transform:translateX(-120%); } }
+        @keyframes exitRight { to { opacity:0; transform:translateX(120%); } }
+        @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+
+        /* 进场：从边缘弹出，初速为负（先冲过头再弹回） */
+        body.page-entering .navbar  { animation: enterDown  0.55s cubic-bezier(0.22,0.61,0.36,1) both; }
+        body.page-entering .hero    { animation: enterDown  0.50s 0.06s cubic-bezier(0.22,0.61,0.36,1) both; }
+        body.page-entering .search-bar  { animation: enterLeft  0.45s 0.10s cubic-bezier(0.22,0.61,0.36,1) both; }
+        body.page-entering .container    { animation: enterUp    0.48s 0.14s cubic-bezier(0.22,0.61,0.36,1) both; }
+        body.page-entering .post-card:nth-child(odd)  { animation: enterLeft  0.50s 0.18s cubic-bezier(0.22,0.61,0.36,1) both; }
+        body.page-entering .post-card:nth-child(even) { animation: enterRight 0.50s 0.20s cubic-bezier(0.22,0.61,0.36,1) both; }
+        body.page-entering .tag-cloud .tag-pill { animation: enterPop 0.42s 0.22s cubic-bezier(0.22,0.61,0.36,1) both; }
+        body.page-entering .footer { animation: enterUp    0.45s 0.26s cubic-bezier(0.22,0.61,0.36,1) both; }
+        body.page-entering .back-to-top { animation: enterPop 0.35s 0.30s cubic-bezier(0.22,0.61,0.36,1) both; }
+
+        @keyframes enterDown {
+            0%   { opacity:0; transform:translateY(-100%); }
+            55%  { opacity:1; transform:translateY(12px); }   /* 先冲过头（负初速的惯性） */
+            100% { opacity:1; transform:translateY(0); }
+        }
+        @keyframes enterUp {
+            0%   { opacity:0; transform:translateY(80px); }
+            55%  { opacity:1; transform:translateY(-8px); }   /* 先冲过头 */
+            100% { opacity:1; transform:translateY(0); }
+        }
+        @keyframes enterLeft {
+            0%   { opacity:0; transform:translateX(-80px); }
+            55%  { opacity:1; transform:translateX(8px); }    /* 先冲过头 */
+            100% { opacity:1; transform:translateX(0); }
+        }
+        @keyframes enterRight {
+            0%   { opacity:0; transform:translateX(80px); }
+            55%  { opacity:1; transform:translateX(-8px); }   /* 先冲过头 */
+            100% { opacity:1; transform:translateX(0); }
+        }
+        @keyframes enterPop {
+            0%   { opacity:0; transform:scale(0.4); }
+            55%  { opacity:1; transform:scale(1.12); }        /* 先冲过头 */
+            100% { opacity:1; transform:scale(1); }
+        }
     </style>
 </head>
 <body>
@@ -427,6 +480,25 @@
             btn.classList.toggle('visible', window.scrollY > 400);
         });
         btn.addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    })();
+
+    /* ═══════════ 页面转场：进场 ═══════════ */
+    (function(){
+        document.body.classList.add('page-entering');
+        addEventListener('load',function(){setTimeout(function(){document.body.classList.remove('page-entering')},700)});
+    })();
+
+    /* ═══════════ 页面转场：退场（拦截导航） ═══════════ */
+    (function(){
+        document.addEventListener('click',function(e){
+            var a=e.target.closest('a');
+            if(!a)return;
+            var h=a.getAttribute('href');
+            if(!h||h[0]==='#'||h.indexOf('://')>0||h.indexOf('//')===0||a.target==='_blank')return;
+            e.preventDefault();
+            document.body.classList.add('page-exiting');
+            setTimeout(function(){location.assign(h)},360);
+        });
     })();
     </script>
 </body>
