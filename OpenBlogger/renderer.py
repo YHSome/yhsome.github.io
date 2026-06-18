@@ -248,12 +248,24 @@ class BlogRenderer:
         return date_str  # 保留原样
 
     @staticmethod
+    @staticmethod
     def _make_excerpt(body_md: str, max_len: int = 150) -> str:
-        """生成文章摘要：去除 Markdown 标记，取前 N 个字符。"""
-        clean = re.sub(r"[#*>`~\[\]()!_]", "", body_md)
-        clean = re.sub(r"\s+", " ", clean).strip()
+        """生成纯文本摘要：MD→HTML→剥标签，干净无语法残留。"""
+        try:
+            # 用轻量 markdown 转 HTML（不用代码高亮等重扩展）
+            md = markdown.Markdown(extensions=["extra"], output_format="html")
+            html = md.convert(body_md)
+            # 剥 HTML 标签
+            clean = re.sub(r'<[^>]+>', '', html)
+            # 解 HTML 实体
+            clean = clean.replace('&amp;', '&').replace('&lt;', '<').replace('&gt;', '>').replace('&quot;', '"').replace('&#39;', "'")
+            # 压缩空白
+            clean = re.sub(r'\s+', ' ', clean).strip()
+        except Exception:
+            clean = re.sub(r'[#*>`~\[\]()!_|]', ' ', body_md)
+            clean = re.sub(r'\s+', ' ', clean).strip()
         if len(clean) > max_len:
-            clean = clean[:max_len] + "…"
+            clean = clean[:max_len].rstrip() + '…'
         return clean
 
     @staticmethod
