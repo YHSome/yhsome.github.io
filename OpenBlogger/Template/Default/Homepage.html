@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>(function(){var s=localStorage.getItem('blog-theme');if(s==='dark'||(!s&&matchMedia('(prefers-color-scheme:dark)').matches)){document.documentElement.classList.add('dark')}})();</script>
     <title>{{ site_title }}</title>
     <meta name="description" content="{{ site_description }}">
     <style>
@@ -26,7 +27,7 @@
         }
 
         /* ═══════════ 深色模式 ═══════════ */
-        body.dark {
+        html.dark {
             --bg: #1a1a1f;
             --card-bg: #25252b;
             --text: #d4d0c8;
@@ -57,7 +58,7 @@
 
         /* ── 粒子画布 ── */
         #particles { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.5; }
-        body.dark #particles { opacity: 0.25; }
+        html.dark #particles { opacity: 0.25; }
 
         /* ── 导航栏 ── */
         .navbar {
@@ -334,13 +335,13 @@
         const ctx = canvas.getContext('2d');
         let w, h, particles = [];
         const COUNT = 55, MAX_DIST = 120;
-        const COLOR = getComputedStyle(document.body).getPropertyValue('--particle-color').trim();
+        const COLOR = getComputedStyle(document.documentElement).getPropertyValue('--particle-color').trim();
 
         function resize() { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; }
         resize(); window.addEventListener('resize', resize);
 
         function parseColor() {
-            const c = getComputedStyle(document.body).getPropertyValue('--particle-color').trim();
+            const c = getComputedStyle(document.documentElement).getPropertyValue('--particle-color').trim();
             return c.split(',').map(Number);
         }
 
@@ -390,13 +391,13 @@
     /* ═══════════ 深色模式切换 ═══════════ */
     (function() {
         const toggle = document.getElementById('themeToggle');
-        const body = document.body;
+        const html = document.documentElement;
         const saved = localStorage.getItem('blog-theme');
         if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            body.classList.add('dark'); toggle.textContent = '☀️';
+            html.classList.add('dark'); toggle.textContent = '☀️';
         }
         toggle.addEventListener('click', () => {
-            const isDark = body.classList.toggle('dark');
+            const isDark = html.classList.toggle('dark');
             toggle.textContent = isDark ? '☀️' : '🌙';
             localStorage.setItem('blog-theme', isDark ? 'dark' : 'light');
         });
