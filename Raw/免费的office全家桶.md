@@ -7,4 +7,4 @@ title: 免费的office全家桶
 
 ## 下载链接
 
-[点击下载](<../blog/image/2023-10-28/OfficeTools.zip>)
+[点击下载](<../images/posts/2023-10-28/OfficeTools.zip>)

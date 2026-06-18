@@ -1,7 +1,7 @@
 time: 2023.7.25
 title: 录屏软件bandicam下载
 
-下载地址：[点击下载](<../blog/image/2023-7-25/BandiCam.zip>)
+下载地址：[点击下载](<../images/posts/2023-7-25/BandiCam.zip>)
 
 Bandicam（班迪录屏）一款简单好用的电脑屏幕录制软件，录屏幕，录游戏，录视频的功能强大的录屏工具，比起其他软件其性能更加卓越。 与其他软件相比，用 Bandicam 录制的视频大小更小，不仅保证原文件的质量。下载免费版，可录制时间最长为10分钟，录制视频打上（[www.BANDICAM.com）水印。购买](<http://www.bandicam.com\)水印.购买/>) Bandicam 授权，能够永久使用无功能限制的正式版。
 

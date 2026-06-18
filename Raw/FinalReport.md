@@ -398,7 +398,7 @@ title: 综合实践课结题报告
 
 附件1：开题报告
 
-![](/blog/../blog/image/2023-6-03/1.PNG)
+![](../images/posts/2023-6-03/1.PNG)
 
 备注：
 
@@ -409,14 +409,14 @@ title: 综合实践课结题报告
 
 附件2：思维导图
 
-![](/blog/../blog/image/2023-6-03/2.PNG)
+![](../images/posts/2023-6-03/2.PNG)
 
 4：调查结果
 
 链接：<https://www.wjx.cn/report/223806634.aspx>
 
 **关于高一18班学生对学校食堂的满意度进行调查的问卷**  
-![](/blog/../blog/image/2023-6-03/3.PNG)  
-![](/blog/../blog/image/2023-6-03/4.PNG)  
-![](/blog/../blog/image/2023-6-03/5.PNG)  
-![](/blog/../blog/image/2023-6-03/6.PNG)
+![](../images/posts/2023-6-03/3.PNG)  
+![](../images/posts/2023-6-03/4.PNG)  
+![](../images/posts/2023-6-03/5.PNG)  
+![](../images/posts/2023-6-03/6.PNG)

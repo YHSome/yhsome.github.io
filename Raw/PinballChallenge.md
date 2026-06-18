@@ -9,7 +9,7 @@ title: 弹球挑战
 
 祝君好运！
 
-![logo](/blog/../blog/image/2023-9-02/PineballChallenge3.png)
+![logo](../images/posts/2023-9-02/PineballChallenge3.png)
 
 # 挑战成功有奖励！
 
@@ -34,9 +34,9 @@ title: 弹球挑战
 
 这是我第无数次用scratch做游戏了，不过把游戏部署到网页上还是第一次  
 下面是一些奇怪的logo设计  
-![logo](/blog/../blog/image/2023-9-02/PineballChallenge.png)  
-![logo](/blog/../blog/image/2023-9-02/PineballChallenge2.png)  
-![logo](/blog/../blog/image/2023-9-02/PineballChallenge3.png)
+![logo](../images/posts/2023-9-02/PineballChallenge.png)  
+![logo](../images/posts/2023-9-02/PineballChallenge2.png)  
+![logo](../images/posts/2023-9-02/PineballChallenge3.png)
 
 # 相关信息
 
