@@ -444,6 +444,7 @@ class BlogRenderer:
             "recent_posts": [self._summary(p) for p in recent],
             "all_tags": all_tags,
             "total_posts": len(self.posts),       # 全站文章总数（侧栏统计用）
+            "max_page_id": max(self._page_ids.values()) if self._page_ids else 0,  # 弹幕用
             "current_year": datetime.now().year,
             "relative_root": "",                  # 首页在根目录
         }

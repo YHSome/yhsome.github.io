@@ -230,6 +230,46 @@
             .back-to-top { bottom: 1.2rem; right: 1.2rem; width: 38px; height: 38px; }
         }
 
+        /* ── 弹幕评论条 ── */
+        .danmaku-bar {
+            position: fixed; right: 0.5rem; top: 72px;
+            width: 170px; height: calc(100vh - 100px); z-index: 50;
+            background: color-mix(in srgb, var(--card-bg) 75%, transparent);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border); border-radius: var(--radius);
+            overflow: hidden; padding: 0.6rem 0;
+            display: flex; flex-direction: column;
+            transition: opacity 0.4s, border 0.4s;
+        }
+        .danmaku-bar .danmaku-title {
+            text-align: center; font-size: 0.75rem; font-weight: 700;
+            color: var(--text-secondary); text-transform: uppercase;
+            letter-spacing: 0.06em; padding: 0 0.6rem 0.5rem;
+            border-bottom: 1px solid var(--border); margin: 0 0.6rem 0.5rem;
+        }
+        .danmaku-track {
+            flex: 1; overflow: hidden; position: relative;
+            mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
+        }
+        .danmaku-scroll {
+            animation: danmakuFlow 40s linear infinite;
+            padding: 0 0.6rem;
+        }
+        .danmaku-scroll:hover { animation-play-state: paused; }
+        .danmaku-item {
+            padding: 0.5rem 0.6rem; margin-bottom: 0.5rem;
+            background: var(--tag-bg); border-radius: 6px;
+            font-size: 0.75rem; line-height: 1.5; color: var(--text-secondary);
+            transition: background 0.3s;
+        }
+        .danmaku-item .dm-author { font-weight: 600; color: var(--accent); font-size: 0.7rem; margin-bottom: 0.15rem; }
+        .danmaku-item .dm-body { word-break: break-all; }
+        @keyframes danmakuFlow {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-50%); }
+        }
+        @media (max-width: 1300px) { .danmaku-bar { display: none; } }
+
         /* ═══════════ 页面转场 ═══════════ */
         body.page-exiting .navbar     { animation: exitUp   0.32s cubic-bezier(0.55,0,1,0.45) forwards; }
         body.page-exiting .hero       { animation: exitUp   0.30s 0.03s cubic-bezier(0.55,0,1,0.45) forwards; }
@@ -359,6 +399,18 @@
             {% endif %}
         </main>
     </div>
+
+    {% if viewer_comment and max_page_id > 0 %}
+    <!-- 弹幕评论条 -->
+    <div class="danmaku-bar" id="danmakuBar" data-max-pid="{{ max_page_id }}">
+        <div class="danmaku-title">💬 最新碎碎念</div>
+        <div class="danmaku-track">
+            <div class="danmaku-scroll" id="danmakuScroll">
+                <div class="danmaku-item"><div class="dm-author">加载中…</div></div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
 
     <button class="back-to-top" id="backToTop" title="返回顶部" aria-label="返回顶部">↑</button>
 
@@ -491,6 +543,92 @@
         {% if viewer_unique %}Viewer.getUniqueCount().then(function(r){var e=document.getElementById('vUnique');if(e)e.innerHTML=r.count.toLocaleString()});{% endif %}
     })();
     </script>
+    {% if viewer_comment %}
+    <!-- Viewer 插件：弹幕评论 -->
+    <script>
+    (function(){
+        var bar=document.getElementById('danmakuBar');
+        if(!bar)return;
+        var maxPid=parseInt(bar.dataset.maxPid)||0;
+        if(!maxPid)return;
+        var API='https://tinywebdb.appinventor.space/api';
+        var USER=(window.ViewerConfig&&window.ViewerConfig.user)||'aaaaa';
+        var SECRET=(window.ViewerConfig&&window.ViewerConfig.secret)||'d1bdf09a';
+        var scroll=document.getElementById('danmakuScroll');
+        var allComments=[], loaded=!1;
+        function call(p){
+            var b=new URLSearchParams({user:USER,secret:SECRET});
+            Object.keys(p).forEach(function(k){b.append(k,p[k])});
+            return fetch(API,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:b.toString()})
+                .then(function(r){return r.ok?r.text():Promise.reject(r.status)})
+                .then(function(t){try{return JSON.parse(t)}catch(e){return t}});
+        }
+        function extractVal(raw,tag){
+            var v=raw;
+            if(Array.isArray(raw)&&raw[0]==='VALUE')v=raw[2];
+            else if(typeof raw==='object'&&raw!==null&&raw[tag]!==undefined)v=raw[tag];
+            return v;
+        }
+        function loadCommentsForPage(pid){
+            var countTag='comment_count_'+pid;
+            return call({action:'get',tag:countTag}).then(function(raw){
+                var v=extractVal(raw,countTag);
+                var count=parseInt(v,10)||0;
+                if(!count)return[];
+                var tasks=[];
+                for(var i=1;i<=count;i++){
+                    tasks.push(call({action:'get',tag:'comment_'+pid+'_'+i}));
+                }
+                return Promise.all(tasks).then(function(results){
+                    return results.map(function(r,idx){
+                        var val=extractVal(r,'comment_'+pid+'_'+(idx+1));
+                        if(!val)return null;
+                        try{return typeof val==='string'?JSON.parse(val):val}catch(e){return null}
+                    }).filter(Boolean);
+                });
+            });
+        }
+        function pickRandom(arr,n){
+            var copy=arr.slice(),result=[];
+            for(var i=0;i<n&&copy.length;i++){
+                var idx=Math.floor(Math.random()*copy.length);
+                result.push(copy.splice(idx,1)[0]);
+            }
+            return result;
+        }
+        function render(){
+            if(!allComments.length){
+                scroll.innerHTML='<div class="danmaku-item"><div class="dm-author">还没有评论…</div><div class="dm-body">去文章页说点什么吧</div></div>';
+                return;
+            }
+            // 随机抽一批，加一点变体（名字时间不同）看起来更丰富
+            var pool=allComments.length<8?allComments.slice():pickRandom(allComments,Math.max(8,allComments.length));
+            // 翻倍并混洗以填充循环
+            var doubled=pool.concat(pool.slice().sort(function(){return Math.random()-.5}));
+            scroll.innerHTML=doubled.map(function(c){
+                var name=(c.name||'匿名').replace(/</g,'&lt;');
+                var body=(c.content||'').replace(/</g,'&lt;').substring(0,80);
+                return '<div class="danmaku-item"><div class="dm-author">'+name+'</div><div class="dm-body">'+body+'</div></div>';
+            }).join('');
+        }
+        // 随机选几个页面来抓评论
+        var pids=[], sampleSize=Math.min(maxPid,12);
+        while(pids.length<sampleSize){
+            var r=Math.floor(Math.random()*maxPid)+1;
+            if(pids.indexOf(r)<0)pids.push(r);
+        }
+        Promise.all(pids.map(function(pid){return loadCommentsForPage(pid).catch(function(){return[]})}))
+            .then(function(results){
+                results.forEach(function(cs){allComments=allComments.concat(cs)});
+                render();
+            });
+        // 每 60 秒刷新一次弹幕内容
+        setInterval(function(){
+            if(allComments.length)render();
+        },60000);
+    })();
+    </script>
+    {% endif %}
     {% endif %}
 </body>
 </html>
