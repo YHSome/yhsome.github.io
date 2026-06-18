@@ -13,7 +13,7 @@
             --accent: #b1743e; --accent-hover: #8b5a2e; --border: #e5ddd0; --tag-bg: #f5efe3;
             --code-bg: #f4f0e8; --shadow: 0 1px 3px rgba(44,36,22,0.06);
             --shadow-hover: 0 8px 24px rgba(44,36,22,0.12); --radius: 10px;
-            --content-width: 960px; --sidebar-width: 260px;
+            --content-width: 1120px; --sidebar-width: 240px; --danmaku-width: 220px;
             --nav-blur: blur(12px); --particle-color: 180,160,140;
         }
         html.dark {
@@ -217,10 +217,12 @@
 
         /* ── 响应式：窄屏还原单栏 ── */
         @media (max-width: 768px) {
-            :root { --content-width: 100%; --sidebar-width: 100%; }
+            :root { --content-width: 100%; --sidebar-width: 100%; --danmaku-width: 100%; }
             .main-layout { flex-direction: column; padding: 0 1.25rem 2rem; gap: 2rem; }
             .sidebar { flex: auto; order: 2; }
-            .sidebar-sticky { position: static; }
+            .danmaku-col { flex: auto; order: 3; }
+            .sidebar-sticky, .danmaku-sticky { position: static; }
+            .danmaku-col .danmaku-widget { max-height: 300px; }
             .hero { padding: 4rem 1.25rem 2rem; }
             .hero h1 { font-size: 2rem; }
             .search-bar { padding: 0 1.25rem; }
@@ -230,52 +232,57 @@
             .back-to-top { bottom: 1.2rem; right: 1.2rem; width: 38px; height: 38px; }
         }
 
-        /* ── 弹幕评论条 ── */
-        .danmaku-bar {
-            position: fixed; right: 0.5rem; top: 72px;
-            width: 170px; height: calc(100vh - 100px); z-index: 50;
-            background: color-mix(in srgb, var(--card-bg) 75%, transparent);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--border); border-radius: var(--radius);
-            overflow: hidden; padding: 0.6rem 0;
-            display: flex; flex-direction: column;
-            transition: opacity 0.4s, border 0.4s;
+        /* ── 弹幕评论栏（右侧第三列） ── */
+        .danmaku-col {
+            flex: 0 0 var(--danmaku-width);
+            display: flex; flex-direction: column; gap: 1.5rem;
         }
-        .danmaku-bar .danmaku-title {
-            text-align: center; font-size: 0.75rem; font-weight: 700;
-            color: var(--text-secondary); text-transform: uppercase;
-            letter-spacing: 0.06em; padding: 0 0.6rem 0.5rem;
-            border-bottom: 1px solid var(--border); margin: 0 0.6rem 0.5rem;
+        .danmaku-col .danmaku-sticky {
+            position: sticky; top: calc(56px + 1.5rem);
+            display: flex; flex-direction: column; gap: 1.5rem;
         }
-        .danmaku-track {
+        .danmaku-col .danmaku-widget {
+            background: var(--card-bg); border: 1px solid var(--border);
+            border-radius: var(--radius); padding: 1.25rem 1.25rem;
+            box-shadow: var(--shadow); transition: background 0.4s, border 0.4s;
+            max-height: calc(100vh - 120px);
+            display: flex; flex-direction: column; overflow: hidden;
+        }
+        .danmaku-col .widget-title {
+            font-size: 0.85rem; font-weight: 700; color: var(--text-secondary);
+            text-transform: uppercase; letter-spacing: 0.08em;
+            margin-bottom: 0.6rem; padding-bottom: 0.4rem;
+            border-bottom: 1.5px solid var(--border); text-align: center;
+            transition: border 0.4s;
+        }
+        .danmaku-col .danmaku-track {
             flex: 1; overflow: hidden; position: relative;
-            mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
+            mask-image: linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%);
         }
-        .danmaku-scroll {
-            animation: danmakuFlow 40s linear infinite;
-            padding: 0 0.6rem;
+        .danmaku-col .danmaku-scroll {
+            animation: danmakuFlow 45s linear infinite;
         }
-        .danmaku-scroll:hover { animation-play-state: paused; }
-        .danmaku-item {
-            padding: 0.5rem 0.6rem; margin-bottom: 0.5rem;
+        .danmaku-col .danmaku-scroll:hover { animation-play-state: paused; }
+        .danmaku-col .danmaku-item {
+            padding: 0.5rem 0.6rem; margin-bottom: 0.45rem;
             background: var(--tag-bg); border-radius: 6px;
             font-size: 0.75rem; line-height: 1.5; color: var(--text-secondary);
             transition: background 0.3s;
         }
-        .danmaku-item .dm-author { font-weight: 600; color: var(--accent); font-size: 0.7rem; margin-bottom: 0.15rem; }
-        .danmaku-item .dm-body { word-break: break-all; }
+        .danmaku-col .danmaku-item .dm-author { font-weight: 600; color: var(--accent); font-size: 0.7rem; margin-bottom: 0.1rem; }
+        .danmaku-col .danmaku-item .dm-body { word-break: break-all; }
         @keyframes danmakuFlow {
             0% { transform: translateY(0); }
             100% { transform: translateY(-50%); }
         }
-        @media (max-width: 1300px) { .danmaku-bar { display: none; } }
 
         /* ═══════════ 页面转场 ═══════════ */
         body.page-exiting .navbar     { animation: exitUp   0.32s cubic-bezier(0.55,0,1,0.45) forwards; }
         body.page-exiting .hero       { animation: exitUp   0.30s 0.03s cubic-bezier(0.55,0,1,0.45) forwards; }
         body.page-exiting .search-bar { animation: exitLeft 0.28s 0.05s cubic-bezier(0.55,0,1,0.45) forwards; }
         body.page-exiting .sidebar    { animation: exitLeft  0.28s 0.07s cubic-bezier(0.55,0,1,0.45) forwards; }
-        body.page-exiting .content-main{animation: exitRight 0.28s 0.07s cubic-bezier(0.55,0,1,0.45) forwards; }
+        body.page-exiting .danmaku-col{ animation: exitRight 0.28s 0.07s cubic-bezier(0.55,0,1,0.45) forwards; }
+        body.page-exiting .content-main{animation: exitDown  0.30s 0.09s cubic-bezier(0.55,0,1,0.45) forwards; }
         body.page-exiting .footer     { animation: exitDown 0.28s 0.09s cubic-bezier(0.55,0,1,0.45) forwards; }
         body.page-exiting .back-to-top{ animation: exitDown 0.20s cubic-bezier(0.55,0,1,0.45) forwards; }
         body.page-exiting::after { content:''; position:fixed; inset:0; background:var(--bg); z-index:9999; animation: fadeIn 0.25s 0.2s both; }
@@ -290,10 +297,12 @@
         body.page-entering .hero       { animation: enterDown  0.50s 0.06s cubic-bezier(0.22,0.61,0.36,1) both; }
         body.page-entering .search-bar { animation: enterLeft  0.42s 0.10s cubic-bezier(0.22,0.61,0.36,1) both; }
         body.page-entering .sidebar    { animation: enterLeft  0.50s 0.14s cubic-bezier(0.22,0.61,0.36,1) both; }
-        body.page-entering .content-main{animation: enterRight 0.50s 0.18s cubic-bezier(0.22,0.61,0.36,1) both; }
-        body.page-entering .post-card:nth-child(odd)  { animation: enterLeft  0.50s 0.18s cubic-bezier(0.22,0.61,0.36,1) both; }
-        body.page-entering .post-card:nth-child(even) { animation: enterRight 0.50s 0.20s cubic-bezier(0.22,0.61,0.36,1) both; }
+        body.page-entering .danmaku-col{animation: enterRight 0.50s 0.14s cubic-bezier(0.22,0.61,0.36,1) both; }
+        body.page-entering .content-main{animation: enterUp    0.52s 0.18s cubic-bezier(0.22,0.61,0.36,1) both; }
+        body.page-entering .post-card:nth-child(odd)  { animation: enterLeft  0.50s 0.20s cubic-bezier(0.22,0.61,0.36,1) both; }
+        body.page-entering .post-card:nth-child(even) { animation: enterRight 0.50s 0.22s cubic-bezier(0.22,0.61,0.36,1) both; }
         body.page-entering .sidebar-widget { animation: enterPop 0.42s 0.22s cubic-bezier(0.22,0.61,0.36,1) both; }
+        body.page-entering .danmaku-widget { animation: enterPop 0.42s 0.22s cubic-bezier(0.22,0.61,0.36,1) both; }
         body.page-entering .footer     { animation: enterUp    0.45s 0.26s cubic-bezier(0.22,0.61,0.36,1) both; }
         body.page-entering .back-to-top{ animation: enterPop   0.35s 0.30s cubic-bezier(0.22,0.61,0.36,1) both; }
 
@@ -398,19 +407,23 @@
                 <div class="empty-state">还没有文章，开始写第一篇吧 ✍️</div>
             {% endif %}
         </main>
-    </div>
 
-    {% if viewer_comment and max_page_id > 0 %}
-    <!-- 弹幕评论条 -->
-    <div class="danmaku-bar" id="danmakuBar" data-max-pid="{{ max_page_id }}">
-        <div class="danmaku-title">💬 最新碎碎念</div>
-        <div class="danmaku-track">
-            <div class="danmaku-scroll" id="danmakuScroll">
-                <div class="danmaku-item"><div class="dm-author">加载中…</div></div>
+        {% if viewer_comment and max_page_id > 0 %}
+        <!-- 右栏：弹幕评论 -->
+        <aside class="danmaku-col" id="danmakuBar" data-max-pid="{{ max_page_id }}">
+            <div class="danmaku-sticky">
+                <div class="danmaku-widget">
+                    <div class="widget-title">💬 最新碎碎念</div>
+                    <div class="danmaku-track">
+                        <div class="danmaku-scroll" id="danmakuScroll">
+                            <div class="danmaku-item"><div class="dm-author">加载中…</div></div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
+        </aside>
+        {% endif %}
     </div>
-    {% endif %}
 
     <button class="back-to-top" id="backToTop" title="返回顶部" aria-label="返回顶部">↑</button>
 
