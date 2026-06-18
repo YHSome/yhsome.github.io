@@ -527,9 +527,9 @@ class BlogRenderer:
         return [{"name": k, "count": v} for k, v in sorted(tag_counts.items(), key=lambda x: (-x[1], x[0]))]
 
     def _random_sidebar_tags(self, count: int = 10) -> list[dict]:
-        """从全站标签中随机选取若干，供侧栏精选展示。"""
+        """从全站标签中随机选取若干（仅限文章数 ≥2 的标签），供侧栏精选展示。"""
         import random
-        all_tags = self._collect_tags()
+        all_tags = [t for t in self._collect_tags() if t["count"] >= 2]
         if len(all_tags) <= count:
             return all_tags
         return random.sample(all_tags, count)
