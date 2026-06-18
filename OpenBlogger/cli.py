@@ -51,6 +51,12 @@ def cmd_build(args):
 
 def cmd_serve(args):
     """启动本地预览服务器，自动在浏览器中打开。"""
+    # 先构建站点
+    print("🔨 预览前先构建…")
+    renderer = BlogRenderer(theme=args.theme, config=_load_config(args.config))
+    stats = renderer.build(force=False)
+    print(f"   渲染 {stats['rendered']} 篇，跳过 {stats['skipped']} 篇\n")
+
     os.chdir(RENDERED_DIR)
 
     port = args.port or 8080
