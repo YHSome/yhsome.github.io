@@ -142,7 +142,11 @@
         .article-nav .nav-title { font-weight: 600; font-size: 0.95rem; }
         .article-nav .nav-prev { text-align: left; }
         .article-nav .nav-next { text-align: right; margin-left: auto; }
-        .article-nav .nav-placeholder { flex: 1; }
+        .article-nav .nav-end {
+            flex: 1; padding: 1.1rem 1.35rem; border: 1px solid var(--border);
+            border-radius: var(--radius); color: var(--text-secondary); opacity: 0.5;
+            cursor: default; transition: border 0.4s;
+        }
 
         /* ── 返回顶部 ── */
         .back-to-top {
@@ -434,13 +438,23 @@
                     <div class="nav-label">← 上一篇</div>
                     <div class="nav-title">{{ prev_post.title }}</div>
                 </a>
-                {% else %}<div class="nav-placeholder"></div>{% endif %}
+                {% else %}
+                <span class="nav-end nav-prev">
+                    <div class="nav-label">← 上一篇</div>
+                    <div class="nav-title">已经是第一篇</div>
+                </span>
+                {% endif %}
                 {% if next_post %}
                 <a href="{{ next_post.url }}" class="nav-next">
                     <div class="nav-label">下一篇 →</div>
                     <div class="nav-title">{{ next_post.title }}</div>
                 </a>
-                {% else %}<div class="nav-placeholder"></div>{% endif %}
+                {% else %}
+                <span class="nav-end nav-next">
+                    <div class="nav-label">下一篇 →</div>
+                    <div class="nav-title">已经是最后一篇</div>
+                </span>
+                {% endif %}
             </nav>
 
             {% if viewer_comment %}
