@@ -243,11 +243,11 @@
     <!-- 导航栏 -->
     <nav class="navbar">
         <div class="navbar-inner">
-            <a href="index.html" class="brand">{{ site_title }}</a>
+            <a href="{{ relative_root }}index.html" class="brand">{{ site_title }}</a>
             <ul class="nav-links">
-                <li><a href="index.html">首页</a></li>
-                <li><a href="directory.html" class="active">目录</a></li>
-                <li><a href="tags.html">标签</a></li>
+                <li><a href="{{ relative_root }}index.html">首页</a></li>
+                <li><a href="{{ relative_root }}directory.html" class="active">目录</a></li>
+                <li><a href="{{ relative_root }}tags.html">标签</a></li>
             </ul>
         </div>
     </nav>
@@ -273,7 +273,7 @@
 
     {% if active_tag %}
     <div class="filter-info">
-        正在查看标签为「<strong>{{ active_tag }}</strong>」的文章 · <a href="directory.html">显示全部</a>
+        正在查看标签为「<strong>{{ active_tag }}</strong>」的文章 · <a href="{{ relative_root }}directory.html">显示全部</a>
     </div>
     {% endif %}
 

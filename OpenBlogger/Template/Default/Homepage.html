@@ -226,11 +226,11 @@
     <!-- 导航栏 -->
     <nav class="navbar">
         <div class="navbar-inner">
-            <a href="index.html" class="brand">{{ site_title }}</a>
+            <a href="{{ relative_root }}index.html" class="brand">{{ site_title }}</a>
             <ul class="nav-links">
-                <li><a href="index.html">首页</a></li>
-                <li><a href="directory.html">目录</a></li>
-                <li><a href="tags.html">标签</a></li>
+                <li><a href="{{ relative_root }}index.html">首页</a></li>
+                <li><a href="{{ relative_root }}directory.html">目录</a></li>
+                <li><a href="{{ relative_root }}tags.html">标签</a></li>
             </ul>
         </div>
     </nav>
@@ -273,7 +273,7 @@
         {% if all_tags %}
         <div class="tag-cloud">
             {% for tag in all_tags %}
-            <a href="directory.html?tag={{ tag.name | urlencode }}" class="tag-pill">
+            <a href="{{ relative_root }}directory.html?tag={{ tag.name | urlencode }}" class="tag-pill">
                 {{ tag.name }}<span class="count">({{ tag.count }})</span>
             </a>
             {% endfor %}

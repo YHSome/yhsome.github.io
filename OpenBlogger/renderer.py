@@ -368,7 +368,7 @@ class BlogRenderer:
     # ═══════════════════════════════════════════════
 
     def _build_post_context(self, post: dict, prev_post: Optional[dict], next_post: Optional[dict]) -> dict:
-        """构建文章页的模板上下文。"""
+        """构建文章页的模板上下文（位于 posts/ 子目录）。"""
         meta = post["metadata"]
         return {
             "title": meta["title"],
@@ -378,6 +378,7 @@ class BlogRenderer:
             "content": post["body_html"],
             "site_title": self.config["site_title"],
             "current_year": datetime.now().year,
+            "relative_root": "../",               # 文章页需要 ../ 回到根目录
             "prev_post": self._nav_post(prev_post) if prev_post else None,
             "next_post": self._nav_post(next_post) if next_post else None,
         }
@@ -392,6 +393,7 @@ class BlogRenderer:
             "recent_posts": [self._summary(p) for p in recent],
             "all_tags": all_tags,
             "current_year": datetime.now().year,
+            "relative_root": "",                  # 首页在根目录
         }
 
     def _build_directory_context(self, active_tag: str = "") -> dict:
@@ -403,6 +405,7 @@ class BlogRenderer:
             "all_tags": all_tags,
             "active_tag": active_tag,
             "current_year": datetime.now().year,
+            "relative_root": "",                  # 目录页在根目录
         }
 
     def _build_tags_context(self) -> dict:
@@ -428,6 +431,7 @@ class BlogRenderer:
             "site_title": self.config["site_title"],
             "tags_with_count": tags_data,
             "current_year": datetime.now().year,
+            "relative_root": "",                  # 标签页在根目录
         }
 
     def _collect_tags(self) -> list[dict]:
@@ -450,11 +454,11 @@ class BlogRenderer:
         }
 
     def _nav_post(self, post: dict) -> dict:
-        """生成上下篇导航数据。"""
+        """生成上下篇导航数据（同目录内，仅文件名）。"""
         meta = post["metadata"]
         return {
             "title": meta["title"],
-            "url": post.get("url", f"posts/{post['slug']}.html"),
+            "url": f"{post['slug']}.html",       # 文章都在 posts/ 下，相对链接无需前缀
         }
 
     def _format_date(self, date_str: str) -> str:
