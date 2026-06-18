@@ -432,6 +432,9 @@ class BlogRenderer:
             "prev_post": self._nav_post(prev_post) if prev_post else None,
             "next_post": self._nav_post(next_post) if next_post else None,
             "excerpt": meta.get("excerpt", ""),   # 给评论区做文章标识
+            "total_posts": len(self.posts),        # 侧栏统计
+            "all_tags": self._collect_tags(),      # 侧栏标签
+            "max_page_id": max(self._page_ids.values()) if self._page_ids else 0,
             **self._viewer_context(out_path),      # Viewer: page_id + 配置
         }
 
