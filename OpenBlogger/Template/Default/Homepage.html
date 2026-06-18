@@ -100,6 +100,17 @@
         }
         .search-result-count.visible { display: block; }
 
+        /* ── 站点统计横条 ── */
+        .stats-bar {
+            max-width: var(--content-width); margin: 0 auto 1.5rem;
+            padding: 0 2rem; display: flex; justify-content: center;
+            gap: 1rem; font-size: 0.9rem; color: var(--text-secondary);
+            position: relative; z-index: 1;
+        }
+        .stats-bar .stats-item strong { color: var(--accent); font-weight: 700; }
+        .stats-bar .stats-divider { color: var(--border); }
+        @media (max-width: 768px) { .stats-bar { padding: 0 1.25rem; } }
+
         /* ── 双栏布局 ── */
         .main-layout {
             max-width: var(--content-width); margin: 0 auto;
@@ -282,6 +293,7 @@
         body.page-exiting .search-bar { animation: exitLeft 0.28s 0.05s cubic-bezier(0.55,0,1,0.45) forwards; }
         body.page-exiting .sidebar    { animation: exitLeft  0.28s 0.07s cubic-bezier(0.55,0,1,0.45) forwards; }
         body.page-exiting .danmaku-col{ animation: exitRight 0.28s 0.07s cubic-bezier(0.55,0,1,0.45) forwards; }
+        body.page-exiting .stats-bar   { animation: exitUp   0.26s 0.06s cubic-bezier(0.55,0,1,0.45) forwards; }
         body.page-exiting .content-main{animation: exitDown  0.30s 0.09s cubic-bezier(0.55,0,1,0.45) forwards; }
         body.page-exiting .footer     { animation: exitDown 0.28s 0.09s cubic-bezier(0.55,0,1,0.45) forwards; }
         body.page-exiting .back-to-top{ animation: exitDown 0.20s cubic-bezier(0.55,0,1,0.45) forwards; }
@@ -358,6 +370,13 @@
         <input type="text" id="searchInput" placeholder="搜索文章标题、内容或标签…" autocomplete="off">
     </div>
     <div class="search-result-count" id="searchCount"></div>
+
+    <!-- 站点统计横条 -->
+    <div class="stats-bar">
+        <span class="stats-item">📝 <strong>{{ total_posts }}</strong> 篇文章</span>
+        <span class="stats-divider">·</span>
+        <span class="stats-item">🏷️ <strong>{{ all_tags | length if all_tags else 0 }}</strong> 个标签</span>
+    </div>
 
     <div class="main-layout">
         <!-- 文章列表 -->

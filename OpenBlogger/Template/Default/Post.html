@@ -170,8 +170,8 @@
 
         /* ── 评论区 ── */
         .comment-section {
-            max-width: var(--max-width); margin: 0 auto 2rem; padding: 0 1.5rem;
-            position: relative; z-index: 1; width: 100%;
+            margin: 0 0 2rem; padding: 1.25rem 0 0;
+            border-top: 1px solid var(--border); transition: border 0.4s;
         }
         .comment-section h3 {
             font-size: 1.2rem; font-weight: 700; margin-bottom: 1rem;
@@ -442,6 +442,24 @@
                 </a>
                 {% else %}<div class="nav-placeholder"></div>{% endif %}
             </nav>
+
+            {% if viewer_comment %}
+            <!-- 评论区（与正文同宽） -->
+            <section class="comment-section">
+                <h3>💬 评论 (<span id="commentCount">0</span>)</h3>
+                <div class="comment-form" id="commentForm">
+                    <div class="row">
+                        <input type="text" id="cName" placeholder="昵称" maxlength="30">
+                        <input type="email" id="cEmail" placeholder="邮箱（选填）">
+                    </div>
+                    <textarea id="cContent" placeholder="说点什么吧…" maxlength="1000"></textarea>
+                    <button id="cSubmit">发表评论</button>
+                </div>
+                <div class="comment-list" id="commentList">
+                    <div class="comment-empty">加载中…</div>
+                </div>
+            </section>
+            {% endif %}
         </main>
 
         <!-- 右栏：弹幕 -->
@@ -462,24 +480,6 @@
     </div>
 
     <button class="back-to-top" id="backToTop" title="返回顶部" aria-label="返回顶部">↑</button>
-
-    {% if viewer_comment %}
-    <!-- 评论区 -->
-    <section class="comment-section">
-        <h3>💬 评论 (<span id="commentCount">0</span>)</h3>
-        <div class="comment-form" id="commentForm">
-            <div class="row">
-                <input type="text" id="cName" placeholder="昵称" maxlength="30">
-                <input type="email" id="cEmail" placeholder="邮箱（选填）">
-            </div>
-            <textarea id="cContent" placeholder="说点什么吧…" maxlength="1000"></textarea>
-            <button id="cSubmit">发表评论</button>
-        </div>
-        <div class="comment-list" id="commentList">
-            <div class="comment-empty">加载中…</div>
-        </div>
-    </section>
-    {% endif %}
 
     <footer class="footer">
         <div class="footer-stats" id="footerStats">
