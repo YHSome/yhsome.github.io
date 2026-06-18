@@ -1,4 +1,5 @@
 time: 2023.7.9
+tag: 软件, 桌面宠物
 title: 猫猫桌宠BongoCat下载
 
 ### 简述
