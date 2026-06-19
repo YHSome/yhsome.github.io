@@ -5,8 +5,22 @@
     <link>https://example.com</link>
     <description>书山有径勤为路，学海无涯苦作舟</description>
     <language>zh-CN</language>
-    <lastBuildDate>Fri, 19 Jun 2026 13:20:05 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 19 Jun 2026 13:38:41 +0800</lastBuildDate>
     <atom:link href="https://example.com/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>Claude 期末复习 Skill：把 PPT/PDF/Word 扔给 AI，生成可视化讲义</title>
+      <link>https://example.com/posts/Claude期末复习Skill.html</link>
+      <description>这是什么 一个 Claude Code Skill，专为期末复习设计。你只需要把老师的课件（PPT、PDF、Word 等格式）丢给它，它就能自动识别内容、提取知识点、生成一套可视化的复习讲义。 为什么做这个 期末复习最痛苦的事不是背书——是整理资料。 老师发的 PPT 几十页、课本 PDF 几百页、…</description>
+      <pubDate>Fri, 19 Jun 2026 00:00:00 +0800</pubDate>
+      <guid isPermaLink="true">https://example.com/posts/Claude期末复习Skill.html</guid>
+    </item>
+    <item>
+      <title>Viewer：纯前端访问计数与评论系统——零后端、零数据库、复制即用</title>
+      <link>https://example.com/posts/Viewer-纯前端访问计数与评论系统.html</link>
+      <description>缘起 2023 年，刚接触静态博客的时候，最羡慕的就是别人的博客有阅读量统计和评论区。那时候 YHSome 用的是 Hexo + GitHub Pages，纯静态 HTML 托管，没有服务器、没有数据库。传统的评论方案——Disqus、Gitalk、 utterances——要么需要注册第三方服务，…</description>
+      <pubDate>Fri, 19 Jun 2026 00:00:00 +0800</pubDate>
+      <guid isPermaLink="true">https://example.com/posts/Viewer-纯前端访问计数与评论系统.html</guid>
+    </item>
     <item>
       <title>颂 YHSome 与 OpenBlogger：一个划时代的博客方案诞生记</title>
       <link>https://example.com/posts/颂-YHSome与OpenBlogger.html</link>
@@ -132,20 +146,6 @@
       <description>前言 对于电脑使用者来说，压缩/解压缩软件是必不可少的，今天给大家推荐的Bandizip是一款免费优秀的文件压缩/解压缩软件，界面简洁，功能明了，免费纯净无广告。它支持多国语言，解压后不会出现乱码，Bandizip拥有非常快速的压缩和解压缩的算法，适用于多核心压缩、快速拖拽、高速压缩等功能。 解锁步…</description>
       <pubDate>Tue, 08 Aug 2023 00:00:00 +0800</pubDate>
       <guid isPermaLink="true">https://example.com/posts/bandizip.html</guid>
-    </item>
-    <item>
-      <title>altale五线谱</title>
-      <link>https://example.com/posts/altale.html</link>
-      <description>作者不是我，仅搬运 下载链接：点击下载</description>
-      <pubDate>Sun, 06 Aug 2023 00:00:00 +0800</pubDate>
-      <guid isPermaLink="true">https://example.com/posts/altale.html</guid>
-    </item>
-    <item>
-      <title>喜德盛rc200改装实例</title>
-      <link>https://example.com/posts/rc200tools.html</link>
-      <description>前言 RC200，作为一辆入门级的公路车，性价比是1000~2000中比较高的。我骑了半年，接下来按重要性高低介绍一下rc200这辆车有哪些便宜的配件能够提高骑行体验 正文 车锁 公路自行车价格普遍偏高，如果自行车在晚上不能停到家中就会有一定风险会被偷。因此一把好的车锁是必要的 水壶支架 出门时，如…</description>
-      <pubDate>Sun, 06 Aug 2023 00:00:00 +0800</pubDate>
-      <guid isPermaLink="true">https://example.com/posts/rc200tools.html</guid>
     </item>
   </channel>
 </rss>
