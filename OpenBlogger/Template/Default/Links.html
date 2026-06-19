@@ -5,7 +5,7 @@
     <meta name="x-viewer-page-id" content="{{ page_id }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script>(function(){var s=localStorage.getItem('blog-theme');if(s==='dark'||(!s&&matchMedia('(prefers-color-scheme:dark)').matches)){document.documentElement.classList.add('dark')}})();</script>
-    <title>开源项目 — {{ site_title }}</title>
+    <title>友情链接 — {{ site_title }}</title>
     <style>
         :root {
             --bg: #fdfbf7; --card-bg: #ffffff; --text: #2c2416; --text-secondary: #6b5e4a;
@@ -61,38 +61,41 @@
         .page-header .subtitle { font-size: 1rem; color: var(--text-secondary); }
 
         .container { max-width: var(--max-width); margin: 0 auto; padding: 0 2rem 3rem; flex: 1; width: 100%; position: relative; z-index: 1; }
+        .section-title {
+            font-size: 1rem; font-weight: 600; color: var(--text-secondary);
+            text-transform: uppercase; letter-spacing: 0.08em;
+            margin: 2rem 0 1rem; padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border); transition: border 0.4s;
+        }
+        .section-title:first-child { margin-top: 0; }
 
-        .project-card {
+        .link-card {
             background: var(--card-bg); border: 1px solid var(--border);
-            border-radius: var(--radius); padding: 1.5rem 1.75rem; margin-bottom: 1rem;
+            border-radius: var(--radius); padding: 1.25rem 1.5rem; margin-bottom: 0.8rem;
             box-shadow: var(--shadow); text-decoration: none; color: var(--text);
-            display: flex; gap: 1.25rem; align-items: flex-start;
+            display: flex; gap: 1rem; align-items: center;
             transition: all 0.35s cubic-bezier(0.4,0,0.2,1);
             position: relative; overflow: hidden;
         }
-        .project-card::before {
+        .link-card::before {
             content: ''; position: absolute; left: 0; top: 0; bottom: 0;
             width: 3px; background: var(--accent); border-radius: 0 3px 3px 0;
             transform: scaleY(0); transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
         }
-        .project-card:hover::before { transform: scaleY(1); }
-        .project-card:hover { box-shadow: var(--shadow-hover); transform: translateY(-2px); border-color: var(--accent); }
-        .project-card .proj-icon { font-size: 2rem; flex-shrink: 0; margin-top: 0.2rem; }
-        .project-card .proj-info { flex: 1; min-width: 0; }
-        .project-card .proj-name { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.25rem; transition: color 0.3s; }
-        .project-card:hover .proj-name { color: var(--accent); }
-        .project-card .proj-desc { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 0.5rem; }
-        .project-card .proj-meta { display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center; font-size: 0.8rem; color: var(--text-secondary); }
-        .project-card .proj-lang { display: inline-flex; align-items: center; gap: 0.3rem; }
-        .project-card .proj-lang-dot {
-            width: 10px; height: 10px; border-radius: 50%; display: inline-block;
+        .link-card:hover::before { transform: scaleY(1); }
+        .link-card:hover { box-shadow: var(--shadow-hover); transform: translateY(-2px); border-color: var(--accent); }
+        .link-card .link-icon { font-size: 1.8rem; flex-shrink: 0; width: 44px; text-align: center; }
+        .link-card .link-info { flex: 1; min-width: 0; }
+        .link-card .link-name { font-size: 1.1rem; font-weight: 700; transition: color 0.3s; }
+        .link-card:hover .link-name { color: var(--accent); }
+        .link-card .link-desc { font-size: 0.88rem; color: var(--text-secondary); margin-top: 0.2rem; }
+        .link-card .link-tag {
+            display: inline-block; background: var(--tag-bg); color: var(--accent);
+            font-size: 0.72rem; padding: 0.15rem 0.55rem; border-radius: 100px;
+            margin-left: 0.4rem; vertical-align: middle;
         }
-        .proj-badge {
-            display: inline-block; padding: 0.15rem 0.55rem; border-radius: 100px;
-            font-size: 0.75rem; font-weight: 600;
-        }
-        .proj-badge.pages { background: var(--accent); color: #fff; }
-        .proj-badge.repo { background: var(--tag-bg); color: var(--accent); }
+        .link-card .link-arrow { color: var(--text-secondary); font-size: 1.2rem; flex-shrink: 0; transition: color 0.3s; }
+        .link-card:hover .link-arrow { color: var(--accent); }
 
         .back-to-top {
             position: fixed; bottom: 2rem; right: 2rem; z-index: 200;
@@ -110,11 +113,9 @@
         .footer { text-align: center; padding: 2rem; color: var(--text-secondary); font-size: 0.85rem; border-top: 1px solid var(--border); margin-top: auto; position: relative; z-index: 1; transition: border 0.4s; }
         .footer span { color: var(--accent); }
 
-        .empty-state { text-align: center; color: var(--text-secondary); padding: 3rem 0; font-size: 1.05rem; }
-
         @media (max-width: 600px) {
             .page-header h1 { font-size: 1.6rem; }
-            .project-card { flex-direction: column; gap: 0.5rem; padding: 1.25rem 1.5rem; }
+            .link-card { padding: 1rem 1.25rem; }
             .nav-links { gap: 1rem; }
             .navbar { padding: 0 1.25rem; }
             .back-to-top { bottom: 1.2rem; right: 1.2rem; width: 38px; height: 38px; }
@@ -131,47 +132,33 @@
                 <li><a href="{{ relative_root }}index.html">首页</a></li>
                 <li><a href="{{ relative_root }}directory.html">目录</a></li>
                 <li><a href="{{ relative_root }}tags.html">标签</a></li>
-                <li><a href="{{ relative_root }}projects.html" class="active">项目</a></li>
-                <li><a href="{{ relative_root }}links.html">友链</a></li>
+                <li><a href="{{ relative_root }}projects.html">项目</a></li>
+                <li><a href="{{ relative_root }}links.html" class="active">友链</a></li>
                 <li><button class="theme-toggle" id="themeToggle" title="切换颜色模式" aria-label="切换颜色模式">🌙</button></li>
             </ul>
         </div>
     </nav>
 
     <div class="page-header">
-        <h1>🚀 开源项目</h1>
-        <p class="subtitle">来自 <a href="https://github.com/YHSome" target="_blank" rel="noopener">github.com/YHSome</a> 的公开仓库</p>
+        <h1>🔗 友情链接</h1>
+        <p class="subtitle">YHSome 的各种小项目与在线工具</p>
     </div>
 
     <div class="container">
-        {% if projects %}
-            {% for proj in projects %}
-            <a href="{{ proj.link }}" class="project-card" target="_blank" rel="noopener">
-                <div class="proj-icon">{{ proj.icon }}</div>
-                <div class="proj-info">
-                    <div class="proj-name">{{ proj.name }}</div>
-                    {% if proj.description %}
-                    <div class="proj-desc">{{ proj.description }}</div>
-                    {% endif %}
-                    <div class="proj-meta">
-                        {% if proj.language %}
-                        <span class="proj-lang">
-                            <span class="proj-lang-dot" style="background:{{ proj.lang_color }}"></span>
-                            {{ proj.language }}
-                        </span>
-                        {% endif %}
-                        <span>⭐ {{ proj.stars }}</span>
-                        <span>🍴 {{ proj.forks }}</span>
-                        <span class="proj-badge {{ 'pages' if proj.has_pages else 'repo' }}">
-                            {{ '🌐 GitHub Pages' if proj.has_pages else '📦 仓库' }}
-                        </span>
-                    </div>
-                </div>
-            </a>
-            {% endfor %}
-        {% else %}
-            <div class="empty-state">暂无项目数据，请运行 fetch_projects.py 获取</div>
-        {% endif %}
+        {% for section in link_sections %}
+        <div class="section-title">{{ section.title }}</div>
+        {% for link in section.links %}
+        <a href="{{ link.url }}" class="link-card" target="_blank" rel="noopener">
+            <div class="link-icon">{{ link.icon }}</div>
+            <div class="link-info">
+                <span class="link-name">{{ link.name }}</span>
+                {% if link.tag %}<span class="link-tag">{{ link.tag }}</span>{% endif %}
+                {% if link.desc %}<div class="link-desc">{{ link.desc }}</div>{% endif %}
+            </div>
+            <span class="link-arrow">→</span>
+        </a>
+        {% endfor %}
+        {% endfor %}
     </div>
 
     <button class="back-to-top" id="backToTop" title="返回顶部" aria-label="返回顶部">↑</button>
