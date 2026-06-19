@@ -1,0 +1,3 @@
+[submodule "OpenBlogger"]
+	path = OpenBlogger
+	url = https://github.com/YHSome/OpenBlogger.git
