@@ -33,7 +33,7 @@ PLUGINS_DIR = PROJECT_ROOT / "OpenBlogger" / "Plugins"
 VIEWER_JS_DIR = PLUGINS_DIR / "Viewer" / "js"
 PAGE_ID_FILE = PROJECT_ROOT / "OpenBlogger" / ".viewer_pages.json"
 CACHE_FILE = PROJECT_ROOT / "OpenBlogger" / ".render_cache.json"
-PROJECTS_FILE = PROJECT_ROOT / "OpenBlogger" / "projects.json"
+PROJECTS_FILE = PLUGINS_DIR / "GitHubProjects" / "projects.json"
 
 # ── GitHub 语言颜色映射 ──
 LANG_COLORS = {

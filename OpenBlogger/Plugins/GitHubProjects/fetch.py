@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
-从 GitHub API 拉取 YHSome 的公开仓库列表，保存为 projects.json。
+GitHubProjects 插件 — 从 GitHub API 拉取 YHSome 的公开仓库列表。
 
 用法:
-    python OpenBlogger/fetch_repos.py
+    python OpenBlogger/Plugins/GitHubProjects/fetch.py
 """
 
 import json, urllib.request, sys
