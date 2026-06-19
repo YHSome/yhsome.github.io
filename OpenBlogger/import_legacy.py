@@ -44,7 +44,7 @@ except ImportError:
 
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
-LEGACY_DIR = PROJECT_ROOT / "legacy" / "blog-master"
+LEGACY_DIR = PROJECT_ROOT / ".archive" / "Legacy" / "blog-master"
 RAW_DIR = PROJECT_ROOT / "Raw"
 
 # 可识别的标题前缀 → 标签映射

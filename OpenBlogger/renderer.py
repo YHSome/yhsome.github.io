@@ -27,8 +27,7 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 RAW_DIR = PROJECT_ROOT / "Raw"
 RENDERED_DIR = PROJECT_ROOT / "Rendered"
 TEMPLATE_ROOT = PROJECT_ROOT / "OpenBlogger" / "Template"
-IMAGES_DIR = PROJECT_ROOT / "Images"
-LEGACY_IMAGE_DIR = PROJECT_ROOT / "image"         # 旧博客图片（按日期子目录存放）
+IMAGES_DIR = PROJECT_ROOT / "Image"               # 所有静态资源（图片/下载）
 PLUGINS_DIR = PROJECT_ROOT / "OpenBlogger" / "Plugins"
 VIEWER_JS_DIR = PLUGINS_DIR / "Viewer" / "js"
 PAGE_ID_FILE = PROJECT_ROOT / "OpenBlogger" / ".viewer_pages.json"
@@ -746,46 +745,28 @@ class BlogRenderer:
     # ═══════════════════════════════════════════════
 
     def _copy_images(self):
-        """将 Images/ 和 image/ 目录合并复制到 Rendered/images/。"""
+        """将 Image/ 目录复制到 Rendered/images/（图片 → images/posts/，其他留根）。"""
         dest = RENDERED_DIR / "images"
-        if not dest.exists():
-            dest.mkdir(parents=True, exist_ok=True)
-
+        if not IMAGES_DIR.exists():
+            return
+        dest.mkdir(parents=True, exist_ok=True)
         total = 0
-        # 1) 用户图片 (Images/ → images/)
-        if IMAGES_DIR.exists():
-            for item in IMAGES_DIR.iterdir():
-                target = dest / item.name
-                try:
-                    if item.is_dir():
-                        if target.exists():
-                            shutil.rmtree(target)
-                        shutil.copytree(item, target)
-                    else:
-                        shutil.copy2(item, target)
-                    total += len(list(target.rglob("*"))) if item.is_dir() else 1
-                except Exception as e:
-                    print(f"⚠️  复制 {item.name} 失败: {e}")
-
-        # 2) 旧博客图片 (image/ → images/posts/)
-        if LEGACY_IMAGE_DIR.exists():
-            posts_img = dest / "posts"
-            for item in LEGACY_IMAGE_DIR.iterdir():
-                if item.name.startswith(".") or item.name == "README.md":
-                    continue
-                target = posts_img / item.name
-                try:
-                    if item.is_dir():
-                        if target.exists():
-                            shutil.rmtree(target)
-                        shutil.copytree(item, target)
-                    else:
-                        posts_img.mkdir(parents=True, exist_ok=True)
-                        shutil.copy2(item, target)
-                    total += len(list(target.rglob("*"))) if item.is_dir() else 1
-                except Exception as e:
-                    print(f"⚠️  复制旧图片 {item.name} 失败: {e}")
-
+        posts_img = dest / "posts"
+        for item in IMAGES_DIR.iterdir():
+            if item.name.startswith(".") or item.name == "README.md":
+                continue
+            # 日期子目录 → images/posts/YYYY-M-DD/
+            target = posts_img / item.name if item.is_dir() else dest / item.name
+            try:
+                if item.is_dir():
+                    if target.exists():
+                        shutil.rmtree(target)
+                    shutil.copytree(item, target)
+                else:
+                    shutil.copy2(item, target)
+                total += len(list(target.rglob("*"))) if item.is_dir() else 1
+            except Exception as e:
+                print(f"⚠️  复制 {item.name} 失败: {e}")
         if total:
             print(f"🖼️  复制了 {total} 个资源文件 → images/")
 

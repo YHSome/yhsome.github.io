@@ -1,6 +1,9 @@
 # ── 渲染输出（通过 git subtree 部署到 gh-pages） ──
 Rendered/
 
+# ── 历史存档 ──
+.archive/
+
 # ── Python ──
 __pycache__/
 *.py[cod]
@@ -22,4 +25,3 @@ Thumbs.db
 
 # ── 缓存 ──
 OpenBlogger/.render_cache.json
-yhsome.github.io/
