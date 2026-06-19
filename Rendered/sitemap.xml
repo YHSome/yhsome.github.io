@@ -3,6 +3,7 @@
   <url><loc>https://example.com/index.html</loc><lastmod>2026-06-19</lastmod><priority>1.0</priority></url>
   <url><loc>https://example.com/directory.html</loc><lastmod>2026-06-19</lastmod><priority>0.8</priority></url>
   <url><loc>https://example.com/tags.html</loc><lastmod>2026-06-19</lastmod><priority>0.6</priority></url>
+  <url><loc>https://example.com/posts/OpenBlogger-静态博客渲染框架介绍与使用指南.html</loc><lastmod>2026-06-19</lastmod><priority>0.9</priority></url>
   <url><loc>https://example.com/posts/Claude期末复习Skill.html</loc><lastmod>2026-06-19</lastmod><priority>0.9</priority></url>
   <url><loc>https://example.com/posts/Viewer-纯前端访问计数与评论系统.html</loc><lastmod>2026-06-19</lastmod><priority>0.9</priority></url>
   <url><loc>https://example.com/posts/颂-YHSome与OpenBlogger.html</loc><lastmod>2026-06-19</lastmod><priority>0.9</priority></url>
@@ -10,12 +11,12 @@
   <url><loc>https://example.com/posts/笔记-快速写简化电子排布式.html</loc><lastmod>2026-06-19</lastmod><priority>0.9</priority></url>
   <url><loc>https://example.com/posts/免费的office全家桶.html</loc><lastmod>2026-06-19</lastmod><priority>0.9</priority></url>
   <url><loc>https://example.com/posts/实验报告-固体酒精.html</loc><lastmod>2026-06-19</lastmod><priority>0.9</priority></url>
-  <url><loc>https://example.com/posts/myhtml.html</loc><lastmod>2026-06-19</lastmod><priority>0.9</priority></url>
   <url><loc>https://example.com/posts/随笔-重新注册白鲸加速器.html</loc><lastmod>2026-06-19</lastmod><priority>0.9</priority></url>
+  <url><loc>https://example.com/posts/myhtml.html</loc><lastmod>2026-06-19</lastmod><priority>0.9</priority></url>
   <url><loc>https://example.com/posts/PinballChallenge.html</loc><lastmod>2026-06-19</lastmod><priority>0.9</priority></url>
   <url><loc>https://example.com/posts/随笔-台风-停课.html</loc><lastmod>2026-06-19</lastmod><priority>0.9</priority></url>
-  <url><loc>https://example.com/posts/pixelqx.html</loc><lastmod>2026-06-19</lastmod><priority>0.9</priority></url>
   <url><loc>https://example.com/posts/随笔-文心一言使用感受.html</loc><lastmod>2026-06-19</lastmod><priority>0.9</priority></url>
+  <url><loc>https://example.com/posts/pixelqx.html</loc><lastmod>2026-06-19</lastmod><priority>0.9</priority></url>
   <url><loc>https://example.com/posts/xiyouspeaker.html</loc><lastmod>2026-06-19</lastmod><priority>0.9</priority></url>
   <url><loc>https://example.com/posts/xiyouchooser.html</loc><lastmod>2026-06-19</lastmod><priority>0.9</priority></url>
   <url><loc>https://example.com/posts/随笔-论网络诈骗.html</loc><lastmod>2026-06-19</lastmod><priority>0.9</priority></url>
@@ -29,27 +30,27 @@
   <url><loc>https://example.com/posts/bitcoment-pro.html</loc><lastmod>2026-06-19</lastmod><priority>0.9</priority></url>
   <url><loc>https://example.com/posts/BongoCat.html</loc><lastmod>2026-06-19</lastmod><priority>0.9</priority></url>
   <url><loc>https://example.com/posts/coc.html</loc><lastmod>2026-06-19</lastmod><priority>0.9</priority></url>
-  <url><loc>https://example.com/posts/EaseUS-PDF-Editor.html</loc><lastmod>2026-06-19</lastmod><priority>0.9</priority></url>
   <url><loc>https://example.com/posts/RsearchLearning.html</loc><lastmod>2026-06-19</lastmod><priority>0.9</priority></url>
+  <url><loc>https://example.com/posts/EaseUS-PDF-Editor.html</loc><lastmod>2026-06-19</lastmod><priority>0.9</priority></url>
   <url><loc>https://example.com/posts/FinalReport.html</loc><lastmod>2026-06-19</lastmod><priority>0.9</priority></url>
   <url><loc>https://example.com/posts/Shcedule.html</loc><lastmod>2026-06-19</lastmod><priority>0.9</priority></url>
   <url><loc>https://example.com/posts/红楼梦思维导图21-70回.html</loc><lastmod>2026-06-19</lastmod><priority>0.9</priority></url>
   <url><loc>https://example.com/posts/哗哩哗哩-欧洲浪漫主义.html</loc><lastmod>2026-06-19</lastmod><priority>0.9</priority></url>
   <url><loc>https://example.com/posts/终南别业古诗赏析演讲稿.html</loc><lastmod>2026-06-19</lastmod><priority>0.9</priority></url>
   <url><loc>https://example.com/posts/红楼梦思维导图11-20回.html</loc><lastmod>2026-06-19</lastmod><priority>0.9</priority></url>
-  <url><loc>https://example.com/posts/征文-雾都孤儿观后感.html</loc><lastmod>2026-06-19</lastmod><priority>0.9</priority></url>
   <url><loc>https://example.com/posts/红楼梦思维导图1-10回.html</loc><lastmod>2026-06-19</lastmod><priority>0.9</priority></url>
   <url><loc>https://example.com/posts/蓝灯镜像下载.html</loc><lastmod>2026-06-19</lastmod><priority>0.9</priority></url>
+  <url><loc>https://example.com/posts/征文-雾都孤儿观后感.html</loc><lastmod>2026-06-19</lastmod><priority>0.9</priority></url>
   <url><loc>https://example.com/posts/E听说辅助工具使用方法.html</loc><lastmod>2026-06-19</lastmod><priority>0.9</priority></url>
   <url><loc>https://example.com/posts/图片测试以及最近画的大饼.html</loc><lastmod>2026-06-19</lastmod><priority>0.9</priority></url>
   <url><loc>https://example.com/posts/时评-五一调休.html</loc><lastmod>2026-06-19</lastmod><priority>0.9</priority></url>
   <url><loc>https://example.com/posts/征文-你.html</loc><lastmod>2026-06-19</lastmod><priority>0.9</priority></url>
-  <url><loc>https://example.com/posts/时评-KSG廉颇打野.html</loc><lastmod>2026-06-19</lastmod><priority>0.9</priority></url>
-  <url><loc>https://example.com/posts/时评-习近平在广州市考察调研.html</loc><lastmod>2026-06-19</lastmod><priority>0.9</priority></url>
   <url><loc>https://example.com/posts/时评-外交部对美国反华议员采取反制措施.html</loc><lastmod>2026-06-19</lastmod><priority>0.9</priority></url>
+  <url><loc>https://example.com/posts/时评-习近平在广州市考察调研.html</loc><lastmod>2026-06-19</lastmod><priority>0.9</priority></url>
+  <url><loc>https://example.com/posts/时评-KSG廉颇打野.html</loc><lastmod>2026-06-19</lastmod><priority>0.9</priority></url>
   <url><loc>https://example.com/posts/时评-专家称年轻人不生小孩是不对的.html</loc><lastmod>2026-06-19</lastmod><priority>0.9</priority></url>
-  <url><loc>https://example.com/posts/几个ChatGPT镜像网站.html</loc><lastmod>2026-06-19</lastmod><priority>0.9</priority></url>
-  <url><loc>https://example.com/posts/征文-感动中国2023十大人物观后感.html</loc><lastmod>2026-06-19</lastmod><priority>0.9</priority></url>
-  <url><loc>https://example.com/posts/时评-马克龙访问中山大学.html</loc><lastmod>2026-06-19</lastmod><priority>0.9</priority></url>
   <url><loc>https://example.com/posts/这是一条测试帖.html</loc><lastmod>2026-06-19</lastmod><priority>0.9</priority></url>
+  <url><loc>https://example.com/posts/几个ChatGPT镜像网站.html</loc><lastmod>2026-06-19</lastmod><priority>0.9</priority></url>
+  <url><loc>https://example.com/posts/时评-马克龙访问中山大学.html</loc><lastmod>2026-06-19</lastmod><priority>0.9</priority></url>
+  <url><loc>https://example.com/posts/征文-感动中国2023十大人物观后感.html</loc><lastmod>2026-06-19</lastmod><priority>0.9</priority></url>
 </urlset>
