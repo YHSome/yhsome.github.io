@@ -9,6 +9,10 @@
 import json, urllib.request, sys
 from pathlib import Path
 
+# Windows 控制台编码修复
+if sys.platform == "win32":
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+
 API = "https://api.github.com/users/YHSome/repos?per_page=100&sort=updated"
 OUT = Path(__file__).resolve().parent / "projects.json"
 
