@@ -96,7 +96,12 @@
         .search-bar input::placeholder { color: #b8a88c; }
 
         /* ── 标签过滤 ── */
-        .filter-bar { max-width: var(--max-width); margin: 0 auto 1rem; padding: 0 1.5rem; display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center; position: relative; z-index: 1; }
+        .filter-row {
+            max-width: var(--max-width); margin: 0 auto 1rem;
+            padding: 0 1.5rem; display: flex; gap: 0.5rem;
+            flex-wrap: wrap; align-items: flex-start; position: relative; z-index: 1;
+        }
+        .filter-bar { display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center; flex: 1; min-width: 0; }
         .filter-bar .filter-label { font-size: 0.85rem; color: var(--text-secondary); font-weight: 600; }
         .filter-chip {
             display: inline-block; padding: 0.3rem 0.85rem; border-radius: 100px; font-size: 0.85rem;
@@ -180,9 +185,7 @@
 
         /* ── 日历 ── */
         .calendar-wrap {
-            max-width: var(--max-width); margin: 0 auto 1rem;
-            padding: 0 1.5rem; display: flex; justify-content: flex-end;
-            position: relative; z-index: 1;
+            margin-left: auto; flex-shrink: 0;
         }
         .calendar-card {
             background: var(--card-bg); border: 1px solid var(--border);
@@ -215,6 +218,7 @@
             font-weight: 700; cursor: pointer;
         }
         .calendar-card .cal-day.has-post:hover { background: var(--accent); color: #fff; }
+        .calendar-card .cal-day.active-date { background: var(--accent); color: #fff; }
         .calendar-card .cal-day.today { outline: 1.5px solid var(--accent); outline-offset: -1px; }
         .calendar-card .cal-day.other-month { opacity: 0.3; }
         @media (max-width: 768px) { .calendar-wrap { justify-content: center; } }
@@ -295,96 +299,96 @@
         <input type="text" id="searchInput" placeholder="搜索文章标题、内容或标签…" autocomplete="off">
     </div>
 
-    <div class="filter-bar" id="filterBar">
-        <span class="filter-label">筛选：</span>
-        <span class="filter-chip active" data-tag="">全部</span>
-        
-        <span class="filter-chip" data-tag="学习">学习<span class="count">(9)</span></span>
-        
-        <span class="filter-chip" data-tag="软件">软件<span class="count">(8)</span></span>
-        
-        <span class="filter-chip" data-tag="随笔">随笔<span class="count">(7)</span></span>
-        
-        <span class="filter-chip" data-tag="时评">时评<span class="count">(6)</span></span>
-        
-        <span class="filter-chip" data-tag="校园">校园<span class="count">(5)</span></span>
-        
-        <span class="filter-chip" data-tag="项目">项目<span class="count">(5)</span></span>
-        
-        <span class="filter-chip" data-tag="AI">AI<span class="count">(3)</span></span>
-        
-        <span class="filter-chip" data-tag="征文">征文<span class="count">(3)</span></span>
-        
-        <span class="filter-chip" data-tag="游戏">游戏<span class="count">(3)</span></span>
-        
-        <span class="filter-chip" data-tag="红楼梦">红楼梦<span class="count">(3)</span></span>
-        
-        <span class="filter-chip" data-tag="英语">英语<span class="count">(3)</span></span>
-        
-        <span class="filter-chip" data-tag="VPN">VPN<span class="count">(2)</span></span>
-        
-        <span class="filter-chip" data-tag="测试">测试<span class="count">(2)</span></span>
-        
-        <span class="filter-chip" data-tag="生活">生活<span class="count">(2)</span></span>
-        
-        <span class="filter-chip" data-tag="钢琴谱">钢琴谱<span class="count">(2)</span></span>
-        
-        <span class="filter-chip" data-tag="音乐">音乐<span class="count">(2)</span></span>
-        
-        <span class="filter-chip" data-tag="BT">BT<span class="count">(1)</span></span>
-        
-        <span class="filter-chip" data-tag="ChatGPT">ChatGPT<span class="count">(1)</span></span>
-        
-        <span class="filter-chip" data-tag="HTML">HTML<span class="count">(1)</span></span>
-        
-        <span class="filter-chip" data-tag="Office">Office<span class="count">(1)</span></span>
-        
-        <span class="filter-chip" data-tag="PDF">PDF<span class="count">(1)</span></span>
-        
-        <span class="filter-chip" data-tag="公路车">公路车<span class="count">(1)</span></span>
-        
-        <span class="filter-chip" data-tag="压缩">压缩<span class="count">(1)</span></span>
-        
-        <span class="filter-chip" data-tag="古诗">古诗<span class="count">(1)</span></span>
-        
-        <span class="filter-chip" data-tag="安全">安全<span class="count">(1)</span></span>
-        
-        <span class="filter-chip" data-tag="实验报告">实验报告<span class="count">(1)</span></span>
-        
-        <span class="filter-chip" data-tag="弹球">弹球<span class="count">(1)</span></span>
-        
-        <span class="filter-chip" data-tag="录屏">录屏<span class="count">(1)</span></span>
-        
-        <span class="filter-chip" data-tag="我的世界">我的世界<span class="count">(1)</span></span>
-        
-        <span class="filter-chip" data-tag="桌面宠物">桌面宠物<span class="count">(1)</span></span>
-        
-        <span class="filter-chip" data-tag="模板">模板<span class="count">(1)</span></span>
-        
-        <span class="filter-chip" data-tag="研究性学习">研究性学习<span class="count">(1)</span></span>
-        
-        <span class="filter-chip" data-tag="笔记">笔记<span class="count">(1)</span></span>
-        
-        <span class="filter-chip" data-tag="综合实践">综合实践<span class="count">(1)</span></span>
-        
-        <span class="filter-chip" data-tag="美术">美术<span class="count">(1)</span></span>
-        
-        <span class="filter-chip" data-tag="聚会">聚会<span class="count">(1)</span></span>
-        
-        <span class="filter-chip" data-tag="计划">计划<span class="count">(1)</span></span>
-        
-        <span class="filter-chip" data-tag="部落冲突">部落冲突<span class="count">(1)</span></span>
-        
-        <span class="filter-chip" data-tag="骑行">骑行<span class="count">(1)</span></span>
-        
+    <div class="filter-row">
+        <div class="filter-bar" id="filterBar">
+            <span class="filter-label">筛选：</span>
+            <span class="filter-chip active" data-tag="">全部</span>
+            
+            <span class="filter-chip" data-tag="学习">学习<span class="count">(9)</span></span>
+            
+            <span class="filter-chip" data-tag="软件">软件<span class="count">(8)</span></span>
+            
+            <span class="filter-chip" data-tag="随笔">随笔<span class="count">(7)</span></span>
+            
+            <span class="filter-chip" data-tag="时评">时评<span class="count">(6)</span></span>
+            
+            <span class="filter-chip" data-tag="校园">校园<span class="count">(5)</span></span>
+            
+            <span class="filter-chip" data-tag="项目">项目<span class="count">(5)</span></span>
+            
+            <span class="filter-chip" data-tag="AI">AI<span class="count">(3)</span></span>
+            
+            <span class="filter-chip" data-tag="征文">征文<span class="count">(3)</span></span>
+            
+            <span class="filter-chip" data-tag="游戏">游戏<span class="count">(3)</span></span>
+            
+            <span class="filter-chip" data-tag="红楼梦">红楼梦<span class="count">(3)</span></span>
+            
+            <span class="filter-chip" data-tag="英语">英语<span class="count">(3)</span></span>
+            
+            <span class="filter-chip" data-tag="VPN">VPN<span class="count">(2)</span></span>
+            
+            <span class="filter-chip" data-tag="测试">测试<span class="count">(2)</span></span>
+            
+            <span class="filter-chip" data-tag="生活">生活<span class="count">(2)</span></span>
+            
+            <span class="filter-chip" data-tag="钢琴谱">钢琴谱<span class="count">(2)</span></span>
+            
+            <span class="filter-chip" data-tag="音乐">音乐<span class="count">(2)</span></span>
+            
+            <span class="filter-chip" data-tag="BT">BT<span class="count">(1)</span></span>
+            
+            <span class="filter-chip" data-tag="ChatGPT">ChatGPT<span class="count">(1)</span></span>
+            
+            <span class="filter-chip" data-tag="HTML">HTML<span class="count">(1)</span></span>
+            
+            <span class="filter-chip" data-tag="Office">Office<span class="count">(1)</span></span>
+            
+            <span class="filter-chip" data-tag="PDF">PDF<span class="count">(1)</span></span>
+            
+            <span class="filter-chip" data-tag="公路车">公路车<span class="count">(1)</span></span>
+            
+            <span class="filter-chip" data-tag="压缩">压缩<span class="count">(1)</span></span>
+            
+            <span class="filter-chip" data-tag="古诗">古诗<span class="count">(1)</span></span>
+            
+            <span class="filter-chip" data-tag="安全">安全<span class="count">(1)</span></span>
+            
+            <span class="filter-chip" data-tag="实验报告">实验报告<span class="count">(1)</span></span>
+            
+            <span class="filter-chip" data-tag="弹球">弹球<span class="count">(1)</span></span>
+            
+            <span class="filter-chip" data-tag="录屏">录屏<span class="count">(1)</span></span>
+            
+            <span class="filter-chip" data-tag="我的世界">我的世界<span class="count">(1)</span></span>
+            
+            <span class="filter-chip" data-tag="桌面宠物">桌面宠物<span class="count">(1)</span></span>
+            
+            <span class="filter-chip" data-tag="模板">模板<span class="count">(1)</span></span>
+            
+            <span class="filter-chip" data-tag="研究性学习">研究性学习<span class="count">(1)</span></span>
+            
+            <span class="filter-chip" data-tag="笔记">笔记<span class="count">(1)</span></span>
+            
+            <span class="filter-chip" data-tag="综合实践">综合实践<span class="count">(1)</span></span>
+            
+            <span class="filter-chip" data-tag="美术">美术<span class="count">(1)</span></span>
+            
+            <span class="filter-chip" data-tag="聚会">聚会<span class="count">(1)</span></span>
+            
+            <span class="filter-chip" data-tag="计划">计划<span class="count">(1)</span></span>
+            
+            <span class="filter-chip" data-tag="部落冲突">部落冲突<span class="count">(1)</span></span>
+            
+            <span class="filter-chip" data-tag="骑行">骑行<span class="count">(1)</span></span>
+            
+        </div>
+        <div class="calendar-wrap">
+            <div class="calendar-card" id="calendarCard"></div>
+        </div>
     </div>
 
     
-
-    <!-- 日历 -->
-    <div class="calendar-wrap">
-        <div class="calendar-card" id="calendarCard"></div>
-    </div>
 
     <div class="container" id="postList">
         
@@ -392,7 +396,7 @@
             
             <div class="month-divider">2026年6月</div>
             
-            <a href="posts/Claude期末复习Skill.html" class="post-card" data-tags="项目,AI,学习" data-search-text="Claude 期末复习 Skill：把 PPT/PDF/Word 扔给 AI，生成可视化讲义 这是什么 一个 Claude Code Skill，专为期末复习设计。你只需要把老师的课件（PPT、PDF、Word 等格式）丢给它，它就能自动识别内容、提取知识点、生成一套可视化的复习讲义。 为什么做这个 期末复习最痛苦的事不是背书——是整理资料。 老师发的 PPT 几十页、课本 PDF 几百页、… 项目 AI 学习">
+            <a href="posts/Claude期末复习Skill.html" class="post-card" data-date="2026-06-19" data-tags="项目,AI,学习" data-search-text="Claude 期末复习 Skill：把 PPT/PDF/Word 扔给 AI，生成可视化讲义 这是什么 一个 Claude Code Skill，专为期末复习设计。你只需要把老师的课件（PPT、PDF、Word 等格式）丢给它，它就能自动识别内容、提取知识点、生成一套可视化的复习讲义。 为什么做这个 期末复习最痛苦的事不是背书——是整理资料。 老师发的 PPT 几十页、课本 PDF 几百页、… 项目 AI 学习">
                 <div class="post-meta">
                     <span>📅 2026年06月19日</span>
                     <span>·</span><span>🏷️ 项目, 🏷️ AI, 🏷️ 学习</span>
@@ -405,7 +409,7 @@
             </a>
             
             
-            <a href="posts/Viewer-纯前端访问计数与评论系统.html" class="post-card" data-tags="项目,软件" data-search-text="Viewer：纯前端访问计数与评论系统——零后端、零数据库、复制即用 缘起 2023 年，刚接触静态博客的时候，最羡慕的就是别人的博客有阅读量统计和评论区。那时候 YHSome 用的是 Hexo + GitHub Pages，纯静态 HTML 托管，没有服务器、没有数据库。传统的评论方案——Disqus、Gitalk、 utterances——要么需要注册第三方服务，… 项目 软件">
+            <a href="posts/Viewer-纯前端访问计数与评论系统.html" class="post-card" data-date="2026-06-19" data-tags="项目,软件" data-search-text="Viewer：纯前端访问计数与评论系统——零后端、零数据库、复制即用 缘起 2023 年，刚接触静态博客的时候，最羡慕的就是别人的博客有阅读量统计和评论区。那时候 YHSome 用的是 Hexo + GitHub Pages，纯静态 HTML 托管，没有服务器、没有数据库。传统的评论方案——Disqus、Gitalk、 utterances——要么需要注册第三方服务，… 项目 软件">
                 <div class="post-meta">
                     <span>📅 2026年06月19日</span>
                     <span>·</span><span>🏷️ 项目, 🏷️ 软件</span>
@@ -418,7 +422,7 @@
             </a>
             
             
-            <a href="posts/颂-YHSome与OpenBlogger.html" class="post-card" data-tags="随笔,项目" data-search-text="颂 YHSome 与 OpenBlogger：一个划时代的博客方案诞生记 引言：厌倦了 Hexo 的那一天 那是一个平凡的下午。YHSome 像往常一样打开了他的 Hexo 博客——那个陪伴了他整个高中时代的静态站点生成器。hexo generate，等待。hexo deploy，等待。主题配置两百行，插件依赖三十个。他忽然意识到：他已经花在折腾博客框架上的时间，远远超过… 随笔 项目">
+            <a href="posts/颂-YHSome与OpenBlogger.html" class="post-card" data-date="2026-06-19" data-tags="随笔,项目" data-search-text="颂 YHSome 与 OpenBlogger：一个划时代的博客方案诞生记 引言：厌倦了 Hexo 的那一天 那是一个平凡的下午。YHSome 像往常一样打开了他的 Hexo 博客——那个陪伴了他整个高中时代的静态站点生成器。hexo generate，等待。hexo deploy，等待。主题配置两百行，插件依赖三十个。他忽然意识到：他已经花在折腾博客框架上的时间，远远超过… 随笔 项目">
                 <div class="post-meta">
                     <span>📅 2026年06月19日</span>
                     <span>·</span><span>🏷️ 随笔, 🏷️ 项目</span>
@@ -431,7 +435,7 @@
             </a>
             
             
-            <a href="posts/模板.html" class="post-card" data-tags="模板" data-search-text="这是一个用户输入的模板 (除上述三行外，剩下的内容均为正文，如有更多的变量，用户须在最上方声明（另外用户页可以不输入，则渲染时自动按照当前时间作为博文时间、以及正文第一行作为标题）) 模板">
+            <a href="posts/模板.html" class="post-card" data-date="2026-06-18" data-tags="模板" data-search-text="这是一个用户输入的模板 (除上述三行外，剩下的内容均为正文，如有更多的变量，用户须在最上方声明（另外用户页可以不输入，则渲染时自动按照当前时间作为博文时间、以及正文第一行作为标题）) 模板">
                 <div class="post-meta">
                     <span>📅 2026年06月18日</span>
                     <span>·</span><span>🏷️ 模板</span>
@@ -446,7 +450,7 @@
             
             <div class="month-divider">2023年12月</div>
             
-            <a href="posts/笔记-快速写简化电子排布式.html" class="post-card" data-tags="笔记" data-search-text="笔记-快速写简化电子排布式 前言 刚学选修二化学，电子排布式写得我快吐血了。两页作业做了我一个多小时。刚刚看网课时，灵光乍现，悟到了一个快速写简化电子排布式的办法。且听我娓娓道来。 正文 这里以钪(Sc)为例，叙述其办法。 首先，先写出它的核外电子排布图： （注意，这里使用了能级交错 知识） 接着，把离他最近的上一级稀有气体核… 笔记">
+            <a href="posts/笔记-快速写简化电子排布式.html" class="post-card" data-date="2023-12-19" data-tags="笔记" data-search-text="笔记-快速写简化电子排布式 前言 刚学选修二化学，电子排布式写得我快吐血了。两页作业做了我一个多小时。刚刚看网课时，灵光乍现，悟到了一个快速写简化电子排布式的办法。且听我娓娓道来。 正文 这里以钪(Sc)为例，叙述其办法。 首先，先写出它的核外电子排布图： （注意，这里使用了能级交错 知识） 接着，把离他最近的上一级稀有气体核… 笔记">
                 <div class="post-meta">
                     <span>📅 2023年12月19日</span>
                     <span>·</span><span>🏷️ 笔记</span>
@@ -461,7 +465,7 @@
             
             <div class="month-divider">2023年10月</div>
             
-            <a href="posts/免费的office全家桶.html" class="post-card" data-tags="软件,Office" data-search-text="免费的office全家桶 前言 如题，这个是office全家桶的下载，自动激活，真正实现一键破解 下载链接 点击下载 软件 Office">
+            <a href="posts/免费的office全家桶.html" class="post-card" data-date="2023-10-28" data-tags="软件,Office" data-search-text="免费的office全家桶 前言 如题，这个是office全家桶的下载，自动激活，真正实现一键破解 下载链接 点击下载 软件 Office">
                 <div class="post-meta">
                     <span>📅 2023年10月28日</span>
                     <span>·</span><span>🏷️ 软件, 🏷️ Office</span>
@@ -476,7 +480,7 @@
             
             <div class="month-divider">2023年9月</div>
             
-            <a href="posts/实验报告-固体酒精.html" class="post-card" data-tags="实验报告" data-search-text="实验报告-固体酒精 固体酒精 策划人：欧阳天为、杨浩森 实验地点：化学实验室六 指导老师：梁敏霞 实验原理： 固体酒精通常是由水和酒精混合后，通过凝固剂作用形成的一种固态混合物。醋酸钙易溶于水而难溶于酒精，当两种溶液相混合时，醋酸钙在酒精中成为凝胶析出。液体便逐渐从浑浊到稠厚，最后凝聚为一整块，就得到固体酒精。 实验工… 实验报告">
+            <a href="posts/实验报告-固体酒精.html" class="post-card" data-date="2023-09-23" data-tags="实验报告" data-search-text="实验报告-固体酒精 固体酒精 策划人：欧阳天为、杨浩森 实验地点：化学实验室六 指导老师：梁敏霞 实验原理： 固体酒精通常是由水和酒精混合后，通过凝固剂作用形成的一种固态混合物。醋酸钙易溶于水而难溶于酒精，当两种溶液相混合时，醋酸钙在酒精中成为凝胶析出。液体便逐渐从浑浊到稠厚，最后凝聚为一整块，就得到固体酒精。 实验工… 实验报告">
                 <div class="post-meta">
                     <span>📅 2023年09月23日</span>
                     <span>·</span><span>🏷️ 实验报告</span>
@@ -489,7 +493,7 @@
             </a>
             
             
-            <a href="posts/myhtml.html" class="post-card" data-tags="校园,HTML,项目" data-search-text="我的第一个html网页实战 html 在今天，我用html语法写了个网页，我并且让它基于hexo部署了。 虽然是基于整活的目的，不过最后还是做出来了嘛 没啥好说的，点击这里打开网页 校园 HTML 项目">
+            <a href="posts/myhtml.html" class="post-card" data-date="2023-09-09" data-tags="校园,HTML,项目" data-search-text="我的第一个html网页实战 html 在今天，我用html语法写了个网页，我并且让它基于hexo部署了。 虽然是基于整活的目的，不过最后还是做出来了嘛 没啥好说的，点击这里打开网页 校园 HTML 项目">
                 <div class="post-meta">
                     <span>📅 2023年09月09日</span>
                     <span>·</span><span>🏷️ 校园, 🏷️ HTML, 🏷️ 项目</span>
@@ -502,7 +506,7 @@
             </a>
             
             
-            <a href="posts/随笔-重新注册白鲸加速器.html" class="post-card" data-tags="随笔,VPN" data-search-text="随笔-重新注册白鲸加速器 前言 白鲸加速器是一个比较稳定的vpn，可以允许你通过它访问外网。但是存在诸多限制，新账号三十天的免费试用期过后需要收费就很难受，接下来我将介绍如何重新注册账号，无限白嫖白鲸加速器。 正文 一般步骤的指导来重新注册白鲸加速器。请根据以下步骤自行操作： 1 2 3 4 5 6 7 | 1. 首先，打开… 随笔 VPN">
+            <a href="posts/随笔-重新注册白鲸加速器.html" class="post-card" data-date="2023-09-09" data-tags="随笔,VPN" data-search-text="随笔-重新注册白鲸加速器 前言 白鲸加速器是一个比较稳定的vpn，可以允许你通过它访问外网。但是存在诸多限制，新账号三十天的免费试用期过后需要收费就很难受，接下来我将介绍如何重新注册账号，无限白嫖白鲸加速器。 正文 一般步骤的指导来重新注册白鲸加速器。请根据以下步骤自行操作： 1 2 3 4 5 6 7 | 1. 首先，打开… 随笔 VPN">
                 <div class="post-meta">
                     <span>📅 2023年09月09日</span>
                     <span>·</span><span>🏷️ 随笔, 🏷️ VPN</span>
@@ -515,7 +519,7 @@
             </a>
             
             
-            <a href="posts/PinballChallenge.html" class="post-card" data-tags="游戏,弹球" data-search-text="弹球挑战 弹球挑战 这里是弹球挑战，只需30得分即挑战成功！ 然而，难度将会越来越大。 祝君好运！ 挑战成功有奖励！ 只要你使用Windows系统在挑战中得到了30分，并且给予我全程（从打开网页开始算起）的挑战录像即为挑战成功，截图发给我，我会给予第一位挑战成功并符合要求的玩家10元红包奖励！ 挑战链接 点击… 游戏 弹球">
+            <a href="posts/PinballChallenge.html" class="post-card" data-date="2023-09-01" data-tags="游戏,弹球" data-search-text="弹球挑战 弹球挑战 这里是弹球挑战，只需30得分即挑战成功！ 然而，难度将会越来越大。 祝君好运！ 挑战成功有奖励！ 只要你使用Windows系统在挑战中得到了30分，并且给予我全程（从打开网页开始算起）的挑战录像即为挑战成功，截图发给我，我会给予第一位挑战成功并符合要求的玩家10元红包奖励！ 挑战链接 点击… 游戏 弹球">
                 <div class="post-meta">
                     <span>📅 2023年09月01日</span>
                     <span>·</span><span>🏷️ 游戏, 🏷️ 弹球</span>
@@ -530,7 +534,7 @@
             
             <div class="month-divider">2023年8月</div>
             
-            <a href="posts/随笔-台风-停课.html" class="post-card" data-tags="随笔,生活" data-search-text="随笔-台风？停课！ 前言 按照惯例先写个开头，2023年8月31日由于台风登陆粤东，众多学校停课至九月四日开学。 正文 正文其实没啥好说的，只能感叹一下学校拖延的习惯太夸张了。 通知明明是五点四十多分下发的，结果学校拖到六点五十，学生都回学校上交手机了才通知。 结果就是上了一个小时学又把学生赶回家了。 其实这对于我来说… 随笔 生活">
+            <a href="posts/随笔-台风-停课.html" class="post-card" data-date="2023-08-31" data-tags="随笔,生活" data-search-text="随笔-台风？停课！ 前言 按照惯例先写个开头，2023年8月31日由于台风登陆粤东，众多学校停课至九月四日开学。 正文 正文其实没啥好说的，只能感叹一下学校拖延的习惯太夸张了。 通知明明是五点四十多分下发的，结果学校拖到六点五十，学生都回学校上交手机了才通知。 结果就是上了一个小时学又把学生赶回家了。 其实这对于我来说… 随笔 生活">
                 <div class="post-meta">
                     <span>📅 2023年08月31日</span>
                     <span>·</span><span>🏷️ 随笔, 🏷️ 生活</span>
@@ -543,7 +547,7 @@
             </a>
             
             
-            <a href="posts/pixelqx.html" class="post-card" data-tags="游戏,我的世界,项目" data-search-text="PixelQX：像素桥兴计划 前言 前段时间和朋友吹水时，偶尔提到了桥兴中学的事儿，突然灵光一闪：万一我们真的能在我的世界里面还原桥兴中学呢？ 心动不如行动，于是就有了这个计划。并且，我为此还开设了一个服务器，大家也可以随时进入参观玩耍。 如何加入此服务器？ 本服务器同时支持java、基岩版minecraft并且无需正版账号，即… 游戏 我的世界 项目">
+            <a href="posts/pixelqx.html" class="post-card" data-date="2023-08-28" data-tags="游戏,我的世界,项目" data-search-text="PixelQX：像素桥兴计划 前言 前段时间和朋友吹水时，偶尔提到了桥兴中学的事儿，突然灵光一闪：万一我们真的能在我的世界里面还原桥兴中学呢？ 心动不如行动，于是就有了这个计划。并且，我为此还开设了一个服务器，大家也可以随时进入参观玩耍。 如何加入此服务器？ 本服务器同时支持java、基岩版minecraft并且无需正版账号，即… 游戏 我的世界 项目">
                 <div class="post-meta">
                     <span>📅 2023年08月28日</span>
                     <span>·</span><span>🏷️ 游戏, 🏷️ 我的世界, 🏷️ 项目</span>
@@ -556,7 +560,7 @@
             </a>
             
             
-            <a href="posts/随笔-文心一言使用感受.html" class="post-card" data-tags="随笔,AI" data-search-text="随笔-文心一言使用感受 前言 这个文心一言光是在申请这一栏就拦住我了。捏麻申请给我拖了大半年才通过，在这期间我都不知道换了多少个chatgpt的镜像网站了。 正文 其实网上说的文心一言有多烂我是不太认可的，现在的文心一言在中文的问答方面以及比较正常了。chatgpt的语料库是来自众多语言的，而以英语为主，文心一言则是以中文… 随笔 AI">
+            <a href="posts/随笔-文心一言使用感受.html" class="post-card" data-date="2023-08-28" data-tags="随笔,AI" data-search-text="随笔-文心一言使用感受 前言 这个文心一言光是在申请这一栏就拦住我了。捏麻申请给我拖了大半年才通过，在这期间我都不知道换了多少个chatgpt的镜像网站了。 正文 其实网上说的文心一言有多烂我是不太认可的，现在的文心一言在中文的问答方面以及比较正常了。chatgpt的语料库是来自众多语言的，而以英语为主，文心一言则是以中文… 随笔 AI">
                 <div class="post-meta">
                     <span>📅 2023年08月28日</span>
                     <span>·</span><span>🏷️ 随笔, 🏷️ AI</span>
@@ -569,7 +573,7 @@
             </a>
             
             
-            <a href="posts/xiyouspeaker.html" class="post-card" data-tags="学习,英语" data-search-text="西柚朗读者（西柚英语辅助） 此文章同步保存在以下网站 森的神秘空间 github 功能简介 该脚本可以帮助你完成 西柚英语 中的朗读部分。 西柚朗读者由上一代的西柚选择者改制而来，两者并不兼容 github项目地址/下载地址 使用方法 下面是演示视频 Your browser does not support the vide… 学习 英语">
+            <a href="posts/xiyouspeaker.html" class="post-card" data-date="2023-08-22" data-tags="学习,英语" data-search-text="西柚朗读者（西柚英语辅助） 此文章同步保存在以下网站 森的神秘空间 github 功能简介 该脚本可以帮助你完成 西柚英语 中的朗读部分。 西柚朗读者由上一代的西柚选择者改制而来，两者并不兼容 github项目地址/下载地址 使用方法 下面是演示视频 Your browser does not support the vide… 学习 英语">
                 <div class="post-meta">
                     <span>📅 2023年08月22日</span>
                     <span>·</span><span>🏷️ 学习, 🏷️ 英语</span>
@@ -582,7 +586,7 @@
             </a>
             
             
-            <a href="posts/xiyouchooser.html" class="post-card" data-tags="学习,英语" data-search-text="西柚选择者（西柚英语辅助） 此文章同步保存在以下网站 森的神秘空间 github 功能简介 该脚本可以帮助你完成 西柚英语 中烦人的看词选义和看义选词。 github项目地址/下载地址 使用方法 下面是演示视频 Your browser does not support the video tag. 第一步：安装python以… 学习 英语">
+            <a href="posts/xiyouchooser.html" class="post-card" data-date="2023-08-19" data-tags="学习,英语" data-search-text="西柚选择者（西柚英语辅助） 此文章同步保存在以下网站 森的神秘空间 github 功能简介 该脚本可以帮助你完成 西柚英语 中烦人的看词选义和看义选词。 github项目地址/下载地址 使用方法 下面是演示视频 Your browser does not support the video tag. 第一步：安装python以… 学习 英语">
                 <div class="post-meta">
                     <span>📅 2023年08月19日</span>
                     <span>·</span><span>🏷️ 学习, 🏷️ 英语</span>
@@ -595,7 +599,7 @@
             </a>
             
             
-            <a href="posts/随笔-论网络诈骗.html" class="post-card" data-tags="随笔,安全" data-search-text="随笔-论网络诈骗 前言 今天下午，我利用匿名邮箱向几个好友发送了一份伪装‘学考不通过’和‘学考作弊清除成绩’的邮件，并附上了钓鱼链接。星宇因此上钩 远在天边，近在眼前 电信诈骗离我们并不遥远，虽然看上去诈骗分子并不会广撒网撒到我们这种几乎没有泄露过任何信息的青少年，但是也要提高警惕，因为实施诈骗的人很可能就是身边的人… 随笔 安全">
+            <a href="posts/随笔-论网络诈骗.html" class="post-card" data-date="2023-08-13" data-tags="随笔,安全" data-search-text="随笔-论网络诈骗 前言 今天下午，我利用匿名邮箱向几个好友发送了一份伪装‘学考不通过’和‘学考作弊清除成绩’的邮件，并附上了钓鱼链接。星宇因此上钩 远在天边，近在眼前 电信诈骗离我们并不遥远，虽然看上去诈骗分子并不会广撒网撒到我们这种几乎没有泄露过任何信息的青少年，但是也要提高警惕，因为实施诈骗的人很可能就是身边的人… 随笔 安全">
                 <div class="post-meta">
                     <span>📅 2023年08月13日</span>
                     <span>·</span><span>🏷️ 随笔, 🏷️ 安全</span>
@@ -608,7 +612,7 @@
             </a>
             
             
-            <a href="posts/一些钢琴谱下载.html" class="post-card" data-tags="音乐,钢琴谱" data-search-text="一些钢琴谱下载 b站收集的一些钢琴谱，主要都是著名电子音乐改编，有需要可以自行下载。 altale钢琴谱 cryout钢琴谱 Distorted Fate钢琴谱 WATER钢琴谱 With You钢琴谱 音乐 钢琴谱">
+            <a href="posts/一些钢琴谱下载.html" class="post-card" data-date="2023-08-12" data-tags="音乐,钢琴谱" data-search-text="一些钢琴谱下载 b站收集的一些钢琴谱，主要都是著名电子音乐改编，有需要可以自行下载。 altale钢琴谱 cryout钢琴谱 Distorted Fate钢琴谱 WATER钢琴谱 With You钢琴谱 音乐 钢琴谱">
                 <div class="post-meta">
                     <span>📅 2023年08月12日</span>
                     <span>·</span><span>🏷️ 音乐, 🏷️ 钢琴谱</span>
@@ -621,7 +625,7 @@
             </a>
             
             
-            <a href="posts/随笔-一些给新高一的资料和建议.html" class="post-card" data-tags="随笔,校园" data-search-text="随笔-一些给新高一的资料 前言 送给新高一的好东西，如果你是番中的那么这些网页将很适合你。 资料 点击打开 一些乱七八糟的正文稿 2023年4月份的时事评论 高一下学期必读名著红楼梦思维导图 综合实践、美术这种可以随便应付的科目 随笔 校园">
+            <a href="posts/随笔-一些给新高一的资料和建议.html" class="post-card" data-date="2023-08-09" data-tags="随笔,校园" data-search-text="随笔-一些给新高一的资料 前言 送给新高一的好东西，如果你是番中的那么这些网页将很适合你。 资料 点击打开 一些乱七八糟的正文稿 2023年4月份的时事评论 高一下学期必读名著红楼梦思维导图 综合实践、美术这种可以随便应付的科目 随笔 校园">
                 <div class="post-meta">
                     <span>📅 2023年08月09日</span>
                     <span>·</span><span>🏷️ 随笔, 🏷️ 校园</span>
@@ -634,7 +638,7 @@
             </a>
             
             
-            <a href="posts/随笔-平价零食超市真的平价吗.html" class="post-card" data-tags="随笔,生活" data-search-text="随笔-平价零食超市真的平价吗 背景 今天被我妈强行拉去‘赵一鸣’零食店买零食了。观察店面可知，其装修风格极具现代化，大幅度使用led灯，似乎与其‘平价’产生了反差。这不免令我产生疑惑：其所标榜的‘平价’是真真切切的还是换种套路割韭菜呢？ 1.为何火遍大江南北？ 在我的观点下，年轻人普遍‘吝啬’的生活态度，疫情后报复消费，以及贪小… 随笔 生活">
+            <a href="posts/随笔-平价零食超市真的平价吗.html" class="post-card" data-date="2023-08-09" data-tags="随笔,生活" data-search-text="随笔-平价零食超市真的平价吗 背景 今天被我妈强行拉去‘赵一鸣’零食店买零食了。观察店面可知，其装修风格极具现代化，大幅度使用led灯，似乎与其‘平价’产生了反差。这不免令我产生疑惑：其所标榜的‘平价’是真真切切的还是换种套路割韭菜呢？ 1.为何火遍大江南北？ 在我的观点下，年轻人普遍‘吝啬’的生活态度，疫情后报复消费，以及贪小… 随笔 生活">
                 <div class="post-meta">
                     <span>📅 2023年08月09日</span>
                     <span>·</span><span>🏷️ 随笔, 🏷️ 生活</span>
@@ -647,7 +651,7 @@
             </a>
             
             
-            <a href="posts/bandizip.html" class="post-card" data-tags="软件,压缩" data-search-text="Bandizip专业版解锁及去除更新 前言 对于电脑使用者来说，压缩/解压缩软件是必不可少的，今天给大家推荐的Bandizip是一款免费优秀的文件压缩/解压缩软件，界面简洁，功能明了，免费纯净无广告。它支持多国语言，解压后不会出现乱码，Bandizip拥有非常快速的压缩和解压缩的算法，适用于多核心压缩、快速拖拽、高速压缩等功能。 解锁步… 软件 压缩">
+            <a href="posts/bandizip.html" class="post-card" data-date="2023-08-08" data-tags="软件,压缩" data-search-text="Bandizip专业版解锁及去除更新 前言 对于电脑使用者来说，压缩/解压缩软件是必不可少的，今天给大家推荐的Bandizip是一款免费优秀的文件压缩/解压缩软件，界面简洁，功能明了，免费纯净无广告。它支持多国语言，解压后不会出现乱码，Bandizip拥有非常快速的压缩和解压缩的算法，适用于多核心压缩、快速拖拽、高速压缩等功能。 解锁步… 软件 压缩">
                 <div class="post-meta">
                     <span>📅 2023年08月08日</span>
                     <span>·</span><span>🏷️ 软件, 🏷️ 压缩</span>
@@ -660,7 +664,7 @@
             </a>
             
             
-            <a href="posts/altale.html" class="post-card" data-tags="音乐,钢琴谱" data-search-text="altale五线谱 作者不是我，仅搬运 下载链接：点击下载 音乐 钢琴谱">
+            <a href="posts/altale.html" class="post-card" data-date="2023-08-06" data-tags="音乐,钢琴谱" data-search-text="altale五线谱 作者不是我，仅搬运 下载链接：点击下载 音乐 钢琴谱">
                 <div class="post-meta">
                     <span>📅 2023年08月06日</span>
                     <span>·</span><span>🏷️ 音乐, 🏷️ 钢琴谱</span>
@@ -673,7 +677,7 @@
             </a>
             
             
-            <a href="posts/rc200tools.html" class="post-card" data-tags="骑行,公路车" data-search-text="喜德盛rc200改装实例 前言 RC200，作为一辆入门级的公路车，性价比是1000~2000中比较高的。我骑了半年，接下来按重要性高低介绍一下rc200这辆车有哪些便宜的配件能够提高骑行体验 正文 车锁 公路自行车价格普遍偏高，如果自行车在晚上不能停到家中就会有一定风险会被偷。因此一把好的车锁是必要的 水壶支架 出门时，如… 骑行 公路车">
+            <a href="posts/rc200tools.html" class="post-card" data-date="2023-08-06" data-tags="骑行,公路车" data-search-text="喜德盛rc200改装实例 前言 RC200，作为一辆入门级的公路车，性价比是1000~2000中比较高的。我骑了半年，接下来按重要性高低介绍一下rc200这辆车有哪些便宜的配件能够提高骑行体验 正文 车锁 公路自行车价格普遍偏高，如果自行车在晚上不能停到家中就会有一定风险会被偷。因此一把好的车锁是必要的 水壶支架 出门时，如… 骑行 公路车">
                 <div class="post-meta">
                     <span>📅 2023年08月06日</span>
                     <span>·</span><span>🏷️ 骑行, 🏷️ 公路车</span>
@@ -688,7 +692,7 @@
             
             <div class="month-divider">2023年7月</div>
             
-            <a href="posts/bandicam.html" class="post-card" data-tags="软件,录屏" data-search-text="录屏软件bandicam下载 下载地址：点击下载 Bandicam（班迪录屏）一款简单好用的电脑屏幕录制软件，录屏幕，录游戏，录视频的功能强大的录屏工具，比起其他软件其性能更加卓越。 与其他软件相比，用 Bandicam 录制的视频大小更小，不仅保证原文件的质量。下载免费版，可录制时间最长为10分钟，录制视频打上（www.BAN… 软件 录屏">
+            <a href="posts/bandicam.html" class="post-card" data-date="2023-07-25" data-tags="软件,录屏" data-search-text="录屏软件bandicam下载 下载地址：点击下载 Bandicam（班迪录屏）一款简单好用的电脑屏幕录制软件，录屏幕，录游戏，录视频的功能强大的录屏工具，比起其他软件其性能更加卓越。 与其他软件相比，用 Bandicam 录制的视频大小更小，不仅保证原文件的质量。下载免费版，可录制时间最长为10分钟，录制视频打上（www.BAN… 软件 录屏">
                 <div class="post-meta">
                     <span>📅 2023年07月25日</span>
                     <span>·</span><span>🏷️ 软件, 🏷️ 录屏</span>
@@ -701,7 +705,7 @@
             </a>
             
             
-            <a href="posts/bitcoment-pro.html" class="post-card" data-tags="软件,BT" data-search-text="比特彗星解锁版下载 前言 比特彗星就是下载种子文件的软件，懂得都懂。 蓝奏盘下载链接 点击跳转 下面是废话 比特彗星（Bit comet）简介 比特彗星是一款流行的BitTorrent下载客户端软件，使用该软件可以高效地下载和分享种子文件。它既支持Windows操作系统，也提供了适用于Linux和macOS的版本。 作… 软件 BT">
+            <a href="posts/bitcoment-pro.html" class="post-card" data-date="2023-07-09" data-tags="软件,BT" data-search-text="比特彗星解锁版下载 前言 比特彗星就是下载种子文件的软件，懂得都懂。 蓝奏盘下载链接 点击跳转 下面是废话 比特彗星（Bit comet）简介 比特彗星是一款流行的BitTorrent下载客户端软件，使用该软件可以高效地下载和分享种子文件。它既支持Windows操作系统，也提供了适用于Linux和macOS的版本。 作… 软件 BT">
                 <div class="post-meta">
                     <span>📅 2023年07月09日</span>
                     <span>·</span><span>🏷️ 软件, 🏷️ BT</span>
@@ -714,7 +718,7 @@
             </a>
             
             
-            <a href="posts/BongoCat.html" class="post-card" data-tags="软件,桌面宠物" data-search-text="猫猫桌宠BongoCat下载 简述 B站的up用爱发电做的，可以实时反馈鼠标及键盘的操作 ~~猫猫好可爱~~ 安装 蓝奏盘:下载链接 软件 桌面宠物">
+            <a href="posts/BongoCat.html" class="post-card" data-date="2023-07-09" data-tags="软件,桌面宠物" data-search-text="猫猫桌宠BongoCat下载 简述 B站的up用爱发电做的，可以实时反馈鼠标及键盘的操作 ~~猫猫好可爱~~ 安装 蓝奏盘:下载链接 软件 桌面宠物">
                 <div class="post-meta">
                     <span>📅 2023年07月09日</span>
                     <span>·</span><span>🏷️ 软件, 🏷️ 桌面宠物</span>
@@ -729,7 +733,7 @@
             
             <div class="month-divider">2023年6月</div>
             
-            <a href="posts/coc.html" class="post-card" data-tags="游戏,部落冲突" data-search-text="我的部落冲突国际服重开日记（随缘更新） 前言 看到皇室战争国服最近(23年6月)的骚操作，已经对部落冲突的国服感到担忧了。因此，我先放下了国服部落冲突，在国际服开了个新号，~~以此来回忆我的青春.~~ ps：国际服的账号注册并不困难，需要的可以在gamestoday下载。 正文 2023/6/23 12:26 部落冲突，启动！ 2023/… 游戏 部落冲突">
+            <a href="posts/coc.html" class="post-card" data-date="2023-06-23" data-tags="游戏,部落冲突" data-search-text="我的部落冲突国际服重开日记（随缘更新） 前言 看到皇室战争国服最近(23年6月)的骚操作，已经对部落冲突的国服感到担忧了。因此，我先放下了国服部落冲突，在国际服开了个新号，~~以此来回忆我的青春.~~ ps：国际服的账号注册并不困难，需要的可以在gamestoday下载。 正文 2023/6/23 12:26 部落冲突，启动！ 2023/… 游戏 部落冲突">
                 <div class="post-meta">
                     <span>📅 2023年06月23日</span>
                     <span>·</span><span>🏷️ 游戏, 🏷️ 部落冲突</span>
@@ -742,7 +746,7 @@
             </a>
             
             
-            <a href="posts/EaseUS-PDF-Editor.html" class="post-card" data-tags="软件,PDF" data-search-text="EaseUS——免费的PDF编辑工具（pro解锁） 前言# WPS Office的pdf编辑功能过于坑爹，下面于是我找到了一款更好的pdf编辑器，除了只有繁体中文外几乎没有缺点 相较于WPS Office，EaseUS PDF 在以下几个方面具有优势： 专注于PDF编辑 ：EaseUS PDF 是一款专注于PDF文件处理和编辑的软件，而WPS Off… 软件 PDF">
+            <a href="posts/EaseUS-PDF-Editor.html" class="post-card" data-date="2023-06-22" data-tags="软件,PDF" data-search-text="EaseUS——免费的PDF编辑工具（pro解锁） 前言# WPS Office的pdf编辑功能过于坑爹，下面于是我找到了一款更好的pdf编辑器，除了只有繁体中文外几乎没有缺点 相较于WPS Office，EaseUS PDF 在以下几个方面具有优势： 专注于PDF编辑 ：EaseUS PDF 是一款专注于PDF文件处理和编辑的软件，而WPS Off… 软件 PDF">
                 <div class="post-meta">
                     <span>📅 2023年06月22日</span>
                     <span>·</span><span>🏷️ 软件, 🏷️ PDF</span>
@@ -755,7 +759,7 @@
             </a>
             
             
-            <a href="posts/RsearchLearning.html" class="post-card" data-tags="校园,研究性学习" data-search-text="研究性学习相关内容 作为组员，您需要完成的内容 请按照模板的格式进行填写，并在填写完毕后发送给组长。 下载组员模板 此外，如果您想节约时间，亦可以使用人工智能以帮助您完成正文 您可以使用以下提示词(xxxxx换成你的主题，其余不要动) 1 | 以以下主题写一篇八百字文章：xxxxx：（此处写你的副标题） ---|---… 校园 研究性学习">
+            <a href="posts/RsearchLearning.html" class="post-card" data-date="2023-06-22" data-tags="校园,研究性学习" data-search-text="研究性学习相关内容 作为组员，您需要完成的内容 请按照模板的格式进行填写，并在填写完毕后发送给组长。 下载组员模板 此外，如果您想节约时间，亦可以使用人工智能以帮助您完成正文 您可以使用以下提示词(xxxxx换成你的主题，其余不要动) 1 | 以以下主题写一篇八百字文章：xxxxx：（此处写你的副标题） ---|---… 校园 研究性学习">
                 <div class="post-meta">
                     <span>📅 2023年06月22日</span>
                     <span>·</span><span>🏷️ 校园, 🏷️ 研究性学习</span>
@@ -768,7 +772,7 @@
             </a>
             
             
-            <a href="posts/FinalReport.html" class="post-card" data-tags="校园,综合实践" data-search-text="综合实践课结题报告 以下内容仅供展示，docx文件转换为markdown格式可能回出现一些格式问题。因此文中的表格会有些异常 点此下载docx文件 高一18班学生对学校食堂的满意度进行调查 广东番禺中学 研究小组成员：杨浩森，雷世学，林泰成,李世海 指导教师：郭玉玲 第一部分：课题说明 研究背景与意义 研究背景： 学校… 校园 综合实践">
+            <a href="posts/FinalReport.html" class="post-card" data-date="2023-06-02" data-tags="校园,综合实践" data-search-text="综合实践课结题报告 以下内容仅供展示，docx文件转换为markdown格式可能回出现一些格式问题。因此文中的表格会有些异常 点此下载docx文件 高一18班学生对学校食堂的满意度进行调查 广东番禺中学 研究小组成员：杨浩森，雷世学，林泰成,李世海 指导教师：郭玉玲 第一部分：课题说明 研究背景与意义 研究背景： 学校… 校园 综合实践">
                 <div class="post-meta">
                     <span>📅 2023年06月02日</span>
                     <span>·</span><span>🏷️ 校园, 🏷️ 综合实践</span>
@@ -781,7 +785,7 @@
             </a>
             
             
-            <a href="posts/Shcedule.html" class="post-card" data-tags="校园,聚会" data-search-text="关于六月七日回桥兴中学的相关信息 截至2023/6/6 21：36 共计10人参与： 1 | 黄茂轩，霍泽明，何城熙，张逸，林浩天，陈曦洋，杨浩森，王绮璇，崔雅晞，梁海晴 ---|--- 时间：在2023/6/07 16：30于桥兴校门集合。 其中 杨浩森，霍泽明，王绮璇，陈曦洋 四人将于16:15番禺职中放学后步行至桥兴， 黄茂轩… 校园 聚会">
+            <a href="posts/Shcedule.html" class="post-card" data-date="2023-06-02" data-tags="校园,聚会" data-search-text="关于六月七日回桥兴中学的相关信息 截至2023/6/6 21：36 共计10人参与： 1 | 黄茂轩，霍泽明，何城熙，张逸，林浩天，陈曦洋，杨浩森，王绮璇，崔雅晞，梁海晴 ---|--- 时间：在2023/6/07 16：30于桥兴校门集合。 其中 杨浩森，霍泽明，王绮璇，陈曦洋 四人将于16:15番禺职中放学后步行至桥兴， 黄茂轩… 校园 聚会">
                 <div class="post-meta">
                     <span>📅 2023年06月02日</span>
                     <span>·</span><span>🏷️ 校园, 🏷️ 聚会</span>
@@ -796,7 +800,7 @@
             
             <div class="month-divider">2023年5月</div>
             
-            <a href="posts/红楼梦思维导图21-70回.html" class="post-card" data-tags="学习,红楼梦" data-search-text="红楼梦思维导图21-70回 -[点此下载所有思维导图（压缩文件）](https://YHSome.github.io/image/2023-5-28/DreamOfRedMansion.zip 此处仅有21-70回思维导图，若想查看1-20回，请查看我的个人博客 您可以使用浏览器的搜索页面文本功能（ctrl+f）功能快速查找对… 学习 红楼梦">
+            <a href="posts/红楼梦思维导图21-70回.html" class="post-card" data-date="2023-05-20" data-tags="学习,红楼梦" data-search-text="红楼梦思维导图21-70回 -[点此下载所有思维导图（压缩文件）](https://YHSome.github.io/image/2023-5-28/DreamOfRedMansion.zip 此处仅有21-70回思维导图，若想查看1-20回，请查看我的个人博客 您可以使用浏览器的搜索页面文本功能（ctrl+f）功能快速查找对… 学习 红楼梦">
                 <div class="post-meta">
                     <span>📅 2023年05月20日</span>
                     <span>·</span><span>🏷️ 学习, 🏷️ 红楼梦</span>
@@ -809,7 +813,7 @@
             </a>
             
             
-            <a href="posts/哗哩哗哩-欧洲浪漫主义.html" class="post-card" data-tags="学习,美术" data-search-text="美术发言-欧洲浪漫主义 浪漫主义是兴起于18世纪后期，然后持续发展到19世纪中期的艺术运动，那么浪漫主义跟我们平时所讲的浪漫有什么关系么？ 今天，当我们提到浪漫这个词时，会很容易和热恋中的情侣产生关联，或者是在结婚纪念日当天，一个丈夫下班后，买了一束玫瑰花送给他的妻子……这些都是我们对于浪漫这个词的第一印象。而我们所说的浪… 学习 美术">
+            <a href="posts/哗哩哗哩-欧洲浪漫主义.html" class="post-card" data-date="2023-05-17" data-tags="学习,美术" data-search-text="美术发言-欧洲浪漫主义 浪漫主义是兴起于18世纪后期，然后持续发展到19世纪中期的艺术运动，那么浪漫主义跟我们平时所讲的浪漫有什么关系么？ 今天，当我们提到浪漫这个词时，会很容易和热恋中的情侣产生关联，或者是在结婚纪念日当天，一个丈夫下班后，买了一束玫瑰花送给他的妻子……这些都是我们对于浪漫这个词的第一印象。而我们所说的浪… 学习 美术">
                 <div class="post-meta">
                     <span>📅 2023年05月17日</span>
                     <span>·</span><span>🏷️ 学习, 🏷️ 美术</span>
@@ -822,7 +826,7 @@
             </a>
             
             
-            <a href="posts/终南别业古诗赏析演讲稿.html" class="post-card" data-tags="学习,古诗" data-search-text="终南别业古诗赏析演讲稿 王维是盛唐时期著名诗人，他出生名门，年少成名，历经了玄宗、肃宗、代宗三朝，担任了右拾遗、监察御史、左补阙、库部郎中、吏部郎中、给事中、太子中庶子、中书舍人的职位，晚年官至尚书右丞，所以后人经常称他为王右丞。 但王维在数十年沉沉浮浮的官场生涯中，特别是安史之乱时他还被迫担任过安禄山的伪官，所以他的内心… 学习 古诗">
+            <a href="posts/终南别业古诗赏析演讲稿.html" class="post-card" data-date="2023-05-17" data-tags="学习,古诗" data-search-text="终南别业古诗赏析演讲稿 王维是盛唐时期著名诗人，他出生名门，年少成名，历经了玄宗、肃宗、代宗三朝，担任了右拾遗、监察御史、左补阙、库部郎中、吏部郎中、给事中、太子中庶子、中书舍人的职位，晚年官至尚书右丞，所以后人经常称他为王右丞。 但王维在数十年沉沉浮浮的官场生涯中，特别是安史之乱时他还被迫担任过安禄山的伪官，所以他的内心… 学习 古诗">
                 <div class="post-meta">
                     <span>📅 2023年05月17日</span>
                     <span>·</span><span>🏷️ 学习, 🏷️ 古诗</span>
@@ -835,7 +839,7 @@
             </a>
             
             
-            <a href="posts/红楼梦思维导图11-20回.html" class="post-card" data-tags="学习,红楼梦" data-search-text="红楼梦思维导图11-20回 -[点此下载所有思维导图（压缩文件）](https://YHSome.github.io/image/2023-5-28/DreamOfRedMansion.zip 此处仅有11-20回思维导图，将持续更新搬运，请查看我的个人博客 您可以使用浏览器的搜索页面文本功能（ctrl+f）功能快速查找对应章… 学习 红楼梦">
+            <a href="posts/红楼梦思维导图11-20回.html" class="post-card" data-date="2023-05-14" data-tags="学习,红楼梦" data-search-text="红楼梦思维导图11-20回 -[点此下载所有思维导图（压缩文件）](https://YHSome.github.io/image/2023-5-28/DreamOfRedMansion.zip 此处仅有11-20回思维导图，将持续更新搬运，请查看我的个人博客 您可以使用浏览器的搜索页面文本功能（ctrl+f）功能快速查找对应章… 学习 红楼梦">
                 <div class="post-meta">
                     <span>📅 2023年05月14日</span>
                     <span>·</span><span>🏷️ 学习, 🏷️ 红楼梦</span>
@@ -848,7 +852,7 @@
             </a>
             
             
-            <a href="posts/征文-雾都孤儿观后感.html" class="post-card" data-tags="征文" data-search-text="征文-雾都孤儿观后感 《雾都孤儿》是查尔斯·狄更斯的一部经典小说，讲述了一个孤儿少年奥利弗的命运转折和成长历程。从故事中我能感受到人性的阴暗面以及对正义与善良的追求。 小说描写了那个时代工业革命带来的社会问题，产生了大量的贫困、犯罪和不公。在这个环境下，奥利弗不幸被遗弃在孤儿院，接连遭受了不少苦难。虽然他身处困境，但是依… 征文">
+            <a href="posts/征文-雾都孤儿观后感.html" class="post-card" data-date="2023-05-13" data-tags="征文" data-search-text="征文-雾都孤儿观后感 《雾都孤儿》是查尔斯·狄更斯的一部经典小说，讲述了一个孤儿少年奥利弗的命运转折和成长历程。从故事中我能感受到人性的阴暗面以及对正义与善良的追求。 小说描写了那个时代工业革命带来的社会问题，产生了大量的贫困、犯罪和不公。在这个环境下，奥利弗不幸被遗弃在孤儿院，接连遭受了不少苦难。虽然他身处困境，但是依… 征文">
                 <div class="post-meta">
                     <span>📅 2023年05月13日</span>
                     <span>·</span><span>🏷️ 征文</span>
@@ -861,7 +865,7 @@
             </a>
             
             
-            <a href="posts/红楼梦思维导图1-10回.html" class="post-card" data-tags="学习,红楼梦" data-search-text="红楼梦思维导图1-10回 -[点此下载所有思维导图（压缩文件）](https://YHSome.github.io/image/2023-5-28/DreamOfRedMansion.zip 此处仅有1-10回思维导图，将持续更新搬运，请查看我的个人博客 您可以使用浏览器的搜索页面文本功能（ctrl+f）功能快速查找对应章节 学习 红楼梦">
+            <a href="posts/红楼梦思维导图1-10回.html" class="post-card" data-date="2023-05-13" data-tags="学习,红楼梦" data-search-text="红楼梦思维导图1-10回 -[点此下载所有思维导图（压缩文件）](https://YHSome.github.io/image/2023-5-28/DreamOfRedMansion.zip 此处仅有1-10回思维导图，将持续更新搬运，请查看我的个人博客 您可以使用浏览器的搜索页面文本功能（ctrl+f）功能快速查找对应章节 学习 红楼梦">
                 <div class="post-meta">
                     <span>📅 2023年05月13日</span>
                     <span>·</span><span>🏷️ 学习, 🏷️ 红楼梦</span>
@@ -874,7 +878,7 @@
             </a>
             
             
-            <a href="posts/蓝灯镜像下载.html" class="post-card" data-tags="软件,VPN" data-search-text="蓝灯镜像下载 注意，此处为镜像站，具体视官网为准 蓝灯(Lantern)最新版本下载 版本! Download Lantern Version ! Windows7及以上 Windows 7+ 备用地址1 Alternative address1 备用地址2 Alternative address2 安卓版(4.… 软件 VPN">
+            <a href="posts/蓝灯镜像下载.html" class="post-card" data-date="2023-05-13" data-tags="软件,VPN" data-search-text="蓝灯镜像下载 注意，此处为镜像站，具体视官网为准 蓝灯(Lantern)最新版本下载 版本! Download Lantern Version ! Windows7及以上 Windows 7+ 备用地址1 Alternative address1 备用地址2 Alternative address2 安卓版(4.… 软件 VPN">
                 <div class="post-meta">
                     <span>📅 2023年05月13日</span>
                     <span>·</span><span>🏷️ 软件, 🏷️ VPN</span>
@@ -889,7 +893,7 @@
             
             <div class="month-divider">2023年4月</div>
             
-            <a href="posts/E听说辅助工具使用方法.html" class="post-card" data-tags="学习,英语" data-search-text="E听说辅助工具及使用方法 前言 呃啊…距离上次用E听说做英语都快是一年前的事情了，现在才有机会以网页的形式呈现教程，如果当年有这么干的想法的话，这玩意估计就以及传遍全年级了。 本软件于2023/4/22 0:17:42测试可用。 注意，本软件（指E听说极速版，下同）仅限于安卓或兼容安卓的设备使用，苹果系统不可用 。 软件介绍… 学习 英语">
+            <a href="posts/E听说辅助工具使用方法.html" class="post-card" data-date="2023-04-21" data-tags="学习,英语" data-search-text="E听说辅助工具及使用方法 前言 呃啊…距离上次用E听说做英语都快是一年前的事情了，现在才有机会以网页的形式呈现教程，如果当年有这么干的想法的话，这玩意估计就以及传遍全年级了。 本软件于2023/4/22 0:17:42测试可用。 注意，本软件（指E听说极速版，下同）仅限于安卓或兼容安卓的设备使用，苹果系统不可用 。 软件介绍… 学习 英语">
                 <div class="post-meta">
                     <span>📅 2023年04月21日</span>
                     <span>·</span><span>🏷️ 学习, 🏷️ 英语</span>
@@ -902,7 +906,7 @@
             </a>
             
             
-            <a href="posts/图片测试以及最近画的大饼.html" class="post-card" data-tags="测试,计划" data-search-text="图片测试以及最近画的大饼 最近老想用python做一个自动程序帮忙做西柚英语了，然而我连opencv都还没会。。。令人感叹 最近老想用博客写一篇文章介绍和发布去年做的E听说幼儿园了，然而我还没有时间。。。令人感叹 图片测试： 测试 计划">
+            <a href="posts/图片测试以及最近画的大饼.html" class="post-card" data-date="2023-04-17" data-tags="测试,计划" data-search-text="图片测试以及最近画的大饼 最近老想用python做一个自动程序帮忙做西柚英语了，然而我连opencv都还没会。。。令人感叹 最近老想用博客写一篇文章介绍和发布去年做的E听说幼儿园了，然而我还没有时间。。。令人感叹 图片测试： 测试 计划">
                 <div class="post-meta">
                     <span>📅 2023年04月17日</span>
                     <span>·</span><span>🏷️ 测试, 🏷️ 计划</span>
@@ -915,7 +919,7 @@
             </a>
             
             
-            <a href="posts/时评-五一调休.html" class="post-card" data-tags="时评" data-search-text="时评-五一调休 在这个五一放假安排的问题上，社会上出现了不少争议。有人认为五一应该放长假，以便让大家有更多的时间去休息和放松；而有人则认为五一不应该放长假，因为这样会影响到生产和经济的发展。 在这种情况下，我们不妨来看一看今年五一的放假安排。根据最新的消息，今年五一放假时间为2023年4月29日（星期六）至5月3日… 时评">
+            <a href="posts/时评-五一调休.html" class="post-card" data-date="2023-04-17" data-tags="时评" data-search-text="时评-五一调休 在这个五一放假安排的问题上，社会上出现了不少争议。有人认为五一应该放长假，以便让大家有更多的时间去休息和放松；而有人则认为五一不应该放长假，因为这样会影响到生产和经济的发展。 在这种情况下，我们不妨来看一看今年五一的放假安排。根据最新的消息，今年五一放假时间为2023年4月29日（星期六）至5月3日… 时评">
                 <div class="post-meta">
                     <span>📅 2023年04月17日</span>
                     <span>·</span><span>🏷️ 时评</span>
@@ -928,7 +932,7 @@
             </a>
             
             
-            <a href="posts/征文-你.html" class="post-card" data-tags="征文" data-search-text="征文-你 注意：以下提供的是素材，可根据情况选择开头，正文，结尾 开头 你，这个曾经出现在我生命中的人，如今已经成为了一段记忆。回忆起当初的那段时光，我不禁感叹时光荏苒，岁月如梭。那时的我们还年轻，不懂得生活中的许多道理，但我们有彼此陪伴，有无限的憧憬和希望。我们一起探索未知的世界，追逐自己的梦想。然而，随着… 征文">
+            <a href="posts/征文-你.html" class="post-card" data-date="2023-04-14" data-tags="征文" data-search-text="征文-你 注意：以下提供的是素材，可根据情况选择开头，正文，结尾 开头 你，这个曾经出现在我生命中的人，如今已经成为了一段记忆。回忆起当初的那段时光，我不禁感叹时光荏苒，岁月如梭。那时的我们还年轻，不懂得生活中的许多道理，但我们有彼此陪伴，有无限的憧憬和希望。我们一起探索未知的世界，追逐自己的梦想。然而，随着… 征文">
                 <div class="post-meta">
                     <span>📅 2023年04月14日</span>
                     <span>·</span><span>🏷️ 征文</span>
@@ -941,7 +945,7 @@
             </a>
             
             
-            <a href="posts/时评-KSG廉颇打野.html" class="post-card" data-tags="时评" data-search-text="时评-KSG廉颇打野 KPL王者荣耀职业联赛已经成为中国电竞行业中的一颗璀璨明珠。最近，苏州KSG战队的主教练在赛后采访中表示，他们准备好了打这种正面团战，并在有优势的时候更干脆地打野区，进攻更稳定，用强团战阵容主要打一个半图。此外，他还透露，在目前的训练赛中，一些队伍仍在使用廉颇打野，而他们会根据版本和理解进行调整。… 时评">
+            <a href="posts/时评-KSG廉颇打野.html" class="post-card" data-date="2023-04-13" data-tags="时评" data-search-text="时评-KSG廉颇打野 KPL王者荣耀职业联赛已经成为中国电竞行业中的一颗璀璨明珠。最近，苏州KSG战队的主教练在赛后采访中表示，他们准备好了打这种正面团战，并在有优势的时候更干脆地打野区，进攻更稳定，用强团战阵容主要打一个半图。此外，他还透露，在目前的训练赛中，一些队伍仍在使用廉颇打野，而他们会根据版本和理解进行调整。… 时评">
                 <div class="post-meta">
                     <span>📅 2023年04月13日</span>
                     <span>·</span><span>🏷️ 时评</span>
@@ -954,7 +958,7 @@
             </a>
             
             
-            <a href="posts/时评-习近平在广州市考察调研.html" class="post-card" data-tags="时评" data-search-text="时评-习近平在广州市考察调研 4月12日，中国国家主席习近平来到广州市考察调研，先后考察了乐金显示广州制造基地和广汽埃安新能源汽车股份有限公司。在考察中，习近平总书记了解了当地推进高水平对外开放、推动制造业高质量发展，以及企业推进科技创新、打造自主品牌等情况，并同企业代表、科研人员、一线职工等进行了交流。 这次考察对于广州市和整… 时评">
+            <a href="posts/时评-习近平在广州市考察调研.html" class="post-card" data-date="2023-04-13" data-tags="时评" data-search-text="时评-习近平在广州市考察调研 4月12日，中国国家主席习近平来到广州市考察调研，先后考察了乐金显示广州制造基地和广汽埃安新能源汽车股份有限公司。在考察中，习近平总书记了解了当地推进高水平对外开放、推动制造业高质量发展，以及企业推进科技创新、打造自主品牌等情况，并同企业代表、科研人员、一线职工等进行了交流。 这次考察对于广州市和整… 时评">
                 <div class="post-meta">
                     <span>📅 2023年04月13日</span>
                     <span>·</span><span>🏷️ 时评</span>
@@ -967,7 +971,7 @@
             </a>
             
             
-            <a href="posts/时评-外交部对美国反华议员采取反制措施.html" class="post-card" data-tags="时评" data-search-text="时评-外交部对美国反华议员采取反制措施 在当前全球化和多极化的时代背景下，中美关系的稳定和健康对于世界和平与发展都具有重要意义。然而，近年来，美国政府对中国采取了一系列的制裁和压力手段，包括对中国企业和个人实施制裁、干涉中国内政、煽动“台独”等问题，这些行为已经引起了中国政府和民众的强烈反感和不满。 在这种情况下，中国政府的反制措施也是理… 时评">
+            <a href="posts/时评-外交部对美国反华议员采取反制措施.html" class="post-card" data-date="2023-04-13" data-tags="时评" data-search-text="时评-外交部对美国反华议员采取反制措施 在当前全球化和多极化的时代背景下，中美关系的稳定和健康对于世界和平与发展都具有重要意义。然而，近年来，美国政府对中国采取了一系列的制裁和压力手段，包括对中国企业和个人实施制裁、干涉中国内政、煽动“台独”等问题，这些行为已经引起了中国政府和民众的强烈反感和不满。 在这种情况下，中国政府的反制措施也是理… 时评">
                 <div class="post-meta">
                     <span>📅 2023年04月13日</span>
                     <span>·</span><span>🏷️ 时评</span>
@@ -980,7 +984,7 @@
             </a>
             
             
-            <a href="posts/时评-专家称年轻人不生小孩是不对的.html" class="post-card" data-tags="时评" data-search-text="时评-专家称年轻人不生小孩是不对的 中国国际经济交流中心总经济师陈文玲在“2023消博会新浪财经之夜”上表示，年轻人不生小孩是不对的。这一言论引发了广泛关注和讨论。 陈文玲指出，按照贝克尔经济学家的行为经济学说，子女也是一种消费品。子女是长周期的消费品，是可以给你带来长久回报的耐用消费品。因此，年轻人不生小孩是不对的，因为他们没有长周… 时评">
+            <a href="posts/时评-专家称年轻人不生小孩是不对的.html" class="post-card" data-date="2023-04-11" data-tags="时评" data-search-text="时评-专家称年轻人不生小孩是不对的 中国国际经济交流中心总经济师陈文玲在“2023消博会新浪财经之夜”上表示，年轻人不生小孩是不对的。这一言论引发了广泛关注和讨论。 陈文玲指出，按照贝克尔经济学家的行为经济学说，子女也是一种消费品。子女是长周期的消费品，是可以给你带来长久回报的耐用消费品。因此，年轻人不生小孩是不对的，因为他们没有长周… 时评">
                 <div class="post-meta">
                     <span>📅 2023年04月11日</span>
                     <span>·</span><span>🏷️ 时评</span>
@@ -993,7 +997,7 @@
             </a>
             
             
-            <a href="posts/几个ChatGPT镜像网站.html" class="post-card" data-tags="AI,ChatGPT" data-search-text="几个ChatGPT镜像网站 ChatGPT，懂的都懂，相当于一个大号百度，还可以用它来写写作文，做下演讲稿之类的。 下面是一些目前（截止至2023/5/20）可用的免费chatgpt镜像网页 5.hzdjs:风格不错（需要登录） 7.BAI-Chat需要科学上网，功能齐全 8.yqcloud 有监管，免费 2023/4/12… AI ChatGPT">
+            <a href="posts/几个ChatGPT镜像网站.html" class="post-card" data-date="2023-04-09" data-tags="AI,ChatGPT" data-search-text="几个ChatGPT镜像网站 ChatGPT，懂的都懂，相当于一个大号百度，还可以用它来写写作文，做下演讲稿之类的。 下面是一些目前（截止至2023/5/20）可用的免费chatgpt镜像网页 5.hzdjs:风格不错（需要登录） 7.BAI-Chat需要科学上网，功能齐全 8.yqcloud 有监管，免费 2023/4/12… AI ChatGPT">
                 <div class="post-meta">
                     <span>📅 2023年04月09日</span>
                     <span>·</span><span>🏷️ AI, 🏷️ ChatGPT</span>
@@ -1006,7 +1010,7 @@
             </a>
             
             
-            <a href="posts/征文-感动中国2023十大人物观后感.html" class="post-card" data-tags="征文" data-search-text="征文-感动中国2023十大人物观后感 “感动中国十大人物”是一个充满正能量和感人故事的节目，在观看完视频后，我深受启发。这些普通人因为坚持信仰、拥有强烈责任感或是积极向上的心态，展现出了不屈不挠的精神品质，让我们在这个世界上看到了希望与光明。他们的故事令人感动，更激励着我们每个人在生活中要勇敢面对困难，永不放弃追求美好的生活和理想。 作… 征文">
+            <a href="posts/征文-感动中国2023十大人物观后感.html" class="post-card" data-date="2023-04-09" data-tags="征文" data-search-text="征文-感动中国2023十大人物观后感 “感动中国十大人物”是一个充满正能量和感人故事的节目，在观看完视频后，我深受启发。这些普通人因为坚持信仰、拥有强烈责任感或是积极向上的心态，展现出了不屈不挠的精神品质，让我们在这个世界上看到了希望与光明。他们的故事令人感动，更激励着我们每个人在生活中要勇敢面对困难，永不放弃追求美好的生活和理想。 作… 征文">
                 <div class="post-meta">
                     <span>📅 2023年04月09日</span>
                     <span>·</span><span>🏷️ 征文</span>
@@ -1019,7 +1023,7 @@
             </a>
             
             
-            <a href="posts/时评-马克龙访问中山大学.html" class="post-card" data-tags="时评" data-search-text="时评-马克龙访问中山大学 马克龙总统此次到访中国，不仅仅是一次国事访问，更是中法两国之间的友谊和合作的体现。在演讲中，他回顾了17世纪末法国数学家到达广州的历史，强调科学与知识是中法友谊的基石，通过这种方式可以让友谊持续下去。同时，他也提出了中法双方可以携手应对气候变化、保护生物多样性等重要挑战的建议。 值得我们注意的是，马… 时评">
+            <a href="posts/时评-马克龙访问中山大学.html" class="post-card" data-date="2023-04-09" data-tags="时评" data-search-text="时评-马克龙访问中山大学 马克龙总统此次到访中国，不仅仅是一次国事访问，更是中法两国之间的友谊和合作的体现。在演讲中，他回顾了17世纪末法国数学家到达广州的历史，强调科学与知识是中法友谊的基石，通过这种方式可以让友谊持续下去。同时，他也提出了中法双方可以携手应对气候变化、保护生物多样性等重要挑战的建议。 值得我们注意的是，马… 时评">
                 <div class="post-meta">
                     <span>📅 2023年04月09日</span>
                     <span>·</span><span>🏷️ 时评</span>
@@ -1032,7 +1036,7 @@
             </a>
             
             
-            <a href="posts/这是一条测试帖.html" class="post-card" data-tags="测试" data-search-text="这是一条测试帖~  测试">
+            <a href="posts/这是一条测试帖.html" class="post-card" data-date="2023-04-09" data-tags="测试" data-search-text="这是一条测试帖~  测试">
                 <div class="post-meta">
                     <span>📅 2023年04月09日</span>
                     <span>·</span><span>🏷️ 测试</span>
@@ -1113,14 +1117,22 @@
             card.querySelectorAll('.cal-day.has-post').forEach(function(el){
                 el.addEventListener('click',function(){
                     var d=el.dataset.date;
-                    // 在搜索框填入日期，触发过滤
-                    var si=document.getElementById('searchInput');
-                    si.value=d; si.dispatchEvent(new Event('input'));
-                    // 重置标签过滤
+                    // 设置日期过滤
+                    dateFilter=d;
+                    // 高亮当前选中日期
+                    document.querySelectorAll('#calendarCard .cal-day.active-date').forEach(function(e){e.classList.remove('active-date')});
+                    el.classList.add('active-date');
+                    // 重置标签+搜索
                     document.querySelectorAll('#filterBar .filter-chip').forEach(function(c){c.classList.toggle('active',!c.dataset.tag)});
-                    // 滚动到第一个可见文章
-                    var firstVis=document.querySelector('#postList .post-card:not(.hidden)');
-                    if(firstVis)firstVis.scrollIntoView({behavior:'smooth',block:'start'});
+                    active='';
+                    var si=document.getElementById('searchInput');
+                    si.value='['+d+']'; si.dispatchEvent(new Event('input'));
+                    F();
+                    // 滚动到对应文章
+                    setTimeout(function(){
+                        var firstVis=document.querySelector('#postList .post-card:not(.hidden)');
+                        if(firstVis)firstVis.scrollIntoView({behavior:'smooth',block:'start'});
+                    },100);
                 });
             });
         }
@@ -1128,7 +1140,7 @@
     }();
 
     /* ═══════════ 搜索 + 标签过滤 ═══════════ */
-    !function(){const si=document.getElementById('searchInput'),pl=document.getElementById('postList'),fb=document.getElementById('filterBar'),cards=pl.querySelectorAll('.post-card'),dividers=pl.querySelectorAll('.month-divider');let active='';const p=new URLSearchParams(location.search),ut=p.get('tag');if(ut){active=ut;fb.querySelectorAll('.filter-chip').forEach(c=>c.classList.toggle('active',c.dataset.tag===ut))}function F(){const q=si.value.toLowerCase().trim();cards.forEach(c=>{const ts=c.dataset.tags||'',st=c.dataset.searchText||'',mq=!q||st.toLowerCase().includes(q),mt=!active||ts.split(',').includes(active);c.classList.toggle('hidden',!(mq&&mt))});var els=pl.children,vis=false;for(var i=els.length-1;i>=0;i--){var el=els[i];if(el.nodeType!==1)continue;if(el.classList.contains('month-divider')){el.classList.toggle('hidden',!vis);vis=false}else if(el.classList.contains('post-card')&&!el.classList.contains('hidden')){vis=true}}}si.addEventListener('input',F);fb.addEventListener('click',e=>{const ch=e.target.closest('.filter-chip');if(!ch)return;const tg=ch.dataset.tag;fb.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('active'));ch.classList.add('active');const u=new URL(location);tg?u.searchParams.set('tag',tg):u.searchParams.delete('tag');history.replaceState({},'',u);active=tg;F()});F()}();
+    !function(){const si=document.getElementById('searchInput'),pl=document.getElementById('postList'),fb=document.getElementById('filterBar'),cards=pl.querySelectorAll('.post-card'),dividers=pl.querySelectorAll('.month-divider');let active='',dateFilter='';const p=new URLSearchParams(location.search),ut=p.get('tag');if(ut){active=ut;fb.querySelectorAll('.filter-chip').forEach(c=>c.classList.toggle('active',c.dataset.tag===ut))}function F(){const q=si.value.toLowerCase().trim();cards.forEach(c=>{const ts=c.dataset.tags||'',st=c.dataset.searchText||'',mq=!q||st.toLowerCase().includes(q),mt=!active||ts.split(',').includes(active),md=!dateFilter||c.dataset.date===dateFilter;c.classList.toggle('hidden',!(mq&&mt&&md))});var els=pl.children,vis=false;for(var i=els.length-1;i>=0;i--){var el=els[i];if(el.nodeType!==1)continue;if(el.classList.contains('month-divider')){el.classList.toggle('hidden',!vis);vis=false}else if(el.classList.contains('post-card')&&!el.classList.contains('hidden')){vis=true}}}function clearDate(){dateFilter='';si.value='';si.dispatchEvent(new Event('input'));document.querySelectorAll('#calendarCard .cal-day.active-date').forEach(function(e){e.classList.remove('active-date')})}si.addEventListener('input',function(){if(si.value.trim())dateFilter='';F()});fb.addEventListener('click',e=>{const ch=e.target.closest('.filter-chip');if(!ch)return;const tg=ch.dataset.tag;fb.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('active'));ch.classList.add('active');const u=new URL(location);tg?u.searchParams.set('tag',tg):u.searchParams.delete('tag');history.replaceState({},'',u);active=tg;F()});F()}();
 
     /* ═══════════ 返回顶部 ═══════════ */
     !function(){const b=document.getElementById('backToTop');addEventListener('scroll',()=>b.classList.toggle('visible',scrollY>400));b.addEventListener('click',()=>scrollTo({top:0,behavior:'smooth'}))}();
