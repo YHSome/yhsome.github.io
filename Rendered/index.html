@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="x-viewer-page-id" content="2">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>(function(){var s=localStorage.getItem('blog-theme');if(s==='dark'||(!s&&matchMedia('(prefers-color-scheme:dark)').matches)){document.documentElement.classList.add('dark')}})();</script>
+    <title>YHSome的神秘空间</title>
+    <meta name="description" content="书山有径勤为路，学海无涯苦作舟">
+    <style>
+        :root {
+            --bg: #fdfbf7; --card-bg: #ffffff; --text: #2c2416; --text-secondary: #6b5e4a;
+            --accent: #b1743e; --accent-hover: #8b5a2e; --border: #e5ddd0; --tag-bg: #f5efe3;
+            --code-bg: #f4f0e8; --shadow: 0 1px 3px rgba(44,36,22,0.06);
+            --shadow-hover: 0 8px 24px rgba(44,36,22,0.12); --radius: 10px;
+            --content-width: 1120px; --sidebar-width: 240px; --danmaku-width: 220px;
+            --nav-blur: blur(12px); --particle-color: 180,160,140;
+        }
+        html.dark {
+            --bg: #1a1a1f; --card-bg: #25252b; --text: #d4d0c8; --text-secondary: #9a9488;
+            --accent: #d4945a; --accent-hover: #e8a86e; --border: #36363d;
+            --tag-bg: #2e2e35; --code-bg: #2e2e35;
+            --shadow: 0 1px 3px rgba(0,0,0,0.2); --shadow-hover: 0 8px 24px rgba(0,0,0,0.35);
+            --particle-color: 120,110,100;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            background: var(--bg); color: var(--text); line-height: 1.7;
+            min-height: 100vh; display: flex; flex-direction: column;
+            transition: background 0.4s, color 0.4s;
+        }
+
+        #particles { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.5; }
+        html.dark #particles { opacity: 0.25; }
+
+        /* ── 导航栏 ── */
+        .navbar {
+            background: color-mix(in srgb, var(--card-bg) 85%, transparent);
+            backdrop-filter: var(--nav-blur);
+            border-bottom: 1px solid var(--border); padding: 0 2rem;
+            position: sticky; top: 0; z-index: 100; box-shadow: var(--shadow);
+            transition: background 0.4s, border 0.4s;
+        }
+        .navbar-inner {
+            max-width: var(--content-width); margin: 0 auto;
+            display: flex; align-items: center; justify-content: space-between; height: 56px;
+        }
+        .navbar .brand { font-size: 1.3rem; font-weight: 700; color: var(--text); text-decoration: none; letter-spacing: -0.02em; transition: color 0.3s; }
+        .navbar .brand:hover { color: var(--accent); }
+        .nav-links { display: flex; gap: 1.5rem; list-style: none; align-items: center; }
+        .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.95rem; transition: color 0.3s; }
+        .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+        .theme-toggle {
+            background: none; border: 1.5px solid var(--border); color: var(--text-secondary);
+            width: 34px; height: 34px; border-radius: 50%; cursor: pointer;
+            font-size: 1rem; display: flex; align-items: center; justify-content: center;
+            transition: all 0.3s; margin-left: 0.25rem;
+        }
+        .theme-toggle:hover { border-color: var(--accent); color: var(--accent); background: var(--tag-bg); }
+
+        /* ── Hero ── */
+        .hero {
+            text-align: center; padding: 6rem 2rem 3rem;
+            max-width: var(--content-width); margin: 0 auto; position: relative; z-index: 1;
+        }
+        .hero h1 {
+            font-size: 3rem; font-weight: 800; letter-spacing: -0.05em;
+            color: var(--text); margin-bottom: 1rem;
+            font-family: "Georgia","Noto Serif SC","Source Han Serif SC",serif;
+        }
+        .hero .subtitle { font-size: 1.15rem; color: var(--text-secondary); max-width: 520px; margin: 0 auto; }
+        .hero .divider {
+            width: 60px; height: 3px; background: var(--accent);
+            margin: 1.5rem auto; border-radius: 2px;
+            animation: dividerPulse 2s ease-in-out infinite;
+        }
+        @keyframes dividerPulse {
+            0%,100% { width: 60px; opacity: 1; }
+            50% { width: 80px; opacity: 0.6; }
+        }
+
+        /* ── 搜索 ── */
+        .search-bar {
+            max-width: var(--content-width); margin: 0 auto 2rem;
+            padding: 0 2rem; position: relative; z-index: 1;
+        }
+        .search-bar input {
+            width: 100%; padding: 0.9rem 1.5rem; font-size: 1.05rem;
+            border: 2px solid var(--border); border-radius: 100px;
+            background: var(--card-bg); color: var(--text); outline: none; transition: all 0.3s;
+        }
+        .search-bar input:focus { border-color: var(--accent); box-shadow: 0 0 0 4px rgba(177,116,62,0.08); }
+        .search-bar input::placeholder { color: #b8a88c; }
+        .search-result-count {
+            max-width: var(--content-width); margin: -1rem auto 1.5rem; padding: 0 2rem;
+            font-size: 0.85rem; color: var(--text-secondary); display: none;
+        }
+        .search-result-count.visible { display: block; }
+
+        /* ── 站点统计横条 ── */
+        .stats-bar {
+            max-width: var(--content-width); margin: 0 auto 1.5rem;
+            padding: 0 2rem; display: flex; justify-content: center;
+            gap: 1rem; font-size: 0.9rem; color: var(--text-secondary);
+            position: relative; z-index: 1;
+        }
+        .stats-bar .stats-item strong { color: var(--accent); font-weight: 700; }
+        .stats-bar .stats-divider { color: var(--border); }
+        @media (max-width: 768px) { .stats-bar { padding: 0 1.25rem; } }
+
+        /* ── 双栏布局 ── */
+        .main-layout {
+            max-width: var(--content-width); margin: 0 auto;
+            padding: 0 2rem 3rem; display: flex; gap: 2.5rem;
+            flex: 1; width: 100%; position: relative; z-index: 1;
+        }
+        .content-main { flex: 1; min-width: 0; }
+        .sidebar {
+            flex: 0 0 var(--sidebar-width);
+            display: flex; flex-direction: column; gap: 1.5rem;
+        }
+        .sidebar-sticky { position: sticky; top: calc(56px + 1.5rem); display: flex; flex-direction: column; gap: 1.5rem; }
+
+        .section-title {
+            font-size: 1rem; font-weight: 600; color: var(--text-secondary);
+            text-transform: uppercase; letter-spacing: 0.08em;
+            margin-bottom: 1.25rem; padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border); transition: border 0.4s;
+        }
+
+        /* ── 侧栏小部件 ── */
+        .sidebar-widget {
+            background: var(--card-bg); border: 1px solid var(--border);
+            border-radius: var(--radius); padding: 1.25rem 1.5rem;
+            box-shadow: var(--shadow); transition: background 0.4s, border 0.4s;
+        }
+        .sidebar-widget .widget-title {
+            font-size: 0.85rem; font-weight: 700; color: var(--text-secondary);
+            text-transform: uppercase; letter-spacing: 0.08em;
+            margin-bottom: 1rem; padding-bottom: 0.5rem;
+            border-bottom: 1.5px solid var(--border);
+            transition: border 0.4s;
+        }
+        .widget-stats { display: flex; flex-direction: column; gap: 0.5rem; }
+        .widget-stats .stat-row {
+            display: flex; justify-content: space-between; align-items: center;
+            font-size: 0.9rem; color: var(--text-secondary);
+        }
+        .widget-stats .stat-row strong { color: var(--accent); font-size: 1.1rem; }
+
+        .widget-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .widget-tags .tag-pill {
+            display: inline-block; background: var(--tag-bg); color: var(--accent);
+            font-size: 0.82rem; padding: 0.35rem 0.85rem; border-radius: 100px;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+        }
+        .widget-tags .tag-pill:hover {
+            background: var(--accent); color: #fff;
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: var(--shadow-hover);
+        }
+        .tag-pill .count { opacity: 0.7; font-size: 0.75rem; margin-left: 0.2rem; }
+
+        /* ── 文章卡片 ── */
+        .post-card {
+            background: var(--card-bg); border: 1px solid var(--border);
+            border-radius: var(--radius); padding: 1.6rem 2rem;
+            margin-bottom: 1.1rem; box-shadow: var(--shadow);
+            transition: all 0.35s cubic-bezier(0.4,0,0.2,1);
+            display: block; text-decoration: none; color: var(--text);
+            position: relative; overflow: hidden;
+        }
+        .post-card::before {
+            content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+            width: 3px; background: var(--accent); border-radius: 0 3px 3px 0;
+            transform: scaleY(0); transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+        }
+        .post-card:hover::before { transform: scaleY(1); }
+        .post-card:hover { box-shadow: var(--shadow-hover); transform: translateY(-2px); border-color: var(--accent); }
+        .post-card.hidden { display: none; }
+        .post-card .post-date { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.3rem; }
+        .post-card .post-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--text); transition: color 0.3s; }
+        .post-card:hover .post-title { color: var(--accent); }
+        .post-card .post-excerpt { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.7; }
+        .post-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 0.7rem; }
+        .post-tags .tag {
+            display: inline-block; background: var(--tag-bg); color: var(--accent);
+            font-size: 0.78rem; padding: 0.18rem 0.65rem; border-radius: 100px;
+            text-decoration: none; transition: all 0.3s;
+        }
+        .post-tags .tag:hover { background: var(--accent); color: #fff; transform: translateY(-1px); }
+
+        /* ── 返回顶部 ── */
+        .back-to-top {
+            position: fixed; bottom: 2rem; right: 2rem; z-index: 200;
+            width: 44px; height: 44px; border-radius: 50%;
+            background: var(--card-bg); border: 2px solid var(--border);
+            color: var(--text-secondary); font-size: 1.2rem; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; transform: translateY(20px); pointer-events: none;
+            transition: all 0.35s cubic-bezier(0.4,0,0.2,1);
+            box-shadow: var(--shadow);
+        }
+        .back-to-top.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+        .back-to-top:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-3px); box-shadow: var(--shadow-hover); }
+
+        /* ── 页脚 ── */
+        .footer {
+            text-align: center; padding: 2rem;
+            color: var(--text-secondary); font-size: 0.85rem;
+            border-top: 1px solid var(--border); margin-top: auto;
+            position: relative; z-index: 1; transition: border 0.4s;
+        }
+        .footer span { color: var(--accent); }
+        .footer-stats {
+            display: flex; justify-content: center; align-items: center; gap: 0.6rem;
+            flex-wrap: wrap; margin-bottom: 0.4rem; font-size: 0.85rem; color: var(--text-secondary);
+        }
+        .footer-stats .stat { display: inline-flex; align-items: center; gap: 0.2rem; }
+        .footer-stats .stat strong { color: var(--accent); font-weight: 700; }
+        .footer-stats .stat-divider { color: var(--border); }
+
+        .empty-state { text-align: center; color: var(--text-secondary); padding: 3rem 0; font-size: 1.05rem; }
+
+        /* ── 响应式：窄屏还原单栏 ── */
+        @media (max-width: 768px) {
+            :root { --content-width: 100%; --sidebar-width: 100%; --danmaku-width: 100%; }
+            .main-layout { flex-direction: column; padding: 0 1.25rem 2rem; gap: 2rem; }
+            .sidebar { flex: auto; order: 2; }
+            .danmaku-col { flex: auto; order: 3; }
+            .sidebar-sticky, .danmaku-sticky { position: static; }
+            .danmaku-col .danmaku-widget { max-height: 300px; }
+            .hero { padding: 4rem 1.25rem 2rem; }
+            .hero h1 { font-size: 2rem; }
+            .search-bar { padding: 0 1.25rem; }
+            .post-card { padding: 1.25rem 1.5rem; }
+            .nav-links { gap: 1rem; }
+            .navbar { padding: 0 1.25rem; }
+            .back-to-top { bottom: 1.2rem; right: 1.2rem; width: 38px; height: 38px; }
+        }
+
+        /* ── 弹幕评论栏（右侧第三列） ── */
+        .danmaku-col {
+            flex: 0 0 var(--danmaku-width);
+            display: flex; flex-direction: column; gap: 1.5rem;
+        }
+        .danmaku-col .danmaku-sticky {
+            position: sticky; top: calc(56px + 1.5rem);
+            display: flex; flex-direction: column; gap: 1.5rem;
+        }
+        .danmaku-col .danmaku-widget {
+            background: var(--card-bg); border: 1px solid var(--border);
+            border-radius: var(--radius); padding: 1.25rem 1.25rem;
+            box-shadow: var(--shadow); transition: background 0.4s, border 0.4s;
+            max-height: 360px;
+            display: flex; flex-direction: column; overflow: hidden;
+        }
+        .danmaku-col .widget-title {
+            font-size: 0.85rem; font-weight: 700; color: var(--text-secondary);
+            text-transform: uppercase; letter-spacing: 0.08em;
+            margin-bottom: 0.6rem; padding-bottom: 0.4rem;
+            border-bottom: 1.5px solid var(--border); text-align: center;
+            transition: border 0.4s;
+        }
+        .danmaku-col .danmaku-track {
+            flex: 1; overflow: hidden; position: relative;
+            mask-image: linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%);
+        }
+        .danmaku-col .danmaku-scroll {
+            animation: danmakuFlow 22s linear infinite;
+        }
+        .danmaku-col .danmaku-scroll:hover { animation-play-state: paused; }
+        .danmaku-col .danmaku-item {
+            padding: 0.5rem 0.6rem; margin-bottom: 0.45rem;
+            background: var(--tag-bg); border-radius: 6px;
+            font-size: 0.75rem; line-height: 1.5; color: var(--text-secondary);
+            transition: background 0.3s;
+        }
+        .danmaku-col .danmaku-item .dm-author { font-weight: 600; color: var(--accent); font-size: 0.7rem; margin-bottom: 0.1rem; }
+        .danmaku-col .danmaku-item .dm-body { word-break: break-all; }
+        @keyframes danmakuFlow {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-50%); }
+        }
+
+        /* ═══════════ 页面转场 ═══════════ */
+        body.page-exiting .navbar     { animation: exitUp   0.32s cubic-bezier(0.55,0,1,0.45) forwards; }
+        body.page-exiting .hero       { animation: exitUp   0.30s 0.03s cubic-bezier(0.55,0,1,0.45) forwards; }
+        body.page-exiting .search-bar { animation: exitLeft 0.28s 0.05s cubic-bezier(0.55,0,1,0.45) forwards; }
+        body.page-exiting .sidebar    { animation: exitLeft  0.28s 0.07s cubic-bezier(0.55,0,1,0.45) forwards; }
+        body.page-exiting .danmaku-col{ animation: exitRight 0.28s 0.07s cubic-bezier(0.55,0,1,0.45) forwards; }
+        body.page-exiting .content-main{animation: exitDown  0.30s 0.09s cubic-bezier(0.55,0,1,0.45) forwards; }
+        body.page-exiting .footer     { animation: exitDown 0.28s 0.09s cubic-bezier(0.55,0,1,0.45) forwards; }
+        body.page-exiting .back-to-top{ animation: exitDown 0.20s cubic-bezier(0.55,0,1,0.45) forwards; }
+        body.page-exiting::after { content:''; position:fixed; inset:0; background:var(--bg); z-index:9999; animation: fadeIn 0.25s 0.2s both; }
+
+        @keyframes exitUp    { to { opacity:0; transform:translateY(-130%); } }
+        @keyframes exitDown  { to { opacity:0; transform:translateY(130%); } }
+        @keyframes exitLeft  { to { opacity:0; transform:translateX(-120%); } }
+        @keyframes exitRight { to { opacity:0; transform:translateX(120%); } }
+        @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+
+        body.page-entering .navbar     { animation: enterDown  0.55s cubic-bezier(0.22,0.61,0.36,1) both; }
+        body.page-entering .hero       { animation: enterDown  0.50s 0.06s cubic-bezier(0.22,0.61,0.36,1) both; }
+        body.page-entering .search-bar { animation: enterLeft  0.42s 0.10s cubic-bezier(0.22,0.61,0.36,1) both; }
+        body.page-entering .sidebar    { animation: enterLeft  0.50s 0.14s cubic-bezier(0.22,0.61,0.36,1) both; }
+        body.page-entering .danmaku-col{animation: enterRight 0.50s 0.14s cubic-bezier(0.22,0.61,0.36,1) both; }
+        body.page-entering .content-main{animation: enterUp    0.52s 0.18s cubic-bezier(0.22,0.61,0.36,1) both; }
+        body.page-entering .post-card:nth-child(odd)  { animation: enterLeft  0.50s 0.20s cubic-bezier(0.22,0.61,0.36,1) both; }
+        body.page-entering .post-card:nth-child(even) { animation: enterRight 0.50s 0.22s cubic-bezier(0.22,0.61,0.36,1) both; }
+        body.page-entering .sidebar-widget { animation: enterPop 0.42s 0.22s cubic-bezier(0.22,0.61,0.36,1) both; }
+        body.page-entering .danmaku-widget { animation: enterPop 0.42s 0.22s cubic-bezier(0.22,0.61,0.36,1) both; }
+        body.page-entering .footer     { animation: enterUp    0.45s 0.26s cubic-bezier(0.22,0.61,0.36,1) both; }
+        body.page-entering .back-to-top{ animation: enterPop   0.35s 0.30s cubic-bezier(0.22,0.61,0.36,1) both; }
+
+        @keyframes enterDown {
+            0%   { opacity:0; transform:translateY(-100%); }
+            55%  { opacity:1; transform:translateY(12px); }
+            100% { opacity:1; transform:translateY(0); }
+        }
+        @keyframes enterUp {
+            0%   { opacity:0; transform:translateY(80px); }
+            55%  { opacity:1; transform:translateY(-8px); }
+            100% { opacity:1; transform:translateY(0); }
+        }
+        @keyframes enterLeft {
+            0%   { opacity:0; transform:translateX(-80px); }
+            55%  { opacity:1; transform:translateX(8px); }
+            100% { opacity:1; transform:translateX(0); }
+        }
+        @keyframes enterRight {
+            0%   { opacity:0; transform:translateX(80px); }
+            55%  { opacity:1; transform:translateX(-8px); }
+            100% { opacity:1; transform:translateX(0); }
+        }
+        @keyframes enterPop {
+            0%   { opacity:0; transform:scale(0.4); }
+            55%  { opacity:1; transform:scale(1.12); }
+            100% { opacity:1; transform:scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="particles"></canvas>
+
+    <nav class="navbar">
+        <div class="navbar-inner">
+            <a href="index.html" class="brand">YHSome的神秘空间</a>
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">首页</a></li>
+                <li><a href="directory.html">目录</a></li>
+                <li><a href="tags.html">标签</a></li>
+                <li><a href="projects.html">项目</a></li>
+                <li><a href="links.html">友链</a></li>
+                <li><button class="theme-toggle" id="themeToggle" title="切换颜色模式" aria-label="切换颜色模式">🌙</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <h1>YHSome的神秘空间</h1>
+        <div class="divider"></div>
+        <p class="subtitle">书山有径勤为路，学海无涯苦作舟</p>
+    </section>
+
+    <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="搜索文章标题、内容或标签…" autocomplete="off">
+    </div>
+    <div class="search-result-count" id="searchCount"></div>
+
+    <div class="main-layout">
+        <!-- 左栏：标签侧边栏 -->
+        <aside class="sidebar">
+            <div class="sidebar-sticky">
+                <div class="sidebar-widget">
+                    <div class="widget-title">📊 站点统计</div>
+                    <div class="widget-stats">
+                        <div class="stat-row"><span>文章总数</span><strong>47 篇</strong></div>
+                        <div class="stat-row"><span>标签</span><strong>39 个</strong></div>
+                        <div class="stat-row"><span>总字数</span><strong>57,678</strong></div>
+                    </div>
+                </div>
+                
+                <div class="sidebar-widget">
+                    <div class="widget-title">🏷️ 精选标签</div>
+                    <div class="widget-tags">
+                        
+                        <a href="directory.html?tag=%E5%AD%A6%E4%B9%A0" class="tag-pill">
+                            学习<span class="count">8</span>
+                        </a>
+                        
+                        <a href="directory.html?tag=%E6%B8%B8%E6%88%8F" class="tag-pill">
+                            游戏<span class="count">3</span>
+                        </a>
+                        
+                        <a href="directory.html?tag=%E9%9F%B3%E4%B9%90" class="tag-pill">
+                            音乐<span class="count">2</span>
+                        </a>
+                        
+                        <a href="directory.html?tag=%E8%8B%B1%E8%AF%AD" class="tag-pill">
+                            英语<span class="count">3</span>
+                        </a>
+                        
+                        <a href="directory.html?tag=%E8%BD%AF%E4%BB%B6" class="tag-pill">
+                            软件<span class="count">7</span>
+                        </a>
+                        
+                        <a href="directory.html?tag=VPN" class="tag-pill">
+                            VPN<span class="count">2</span>
+                        </a>
+                        
+                        <a href="directory.html?tag=%E5%BE%81%E6%96%87" class="tag-pill">
+                            征文<span class="count">3</span>
+                        </a>
+                        
+                        <a href="directory.html?tag=%E6%97%B6%E8%AF%84" class="tag-pill">
+                            时评<span class="count">6</span>
+                        </a>
+                        
+                        <a href="directory.html?tag=%E9%9A%8F%E7%AC%94" class="tag-pill">
+                            随笔<span class="count">7</span>
+                        </a>
+                        
+                        <a href="directory.html?tag=%E7%94%9F%E6%B4%BB" class="tag-pill">
+                            生活<span class="count">2</span>
+                        </a>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        </aside>
+
+        <!-- 文章列表 -->
+        <main class="content-main" id="postList">
+            <div class="section-title">📝 最近文章</div>
+            
+                
+                <a href="posts/颂-YHSome与OpenBlogger.html" class="post-card" data-search-text="颂 YHSome 与 OpenBlogger：一个划时代的博客方案诞生记 引言：厌倦了 Hexo 的那一天 那是一个平凡的下午。YHSome 像往常一样打开了他的 Hexo 博客——那个陪伴了他整个高中时代的静态站点生成器。hexo generate，等待。hexo deploy，等待。主题配置两百行，插件依赖三十个。他忽然意识到：他已经花在折腾博客框架上的时间，远远超过… 随笔 项目">
+                    <div class="post-date">2026年06月19日</div>
+                    <div class="post-title">颂 YHSome 与 OpenBlogger：一个划时代的博客方案诞生记</div>
+                    <div class="post-excerpt">引言：厌倦了 Hexo 的那一天 那是一个平凡的下午。YHSome 像往常一样打开了他的 Hexo 博客——那个陪伴了他整个高中时代的静态站点生成器。hexo generate，等待。hexo deploy，等待。主题配置两百行，插件依赖三十个。他忽然意识到：他已经花在折腾博客框架上的时间，远远超过…</div>
+                    
+                    <div class="post-tags">
+                        <span class="tag">随笔</span><span class="tag">项目</span>
+                    </div>
+                    
+                </a>
+                
+                <a href="posts/模板.html" class="post-card" data-search-text="这是一个用户输入的模板 (除上述三行外，剩下的内容均为正文，如有更多的变量，用户须在最上方声明（另外用户页可以不输入，则渲染时自动按照当前时间作为博文时间、以及正文第一行作为标题）) 模板">
+                    <div class="post-date">2026年06月18日</div>
+                    <div class="post-title">这是一个用户输入的模板</div>
+                    <div class="post-excerpt">(除上述三行外，剩下的内容均为正文，如有更多的变量，用户须在最上方声明（另外用户页可以不输入，则渲染时自动按照当前时间作为博文时间、以及正文第一行作为标题）)</div>
+                    
+                    <div class="post-tags">
+                        <span class="tag">模板</span>
+                    </div>
+                    
+                </a>
+                
+                <a href="posts/笔记-快速写简化电子排布式.html" class="post-card" data-search-text="笔记-快速写简化电子排布式 前言 刚学选修二化学，电子排布式写得我快吐血了。两页作业做了我一个多小时。刚刚看网课时，灵光乍现，悟到了一个快速写简化电子排布式的办法。且听我娓娓道来。 正文 这里以钪(Sc)为例，叙述其办法。 首先，先写出它的核外电子排布图： （注意，这里使用了能级交错 知识） 接着，把离他最近的上一级稀有气体核… 笔记">
+                    <div class="post-date">2023年12月19日</div>
+                    <div class="post-title">笔记-快速写简化电子排布式</div>
+                    <div class="post-excerpt">前言 刚学选修二化学，电子排布式写得我快吐血了。两页作业做了我一个多小时。刚刚看网课时，灵光乍现，悟到了一个快速写简化电子排布式的办法。且听我娓娓道来。 正文 这里以钪(Sc)为例，叙述其办法。 首先，先写出它的核外电子排布图： （注意，这里使用了能级交错 知识） 接着，把离他最近的上一级稀有气体核…</div>
+                    
+                    <div class="post-tags">
+                        <span class="tag">笔记</span>
+                    </div>
+                    
+                </a>
+                
+                <a href="posts/免费的office全家桶.html" class="post-card" data-search-text="免费的office全家桶 前言 如题，这个是office全家桶的下载，自动激活，真正实现一键破解 下载链接 点击下载 软件 Office">
+                    <div class="post-date">2023年10月28日</div>
+                    <div class="post-title">免费的office全家桶</div>
+                    <div class="post-excerpt">前言 如题，这个是office全家桶的下载，自动激活，真正实现一键破解 下载链接 点击下载</div>
+                    
+                    <div class="post-tags">
+                        <span class="tag">软件</span><span class="tag">Office</span>
+                    </div>
+                    
+                </a>
+                
+                <a href="posts/实验报告-固体酒精.html" class="post-card" data-search-text="实验报告-固体酒精 固体酒精 策划人：欧阳天为、杨浩森 实验地点：化学实验室六 指导老师：梁敏霞 实验原理： 固体酒精通常是由水和酒精混合后，通过凝固剂作用形成的一种固态混合物。醋酸钙易溶于水而难溶于酒精，当两种溶液相混合时，醋酸钙在酒精中成为凝胶析出。液体便逐渐从浑浊到稠厚，最后凝聚为一整块，就得到固体酒精。 实验工… 实验报告">
+                    <div class="post-date">2023年09月23日</div>
+                    <div class="post-title">实验报告-固体酒精</div>
+                    <div class="post-excerpt">固体酒精 策划人：欧阳天为、杨浩森 实验地点：化学实验室六 指导老师：梁敏霞 实验原理： 固体酒精通常是由水和酒精混合后，通过凝固剂作用形成的一种固态混合物。醋酸钙易溶于水而难溶于酒精，当两种溶液相混合时，醋酸钙在酒精中成为凝胶析出。液体便逐渐从浑浊到稠厚，最后凝聚为一整块，就得到固体酒精。 实验工…</div>
+                    
+                    <div class="post-tags">
+                        <span class="tag">实验报告</span>
+                    </div>
+                    
+                </a>
+                
+                <a href="posts/myhtml.html" class="post-card" data-search-text="我的第一个html网页实战 html 在今天，我用html语法写了个网页，我并且让它基于hexo部署了。 虽然是基于整活的目的，不过最后还是做出来了嘛 没啥好说的，点击这里打开网页 校园 HTML 项目">
+                    <div class="post-date">2023年09月09日</div>
+                    <div class="post-title">我的第一个html网页实战</div>
+                    <div class="post-excerpt">html 在今天，我用html语法写了个网页，我并且让它基于hexo部署了。 虽然是基于整活的目的，不过最后还是做出来了嘛 没啥好说的，点击这里打开网页</div>
+                    
+                    <div class="post-tags">
+                        <span class="tag">校园</span><span class="tag">HTML</span><span class="tag">项目</span>
+                    </div>
+                    
+                </a>
+                
+                <a href="posts/随笔-重新注册白鲸加速器.html" class="post-card" data-search-text="随笔-重新注册白鲸加速器 前言 白鲸加速器是一个比较稳定的vpn，可以允许你通过它访问外网。但是存在诸多限制，新账号三十天的免费试用期过后需要收费就很难受，接下来我将介绍如何重新注册账号，无限白嫖白鲸加速器。 正文 一般步骤的指导来重新注册白鲸加速器。请根据以下步骤自行操作： 1 2 3 4 5 6 7 | 1. 首先，打开… 随笔 VPN">
+                    <div class="post-date">2023年09月09日</div>
+                    <div class="post-title">随笔-重新注册白鲸加速器</div>
+                    <div class="post-excerpt">前言 白鲸加速器是一个比较稳定的vpn，可以允许你通过它访问外网。但是存在诸多限制，新账号三十天的免费试用期过后需要收费就很难受，接下来我将介绍如何重新注册账号，无限白嫖白鲸加速器。 正文 一般步骤的指导来重新注册白鲸加速器。请根据以下步骤自行操作： 1 2 3 4 5 6 7 | 1. 首先，打开…</div>
+                    
+                    <div class="post-tags">
+                        <span class="tag">随笔</span><span class="tag">VPN</span>
+                    </div>
+                    
+                </a>
+                
+                <a href="posts/PinballChallenge.html" class="post-card" data-search-text="弹球挑战 弹球挑战 这里是弹球挑战，只需30得分即挑战成功！ 然而，难度将会越来越大。 祝君好运！ 挑战成功有奖励！ 只要你使用Windows系统在挑战中得到了30分，并且给予我全程（从打开网页开始算起）的挑战录像即为挑战成功，截图发给我，我会给予第一位挑战成功并符合要求的玩家10元红包奖励！ 挑战链接 点击… 游戏 弹球">
+                    <div class="post-date">2023年09月01日</div>
+                    <div class="post-title">弹球挑战</div>
+                    <div class="post-excerpt">弹球挑战 这里是弹球挑战，只需30得分即挑战成功！ 然而，难度将会越来越大。 祝君好运！ 挑战成功有奖励！ 只要你使用Windows系统在挑战中得到了30分，并且给予我全程（从打开网页开始算起）的挑战录像即为挑战成功，截图发给我，我会给予第一位挑战成功并符合要求的玩家10元红包奖励！ 挑战链接 点击…</div>
+                    
+                    <div class="post-tags">
+                        <span class="tag">游戏</span><span class="tag">弹球</span>
+                    </div>
+                    
+                </a>
+                
+                <a href="posts/随笔-台风-停课.html" class="post-card" data-search-text="随笔-台风？停课！ 前言 按照惯例先写个开头，2023年8月31日由于台风登陆粤东，众多学校停课至九月四日开学。 正文 正文其实没啥好说的，只能感叹一下学校拖延的习惯太夸张了。 通知明明是五点四十多分下发的，结果学校拖到六点五十，学生都回学校上交手机了才通知。 结果就是上了一个小时学又把学生赶回家了。 其实这对于我来说… 随笔 生活">
+                    <div class="post-date">2023年08月31日</div>
+                    <div class="post-title">随笔-台风？停课！</div>
+                    <div class="post-excerpt">前言 按照惯例先写个开头，2023年8月31日由于台风登陆粤东，众多学校停课至九月四日开学。 正文 正文其实没啥好说的，只能感叹一下学校拖延的习惯太夸张了。 通知明明是五点四十多分下发的，结果学校拖到六点五十，学生都回学校上交手机了才通知。 结果就是上了一个小时学又把学生赶回家了。 其实这对于我来说…</div>
+                    
+                    <div class="post-tags">
+                        <span class="tag">随笔</span><span class="tag">生活</span>
+                    </div>
+                    
+                </a>
+                
+                <a href="posts/pixelqx.html" class="post-card" data-search-text="PixelQX：像素桥兴计划 前言 前段时间和朋友吹水时，偶尔提到了桥兴中学的事儿，突然灵光一闪：万一我们真的能在我的世界里面还原桥兴中学呢？ 心动不如行动，于是就有了这个计划。并且，我为此还开设了一个服务器，大家也可以随时进入参观玩耍。 如何加入此服务器？ 本服务器同时支持java、基岩版minecraft并且无需正版账号，即… 游戏 我的世界 项目">
+                    <div class="post-date">2023年08月28日</div>
+                    <div class="post-title">PixelQX：像素桥兴计划</div>
+                    <div class="post-excerpt">前言 前段时间和朋友吹水时，偶尔提到了桥兴中学的事儿，突然灵光一闪：万一我们真的能在我的世界里面还原桥兴中学呢？ 心动不如行动，于是就有了这个计划。并且，我为此还开设了一个服务器，大家也可以随时进入参观玩耍。 如何加入此服务器？ 本服务器同时支持java、基岩版minecraft并且无需正版账号，即…</div>
+                    
+                    <div class="post-tags">
+                        <span class="tag">游戏</span><span class="tag">我的世界</span><span class="tag">项目</span>
+                    </div>
+                    
+                </a>
+                
+            
+        </main>
+
+        
+        <!-- 右栏：弹幕评论 -->
+        <aside class="danmaku-col" id="danmakuBar" data-max-pid="52">
+            <div class="danmaku-sticky">
+                <div class="danmaku-widget">
+                    <div class="widget-title">💬 精选发言</div>
+                    <div class="danmaku-track">
+                        <div class="danmaku-scroll" id="danmakuScroll">
+                            <div class="danmaku-item"><div class="dm-author">加载中…</div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+        
+    </div>
+
+    <button class="back-to-top" id="backToTop" title="返回顶部" aria-label="返回顶部">↑</button>
+
+    <footer class="footer">
+        <div class="footer-stats" id="footerStats">
+            <span class="stat">🌐 <strong id="vGlobal">…</strong> 次全站浏览</span><span class="stat-divider">|</span>
+            <span class="stat">👁️ <strong id="vCounter">…</strong> 次阅读</span><span class="stat-divider">|</span>
+            <span class="stat">👤 <strong id="vUnique">…</strong> 位访客</span>
+        </div>
+        <p>Powered by <span>OpenBlogger</span> &copy; 2026</p>
+    </footer>
+
+    <script>
+    /* ═══════════ 粒子背景 ═══════════ */
+    (function() {
+        const canvas = document.getElementById('particles');
+        const ctx = canvas.getContext('2d');
+        let w, h, particles = [];
+        const COUNT = 55, MAX_DIST = 120;
+        function resize() { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; }
+        resize(); window.addEventListener('resize', resize);
+        function parseColor() {
+            return getComputedStyle(document.documentElement).getPropertyValue('--particle-color').trim().split(',').map(Number);
+        }
+        class Particle {
+            constructor() { this.reset(); }
+            reset() {
+                this.x = Math.random() * w; this.y = Math.random() * h;
+                this.vx = (Math.random() - 0.5) * 0.4; this.vy = (Math.random() - 0.5) * 0.4;
+                this.r = Math.random() * 2 + 1;
+            }
+            update() {
+                this.x += this.vx; this.y += this.vy;
+                if (this.x < 0 || this.x > w) this.vx *= -1;
+                if (this.y < 0 || this.y > h) this.vy *= -1;
+            }
+            draw() {
+                const [cr,cg,cb] = parseColor();
+                ctx.beginPath(); ctx.arc(this.x, this.y, this.r, 0, Math.PI*2);
+                ctx.fillStyle = `rgba(${cr},${cg},${cb},0.6)`; ctx.fill();
+            }
+        }
+        for (let i = 0; i < COUNT; i++) particles.push(new Particle());
+        function animate() {
+            ctx.clearRect(0, 0, w, h);
+            const [cr,cg,cb] = parseColor();
+            for (let i = 0; i < COUNT; i++) {
+                particles[i].update(); particles[i].draw();
+                for (let j = i+1; j < COUNT; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx*dx + dy*dy);
+                    if (dist < MAX_DIST) {
+                        ctx.beginPath(); ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.strokeStyle = `rgba(${cr},${cg},${cb},${0.15 * (1 - dist/MAX_DIST)})`;
+                        ctx.lineWidth = 0.6; ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(animate);
+        }
+        animate();
+    })();
+
+    /* ═══════════ 深色模式切换 ═══════════ */
+    (function() {
+        const toggle = document.getElementById('themeToggle');
+        const html = document.documentElement;
+        const saved = localStorage.getItem('blog-theme');
+        if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            html.classList.add('dark'); toggle.textContent = '☀️';
+        }
+        toggle.addEventListener('click', () => {
+            const isDark = html.classList.toggle('dark');
+            toggle.textContent = isDark ? '☀️' : '🌙';
+            localStorage.setItem('blog-theme', isDark ? 'dark' : 'light');
+        });
+    })();
+
+    /* ═══════════ 搜索 ═══════════ */
+    (function() {
+        const input = document.getElementById('searchInput');
+        const count = document.getElementById('searchCount');
+        const cards = document.querySelectorAll('#postList .post-card');
+        input.addEventListener('input', () => {
+            const q = input.value.toLowerCase().trim(); let visible = 0;
+            cards.forEach(c => {
+                const match = !q || (c.dataset.searchText||'').toLowerCase().includes(q);
+                c.classList.toggle('hidden', !match);
+                if (match) visible++;
+            });
+            if (q) { count.textContent = visible > 0 ? `找到 ${visible} 篇相关文章` : '没有匹配的文章，换个关键词试试？'; count.classList.add('visible'); }
+            else { count.classList.remove('visible'); }
+        });
+    })();
+
+    /* ═══════════ 返回顶部 ═══════════ */
+    (function() {
+        const btn = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => btn.classList.toggle('visible', window.scrollY > 400));
+        btn.addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    })();
+
+    /* ═══════════ 页面转场 ═══════════ */
+    (function(){
+        document.body.classList.add('page-entering');
+        addEventListener('load',function(){setTimeout(function(){document.body.classList.remove('page-entering')},700)});
+        if(location.protocol==='file:')return;  // file:// 下不做转场动画
+        document.addEventListener('click',function(e){
+            var a=e.target.closest('a');
+            if(!a)return;
+            var h=a.getAttribute('href');
+            if(!h||h[0]==='#'||h.indexOf('://')>0||h.indexOf('//')===0||a.target==='_blank')return;
+            e.preventDefault();
+            document.body.classList.add('page-exiting');
+            setTimeout(function(){location.assign(h)},360);
+        });
+    })();
+    </script>
+
+    
+    <script>window.ViewerConfig={user:'aaaaa',secret:'d1bdf09a'};</script>
+    <script src="js/viewer/counter.js"></script>
+    <script src="js/viewer/unique.js"></script>
+    <script src="js/viewer/global.js"></script>
+    <script>
+    (function(){
+        Viewer.getGlobalCount().then(function(n){var e=document.getElementById('vGlobal');if(e)e.innerHTML=n.toLocaleString()});
+        getVisitCount().then(function(n){var e=document.getElementById('vCounter');if(e)e.innerHTML=n.toLocaleString()});
+        Viewer.getUniqueCount().then(function(r){var e=document.getElementById('vUnique');if(e)e.innerHTML=r.count.toLocaleString()});
+    })();
+    </script>
+    
+    <!-- Viewer 插件：弹幕评论 -->
+    <script>
+    (function(){
+        var bar=document.getElementById('danmakuBar');
+        if(!bar)return;
+        var maxPid=parseInt(bar.dataset.maxPid)||0;
+        if(!maxPid)return;
+        var API='https://tinywebdb.appinventor.space/api';
+        var USER=(window.ViewerConfig&&window.ViewerConfig.user)||'aaaaa';
+        var SECRET=(window.ViewerConfig&&window.ViewerConfig.secret)||'d1bdf09a';
+        var scroll=document.getElementById('danmakuScroll');
+        var allComments=[], loaded=!1;
+        function call(p){
+            var b=new URLSearchParams({user:USER,secret:SECRET});
+            Object.keys(p).forEach(function(k){b.append(k,p[k])});
+            return fetch(API,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:b.toString()})
+                .then(function(r){return r.ok?r.text():Promise.reject(r.status)})
+                .then(function(t){try{return JSON.parse(t)}catch(e){return t}});
+        }
+        function extractVal(raw,tag){
+            var v=raw;
+            if(Array.isArray(raw)&&raw[0]==='VALUE')v=raw[2];
+            else if(typeof raw==='object'&&raw!==null&&raw[tag]!==undefined)v=raw[tag];
+            return v;
+        }
+        function loadCommentsForPage(pid){
+            var countTag='comment_count_'+pid;
+            return call({action:'get',tag:countTag}).then(function(raw){
+                var v=extractVal(raw,countTag);
+                var count=parseInt(v,10)||0;
+                if(!count)return[];
+                var tasks=[];
+                for(var i=1;i<=count;i++){
+                    tasks.push(call({action:'get',tag:'comment_'+pid+'_'+i}));
+                }
+                return Promise.all(tasks).then(function(results){
+                    return results.map(function(r,idx){
+                        var val=extractVal(r,'comment_'+pid+'_'+(idx+1));
+                        if(!val)return null;
+                        try{return typeof val==='string'?JSON.parse(val):val}catch(e){return null}
+                    }).filter(Boolean);
+                });
+            });
+        }
+        function render(){
+            if(!allComments.length){
+                scroll.innerHTML='<div class="danmaku-item"><div class="dm-author">还没有评论…</div><div class="dm-body">去文章页说点什么吧</div></div>';
+                return;
+            }
+            // 全量展示，翻倍以无缝循环
+            var doubled=allComments.concat(allComments);
+            scroll.innerHTML=doubled.map(function(c){
+                var name=(c.name||'匿名').replace(/</g,'&lt;');
+                var body=(c.content||'').replace(/</g,'&lt;').substring(0,80);
+                return '<div class="danmaku-item"><div class="dm-author">'+name+'</div><div class="dm-body">'+body+'</div></div>';
+            }).join('');
+        }
+        // 遍历所有页面加载评论
+        var pidQueue=[];
+        for(var i=1;i<=maxPid;i++) pidQueue.push(i);
+        // 分批加载（每批 5 个并发），避免过多请求
+        function loadBatch(idx){
+            if(idx>=pidQueue.length){
+                render();
+                return;
+            }
+            var batch=pidQueue.slice(idx,idx+5);
+            Promise.all(batch.map(function(pid){return loadCommentsForPage(pid).catch(function(){return[]})}))
+                .then(function(results){
+                    results.forEach(function(cs){allComments=allComments.concat(cs)});
+                    loadBatch(idx+5);
+                });
+        }
+        loadBatch(0);
+        // 每 3 分钟刷新一次弹幕
+        setInterval(function(){
+            allComments=[];
+            loadBatch(0);
+        },180000);
+    })();
+    </script>
+    
+    
+</body>
+</html>
