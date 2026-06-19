@@ -424,40 +424,40 @@
                     <div class="widget-title">🏷️ 精选标签</div>
                     <div class="widget-tags">
                         
-                        <a href="../directory.html?tag=%E6%B5%8B%E8%AF%95" class="tag-pill">
-                            测试
+                        <a href="../directory.html?tag=%E5%AD%A6%E4%B9%A0" class="tag-pill">
+                            学习
+                        </a>
+                        
+                        <a href="../directory.html?tag=%E9%9A%8F%E7%AC%94" class="tag-pill">
+                            随笔
+                        </a>
+                        
+                        <a href="../directory.html?tag=%E5%BE%81%E6%96%87" class="tag-pill">
+                            征文
                         </a>
                         
                         <a href="../directory.html?tag=%E8%BD%AF%E4%BB%B6" class="tag-pill">
                             软件
                         </a>
                         
-                        <a href="../directory.html?tag=%E6%A0%A1%E5%9B%AD" class="tag-pill">
-                            校园
-                        </a>
-                        
-                        <a href="../directory.html?tag=%E7%BA%A2%E6%A5%BC%E6%A2%A6" class="tag-pill">
-                            红楼梦
-                        </a>
-                        
-                        <a href="../directory.html?tag=%E7%94%9F%E6%B4%BB" class="tag-pill">
-                            生活
-                        </a>
-                        
-                        <a href="../directory.html?tag=AI" class="tag-pill">
-                            AI
-                        </a>
-                        
-                        <a href="../directory.html?tag=%E5%AD%A6%E4%B9%A0" class="tag-pill">
-                            学习
+                        <a href="../directory.html?tag=%E8%8B%B1%E8%AF%AD" class="tag-pill">
+                            英语
                         </a>
                         
                         <a href="../directory.html?tag=%E6%97%B6%E8%AF%84" class="tag-pill">
                             时评
                         </a>
                         
-                        <a href="../directory.html?tag=%E9%92%A2%E7%90%B4%E8%B0%B1" class="tag-pill">
-                            钢琴谱
+                        <a href="../directory.html?tag=AI" class="tag-pill">
+                            AI
+                        </a>
+                        
+                        <a href="../directory.html?tag=VPN" class="tag-pill">
+                            VPN
+                        </a>
+                        
+                        <a href="../directory.html?tag=%E9%9F%B3%E4%B9%90" class="tag-pill">
+                            音乐
                         </a>
                         
                         <a href="../directory.html?tag=%E6%B8%B8%E6%88%8F" class="tag-pill">
@@ -590,7 +590,7 @@
     !function(){const b=document.getElementById('backToTop');addEventListener('scroll',()=>b.classList.toggle('visible',scrollY>400));b.addEventListener('click',()=>scrollTo({top:0,behavior:'smooth'}))}();
 
     /* ═══════════ 页面转场 ═══════════ */
-    !function(){document.body.classList.add('page-entering');addEventListener('load',function(){setTimeout(function(){document.body.classList.remove('page-entering')},700)})}();
+    !function(){document.body.classList.add('page-entering');addEventListener('load',function(){setTimeout(function(){document.body.classList.remove('page-entering')},700)});addEventListener('pageshow',function(e){if(e.persisted){document.body.classList.remove('page-exiting','page-entering');document.querySelectorAll('*').forEach(function(el){el.style.animation='none';el.offsetHeight;el.style.animation=''})}})}();
     if(location.protocol!=='file:')!function(){document.addEventListener('click',function(e){var a=e.target.closest('a');if(!a)return;var h=a.getAttribute('href');if(!h||h[0]==='#'||h.indexOf('://')>0||h.indexOf('//')===0||a.target==='_blank')return;e.preventDefault();document.body.classList.add('page-exiting');setTimeout(function(){location.assign(h)},360)})}();
     </script>
 
