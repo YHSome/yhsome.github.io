@@ -1,7 +1,7 @@
-# OpenBlogger 渲染输出
+# ── 渲染输出（通过 git subtree 部署到 gh-pages） ──
 Rendered/
 
-# Python
+# ── Python ──
 __pycache__/
 *.py[cod]
 *.egg-info/
@@ -9,21 +9,16 @@ __pycache__/
 dist/
 build/
 
-# IDE
+# ── IDE ──
 .idea/
 .vscode/
 *.swp
 *.swo
 *~
 
-# 系统文件
+# ── 系统文件 ──
 Thumbs.db
 .DS_Store
 
-# 虚拟环境
-venv/
-.venv/
-env/
-
-# 渲染缓存
+# ── 缓存 ──
 OpenBlogger/.render_cache.json
