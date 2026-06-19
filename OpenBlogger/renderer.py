@@ -540,7 +540,6 @@ class BlogRenderer:
                     "links": [
                         {"name": "弹球挑战", "desc": "浏览器弹球游戏，30分挑战成功有红包", "icon": "🕹️", "tag": "游戏", "url": "https://yhsome.github.io/PinballChallenge/"},
                         {"name": "三国杀记牌工具", "desc": "三国杀在线记牌辅助", "icon": "🃏", "tag": "桌游", "url": "https://yhsome.github.io/sgsrecord/"},
-                        {"name": "QR码快递单", "desc": "QR码动态验证的快递信息传递方案", "icon": "📦", "tag": "工具", "url": "https://yhsome.github.io/QRDeliver/QRPoster.html"},
                         {"name": "假邮件生成器", "desc": "恭喜你，你被坑了——在线整蛊页面", "icon": "📧", "tag": "整活", "url": "https://yhsome.github.io/fakemail/"},
                         {"name": "西柚搜索工具", "desc": "西柚英语在线信息搜索工具", "icon": "🔍", "tag": "学习", "url": "https://yhsome.github.io/xiyou/"},
                     ],
@@ -549,13 +548,11 @@ class BlogRenderer:
                     "title": "🧪 实验性项目",
                     "links": [
                         {"name": "原神启动页", "desc": "原神风格网页还原练习", "icon": "✨", "tag": "前端", "url": "https://yhsome.github.io/genshin/"},
-                        {"name": "R18 发布页", "desc": "一个神秘的内容发布页面", "icon": "🔞", "tag": "神秘", "url": "https://yhsome.github.io/r18/publish.html"},
                     ],
                 },
                 {
                     "title": "📚 参考资源",
                     "links": [
-                        {"name": "Python 库镜像站", "desc": "本地 Python 库预览（OpenCV/PIL/Plotly/PyTorch 等）", "icon": "📖", "tag": "文档", "url": "https://yhsome.github.io/__pycache__/preview/"},
                         {"name": "3500 词研究器", "desc": "英语 3500 词汇研究与数据库", "icon": "📊", "tag": "数据", "url": "https://yhsome.github.io/projects/3500researcher/"},
                     ],
                 },
