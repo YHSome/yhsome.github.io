@@ -23,5 +23,5 @@ build/
 Thumbs.db
 .DS_Store
 
-# ── 缓存 ──
-OpenBlogger/.render_cache.json
+# ── 缓存与运行时数据 ──
+.data/

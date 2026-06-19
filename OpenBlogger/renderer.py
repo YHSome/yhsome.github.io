@@ -29,10 +29,10 @@ RENDERED_DIR = PROJECT_ROOT / "Rendered"
 TEMPLATE_ROOT = PROJECT_ROOT / "OpenBlogger" / "Template"
 IMAGES_DIR = PROJECT_ROOT / "Image"               # 所有静态资源（图片/下载）
 FRIENDS_SRC = PROJECT_ROOT / ".archive" / "yhsome.github.io"  # 友链项目源文件
-PLUGINS_DIR = PROJECT_ROOT / "OpenBlogger" / "Plugins"
-VIEWER_JS_DIR = PLUGINS_DIR / "Viewer" / "js"
-PAGE_ID_FILE = PROJECT_ROOT / "OpenBlogger" / ".viewer_pages.json"
-CACHE_FILE = PROJECT_ROOT / "OpenBlogger" / ".render_cache.json"
+PLUGINS_DIR = PROJECT_ROOT / "Plugins"                       # 博客专属插件
+VIEWER_JS_DIR = PROJECT_ROOT / "OpenBlogger" / "Plugins" / "Viewer" / "js"  # 框架自带
+PAGE_ID_FILE = PROJECT_ROOT / ".data" / ".viewer_pages.json"
+CACHE_FILE = PROJECT_ROOT / ".data" / ".render_cache.json"
 PROJECTS_FILE = PLUGINS_DIR / "GitHubProjects" / "projects.json"
 
 # ── GitHub 语言颜色映射 ──

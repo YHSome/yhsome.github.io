@@ -151,7 +151,7 @@ def _load_config(config_path: str = None) -> dict:
     if config_path:
         path = Path(config_path)
     else:
-        path = Path(__file__).resolve().parent / "site.json"
+        path = Path(__file__).resolve().parent.parent / "site.json"
     if path.exists():
         try:
             return json.loads(path.read_text(encoding="utf-8"))
