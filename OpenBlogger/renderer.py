@@ -521,10 +521,11 @@ class BlogRenderer:
                 tag_post_map[tag].append(post)
 
         for tc in tags_with_count:
+            summaries = [self._summary(p) for p in tag_post_map.get(tc["name"], [])]
             tags_data.append({
                 "name": tc["name"],
                 "count": tc["count"],
-                "posts": tag_post_map.get(tc["name"], []),
+                "posts": summaries,
             })
 
         return {

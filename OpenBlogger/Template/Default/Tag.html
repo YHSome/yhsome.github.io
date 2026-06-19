@@ -84,6 +84,28 @@
         }
         .tag-row:hover .post-count { background: var(--accent); color: #fff; }
 
+        /* ── 悬停弹出文章列表 ── */
+        .tag-row-wrap { position: relative; }
+        .tag-row-popup {
+            position: absolute; left: calc(100% + 0.75rem); top: 0;
+            min-width: 220px; max-width: 320px;
+            background: var(--card-bg); border: 1px solid var(--accent);
+            border-radius: var(--radius); box-shadow: var(--shadow-hover);
+            padding: 0.6rem 0; z-index: 50;
+            opacity: 0; transform: translateX(-8px);
+            pointer-events: none;
+            transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
+        }
+        .tag-row-wrap:hover .tag-row-popup {
+            opacity: 1; transform: translateX(0); pointer-events: auto;
+        }
+        .tag-row-popup .popup-post {
+            display: block; padding: 0.35rem 1rem;
+            font-size: 0.85rem; color: var(--text); text-decoration: none;
+            transition: all 0.2s; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        .tag-row-popup .popup-post:hover { background: var(--tag-bg); color: var(--accent); }
+
         .back-to-top {
             position: fixed; bottom: 2rem; right: 2rem; z-index: 200;
             width: 44px; height: 44px; border-radius: 50%;
@@ -191,13 +213,20 @@
         <div class="tag-group">
             <div class="tag-group-items">
                 {% for tag in tags_with_count %}
-                <a href="{{ relative_root }}directory.html?tag={{ tag.name | urlencode }}" class="tag-row">
-                    <span class="tag-name">{{ tag.name }}</span>
-                    <div class="tag-meta">
-                        <span class="post-count">{{ tag.count }} 篇</span>
-                        <span>→</span>
+                <div class="tag-row-wrap">
+                    <a href="{{ relative_root }}directory.html?tag={{ tag.name | urlencode }}" class="tag-row">
+                        <span class="tag-name">{{ tag.name }}</span>
+                        <div class="tag-meta">
+                            <span class="post-count">{{ tag.count }} 篇</span>
+                            <span>→</span>
+                        </div>
+                    </a>
+                    <div class="tag-row-popup">
+                        {% for post in tag.posts %}
+                        <a href="{{ post.url }}" class="popup-post">{{ post.title }}</a>
+                        {% endfor %}
                     </div>
-                </a>
+                </div>
                 {% endfor %}
             </div>
         </div>
