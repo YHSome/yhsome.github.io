@@ -1,0 +1,93 @@
+[
+  {
+    "name": "Viewer",
+    "full_name": "YHSome/Viewer",
+    "description": "鍩轰簬TinyWebDB鐨勭函鍓嶇??椤甸潰璁块棶璁℃暟鍣?&璇勮?虹粍浠躲?侫 pure frontend page visit counter & comment module powered by TinyWebDB. ",
+    "language": "HTML",
+    "stars": 0,
+    "forks": 0,
+    "has_pages": true,
+    "homepage": "https://yhsome.github.io/Viewer/",
+    "html_url": "https://github.com/YHSome/Viewer",
+    "updated_at": "2026-06-15T12:16:18Z",
+    "topics": []
+  },
+  {
+    "name": "claude-final-exam-review",
+    "full_name": "YHSome/claude-final-exam-review",
+    "description": "涓?涓?鏈熸湯澶嶄範Skill锛岃兘澶熻?〤laude璇嗗埆ppt,pdf,docx绛夋枃浠跺苟鐢熸垚鍙?瑙嗗寲璁蹭箟鐨凜laude Code skill銆侫n end-of-term review Skill that enables Claude to recognize files such as ppt, pdf, and docx, and generate visualized lecture notes, known as the Claude Code skill.",
+    "language": "Python",
+    "stars": 4,
+    "forks": 0,
+    "has_pages": false,
+    "homepage": "",
+    "html_url": "https://github.com/YHSome/claude-final-exam-review",
+    "updated_at": "2026-06-15T07:17:19Z",
+    "topics": []
+  },
+  {
+    "name": "yhsome.github.io",
+    "full_name": "YHSome/yhsome.github.io",
+    "description": "瀛樻斁鏉傜墿鐨勪粨搴?",
+    "language": "HTML",
+    "stars": 0,
+    "forks": 0,
+    "has_pages": true,
+    "homepage": "https://yhsome.github.io/",
+    "html_url": "https://github.com/YHSome/yhsome.github.io",
+    "updated_at": "2026-06-14T08:42:37Z",
+    "topics": []
+  },
+  {
+    "name": "TheFinalPuzzle",
+    "full_name": "YHSome/TheFinalPuzzle",
+    "description": "銆愭暣娲汇?戜竴涓?鏃ㄥ湪瑙ｅ喅Vibe Coding鏈?娣卞叆銆佹渶鏈?璐ㄩ棶棰樼殑宸ュ叿銆侫 tool that goes straight to the deepest, most fundamental essence of Vibe Coding.",
+    "language": "Python",
+    "stars": 0,
+    "forks": 0,
+    "has_pages": false,
+    "homepage": "",
+    "html_url": "https://github.com/YHSome/TheFinalPuzzle",
+    "updated_at": "2026-06-12T12:53:15Z",
+    "topics": []
+  },
+  {
+    "name": "xiyouspeaker",
+    "full_name": "YHSome/xiyouspeaker",
+    "description": "涓?涓?鍙?浠ュ府浣犲畬鎴愯タ鏌氳嫳璇?涓?鐑︿汉鐨勫崟璇嶆湕璇荤殑绋嬪簭",
+    "language": "Python",
+    "stars": 0,
+    "forks": 0,
+    "has_pages": false,
+    "homepage": "",
+    "html_url": "https://github.com/YHSome/xiyouspeaker",
+    "updated_at": "2023-08-22T17:07:55Z",
+    "topics": []
+  },
+  {
+    "name": "xiyouchooser",
+    "full_name": "YHSome/xiyouchooser",
+    "description": "涓?涓?鍙?浠ュ府浣犲畬鎴愯タ鏌氳嫳璇?涓?鐑︿汉鐨勭湅璇嶉?変箟鍜岀湅涔夐?夎瘝鐨勭▼搴?",
+    "language": "Python",
+    "stars": 0,
+    "forks": 0,
+    "has_pages": false,
+    "homepage": "",
+    "html_url": "https://github.com/YHSome/xiyouchooser",
+    "updated_at": "2023-08-22T17:00:33Z",
+    "topics": []
+  },
+  {
+    "name": "my_picture_tools",
+    "full_name": "YHSome/my_picture_tools",
+    "description": "澶勭悊銆婄孩妤兼ⅵ銆嬫?濈淮瀵煎浘鏃舵墍鐢ㄧ殑浠ｇ爜",
+    "language": "Python",
+    "stars": 0,
+    "forks": 0,
+    "has_pages": false,
+    "homepage": "",
+    "html_url": "https://github.com/YHSome/my_picture_tools",
+    "updated_at": "2023-05-20T11:35:34Z",
+    "topics": []
+  }
+]

@@ -33,6 +33,16 @@ PLUGINS_DIR = PROJECT_ROOT / "OpenBlogger" / "Plugins"
 VIEWER_JS_DIR = PLUGINS_DIR / "Viewer" / "js"
 PAGE_ID_FILE = PROJECT_ROOT / "OpenBlogger" / ".viewer_pages.json"
 CACHE_FILE = PROJECT_ROOT / "OpenBlogger" / ".render_cache.json"
+PROJECTS_FILE = PROJECT_ROOT / "OpenBlogger" / "projects.json"
+
+# ── GitHub 语言颜色映射 ──
+LANG_COLORS = {
+    "Python": "#3572A5", "JavaScript": "#f1e05a", "TypeScript": "#3178c6",
+    "HTML": "#e34c26", "CSS": "#563d7c", "Java": "#b07219",
+    "C++": "#f34b7d", "C": "#555555", "Go": "#00ADD8", "Rust": "#dea584",
+    "Shell": "#89e051", "Vue": "#41b883", "Kotlin": "#A97BFF",
+    "Swift": "#F05138", "Dart": "#00B4AB", "Ruby": "#701516",
+}
 
 # ── 默认站点配置 ──
 DEFAULT_CONFIG = {
@@ -392,6 +402,7 @@ class BlogRenderer:
             ("index.html", "Homepage.html", self._build_homepage_context()),
             ("directory.html", "Directory.html", self._build_directory_context()),
             ("tags.html", "Tag.html", self._build_tags_context()),
+            ("projects.html", "Projects.html", self._build_projects_context()),
         ]
 
         for filename, template, context in list_pages:
@@ -507,6 +518,57 @@ class BlogRenderer:
             "current_year": datetime.now().year,
             "relative_root": "",                  # 标签页在根目录
         }
+
+    def _build_projects_context(self) -> dict:
+        """构建项目展示页上下文（GitHub 仓库列表）。"""
+        projects = self._load_projects()
+        return {
+            "site_title": self.config["site_title"],
+            "projects": projects,
+            "current_year": datetime.now().year,
+            "relative_root": "",
+        }
+
+    def _load_projects(self) -> list[dict]:
+        """从 projects.json 加载 GitHub 仓库数据，格式化为模板用的结构。"""
+        if not PROJECTS_FILE.exists():
+            return []
+        try:
+            raw = json.loads(PROJECTS_FILE.read_text(encoding="utf-8"))
+        except (json.JSONDecodeError, OSError):
+            return []
+        result = []
+        for r in raw:
+            name = r.get("name", "")
+            # 图标根据语言/主题选择
+            icon = "📂"
+            lang = r.get("language", "")
+            if "Python" in lang: icon = "🐍"
+            elif "JavaScript" in lang or "TypeScript" in lang: icon = "📜"
+            elif "HTML" in lang: icon = "🌐"
+            elif "Vue" in lang: icon = "💚"
+            elif "Go" in lang: icon = "🔵"
+            elif "Rust" in lang: icon = "🦀"
+            elif "Java" in lang: icon = "☕"
+            # 链接：有 GitHub Pages 则链向 pages，否则链向仓库
+            has_pages = r.get("has_pages", False)
+            if has_pages:
+                # GitHub Pages URL: https://YHSome.github.io/{repo}/
+                link = f"https://yhsome.github.io/{name}/"
+            else:
+                link = r.get("html_url", f"https://github.com/YHSome/{name}")
+            result.append({
+                "name": name,
+                "description": r.get("description", ""),
+                "language": lang,
+                "lang_color": LANG_COLORS.get(lang, "#8b8b8b"),
+                "stars": r.get("stars", 0),
+                "forks": r.get("forks", 0),
+                "has_pages": has_pages,
+                "link": link,
+                "icon": icon,
+            })
+        return result
 
     def _count_total_words(self) -> int:
         """统计全站文章总字数（去除 Markdown 标记后的纯文本字数）。"""
