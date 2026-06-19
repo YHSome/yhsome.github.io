@@ -28,6 +28,7 @@ RAW_DIR = PROJECT_ROOT / "Raw"
 RENDERED_DIR = PROJECT_ROOT / "Rendered"
 TEMPLATE_ROOT = PROJECT_ROOT / "OpenBlogger" / "Template"
 IMAGES_DIR = PROJECT_ROOT / "Image"               # 所有静态资源（图片/下载）
+FRIENDS_SRC = PROJECT_ROOT / ".archive" / "yhsome.github.io"  # 友链项目源文件
 PLUGINS_DIR = PROJECT_ROOT / "OpenBlogger" / "Plugins"
 VIEWER_JS_DIR = PLUGINS_DIR / "Viewer" / "js"
 PAGE_ID_FILE = PROJECT_ROOT / "OpenBlogger" / ".viewer_pages.json"
@@ -427,6 +428,9 @@ class BlogRenderer:
         # Step 7: 复制图片
         self._copy_images()
 
+        # Step 7.5: 复制友链项目
+        self._copy_friends()
+
         # Step 8: 复制 Viewer 插件 JS
         self._copy_viewer_js()
 
@@ -537,22 +541,22 @@ class BlogRenderer:
                 {
                     "title": "🎮 在线小工具",
                     "links": [
-                        {"name": "弹球挑战", "desc": "浏览器弹球游戏，30分挑战成功有红包", "icon": "🕹️", "tag": "游戏", "url": "https://yhsome.github.io/PinballChallenge/"},
-                        {"name": "三国杀记牌工具", "desc": "三国杀在线记牌辅助", "icon": "🃏", "tag": "桌游", "url": "https://yhsome.github.io/sgsrecord/"},
-                        {"name": "假邮件生成器", "desc": "恭喜你，你被坑了——在线整蛊页面", "icon": "📧", "tag": "整活", "url": "https://yhsome.github.io/fakemail/"},
-                        {"name": "西柚搜索工具", "desc": "西柚英语在线信息搜索工具", "icon": "🔍", "tag": "学习", "url": "https://yhsome.github.io/xiyou/"},
+                        {"name": "弹球挑战", "desc": "浏览器弹球游戏，30分挑战成功有红包", "icon": "🕹️", "tag": "游戏", "url": "friends/PinballChallenge/"},
+                        {"name": "三国杀记牌工具", "desc": "三国杀在线记牌辅助", "icon": "🃏", "tag": "桌游", "url": "friends/sgsrecord/"},
+                        {"name": "假邮件生成器", "desc": "恭喜你，你被坑了——在线整蛊页面", "icon": "📧", "tag": "整活", "url": "friends/fakemail/"},
+                        {"name": "西柚搜索工具", "desc": "西柚英语在线信息搜索工具", "icon": "🔍", "tag": "学习", "url": "friends/xiyou/"},
                     ],
                 },
                 {
                     "title": "🧪 实验性项目",
                     "links": [
-                        {"name": "原神启动页", "desc": "原神风格网页还原练习", "icon": "✨", "tag": "前端", "url": "https://yhsome.github.io/genshin/"},
+                        {"name": "原神启动页", "desc": "原神风格网页还原练习", "icon": "✨", "tag": "前端", "url": "friends/genshin/"},
                     ],
                 },
                 {
                     "title": "📚 参考资源",
                     "links": [
-                        {"name": "3500 词研究器", "desc": "英语 3500 词汇研究与数据库", "icon": "📊", "tag": "数据", "url": "https://yhsome.github.io/projects/3500researcher/"},
+                        {"name": "3500 词研究器", "desc": "英语 3500 词汇研究与数据库", "icon": "📊", "tag": "数据", "url": "friends/3500researcher/"},
                     ],
                 },
             ],
@@ -769,6 +773,39 @@ class BlogRenderer:
                 print(f"⚠️  复制 {item.name} 失败: {e}")
         if total:
             print(f"🖼️  复制了 {total} 个资源文件 → images/")
+
+    def _copy_friends(self):
+        """将友链项目文件复制到 Rendered/friends/。"""
+        if not FRIENDS_SRC.exists():
+            return
+        dest = RENDERED_DIR / "friends"
+        if dest.exists():
+            shutil.rmtree(dest)
+        dest.mkdir(parents=True)
+        # 只复制有效子项目（排除 pyignore 和内部目录）
+        copy_dirs = {
+            "PinballChallenge", "sgsrecord", "fakemail", "xiyou", "genshin",
+        }
+        total = 0
+        for name in copy_dirs:
+            src = FRIENDS_SRC / name
+            if not src.exists():
+                continue
+            try:
+                shutil.copytree(src, dest / name)
+                total += len(list((dest / name).rglob("*")))
+            except Exception as e:
+                print(f"⚠️  复制友链 {name} 失败: {e}")
+        # 3500researcher 单独复制
+        researcher_src = FRIENDS_SRC / "projects" / "3500researcher"
+        if researcher_src.exists():
+            try:
+                shutil.copytree(researcher_src, dest / "3500researcher")
+                total += len(list((dest / "3500researcher").rglob("*")))
+            except Exception as e:
+                print(f"⚠️  复制 3500researcher 失败: {e}")
+        if total:
+            print(f"🔗 友链项目: {len(copy_dirs)+1} 个子项目 → friends/")
 
     # ═══════════════════════════════════════════════
     #  Viewer 插件支持
