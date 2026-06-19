@@ -486,11 +486,22 @@ class BlogRenderer:
         }
 
     def _build_directory_context(self, active_tag: str = "") -> dict:
-        """构建目录页模板上下文。"""
+        """构建目录页模板上下文（文章按年月分组）。"""
         all_tags = self._collect_tags()
+        posts = []
+        last_month = ""
+        for p in self.posts:
+            s = self._summary(p)
+            # 提取年月标签 (如 "2023年4月")
+            m = re.match(r'(\d{4})\D+(\d{1,2})', s["date"])
+            month_label = f"{m.group(1)}年{int(m.group(2))}月" if m else ""
+            s["month_label"] = month_label
+            s["show_month"] = (month_label != last_month)   # 月份变化时显示分隔
+            last_month = month_label
+            posts.append(s)
         return {
             "site_title": self.config["site_title"],
-            "all_posts": [self._summary(p) for p in self.posts],
+            "all_posts": posts,
             "all_tags": all_tags,
             "active_tag": active_tag,
             "current_year": datetime.now().year,

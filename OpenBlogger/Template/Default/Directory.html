@@ -126,6 +126,12 @@
         .post-card:hover::before { transform: scaleY(1); }
         .post-card:hover { box-shadow: var(--shadow-hover); transform: translateY(-2px); border-color: var(--accent); }
         .post-card.hidden { display: none; }
+        .month-divider {
+            font-size: 1.05rem; font-weight: 700; color: var(--accent);
+            padding: 0.6rem 0 0.4rem; margin: 0.5rem 0 0.8rem;
+            border-bottom: 2px solid var(--border);
+            transition: border 0.4s;
+        }
         .post-card .post-meta { display: flex; align-items: center; gap: 0.75rem; font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.3rem; }
         .post-card .post-title { font-size: 1.25rem; font-weight: 700; margin-bottom: 0.4rem; color: var(--text); transition: color 0.3s; }
         .post-card:hover .post-title { color: var(--accent); }
@@ -262,6 +268,9 @@
     <div class="container" id="postList">
         {% if all_posts %}
             {% for post in all_posts %}
+            {% if post.show_month %}
+            <div class="month-divider">{{ post.month_label }}</div>
+            {% endif %}
             <a href="{{ post.url }}" class="post-card" data-tags="{{ post.tags | join(',') }}" data-search-text="{{ post.title }} {{ post.excerpt }} {{ post.tags | join(' ') }}">
                 <div class="post-meta">
                     <span>📅 {{ post.date }}</span>
