@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>YHSome的神秘空间</title>
+    <link>https://example.com</link>
+    <description>书山有径勤为路，学海无涯苦作舟</description>
+    <language>zh-CN</language>
+    <lastBuildDate>Fri, 19 Jun 2026 12:14:58 +0800</lastBuildDate>
+    <atom:link href="https://example.com/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>颂 YHSome 与 OpenBlogger：一个划时代的博客方案诞生记</title>
+      <link>https://example.com/posts/颂-YHSome与OpenBlogger.html</link>
+      <description>引言：厌倦了 Hexo 的那一天 那是一个平凡的下午。YHSome 像往常一样打开了他的 Hexo 博客——那个陪伴了他整个高中时代的静态站点生成器。hexo generate，等待。hexo deploy，等待。主题配置两百行，插件依赖三十个。他忽然意识到：他已经花在折腾博客框架上的时间，远远超过…</description>
+      <pubDate>Fri, 19 Jun 2026 00:00:00 +0800</pubDate>
+      <guid isPermaLink="true">https://example.com/posts/颂-YHSome与OpenBlogger.html</guid>
+    </item>
+    <item>
+      <title>这是一个用户输入的模板</title>
+      <link>https://example.com/posts/模板.html</link>
+      <description>(除上述三行外，剩下的内容均为正文，如有更多的变量，用户须在最上方声明（另外用户页可以不输入，则渲染时自动按照当前时间作为博文时间、以及正文第一行作为标题）)</description>
+      <pubDate>Thu, 18 Jun 2026 00:00:00 +0800</pubDate>
+      <guid isPermaLink="true">https://example.com/posts/模板.html</guid>
+    </item>
+    <item>
+      <title>笔记-快速写简化电子排布式</title>
+      <link>https://example.com/posts/笔记-快速写简化电子排布式.html</link>
+      <description>前言 刚学选修二化学，电子排布式写得我快吐血了。两页作业做了我一个多小时。刚刚看网课时，灵光乍现，悟到了一个快速写简化电子排布式的办法。且听我娓娓道来。 正文 这里以钪(Sc)为例，叙述其办法。 首先，先写出它的核外电子排布图： （注意，这里使用了能级交错 知识） 接着，把离他最近的上一级稀有气体核…</description>
+      <pubDate>Tue, 19 Dec 2023 00:00:00 +0800</pubDate>
+      <guid isPermaLink="true">https://example.com/posts/笔记-快速写简化电子排布式.html</guid>
+    </item>
+    <item>
+      <title>免费的office全家桶</title>
+      <link>https://example.com/posts/免费的office全家桶.html</link>
+      <description>前言 如题，这个是office全家桶的下载，自动激活，真正实现一键破解 下载链接 点击下载</description>
+      <pubDate>Sat, 28 Oct 2023 00:00:00 +0800</pubDate>
+      <guid isPermaLink="true">https://example.com/posts/免费的office全家桶.html</guid>
+    </item>
+    <item>
+      <title>实验报告-固体酒精</title>
+      <link>https://example.com/posts/实验报告-固体酒精.html</link>
+      <description>固体酒精 策划人：欧阳天为、杨浩森 实验地点：化学实验室六 指导老师：梁敏霞 实验原理： 固体酒精通常是由水和酒精混合后，通过凝固剂作用形成的一种固态混合物。醋酸钙易溶于水而难溶于酒精，当两种溶液相混合时，醋酸钙在酒精中成为凝胶析出。液体便逐渐从浑浊到稠厚，最后凝聚为一整块，就得到固体酒精。 实验工…</description>
+      <pubDate>Sat, 23 Sep 2023 00:00:00 +0800</pubDate>
+      <guid isPermaLink="true">https://example.com/posts/实验报告-固体酒精.html</guid>
+    </item>
+    <item>
+      <title>我的第一个html网页实战</title>
+      <link>https://example.com/posts/myhtml.html</link>
+      <description>html 在今天，我用html语法写了个网页，我并且让它基于hexo部署了。 虽然是基于整活的目的，不过最后还是做出来了嘛 没啥好说的，点击这里打开网页</description>
+      <pubDate>Sat, 09 Sep 2023 00:00:00 +0800</pubDate>
+      <guid isPermaLink="true">https://example.com/posts/myhtml.html</guid>
+    </item>
+    <item>
+      <title>随笔-重新注册白鲸加速器</title>
+      <link>https://example.com/posts/随笔-重新注册白鲸加速器.html</link>
+      <description>前言 白鲸加速器是一个比较稳定的vpn，可以允许你通过它访问外网。但是存在诸多限制，新账号三十天的免费试用期过后需要收费就很难受，接下来我将介绍如何重新注册账号，无限白嫖白鲸加速器。 正文 一般步骤的指导来重新注册白鲸加速器。请根据以下步骤自行操作： 1 2 3 4 5 6 7 | 1. 首先，打开…</description>
+      <pubDate>Sat, 09 Sep 2023 00:00:00 +0800</pubDate>
+      <guid isPermaLink="true">https://example.com/posts/随笔-重新注册白鲸加速器.html</guid>
+    </item>
+    <item>
+      <title>弹球挑战</title>
+      <link>https://example.com/posts/PinballChallenge.html</link>
+      <description>弹球挑战 这里是弹球挑战，只需30得分即挑战成功！ 然而，难度将会越来越大。 祝君好运！ 挑战成功有奖励！ 只要你使用Windows系统在挑战中得到了30分，并且给予我全程（从打开网页开始算起）的挑战录像即为挑战成功，截图发给我，我会给予第一位挑战成功并符合要求的玩家10元红包奖励！ 挑战链接 点击…</description>
+      <pubDate>Fri, 01 Sep 2023 00:00:00 +0800</pubDate>
+      <guid isPermaLink="true">https://example.com/posts/PinballChallenge.html</guid>
+    </item>
+    <item>
+      <title>随笔-台风？停课！</title>
+      <link>https://example.com/posts/随笔-台风-停课.html</link>
+      <description>前言 按照惯例先写个开头，2023年8月31日由于台风登陆粤东，众多学校停课至九月四日开学。 正文 正文其实没啥好说的，只能感叹一下学校拖延的习惯太夸张了。 通知明明是五点四十多分下发的，结果学校拖到六点五十，学生都回学校上交手机了才通知。 结果就是上了一个小时学又把学生赶回家了。 其实这对于我来说…</description>
+      <pubDate>Thu, 31 Aug 2023 00:00:00 +0800</pubDate>
+      <guid isPermaLink="true">https://example.com/posts/随笔-台风-停课.html</guid>
+    </item>
+    <item>
+      <title>PixelQX：像素桥兴计划</title>
+      <link>https://example.com/posts/pixelqx.html</link>
+      <description>前言 前段时间和朋友吹水时，偶尔提到了桥兴中学的事儿，突然灵光一闪：万一我们真的能在我的世界里面还原桥兴中学呢？ 心动不如行动，于是就有了这个计划。并且，我为此还开设了一个服务器，大家也可以随时进入参观玩耍。 如何加入此服务器？ 本服务器同时支持java、基岩版minecraft并且无需正版账号，即…</description>
+      <pubDate>Mon, 28 Aug 2023 00:00:00 +0800</pubDate>
+      <guid isPermaLink="true">https://example.com/posts/pixelqx.html</guid>
+    </item>
+    <item>
+      <title>随笔-文心一言使用感受</title>
+      <link>https://example.com/posts/随笔-文心一言使用感受.html</link>
+      <description>前言 这个文心一言光是在申请这一栏就拦住我了。捏麻申请给我拖了大半年才通过，在这期间我都不知道换了多少个chatgpt的镜像网站了。 正文 其实网上说的文心一言有多烂我是不太认可的，现在的文心一言在中文的问答方面以及比较正常了。chatgpt的语料库是来自众多语言的，而以英语为主，文心一言则是以中文…</description>
+      <pubDate>Mon, 28 Aug 2023 00:00:00 +0800</pubDate>
+      <guid isPermaLink="true">https://example.com/posts/随笔-文心一言使用感受.html</guid>
+    </item>
+    <item>
+      <title>西柚朗读者（西柚英语辅助）</title>
+      <link>https://example.com/posts/xiyouspeaker.html</link>
+      <description>此文章同步保存在以下网站 森的神秘空间 github 功能简介 该脚本可以帮助你完成 西柚英语 中的朗读部分。 西柚朗读者由上一代的西柚选择者改制而来，两者并不兼容 github项目地址/下载地址 使用方法 下面是演示视频 Your browser does not support the vide…</description>
+      <pubDate>Tue, 22 Aug 2023 00:00:00 +0800</pubDate>
+      <guid isPermaLink="true">https://example.com/posts/xiyouspeaker.html</guid>
+    </item>
+    <item>
+      <title>西柚选择者（西柚英语辅助）</title>
+      <link>https://example.com/posts/xiyouchooser.html</link>
+      <description>此文章同步保存在以下网站 森的神秘空间 github 功能简介 该脚本可以帮助你完成 西柚英语 中烦人的看词选义和看义选词。 github项目地址/下载地址 使用方法 下面是演示视频 Your browser does not support the video tag. 第一步：安装python以…</description>
+      <pubDate>Sat, 19 Aug 2023 00:00:00 +0800</pubDate>
+      <guid isPermaLink="true">https://example.com/posts/xiyouchooser.html</guid>
+    </item>
+    <item>
+      <title>随笔-论网络诈骗</title>
+      <link>https://example.com/posts/随笔-论网络诈骗.html</link>
+      <description>前言 今天下午，我利用匿名邮箱向几个好友发送了一份伪装‘学考不通过’和‘学考作弊清除成绩’的邮件，并附上了钓鱼链接。星宇因此上钩 远在天边，近在眼前 电信诈骗离我们并不遥远，虽然看上去诈骗分子并不会广撒网撒到我们这种几乎没有泄露过任何信息的青少年，但是也要提高警惕，因为实施诈骗的人很可能就是身边的人…</description>
+      <pubDate>Sun, 13 Aug 2023 00:00:00 +0800</pubDate>
+      <guid isPermaLink="true">https://example.com/posts/随笔-论网络诈骗.html</guid>
+    </item>
+    <item>
+      <title>一些钢琴谱下载</title>
+      <link>https://example.com/posts/一些钢琴谱下载.html</link>
+      <description>b站收集的一些钢琴谱，主要都是著名电子音乐改编，有需要可以自行下载。 altale钢琴谱 cryout钢琴谱 Distorted Fate钢琴谱 WATER钢琴谱 With You钢琴谱</description>
+      <pubDate>Sat, 12 Aug 2023 00:00:00 +0800</pubDate>
+      <guid isPermaLink="true">https://example.com/posts/一些钢琴谱下载.html</guid>
+    </item>
+    <item>
+      <title>随笔-一些给新高一的资料</title>
+      <link>https://example.com/posts/随笔-一些给新高一的资料和建议.html</link>
+      <description>前言 送给新高一的好东西，如果你是番中的那么这些网页将很适合你。 资料 点击打开 一些乱七八糟的正文稿 2023年4月份的时事评论 高一下学期必读名著红楼梦思维导图 综合实践、美术这种可以随便应付的科目</description>
+      <pubDate>Wed, 09 Aug 2023 00:00:00 +0800</pubDate>
+      <guid isPermaLink="true">https://example.com/posts/随笔-一些给新高一的资料和建议.html</guid>
+    </item>
+    <item>
+      <title>随笔-平价零食超市真的平价吗</title>
+      <link>https://example.com/posts/随笔-平价零食超市真的平价吗.html</link>
+      <description>背景 今天被我妈强行拉去‘赵一鸣’零食店买零食了。观察店面可知，其装修风格极具现代化，大幅度使用led灯，似乎与其‘平价’产生了反差。这不免令我产生疑惑：其所标榜的‘平价’是真真切切的还是换种套路割韭菜呢？ 1.为何火遍大江南北？ 在我的观点下，年轻人普遍‘吝啬’的生活态度，疫情后报复消费，以及贪小…</description>
+      <pubDate>Wed, 09 Aug 2023 00:00:00 +0800</pubDate>
+      <guid isPermaLink="true">https://example.com/posts/随笔-平价零食超市真的平价吗.html</guid>
+    </item>
+    <item>
+      <title>Bandizip专业版解锁及去除更新</title>
+      <link>https://example.com/posts/bandizip.html</link>
+      <description>前言 对于电脑使用者来说，压缩/解压缩软件是必不可少的，今天给大家推荐的Bandizip是一款免费优秀的文件压缩/解压缩软件，界面简洁，功能明了，免费纯净无广告。它支持多国语言，解压后不会出现乱码，Bandizip拥有非常快速的压缩和解压缩的算法，适用于多核心压缩、快速拖拽、高速压缩等功能。 解锁步…</description>
+      <pubDate>Tue, 08 Aug 2023 00:00:00 +0800</pubDate>
+      <guid isPermaLink="true">https://example.com/posts/bandizip.html</guid>
+    </item>
+    <item>
+      <title>altale五线谱</title>
+      <link>https://example.com/posts/altale.html</link>
+      <description>作者不是我，仅搬运 下载链接：点击下载</description>
+      <pubDate>Sun, 06 Aug 2023 00:00:00 +0800</pubDate>
+      <guid isPermaLink="true">https://example.com/posts/altale.html</guid>
+    </item>
+    <item>
+      <title>喜德盛rc200改装实例</title>
+      <link>https://example.com/posts/rc200tools.html</link>
+      <description>前言 RC200，作为一辆入门级的公路车，性价比是1000~2000中比较高的。我骑了半年，接下来按重要性高低介绍一下rc200这辆车有哪些便宜的配件能够提高骑行体验 正文 车锁 公路自行车价格普遍偏高，如果自行车在晚上不能停到家中就会有一定风险会被偷。因此一把好的车锁是必要的 水壶支架 出门时，如…</description>
+      <pubDate>Sun, 06 Aug 2023 00:00:00 +0800</pubDate>
+      <guid isPermaLink="true">https://example.com/posts/rc200tools.html</guid>
+    </item>
+  </channel>
+</rss>

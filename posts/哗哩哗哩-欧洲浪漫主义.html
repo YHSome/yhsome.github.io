@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="x-viewer-page-id" content="30">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>(function(){var s=localStorage.getItem('blog-theme');if(s==='dark'||(!s&&matchMedia('(prefers-color-scheme:dark)').matches)){document.documentElement.classList.add('dark')}})();</script>
+    <title>美术发言-欧洲浪漫主义 — YHSome的神秘空间</title>
+    <style>
+        :root {
+            --bg: #fdfbf7; --card-bg: #ffffff; --text: #2c2416; --text-secondary: #6b5e4a;
+            --accent: #b1743e; --accent-hover: #8b5a2e; --border: #e5ddd0; --tag-bg: #f5efe3;
+            --code-bg: #f4f0e8; --shadow: 0 1px 3px rgba(44,36,22,0.06);
+            --shadow-hover: 0 8px 24px rgba(44,36,22,0.12); --radius: 10px;
+            --max-width: 1050px; --sidebar-width: 230px; --danmaku-width: 210px;
+            --nav-blur: blur(12px); --particle-color: 180,160,140;
+        }
+        html.dark {
+            --bg: #1a1a1f; --card-bg: #25252b; --text: #d4d0c8; --text-secondary: #9a9488;
+            --accent: #d4945a; --accent-hover: #e8a86e; --border: #36363d;
+            --tag-bg: #2e2e35; --code-bg: #2e2e35;
+            --shadow: 0 1px 3px rgba(0,0,0,0.2); --shadow-hover: 0 8px 24px rgba(0,0,0,0.35);
+            --particle-color: 120,110,100;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            background: var(--bg); color: var(--text); line-height: 1.7;
+            min-height: 100vh; display: flex; flex-direction: column;
+            transition: background 0.4s, color 0.4s;
+        }
+
+        #particles { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.5; }
+        html.dark #particles { opacity: 0.25; }
+
+        /* ── 阅读进度条 ── */
+        .reading-progress {
+            position: fixed; top: 0; left: 0; height: 3px;
+            background: linear-gradient(90deg, var(--accent), #d4945a);
+            z-index: 1000; width: 0%;
+            transition: width 0.1s linear;
+            border-radius: 0 2px 2px 0;
+        }
+
+        .navbar {
+            background: var(--card-bg); border-bottom: 1px solid var(--border);
+            padding: 0 1.5rem; position: sticky; top: 0; z-index: 100;
+            box-shadow: var(--shadow); transition: background 0.4s, border 0.4s;
+            backdrop-filter: var(--nav-blur);
+            background: color-mix(in srgb, var(--card-bg) 85%, transparent);
+        }
+        .navbar-inner { max-width: var(--max-width); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 56px; }
+        .navbar .brand { font-size: 1.25rem; font-weight: 700; color: var(--text); text-decoration: none; letter-spacing: -0.02em; transition: color 0.3s; }
+        .navbar .brand:hover { color: var(--accent); }
+        .nav-links { display: flex; gap: 1.2rem; list-style: none; align-items: center; }
+        .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.95rem; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--accent); }
+        .theme-toggle {
+            background: none; border: 1.5px solid var(--border); color: var(--text-secondary);
+            width: 34px; height: 34px; border-radius: 50%; cursor: pointer;
+            font-size: 1rem; display: flex; align-items: center; justify-content: center;
+            transition: all 0.3s; margin-left: 0.25rem;
+        }
+        .theme-toggle:hover { border-color: var(--accent); color: var(--accent); background: var(--tag-bg); }
+
+        /* ── 文章头部 ── */
+        .article-header {
+            text-align: center; padding: 3.5rem 1.5rem 1.5rem;
+            max-width: var(--max-width); margin: 0 auto; position: relative; z-index: 1;
+        }
+        .article-header h1 {
+            font-size: 2.2rem; font-weight: 800; letter-spacing: -0.03em;
+            line-height: 1.3; margin-bottom: 1rem;
+            font-family: "Georgia","Noto Serif SC","Source Han Serif SC",serif;
+        }
+        .article-meta { display: flex; align-items: center; justify-content: center; gap: 1rem; flex-wrap: wrap; font-size: 0.9rem; color: var(--text-secondary); }
+        .article-meta .meta-divider { width: 4px; height: 4px; background: var(--border); border-radius: 50%; transition: background 0.4s; }
+        .article-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; justify-content: center; margin-top: 0.75rem; }
+        .article-tags .tag {
+            display: inline-block; background: var(--tag-bg); color: var(--accent);
+            font-size: 0.8rem; padding: 0.22rem 0.75rem; border-radius: 100px;
+            text-decoration: none; transition: all 0.3s;
+        }
+        .article-tags .tag:hover { background: var(--accent); color: #fff; transform: translateY(-1px); }
+
+        /* ── 正文 ── */
+        .article-content { padding: 0 0 1.5rem; }
+        .prose { font-size: 1.08rem; line-height: 1.85; color: var(--text); }
+        .prose h1,.prose h2,.prose h3,.prose h4 {
+            margin-top: 2em; margin-bottom: 0.6em; font-weight: 700; line-height: 1.3;
+            font-family: "Georgia","Noto Serif SC","Source Han Serif SC",serif;
+        }
+        .prose h1 { font-size: 1.8rem; }
+        .prose h2 { font-size: 1.5rem; border-bottom: 2px solid var(--border); padding-bottom: 0.3em; transition: border 0.4s; }
+        .prose h3 { font-size: 1.25rem; }
+        .prose h4 { font-size: 1.1rem; }
+        .prose p { margin-bottom: 1.2em; }
+        .prose a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; transition: color 0.3s; }
+        .prose a:hover { color: var(--accent-hover); }
+        .prose strong { font-weight: 700; }
+        .prose blockquote {
+            margin: 1.5em 0; padding: 0.85rem 1.35rem;
+            border-left: 4px solid var(--accent);
+            background: var(--tag-bg); border-radius: 0 var(--radius) var(--radius) 0;
+            color: var(--text-secondary); transition: background 0.4s;
+        }
+        .prose blockquote p { margin-bottom: 0.5em; }
+        .prose blockquote p:last-child { margin-bottom: 0; }
+        .prose ul,.prose ol { margin: 1em 0; padding-left: 1.5em; }
+        .prose li { margin-bottom: 0.35em; }
+        .prose img, .prose video { max-width: 100%; height: auto; border-radius: var(--radius); margin: 1.5em 0; box-shadow: var(--shadow); }
+        .prose img { cursor: zoom-in; transition: transform 0.3s, box-shadow 0.3s; }
+        .prose img:hover { transform: scale(1.01); box-shadow: var(--shadow-hover); }
+        .prose hr { border: none; border-top: 2px solid var(--border); margin: 2em 0; transition: border 0.4s; }
+        .prose table { width: 100%; border-collapse: collapse; margin: 1.5em 0; font-size: 0.95rem; }
+        .prose th,.prose td { border: 1px solid var(--border); padding: 0.6rem 1rem; text-align: left; transition: border 0.4s; }
+        .prose th { background: var(--tag-bg); font-weight: 600; transition: background 0.4s; }
+        .prose code {
+            background: var(--code-bg); padding: 0.15em 0.4em; border-radius: 4px;
+            font-size: 0.9em; font-family: "SF Mono","Fira Code","Consolas","Menlo",monospace;
+            color: var(--accent); transition: background 0.4s;
+        }
+        .prose pre {
+            background: #2c2416; color: #f5efe3; padding: 1.25rem 1.5rem;
+            border-radius: var(--radius); overflow-x: auto; margin: 1.5em 0;
+            font-size: 0.9rem; line-height: 1.6;
+        }
+        html.dark .prose pre { background: #111115; }
+        .prose pre code { background: transparent; color: inherit; padding: 0; font-size: inherit; }
+
+        /* ── 文章导航 ── */
+        .article-nav { margin: 0 0 1.5rem; display: flex; justify-content: space-between; gap: 1rem; }
+        .article-nav a {
+            flex: 1; padding: 1.1rem 1.35rem; border: 1px solid var(--border);
+            border-radius: var(--radius); text-decoration: none; color: var(--text);
+            background: var(--card-bg);
+            transition: all 0.35s cubic-bezier(0.4,0,0.2,1);
+        }
+        .article-nav a:hover { border-color: var(--accent); box-shadow: var(--shadow-hover); transform: translateY(-1px); }
+        .article-nav .nav-label { font-size: 0.8rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem; }
+        .article-nav .nav-title { font-weight: 600; font-size: 0.95rem; }
+        .article-nav .nav-prev { text-align: left; }
+        .article-nav .nav-next { text-align: right; margin-left: auto; }
+        .article-nav .nav-end {
+            flex: 1; padding: 1.1rem 1.35rem; border: 1px solid var(--border);
+            border-radius: var(--radius); color: var(--text-secondary); opacity: 0.5;
+            cursor: default; transition: border 0.4s;
+        }
+
+        /* ── 返回顶部 ── */
+        .back-to-top {
+            position: fixed; bottom: 2rem; right: 2rem; z-index: 200;
+            width: 44px; height: 44px; border-radius: 50%;
+            background: var(--card-bg); border: 2px solid var(--border);
+            color: var(--text-secondary); font-size: 1.2rem; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; transform: translateY(20px); pointer-events: none;
+            transition: all 0.35s cubic-bezier(0.4,0,0.2,1);
+            box-shadow: var(--shadow);
+        }
+        .back-to-top.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+        .back-to-top:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-3px); box-shadow: var(--shadow-hover); }
+
+        .footer { text-align: center; padding: 2rem 1.5rem; color: var(--text-secondary); font-size: 0.85rem; border-top: 1px solid var(--border); margin-top: auto; position: relative; z-index: 1; transition: border 0.4s; }
+        .footer span { color: var(--accent); }
+        .footer-stats {
+            display: flex; justify-content: center; align-items: center; gap: 0.6rem;
+            flex-wrap: wrap; margin-bottom: 0.4rem; font-size: 0.85rem; color: var(--text-secondary);
+        }
+        .footer-stats .stat { display: inline-flex; align-items: center; gap: 0.2rem; }
+        .footer-stats .stat strong { color: var(--accent); font-weight: 700; }
+        .footer-stats .stat-divider { color: var(--border); }
+
+        /* ── 评论区 ── */
+        .comment-section {
+            margin: 0 0 2rem; padding: 1.25rem 0 0;
+            border-top: 1px solid var(--border); transition: border 0.4s;
+        }
+        .comment-section h3 {
+            font-size: 1.2rem; font-weight: 700; margin-bottom: 1rem;
+            padding-bottom: 0.5rem; border-bottom: 2px solid var(--border);
+            transition: border 0.4s;
+        }
+        .comment-form { display: flex; flex-direction: column; gap: 0.7rem; margin-bottom: 2rem; }
+        .comment-form .row { display: flex; gap: 0.7rem; }
+        .comment-form input, .comment-form textarea {
+            flex: 1; padding: 0.65rem 1rem; font-size: 0.95rem; font-family: inherit;
+            border: 1px solid var(--border); border-radius: var(--radius);
+            background: var(--card-bg); color: var(--text); outline: none;
+            transition: all 0.3s;
+        }
+        .comment-form input:focus, .comment-form textarea:focus {
+            border-color: var(--accent); box-shadow: 0 0 0 3px rgba(177,116,62,0.08);
+        }
+        .comment-form textarea { min-height: 100px; resize: vertical; }
+        .comment-form button {
+            align-self: flex-end; padding: 0.6rem 1.8rem;
+            background: var(--accent); color: #fff; border: none;
+            border-radius: 100px; font-size: 0.95rem; cursor: pointer;
+            transition: all 0.3s; font-weight: 600;
+        }
+        .comment-form button:hover { background: var(--accent-hover); transform: translateY(-1px); }
+        .comment-form button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+        .comment-list { display: flex; flex-direction: column; gap: 1rem; }
+        .comment-card {
+            background: var(--card-bg); border: 1px solid var(--border);
+            border-radius: var(--radius); padding: 1rem 1.25rem;
+            transition: background 0.4s, border 0.4s;
+        }
+        .comment-card .comment-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 0.4rem; flex-wrap: wrap; gap: 0.5rem;
+        }
+        .comment-card .comment-author { font-weight: 700; color: var(--accent); font-size: 0.95rem; }
+        .comment-card .comment-time { font-size: 0.8rem; color: var(--text-secondary); }
+        .comment-card .comment-body { font-size: 0.95rem; color: var(--text); line-height: 1.6; }
+        .comment-empty { text-align: center; color: var(--text-secondary); padding: 2rem 0; font-size: 0.95rem; }
+        .comment-error { text-align: center; color: #c44; padding: 1rem; font-size: 0.9rem; }
+
+        @media (max-width: 768px) {
+            :root { --content-width: 100%; --sidebar-width: 100%; --danmaku-width: 100%; }
+            .article-header h1 { font-size: 1.6rem; }
+            .prose { font-size: 1rem; }
+            .article-nav { flex-direction: column; }
+            .nav-links { gap: 0.8rem; }
+            .back-to-top { bottom: 1.2rem; right: 1.2rem; width: 38px; height: 38px; }
+            .main-layout { flex-direction: column; padding: 0 1.25rem 1rem; gap: 1.5rem; }
+            .sidebar, .danmaku-col { flex: auto; }
+            .sidebar-sticky, .danmaku-sticky { position: static; }
+            .danmaku-col .danmaku-widget { max-height: 250px; }
+        }
+
+        /* ── 双栏/三栏布局 ── */
+        .main-layout {
+            max-width: var(--max-width); margin: 0 auto;
+            padding: 0 1.5rem 1rem; display: flex; gap: 1.5rem;
+            flex: 1; width: 100%; position: relative; z-index: 1;
+        }
+        .content-main { flex: 1; min-width: 0; }
+
+        /* ── 侧栏 ── */
+        .sidebar { flex: 0 0 var(--sidebar-width); display: flex; flex-direction: column; gap: 1rem; }
+        .sidebar-sticky { position: sticky; top: calc(56px + 1rem); display: flex; flex-direction: column; gap: 1rem; }
+        .sidebar-widget {
+            background: var(--card-bg); border: 1px solid var(--border);
+            border-radius: var(--radius); padding: 1rem 1.25rem;
+            box-shadow: var(--shadow); transition: background 0.4s, border 0.4s;
+        }
+        .sidebar-widget .widget-title {
+            font-size: 0.8rem; font-weight: 700; color: var(--text-secondary);
+            text-transform: uppercase; letter-spacing: 0.06em;
+            margin-bottom: 0.6rem; padding-bottom: 0.4rem;
+            border-bottom: 1.5px solid var(--border); transition: border 0.4s;
+        }
+        .widget-stats { display: flex; flex-direction: column; gap: 0.4rem; }
+        .widget-stats .stat-row {
+            display: flex; justify-content: space-between; align-items: center;
+            font-size: 0.85rem; color: var(--text-secondary);
+        }
+        .widget-stats .stat-row strong { color: var(--accent); font-size: 1rem; }
+        .widget-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+        .widget-tags .tag-pill {
+            display: inline-block; background: var(--tag-bg); color: var(--accent);
+            font-size: 0.78rem; padding: 0.3rem 0.7rem; border-radius: 100px;
+            text-decoration: none; transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+        }
+        .widget-tags .tag-pill:hover {
+            background: var(--accent); color: #fff;
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: var(--shadow-hover);
+        }
+
+        /* ── 弹幕栏 ── */
+        .danmaku-col {
+            flex: 0 0 var(--danmaku-width);
+            display: flex; flex-direction: column; gap: 1rem;
+        }
+        .danmaku-col .danmaku-sticky {
+            position: sticky; top: calc(56px + 1rem);
+            display: flex; flex-direction: column; gap: 1rem;
+        }
+        .danmaku-col .danmaku-widget {
+            background: var(--card-bg); border: 1px solid var(--border);
+            border-radius: var(--radius); padding: 1rem 1rem;
+            box-shadow: var(--shadow); transition: background 0.4s, border 0.4s;
+            max-height: 360px;
+            display: flex; flex-direction: column; overflow: hidden;
+        }
+        .danmaku-col .widget-title {
+            font-size: 0.8rem; font-weight: 700; color: var(--text-secondary);
+            text-transform: uppercase; letter-spacing: 0.06em;
+            margin-bottom: 0.5rem; padding-bottom: 0.35rem;
+            border-bottom: 1.5px solid var(--border); text-align: center;
+            transition: border 0.4s;
+        }
+        .danmaku-col .danmaku-track {
+            flex: 1; overflow: hidden; position: relative;
+            mask-image: linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%);
+        }
+        .danmaku-col .danmaku-scroll { animation: danmakuFlow 22s linear infinite; }
+        .danmaku-col .danmaku-scroll:hover { animation-play-state: paused; }
+        .danmaku-col .danmaku-item {
+            padding: 0.4rem 0.5rem; margin-bottom: 0.35rem;
+            background: var(--tag-bg); border-radius: 5px;
+            font-size: 0.72rem; line-height: 1.45; color: var(--text-secondary);
+            transition: background 0.3s;
+        }
+        .danmaku-col .danmaku-item .dm-author { font-weight: 600; color: var(--accent); font-size: 0.68rem; margin-bottom: 0.08rem; }
+        .danmaku-col .danmaku-item .dm-body { word-break: break-all; }
+        @keyframes danmakuFlow {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-50%); }
+        }
+
+        /* ═══════════ 页面转场 ═══════════ */
+        body.page-exiting .navbar         { animation: exitUp   0.32s cubic-bezier(0.55,0,1,0.45) forwards; }
+        body.page-exiting .article-header { animation: exitUp   0.30s 0.03s cubic-bezier(0.55,0,1,0.45) forwards; }
+        body.page-exiting .sidebar        { animation: exitLeft  0.28s 0.06s cubic-bezier(0.55,0,1,0.45) forwards; }
+        body.page-exiting .content-main   { animation: exitDown  0.30s 0.08s cubic-bezier(0.55,0,1,0.45) forwards; }
+        body.page-exiting .danmaku-col    { animation: exitRight 0.28s 0.06s cubic-bezier(0.55,0,1,0.45) forwards; }
+        body.page-exiting .footer         { animation: exitDown 0.28s 0.10s cubic-bezier(0.55,0,1,0.45) forwards; }
+        body.page-exiting .back-to-top    { animation: exitDown 0.20s cubic-bezier(0.55,0,1,0.45) forwards; }
+        body.page-exiting::after { content:''; position:fixed; inset:0; background:var(--bg); z-index:9999; animation: fadeIn 0.25s 0.2s both; }
+
+        @keyframes exitUp    { to { opacity:0; transform:translateY(-130%); } }
+        @keyframes exitDown  { to { opacity:0; transform:translateY(130%); } }
+        @keyframes exitLeft  { to { opacity:0; transform:translateX(-120%); } }
+        @keyframes exitRight { to { opacity:0; transform:translateX(120%); } }
+        @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+
+        body.page-entering .navbar         { animation: enterDown  0.55s cubic-bezier(0.22,0.61,0.36,1) both; }
+        body.page-entering .article-header { animation: enterDown  0.50s 0.06s cubic-bezier(0.22,0.61,0.36,1) both; }
+        body.page-entering .sidebar        { animation: enterLeft  0.50s 0.12s cubic-bezier(0.22,0.61,0.36,1) both; }
+        body.page-entering .content-main   { animation: enterUp    0.52s 0.16s cubic-bezier(0.22,0.61,0.36,1) both; }
+        body.page-entering .danmaku-col    { animation: enterRight 0.50s 0.12s cubic-bezier(0.22,0.61,0.36,1) both; }
+        body.page-entering .sidebar-widget { animation: enterPop   0.40s 0.18s cubic-bezier(0.22,0.61,0.36,1) both; }
+        body.page-entering .danmaku-widget { animation: enterPop   0.40s 0.18s cubic-bezier(0.22,0.61,0.36,1) both; }
+        body.page-entering .footer         { animation: enterUp    0.45s 0.24s cubic-bezier(0.22,0.61,0.36,1) both; }
+        body.page-entering .back-to-top    { animation: enterPop   0.35s 0.28s cubic-bezier(0.22,0.61,0.36,1) both; }
+
+        @keyframes enterDown {
+            0%   { opacity:0; transform:translateY(-100%); }
+            55%  { opacity:1; transform:translateY(12px); }
+            100% { opacity:1; transform:translateY(0); }
+        }
+        @keyframes enterUp {
+            0%   { opacity:0; transform:translateY(80px); }
+            55%  { opacity:1; transform:translateY(-8px); }
+            100% { opacity:1; transform:translateY(0); }
+        }
+        @keyframes enterLeft {
+            0%   { opacity:0; transform:translateX(-80px); }
+            55%  { opacity:1; transform:translateX(8px); }
+            100% { opacity:1; transform:translateX(0); }
+        }
+        @keyframes enterRight {
+            0%   { opacity:0; transform:translateX(80px); }
+            55%  { opacity:1; transform:translateX(-8px); }
+            100% { opacity:1; transform:translateX(0); }
+        }
+        @keyframes enterPop {
+            0%   { opacity:0; transform:scale(0.4); }
+            55%  { opacity:1; transform:scale(1.12); }
+            100% { opacity:1; transform:scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <!-- 阅读进度条 -->
+    <div class="reading-progress" id="readingProgress"></div>
+
+    <canvas id="particles"></canvas>
+
+    <nav class="navbar">
+        <div class="navbar-inner">
+            <a href="../index.html" class="brand">YHSome的神秘空间</a>
+            <ul class="nav-links">
+                <li><a href="../index.html">首页</a></li>
+                <li><a href="../directory.html">目录</a></li>
+                <li><a href="../tags.html">标签</a></li>
+                <li><a href="../projects.html">项目</a></li>
+                <li><a href="../links.html">友链</a></li>
+                <li><button class="theme-toggle" id="themeToggle" title="切换深色/浅色模式" aria-label="切换颜色模式">🌙</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="article-header">
+        <h1>美术发言-欧洲浪漫主义</h1>
+        <div class="article-meta">
+            <span>📅 2023年05月17日</span>
+            <span class="meta-divider"></span><span>✍️ YHSome</span>
+        </div>
+        
+        <div class="article-tags">
+            
+            <a href="../directory.html?tag=%E5%AD%A6%E4%B9%A0" class="tag">学习</a>
+            
+            <a href="../directory.html?tag=%E7%BE%8E%E6%9C%AF" class="tag">美术</a>
+            
+        </div>
+        
+    </header>
+
+    <div class="main-layout">
+        <!-- 左栏：侧边栏 -->
+        <aside class="sidebar">
+            <div class="sidebar-sticky">
+                <div class="sidebar-widget">
+                    <div class="widget-title">📊 站点统计</div>
+                    <div class="widget-stats">
+                        <div class="stat-row"><span>文章总数</span><strong>47 篇</strong></div>
+                        <div class="stat-row"><span>标签</span><strong>39 个</strong></div>
+                        <div class="stat-row"><span>总字数</span><strong>57,678</strong></div>
+                    </div>
+                </div>
+                
+                <div class="sidebar-widget">
+                    <div class="widget-title">🏷️ 精选标签</div>
+                    <div class="widget-tags">
+                        
+                        <a href="../directory.html?tag=%E7%BA%A2%E6%A5%BC%E6%A2%A6" class="tag-pill">
+                            红楼梦
+                        </a>
+                        
+                        <a href="../directory.html?tag=AI" class="tag-pill">
+                            AI
+                        </a>
+                        
+                        <a href="../directory.html?tag=%E6%97%B6%E8%AF%84" class="tag-pill">
+                            时评
+                        </a>
+                        
+                        <a href="../directory.html?tag=%E6%A0%A1%E5%9B%AD" class="tag-pill">
+                            校园
+                        </a>
+                        
+                        <a href="../directory.html?tag=%E9%92%A2%E7%90%B4%E8%B0%B1" class="tag-pill">
+                            钢琴谱
+                        </a>
+                        
+                        <a href="../directory.html?tag=%E6%B8%B8%E6%88%8F" class="tag-pill">
+                            游戏
+                        </a>
+                        
+                        <a href="../directory.html?tag=%E7%94%9F%E6%B4%BB" class="tag-pill">
+                            生活
+                        </a>
+                        
+                        <a href="../directory.html?tag=%E8%8B%B1%E8%AF%AD" class="tag-pill">
+                            英语
+                        </a>
+                        
+                        <a href="../directory.html?tag=%E9%9F%B3%E4%B9%90" class="tag-pill">
+                            音乐
+                        </a>
+                        
+                        <a href="../directory.html?tag=VPN" class="tag-pill">
+                            VPN
+                        </a>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        </aside>
+
+        <!-- 中栏：文章内容 -->
+        <main class="content-main">
+            <article class="article-content">
+                <div class="prose"><p>浪漫主义是兴起于18世纪后期，然后持续发展到19世纪中期的艺术运动，那么浪漫主义跟我们平时所讲的浪漫有什么关系么？ 今天，当我们提到浪漫这个词时，会很容易和热恋中的情侣产生关联，或者是在结婚纪念日当天，一个丈夫下班后，买了一束玫瑰花送给他的妻子……这些都是我们对于浪漫这个词的第一印象。而我们所说的浪漫主义跟浪漫有些不一样，浪漫是指虚构、传奇，而浪漫主义则是来源于中世纪的“传奇”一词，最早使用是在18世纪的晚期。当时人们普遍对古代的冒险离奇事件感兴趣，后来，人们就把那些同传奇故事、离奇遭遇、想象色彩相关联的事统统成为浪漫主义。</p>
+<p><img alt="" src="../images/posts/2023-5-18/1.png"></p>
+<p>十八世纪末至十九世纪初的欧洲各国，工业的发展一路高歌猛进。正是在工 业革命的推动下使得当时欧洲及北美地区的生产力水平提升到了空前的高度，自 给自足的小农经济在欧洲大陆逐渐解体，进而迈入了工业化时代。也正是由于工 业革命，落后的生产方式和封建专制的社会结构已经成为时代的绊脚石，使得上 升的资产阶级与没落的封建贵族进行着激烈的反复的权力斗争。新兴的城市资产 阶级标榜的“自由”、“平等”、“博爱”，都成为击垮陈旧封建文化秩序的有力武器。18 世纪末发生的法国大革命彻底瓦解了欧洲传统的政治统治，随之，在德国、 英国、法国以至全欧洲，出现了一股强大的思潮——浪漫主义。它像一位人们在 精神迷惑和惶恐中期盼的神袛走遍全欧，把一种尖锐而又含混的精神气质带到人 们的心中。</p>
+<p><img alt="" src="../images/posts/2023-5-18/2.png"></p>
+<p>现在介绍的是欧仁·德拉克罗瓦，法国著名画家。他是浪漫主义画派的典型代表。他继承和发展了文艺复兴以来欧洲各艺术流派，包括威尼斯画派、荷兰画派、彼得·保罗·鲁本斯和约翰·康斯特布尔等艺术家的成就和传统，并影响了以后的艺术家，特别是印象主义画家。他的主要作品有《十字军占领君士坦丁堡》《希奥岛的屠杀》《但丁之舟》等。</p>
+<p><img alt="" src="../images/posts/2023-5-18/3.png"></p>
+<p>该画取材于真实的历史事件，表现如火如荼的革命场景，包括其中有原型的历史人物开象以及作者自身的参与，都表现了这幅画高度的现实意义。但这幅画被称作德拉克洛瓦浪漫主义风格的代表作，则是因为这幅画中的场景是颇为集中的浪漫主义场景，其中的自由女神更是具备“半人半神气质的一个理想化人物”。她长着古希雕塑般的轮廓，露上身，穿着朴索古典的衣着，走在革命队伍的前面，右手高举：三色旗。脸朝向人群，似在号召着人们革命到底。这样就能获得自由。与周围身穿现代服装的男士们相比，她更像一个抽象的人，代表着最高的精神与意义。她健康、有力、坚决、美丽朴素，领导着工人、知识分子的革命队伍奋勇前进，寄托了国家的革命感情和对英雄气概的向往。恰如其分地表现了现代社会最核心的政治主题：自由与民主。这幅画取材自1815年拿破仑下台后，逃亡国外的路易十八重返法国当国王，这就是“波旁王朝”第二次复辟，封建势力重新猖獗。1830年7月，路易十八的继承人查理十世企图进一步增强皇权，限制人民的选举权和出版自由并宣布解散议会。1830年7月26日，巴黎市民闻讯纷纷起义。他们拿起武器，走向街垒，为推翻这个复辟的波旁王朝浴血奋战，27至29日为推翻波旁王朝，与保皇党展开了战斗，最后占领了王宫，查理十世逃亡英国。在历史上称为“光荣的三天”。在这次战斗中，一位名叫克拉拉·莱辛的姑娘首先在街垒上举起了象征法兰西共和制的三色旗；少年阿莱尔把这面旗帜插到巴黎圣母院旁的一座桥头时，中弹倒下。画家德拉克洛瓦目击了这一悲壮激烈景象，又义愤填膺，决心为之画一幅画作为永久的纪念。</p>
+<p><img alt="" src="../images/posts/2023-5-18/4.png"></p>
+<p>《自由引导人民》是画家在上百幅“七月革命”街战的草图的基础上定稿的画面，全画采取顶天立地的构图形式。倒在地上的尸体、战斗的勇士以及高举法兰西旗帜的女子，构成一个稳定又蕴藏动势的三角形。象征自由、平等、博爱的三色旗位于等腰三角形的顶点，自由女神的人群的头部的横竖黄金分割线的位置，场面宏伟，构图组织井然有序。他们身后都是一往无前的战士，远处的建筑是巴黎市中心的标志——巴黎圣母院。以一个象征自由的女神形象为主体，德拉克洛瓦的浪漫气质造就了这样一位袒胸露怀的女子形象，招呼着后方的人民，将神话中的自由女神与浴血奋战的人民安排到一起，她长着希腊雕塑般的轮廓，穿着朴素古典的衣着，与周围身穿现代服装的男士们相比，她更像一个抽象的人，代表着最高的精神与意义。紧跟她前后左右的是工人、市民、孩子、学生等。她的右方是一个持着双枪的少年，急速向前奔跑，表现了为了自由全民参战的的情景,他象征少年英雄阿莱尔。一名受了重伤的青年工人正抬头仰望自由女神的三色旗，前景右侧有两名政府军的士兵倒毙在地上，左侧躺着一位为自由而献身的起义者。他们手持武器，踏着血迹和尸体奋勇前进。她的身后有两个工人挥舞着尖刀，表情刚毅，显示出愤怒的神色。人群上方则是阴霾的天空。画面中一名头戴高礼帽、身穿燕尾服、手中紧握长枪的人，大声疾呼，号召人民以伟大的过去为榜样，起来进行斗争，进行革命。德拉克洛瓦在创作该幅油画时，用法兰西共和国国旗的红、白、蓝三色作为这幅画的主色， [1] 画面中描绘的自由女神高举三色旗，左手拿枪，赤着脚，正领导着人民迎风前进，明确的主题表现出女性坚强、 勇敢的一面。在弥漫着浓浓硝烟的背景中，低纯度的人物刻画突出了两面中心的女神形象，红色的旗帜更是显得格外醒目，强烈的色彩对比使画面热情奔放，给人十足的力量感。</p>
+<p><img alt="" src="../images/posts/2023-5-18/5.png"></p>
+<p>“自由引导人民”，是一个让人心旷神怡的概念。它代表着自由的力量，能够激发人们内心最深处的梦想和期望。通过自由的引导，人们可以展现出更多的创造力和潜能，获得更多的成就感和自豪感。而这一切，都离不开人民的支持和合作。让我们共同努力，实现自由引导人民的伟大梦想！</p>
+<p>附件：<br>
+<a href="https://yhsome.github.io/image/2023-5-18/PPT.pptx" title="download">欧洲浪漫主义PPT（附讲稿）</a></p></div>
+            </article>
+
+            <nav class="article-nav">
+                
+                <a href="红楼梦思维导图21-70回.html" class="nav-prev">
+                    <div class="nav-label">← 上一篇</div>
+                    <div class="nav-title">红楼梦思维导图21-70回</div>
+                </a>
+                
+                
+                <a href="终南别业古诗赏析演讲稿.html" class="nav-next">
+                    <div class="nav-label">下一篇 →</div>
+                    <div class="nav-title">终南别业古诗赏析演讲稿</div>
+                </a>
+                
+            </nav>
+
+            
+            <!-- 评论区（与正文同宽） -->
+            <section class="comment-section">
+                <h3>💬 评论 (<span id="commentCount">0</span>)</h3>
+                <div class="comment-form" id="commentForm">
+                    <div class="row">
+                        <input type="text" id="cName" placeholder="昵称" maxlength="30">
+                        <input type="email" id="cEmail" placeholder="邮箱（选填）">
+                    </div>
+                    <textarea id="cContent" placeholder="说点什么吧…" maxlength="1000"></textarea>
+                    <button id="cSubmit">发表评论</button>
+                </div>
+                <div class="comment-list" id="commentList">
+                    <div class="comment-empty">加载中…</div>
+                </div>
+            </section>
+            
+        </main>
+
+        <!-- 右栏：弹幕 -->
+        
+        <aside class="danmaku-col" id="danmakuBar">
+            <div class="danmaku-sticky">
+                <div class="danmaku-widget">
+                    <div class="widget-title">💬 精选发言</div>
+                    <div class="danmaku-track">
+                        <div class="danmaku-scroll" id="danmakuScroll">
+                            <div class="danmaku-item"><div class="dm-author">加载中…</div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+        
+    </div>
+
+    <button class="back-to-top" id="backToTop" title="返回顶部" aria-label="返回顶部">↑</button>
+
+    <footer class="footer">
+        <div class="footer-stats" id="footerStats">
+            <span class="stat">🌐 <strong id="vGlobal">…</strong> 次全站浏览</span><span class="stat-divider">|</span>
+            <span class="stat">👁️ <strong id="vCounter">…</strong> 次阅读</span><span class="stat-divider">|</span>
+            <span class="stat">👤 <strong id="vUnique">…</strong> 位访客</span>
+        </div>
+        <p>Powered by <span>OpenBlogger</span> &copy; 2026</p>
+    </footer>
+
+    <script>
+    /* ═══════════ 粒子背景 ═══════════ */
+    !function(){const c=document.getElementById('particles'),x=c.getContext('2d');let w,h,p=[],N=45,D=120;function R(){w=c.width=innerWidth;h=c.height=innerHeight}R(),addEventListener('resize',R);function G(){return getComputedStyle(document.documentElement).getPropertyValue('--particle-color').trim().split(',').map(Number)}class T{constructor(){this.reset()}reset(){this.x=Math.random()*w;this.y=Math.random()*h;this.vx=(Math.random()-.5)*.4;this.vy=(Math.random()-.5)*.4;this.r=Math.random()*2+1}update(){this.x+=this.vx;this.y+=this.vy;if(this.x<0||this.x>w)this.vx*=-1;if(this.y<0||this.y>h)this.vy*=-1}draw(){const[r,g,b]=G();x.beginPath();x.arc(this.x,this.y,this.r,0,Math.PI*2);x.fillStyle=`rgba(${r},${g},${b},0.6)`;x.fill()}}for(let i=0;i<N;i++)p.push(new T);(function A(){x.clearRect(0,0,w,h);const[r,g,b]=G();for(let i=0;i<N;i++){p[i].update();p[i].draw();for(let j=i+1;j<N;j++){const dx=p[i].x-p[j].x,dy=p[i].y-p[j].y,ds=Math.sqrt(dx*dx+dy*dy);if(ds<D){x.beginPath();x.moveTo(p[i].x,p[i].y);x.lineTo(p[j].x,p[j].y);x.strokeStyle=`rgba(${r},${g},${b},${.12*(1-ds/D)})`;x.lineWidth=.5;x.stroke()}}}requestAnimationFrame(A)})()}();
+
+    /* ═══════════ 深色模式 ═══════════ */
+    !function(){const t=document.getElementById('themeToggle'),b=document.documentElement,s=localStorage.getItem('blog-theme');if(s==='dark'||(!s&&matchMedia('(prefers-color-scheme:dark)').matches)){b.classList.add('dark');t.textContent='☀️'}t.addEventListener('click',()=>{const d=b.classList.toggle('dark');t.textContent=d?'☀️':'🌙';localStorage.setItem('blog-theme',d?'dark':'light')})}();
+
+    /* ═══════════ 阅读进度条 ═══════════ */
+    !function(){const bar=document.getElementById('readingProgress');addEventListener('scroll',()=>{const h=document.documentElement.scrollHeight-innerHeight;bar.style.width=h>0?Math.min(100,Math.round(scrollY/h*100))+'%':'0%'})}();
+
+    /* ═══════════ 返回顶部 ═══════════ */
+    !function(){const b=document.getElementById('backToTop');addEventListener('scroll',()=>b.classList.toggle('visible',scrollY>400));b.addEventListener('click',()=>scrollTo({top:0,behavior:'smooth'}))}();
+
+    /* ═══════════ 页面转场 ═══════════ */
+    !function(){document.body.classList.add('page-entering');addEventListener('load',function(){setTimeout(function(){document.body.classList.remove('page-entering')},700)})}();
+    if(location.protocol!=='file:')!function(){document.addEventListener('click',function(e){var a=e.target.closest('a');if(!a)return;var h=a.getAttribute('href');if(!h||h[0]==='#'||h.indexOf('://')>0||h.indexOf('//')===0||a.target==='_blank')return;e.preventDefault();document.body.classList.add('page-exiting');setTimeout(function(){location.assign(h)},360)})}();
+    </script>
+
+    
+    <script>window.ViewerConfig={user:'aaaaa',secret:'d1bdf09a'};</script>
+    <script src="../js/viewer/counter.js"></script>
+    <script src="../js/viewer/unique.js"></script>
+    <script src="../js/viewer/global.js"></script>
+    <script src="../js/viewer/comment.js"></script>
+    <script>
+    (function(){
+        Viewer.getGlobalCount().then(function(n){var e=document.getElementById('vGlobal');if(e)e.innerHTML=n.toLocaleString()});
+        getVisitCount().then(function(n){var e=document.getElementById('vCounter');if(e)e.innerHTML=n.toLocaleString()});
+        Viewer.getUniqueCount().then(function(r){var e=document.getElementById('vUnique');if(e)e.innerHTML=r.count.toLocaleString()});
+        
+        /* ═══════════ 评论系统 ═══════════ */
+        var list=document.getElementById('commentList'),countEl=document.getElementById('commentCount'),
+            form=document.getElementById('commentForm'),nameEl=document.getElementById('cName'),
+            emailEl=document.getElementById('cEmail'),contentEl=document.getElementById('cContent'),
+            submitBtn=document.getElementById('cSubmit');
+        function fmtTime(iso){var d=new Date(iso),p=function(n){return n<10?'0'+n:n};
+            return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())+' '+p(d.getHours())+':'+p(d.getMinutes());}
+        function renderComments(comments){
+            if(!comments||!comments.length){list.innerHTML='<div class="comment-empty">还没有评论，来说点什么吧 🎉</div>';countEl.textContent='0';return}
+            countEl.textContent=comments.length;
+            list.innerHTML=comments.slice().reverse().map(function(c){
+                return '<div class="comment-card"><div class="comment-header"><span class="comment-author">'+
+                    (c.name||'匿名').replace(/</g,'&lt;')+'</span><span class="comment-time">'+fmtTime(c.time)+'</span></div>'+
+                    '<div class="comment-body">'+(c.content||'').replace(/</g,'&lt;').replace(/\n/g,'<br>')+'</div></div>';
+            }).join('');
+        }
+        Viewer.loadComments().then(renderComments).catch(function(){list.innerHTML='<div class="comment-error">评论加载失败，请稍后再试</div>'});
+        /* 弹幕：当前页评论滚动 */
+        var danmakuScroll=document.getElementById('danmakuScroll');
+        if(danmakuScroll){
+            function renderDanmaku(comments){
+                if(!comments||!comments.length){
+                    danmakuScroll.innerHTML='<div class="danmaku-item"><div class="dm-author">暂无发言…</div><div class="dm-body">来评论区说点什么吧</div></div>';
+                    return;
+                }
+                var items=comments.map(function(c){
+                    var name=(c.name||'匿名').replace(/</g,'&lt;');
+                    var body=(c.content||'').replace(/</g,'&lt;').substring(0,80);
+                    return '<div class="danmaku-item"><div class="dm-author">'+name+'</div><div class="dm-body">'+body+'</div></div>';
+                });
+                danmakuScroll.innerHTML=items.concat(items).join('');  // 翻倍无缝循环
+            }
+            Viewer.loadComments().then(renderDanmaku).catch(function(){});
+            // 提交评论后 3s 刷新弹幕
+            submitBtn.addEventListener('click',function(){
+                setTimeout(function(){Viewer.loadComments().then(renderDanmaku).catch(function(){});},3000);
+            });
+        }
+        submitBtn.addEventListener('click',function(){
+            var name=nameEl.value.trim(),content=contentEl.value.trim();
+            if(!name){nameEl.focus();return}
+            if(!content){contentEl.focus();return}
+            submitBtn.disabled=true;submitBtn.textContent='提交中…';
+            Viewer.submitComment({name:name,email:emailEl.value.trim(),content:content}).then(function(c){
+                contentEl.value='';submitBtn.disabled=false;submitBtn.textContent='发表评论';
+                Viewer.loadComments().then(renderComments);
+            }).catch(function(){submitBtn.disabled=false;submitBtn.textContent='发表评论';alert('提交失败，请稍后重试')});
+        });
+        
+    })();
+    </script>
+    
+</body>
+</html>

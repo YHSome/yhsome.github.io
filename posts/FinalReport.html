@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="x-viewer-page-id" content="27">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>(function(){var s=localStorage.getItem('blog-theme');if(s==='dark'||(!s&&matchMedia('(prefers-color-scheme:dark)').matches)){document.documentElement.classList.add('dark')}})();</script>
+    <title>综合实践课结题报告 — YHSome的神秘空间</title>
+    <style>
+        :root {
+            --bg: #fdfbf7; --card-bg: #ffffff; --text: #2c2416; --text-secondary: #6b5e4a;
+            --accent: #b1743e; --accent-hover: #8b5a2e; --border: #e5ddd0; --tag-bg: #f5efe3;
+            --code-bg: #f4f0e8; --shadow: 0 1px 3px rgba(44,36,22,0.06);
+            --shadow-hover: 0 8px 24px rgba(44,36,22,0.12); --radius: 10px;
+            --max-width: 1050px; --sidebar-width: 230px; --danmaku-width: 210px;
+            --nav-blur: blur(12px); --particle-color: 180,160,140;
+        }
+        html.dark {
+            --bg: #1a1a1f; --card-bg: #25252b; --text: #d4d0c8; --text-secondary: #9a9488;
+            --accent: #d4945a; --accent-hover: #e8a86e; --border: #36363d;
+            --tag-bg: #2e2e35; --code-bg: #2e2e35;
+            --shadow: 0 1px 3px rgba(0,0,0,0.2); --shadow-hover: 0 8px 24px rgba(0,0,0,0.35);
+            --particle-color: 120,110,100;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            background: var(--bg); color: var(--text); line-height: 1.7;
+            min-height: 100vh; display: flex; flex-direction: column;
+            transition: background 0.4s, color 0.4s;
+        }
+
+        #particles { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.5; }
+        html.dark #particles { opacity: 0.25; }
+
+        /* ── 阅读进度条 ── */
+        .reading-progress {
+            position: fixed; top: 0; left: 0; height: 3px;
+            background: linear-gradient(90deg, var(--accent), #d4945a);
+            z-index: 1000; width: 0%;
+            transition: width 0.1s linear;
+            border-radius: 0 2px 2px 0;
+        }
+
+        .navbar {
+            background: var(--card-bg); border-bottom: 1px solid var(--border);
+            padding: 0 1.5rem; position: sticky; top: 0; z-index: 100;
+            box-shadow: var(--shadow); transition: background 0.4s, border 0.4s;
+            backdrop-filter: var(--nav-blur);
+            background: color-mix(in srgb, var(--card-bg) 85%, transparent);
+        }
+        .navbar-inner { max-width: var(--max-width); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 56px; }
+        .navbar .brand { font-size: 1.25rem; font-weight: 700; color: var(--text); text-decoration: none; letter-spacing: -0.02em; transition: color 0.3s; }
+        .navbar .brand:hover { color: var(--accent); }
+        .nav-links { display: flex; gap: 1.2rem; list-style: none; align-items: center; }
+        .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.95rem; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--accent); }
+        .theme-toggle {
+            background: none; border: 1.5px solid var(--border); color: var(--text-secondary);
+            width: 34px; height: 34px; border-radius: 50%; cursor: pointer;
+            font-size: 1rem; display: flex; align-items: center; justify-content: center;
+            transition: all 0.3s; margin-left: 0.25rem;
+        }
+        .theme-toggle:hover { border-color: var(--accent); color: var(--accent); background: var(--tag-bg); }
+
+        /* ── 文章头部 ── */
+        .article-header {
+            text-align: center; padding: 3.5rem 1.5rem 1.5rem;
+            max-width: var(--max-width); margin: 0 auto; position: relative; z-index: 1;
+        }
+        .article-header h1 {
+            font-size: 2.2rem; font-weight: 800; letter-spacing: -0.03em;
+            line-height: 1.3; margin-bottom: 1rem;
+            font-family: "Georgia","Noto Serif SC","Source Han Serif SC",serif;
+        }
+        .article-meta { display: flex; align-items: center; justify-content: center; gap: 1rem; flex-wrap: wrap; font-size: 0.9rem; color: var(--text-secondary); }
+        .article-meta .meta-divider { width: 4px; height: 4px; background: var(--border); border-radius: 50%; transition: background 0.4s; }
+        .article-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; justify-content: center; margin-top: 0.75rem; }
+        .article-tags .tag {
+            display: inline-block; background: var(--tag-bg); color: var(--accent);
+            font-size: 0.8rem; padding: 0.22rem 0.75rem; border-radius: 100px;
+            text-decoration: none; transition: all 0.3s;
+        }
+        .article-tags .tag:hover { background: var(--accent); color: #fff; transform: translateY(-1px); }
+
+        /* ── 正文 ── */
+        .article-content { padding: 0 0 1.5rem; }
+        .prose { font-size: 1.08rem; line-height: 1.85; color: var(--text); }
+        .prose h1,.prose h2,.prose h3,.prose h4 {
+            margin-top: 2em; margin-bottom: 0.6em; font-weight: 700; line-height: 1.3;
+            font-family: "Georgia","Noto Serif SC","Source Han Serif SC",serif;
+        }
+        .prose h1 { font-size: 1.8rem; }
+        .prose h2 { font-size: 1.5rem; border-bottom: 2px solid var(--border); padding-bottom: 0.3em; transition: border 0.4s; }
+        .prose h3 { font-size: 1.25rem; }
+        .prose h4 { font-size: 1.1rem; }
+        .prose p { margin-bottom: 1.2em; }
+        .prose a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; transition: color 0.3s; }
+        .prose a:hover { color: var(--accent-hover); }
+        .prose strong { font-weight: 700; }
+        .prose blockquote {
+            margin: 1.5em 0; padding: 0.85rem 1.35rem;
+            border-left: 4px solid var(--accent);
+            background: var(--tag-bg); border-radius: 0 var(--radius) var(--radius) 0;
+            color: var(--text-secondary); transition: background 0.4s;
+        }
+        .prose blockquote p { margin-bottom: 0.5em; }
+        .prose blockquote p:last-child { margin-bottom: 0; }
+        .prose ul,.prose ol { margin: 1em 0; padding-left: 1.5em; }
+        .prose li { margin-bottom: 0.35em; }
+        .prose img, .prose video { max-width: 100%; height: auto; border-radius: var(--radius); margin: 1.5em 0; box-shadow: var(--shadow); }
+        .prose img { cursor: zoom-in; transition: transform 0.3s, box-shadow 0.3s; }
+        .prose img:hover { transform: scale(1.01); box-shadow: var(--shadow-hover); }
+        .prose hr { border: none; border-top: 2px solid var(--border); margin: 2em 0; transition: border 0.4s; }
+        .prose table { width: 100%; border-collapse: collapse; margin: 1.5em 0; font-size: 0.95rem; }
+        .prose th,.prose td { border: 1px solid var(--border); padding: 0.6rem 1rem; text-align: left; transition: border 0.4s; }
+        .prose th { background: var(--tag-bg); font-weight: 600; transition: background 0.4s; }
+        .prose code {
+            background: var(--code-bg); padding: 0.15em 0.4em; border-radius: 4px;
+            font-size: 0.9em; font-family: "SF Mono","Fira Code","Consolas","Menlo",monospace;
+            color: var(--accent); transition: background 0.4s;
+        }
+        .prose pre {
+            background: #2c2416; color: #f5efe3; padding: 1.25rem 1.5rem;
+            border-radius: var(--radius); overflow-x: auto; margin: 1.5em 0;
+            font-size: 0.9rem; line-height: 1.6;
+        }
+        html.dark .prose pre { background: #111115; }
+        .prose pre code { background: transparent; color: inherit; padding: 0; font-size: inherit; }
+
+        /* ── 文章导航 ── */
+        .article-nav { margin: 0 0 1.5rem; display: flex; justify-content: space-between; gap: 1rem; }
+        .article-nav a {
+            flex: 1; padding: 1.1rem 1.35rem; border: 1px solid var(--border);
+            border-radius: var(--radius); text-decoration: none; color: var(--text);
+            background: var(--card-bg);
+            transition: all 0.35s cubic-bezier(0.4,0,0.2,1);
+        }
+        .article-nav a:hover { border-color: var(--accent); box-shadow: var(--shadow-hover); transform: translateY(-1px); }
+        .article-nav .nav-label { font-size: 0.8rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem; }
+        .article-nav .nav-title { font-weight: 600; font-size: 0.95rem; }
+        .article-nav .nav-prev { text-align: left; }
+        .article-nav .nav-next { text-align: right; margin-left: auto; }
+        .article-nav .nav-end {
+            flex: 1; padding: 1.1rem 1.35rem; border: 1px solid var(--border);
+            border-radius: var(--radius); color: var(--text-secondary); opacity: 0.5;
+            cursor: default; transition: border 0.4s;
+        }
+
+        /* ── 返回顶部 ── */
+        .back-to-top {
+            position: fixed; bottom: 2rem; right: 2rem; z-index: 200;
+            width: 44px; height: 44px; border-radius: 50%;
+            background: var(--card-bg); border: 2px solid var(--border);
+            color: var(--text-secondary); font-size: 1.2rem; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; transform: translateY(20px); pointer-events: none;
+            transition: all 0.35s cubic-bezier(0.4,0,0.2,1);
+            box-shadow: var(--shadow);
+        }
+        .back-to-top.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+        .back-to-top:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-3px); box-shadow: var(--shadow-hover); }
+
+        .footer { text-align: center; padding: 2rem 1.5rem; color: var(--text-secondary); font-size: 0.85rem; border-top: 1px solid var(--border); margin-top: auto; position: relative; z-index: 1; transition: border 0.4s; }
+        .footer span { color: var(--accent); }
+        .footer-stats {
+            display: flex; justify-content: center; align-items: center; gap: 0.6rem;
+            flex-wrap: wrap; margin-bottom: 0.4rem; font-size: 0.85rem; color: var(--text-secondary);
+        }
+        .footer-stats .stat { display: inline-flex; align-items: center; gap: 0.2rem; }
+        .footer-stats .stat strong { color: var(--accent); font-weight: 700; }
+        .footer-stats .stat-divider { color: var(--border); }
+
+        /* ── 评论区 ── */
+        .comment-section {
+            margin: 0 0 2rem; padding: 1.25rem 0 0;
+            border-top: 1px solid var(--border); transition: border 0.4s;
+        }
+        .comment-section h3 {
+            font-size: 1.2rem; font-weight: 700; margin-bottom: 1rem;
+            padding-bottom: 0.5rem; border-bottom: 2px solid var(--border);
+            transition: border 0.4s;
+        }
+        .comment-form { display: flex; flex-direction: column; gap: 0.7rem; margin-bottom: 2rem; }
+        .comment-form .row { display: flex; gap: 0.7rem; }
+        .comment-form input, .comment-form textarea {
+            flex: 1; padding: 0.65rem 1rem; font-size: 0.95rem; font-family: inherit;
+            border: 1px solid var(--border); border-radius: var(--radius);
+            background: var(--card-bg); color: var(--text); outline: none;
+            transition: all 0.3s;
+        }
+        .comment-form input:focus, .comment-form textarea:focus {
+            border-color: var(--accent); box-shadow: 0 0 0 3px rgba(177,116,62,0.08);
+        }
+        .comment-form textarea { min-height: 100px; resize: vertical; }
+        .comment-form button {
+            align-self: flex-end; padding: 0.6rem 1.8rem;
+            background: var(--accent); color: #fff; border: none;
+            border-radius: 100px; font-size: 0.95rem; cursor: pointer;
+            transition: all 0.3s; font-weight: 600;
+        }
+        .comment-form button:hover { background: var(--accent-hover); transform: translateY(-1px); }
+        .comment-form button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+        .comment-list { display: flex; flex-direction: column; gap: 1rem; }
+        .comment-card {
+            background: var(--card-bg); border: 1px solid var(--border);
+            border-radius: var(--radius); padding: 1rem 1.25rem;
+            transition: background 0.4s, border 0.4s;
+        }
+        .comment-card .comment-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 0.4rem; flex-wrap: wrap; gap: 0.5rem;
+        }
+        .comment-card .comment-author { font-weight: 700; color: var(--accent); font-size: 0.95rem; }
+        .comment-card .comment-time { font-size: 0.8rem; color: var(--text-secondary); }
+        .comment-card .comment-body { font-size: 0.95rem; color: var(--text); line-height: 1.6; }
+        .comment-empty { text-align: center; color: var(--text-secondary); padding: 2rem 0; font-size: 0.95rem; }
+        .comment-error { text-align: center; color: #c44; padding: 1rem; font-size: 0.9rem; }
+
+        @media (max-width: 768px) {
+            :root { --content-width: 100%; --sidebar-width: 100%; --danmaku-width: 100%; }
+            .article-header h1 { font-size: 1.6rem; }
+            .prose { font-size: 1rem; }
+            .article-nav { flex-direction: column; }
+            .nav-links { gap: 0.8rem; }
+            .back-to-top { bottom: 1.2rem; right: 1.2rem; width: 38px; height: 38px; }
+            .main-layout { flex-direction: column; padding: 0 1.25rem 1rem; gap: 1.5rem; }
+            .sidebar, .danmaku-col { flex: auto; }
+            .sidebar-sticky, .danmaku-sticky { position: static; }
+            .danmaku-col .danmaku-widget { max-height: 250px; }
+        }
+
+        /* ── 双栏/三栏布局 ── */
+        .main-layout {
+            max-width: var(--max-width); margin: 0 auto;
+            padding: 0 1.5rem 1rem; display: flex; gap: 1.5rem;
+            flex: 1; width: 100%; position: relative; z-index: 1;
+        }
+        .content-main { flex: 1; min-width: 0; }
+
+        /* ── 侧栏 ── */
+        .sidebar { flex: 0 0 var(--sidebar-width); display: flex; flex-direction: column; gap: 1rem; }
+        .sidebar-sticky { position: sticky; top: calc(56px + 1rem); display: flex; flex-direction: column; gap: 1rem; }
+        .sidebar-widget {
+            background: var(--card-bg); border: 1px solid var(--border);
+            border-radius: var(--radius); padding: 1rem 1.25rem;
+            box-shadow: var(--shadow); transition: background 0.4s, border 0.4s;
+        }
+        .sidebar-widget .widget-title {
+            font-size: 0.8rem; font-weight: 700; color: var(--text-secondary);
+            text-transform: uppercase; letter-spacing: 0.06em;
+            margin-bottom: 0.6rem; padding-bottom: 0.4rem;
+            border-bottom: 1.5px solid var(--border); transition: border 0.4s;
+        }
+        .widget-stats { display: flex; flex-direction: column; gap: 0.4rem; }
+        .widget-stats .stat-row {
+            display: flex; justify-content: space-between; align-items: center;
+            font-size: 0.85rem; color: var(--text-secondary);
+        }
+        .widget-stats .stat-row strong { color: var(--accent); font-size: 1rem; }
+        .widget-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+        .widget-tags .tag-pill {
+            display: inline-block; background: var(--tag-bg); color: var(--accent);
+            font-size: 0.78rem; padding: 0.3rem 0.7rem; border-radius: 100px;
+            text-decoration: none; transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+        }
+        .widget-tags .tag-pill:hover {
+            background: var(--accent); color: #fff;
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: var(--shadow-hover);
+        }
+
+        /* ── 弹幕栏 ── */
+        .danmaku-col {
+            flex: 0 0 var(--danmaku-width);
+            display: flex; flex-direction: column; gap: 1rem;
+        }
+        .danmaku-col .danmaku-sticky {
+            position: sticky; top: calc(56px + 1rem);
+            display: flex; flex-direction: column; gap: 1rem;
+        }
+        .danmaku-col .danmaku-widget {
+            background: var(--card-bg); border: 1px solid var(--border);
+            border-radius: var(--radius); padding: 1rem 1rem;
+            box-shadow: var(--shadow); transition: background 0.4s, border 0.4s;
+            max-height: 360px;
+            display: flex; flex-direction: column; overflow: hidden;
+        }
+        .danmaku-col .widget-title {
+            font-size: 0.8rem; font-weight: 700; color: var(--text-secondary);
+            text-transform: uppercase; letter-spacing: 0.06em;
+            margin-bottom: 0.5rem; padding-bottom: 0.35rem;
+            border-bottom: 1.5px solid var(--border); text-align: center;
+            transition: border 0.4s;
+        }
+        .danmaku-col .danmaku-track {
+            flex: 1; overflow: hidden; position: relative;
+            mask-image: linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%);
+        }
+        .danmaku-col .danmaku-scroll { animation: danmakuFlow 22s linear infinite; }
+        .danmaku-col .danmaku-scroll:hover { animation-play-state: paused; }
+        .danmaku-col .danmaku-item {
+            padding: 0.4rem 0.5rem; margin-bottom: 0.35rem;
+            background: var(--tag-bg); border-radius: 5px;
+            font-size: 0.72rem; line-height: 1.45; color: var(--text-secondary);
+            transition: background 0.3s;
+        }
+        .danmaku-col .danmaku-item .dm-author { font-weight: 600; color: var(--accent); font-size: 0.68rem; margin-bottom: 0.08rem; }
+        .danmaku-col .danmaku-item .dm-body { word-break: break-all; }
+        @keyframes danmakuFlow {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-50%); }
+        }
+
+        /* ═══════════ 页面转场 ═══════════ */
+        body.page-exiting .navbar         { animation: exitUp   0.32s cubic-bezier(0.55,0,1,0.45) forwards; }
+        body.page-exiting .article-header { animation: exitUp   0.30s 0.03s cubic-bezier(0.55,0,1,0.45) forwards; }
+        body.page-exiting .sidebar        { animation: exitLeft  0.28s 0.06s cubic-bezier(0.55,0,1,0.45) forwards; }
+        body.page-exiting .content-main   { animation: exitDown  0.30s 0.08s cubic-bezier(0.55,0,1,0.45) forwards; }
+        body.page-exiting .danmaku-col    { animation: exitRight 0.28s 0.06s cubic-bezier(0.55,0,1,0.45) forwards; }
+        body.page-exiting .footer         { animation: exitDown 0.28s 0.10s cubic-bezier(0.55,0,1,0.45) forwards; }
+        body.page-exiting .back-to-top    { animation: exitDown 0.20s cubic-bezier(0.55,0,1,0.45) forwards; }
+        body.page-exiting::after { content:''; position:fixed; inset:0; background:var(--bg); z-index:9999; animation: fadeIn 0.25s 0.2s both; }
+
+        @keyframes exitUp    { to { opacity:0; transform:translateY(-130%); } }
+        @keyframes exitDown  { to { opacity:0; transform:translateY(130%); } }
+        @keyframes exitLeft  { to { opacity:0; transform:translateX(-120%); } }
+        @keyframes exitRight { to { opacity:0; transform:translateX(120%); } }
+        @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+
+        body.page-entering .navbar         { animation: enterDown  0.55s cubic-bezier(0.22,0.61,0.36,1) both; }
+        body.page-entering .article-header { animation: enterDown  0.50s 0.06s cubic-bezier(0.22,0.61,0.36,1) both; }
+        body.page-entering .sidebar        { animation: enterLeft  0.50s 0.12s cubic-bezier(0.22,0.61,0.36,1) both; }
+        body.page-entering .content-main   { animation: enterUp    0.52s 0.16s cubic-bezier(0.22,0.61,0.36,1) both; }
+        body.page-entering .danmaku-col    { animation: enterRight 0.50s 0.12s cubic-bezier(0.22,0.61,0.36,1) both; }
+        body.page-entering .sidebar-widget { animation: enterPop   0.40s 0.18s cubic-bezier(0.22,0.61,0.36,1) both; }
+        body.page-entering .danmaku-widget { animation: enterPop   0.40s 0.18s cubic-bezier(0.22,0.61,0.36,1) both; }
+        body.page-entering .footer         { animation: enterUp    0.45s 0.24s cubic-bezier(0.22,0.61,0.36,1) both; }
+        body.page-entering .back-to-top    { animation: enterPop   0.35s 0.28s cubic-bezier(0.22,0.61,0.36,1) both; }
+
+        @keyframes enterDown {
+            0%   { opacity:0; transform:translateY(-100%); }
+            55%  { opacity:1; transform:translateY(12px); }
+            100% { opacity:1; transform:translateY(0); }
+        }
+        @keyframes enterUp {
+            0%   { opacity:0; transform:translateY(80px); }
+            55%  { opacity:1; transform:translateY(-8px); }
+            100% { opacity:1; transform:translateY(0); }
+        }
+        @keyframes enterLeft {
+            0%   { opacity:0; transform:translateX(-80px); }
+            55%  { opacity:1; transform:translateX(8px); }
+            100% { opacity:1; transform:translateX(0); }
+        }
+        @keyframes enterRight {
+            0%   { opacity:0; transform:translateX(80px); }
+            55%  { opacity:1; transform:translateX(-8px); }
+            100% { opacity:1; transform:translateX(0); }
+        }
+        @keyframes enterPop {
+            0%   { opacity:0; transform:scale(0.4); }
+            55%  { opacity:1; transform:scale(1.12); }
+            100% { opacity:1; transform:scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <!-- 阅读进度条 -->
+    <div class="reading-progress" id="readingProgress"></div>
+
+    <canvas id="particles"></canvas>
+
+    <nav class="navbar">
+        <div class="navbar-inner">
+            <a href="../index.html" class="brand">YHSome的神秘空间</a>
+            <ul class="nav-links">
+                <li><a href="../index.html">首页</a></li>
+                <li><a href="../directory.html">目录</a></li>
+                <li><a href="../tags.html">标签</a></li>
+                <li><a href="../projects.html">项目</a></li>
+                <li><a href="../links.html">友链</a></li>
+                <li><button class="theme-toggle" id="themeToggle" title="切换深色/浅色模式" aria-label="切换颜色模式">🌙</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="article-header">
+        <h1>综合实践课结题报告</h1>
+        <div class="article-meta">
+            <span>📅 2023年06月02日</span>
+            <span class="meta-divider"></span><span>✍️ YHSome</span>
+        </div>
+        
+        <div class="article-tags">
+            
+            <a href="../directory.html?tag=%E6%A0%A1%E5%9B%AD" class="tag">校园</a>
+            
+            <a href="../directory.html?tag=%E7%BB%BC%E5%90%88%E5%AE%9E%E8%B7%B5" class="tag">综合实践</a>
+            
+        </div>
+        
+    </header>
+
+    <div class="main-layout">
+        <!-- 左栏：侧边栏 -->
+        <aside class="sidebar">
+            <div class="sidebar-sticky">
+                <div class="sidebar-widget">
+                    <div class="widget-title">📊 站点统计</div>
+                    <div class="widget-stats">
+                        <div class="stat-row"><span>文章总数</span><strong>47 篇</strong></div>
+                        <div class="stat-row"><span>标签</span><strong>39 个</strong></div>
+                        <div class="stat-row"><span>总字数</span><strong>57,678</strong></div>
+                    </div>
+                </div>
+                
+                <div class="sidebar-widget">
+                    <div class="widget-title">🏷️ 精选标签</div>
+                    <div class="widget-tags">
+                        
+                        <a href="../directory.html?tag=%E9%9A%8F%E7%AC%94" class="tag-pill">
+                            随笔
+                        </a>
+                        
+                        <a href="../directory.html?tag=%E6%B8%B8%E6%88%8F" class="tag-pill">
+                            游戏
+                        </a>
+                        
+                        <a href="../directory.html?tag=%E6%B5%8B%E8%AF%95" class="tag-pill">
+                            测试
+                        </a>
+                        
+                        <a href="../directory.html?tag=%E9%9F%B3%E4%B9%90" class="tag-pill">
+                            音乐
+                        </a>
+                        
+                        <a href="../directory.html?tag=VPN" class="tag-pill">
+                            VPN
+                        </a>
+                        
+                        <a href="../directory.html?tag=AI" class="tag-pill">
+                            AI
+                        </a>
+                        
+                        <a href="../directory.html?tag=%E8%8B%B1%E8%AF%AD" class="tag-pill">
+                            英语
+                        </a>
+                        
+                        <a href="../directory.html?tag=%E8%BD%AF%E4%BB%B6" class="tag-pill">
+                            软件
+                        </a>
+                        
+                        <a href="../directory.html?tag=%E7%BA%A2%E6%A5%BC%E6%A2%A6" class="tag-pill">
+                            红楼梦
+                        </a>
+                        
+                        <a href="../directory.html?tag=%E5%AD%A6%E4%B9%A0" class="tag-pill">
+                            学习
+                        </a>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        </aside>
+
+        <!-- 中栏：文章内容 -->
+        <main class="content-main">
+            <article class="article-content">
+                <div class="prose"><p>以下内容仅供展示，docx文件转换为markdown格式可能回出现一些格式问题。因此文中的表格会有些异常<br>
+<a href="https://yhsome.github.io/image/2023-6-03/18-4-jietibaogao2305.docx">点此下载docx文件</a></p>
+<p><strong>高一18班学生对学校食堂的满意度进行调查</strong></p>
+<p>广东番禺中学</p>
+<p>研究小组成员：杨浩森，雷世学，林泰成,李世海</p>
+<p>指导教师：郭玉玲</p>
+<p><strong>第一部分：课题说明</strong></p>
+<ol>
+<li>研究背景与意义</li>
+</ol>
+<p>研究背景：</p>
+<p>学校食堂作为学校日常生活中不可或缺的一部分，直接关系到学生们的身体健康和学习生活。然而，随着学校规模的不断扩大，食堂的管理和服务质量也面临着越来越多的挑战。因此，了解学生对学校食堂的满意度和不满意的原因，对于食堂的改进和提高服务质量具有重要意义。</p>
+<p>研究意义：</p>
+<p>通过对高一18班学生对学校食堂的满意度进行调查，可以了解他们对食堂的看法和建议，从而为改善学校食堂的管理和服务质量提供参考。同时，研究结果也可以为其他学校的食堂管理提供参考，提高全国学生的饮食环境和健康水平。此外，通过此项调查，也可以加强学生与学校之间的沟通和联系，促进学校与学生之间的良好关系。</p>
+<ol start="2">
+<li>
+<p>目标</p>
+<p>1  </p>
+</li>
+</ol>
+<p>| </p>
+<div class="highlight"><pre><span></span><code><span class="o">&lt;!--</span><span class="w"> </span><span class="o">--&gt;</span>
+</code></pre></div>
+
+<p>&mdash;|&mdash;  </p>
+<ol>
+<li>价值体认</li>
+</ol>
+<p>调查高一18班学生对学校食堂满意度的活动，有助于促进学校与学生之间的沟通和联系，提高食堂的管理和服务质量，以改善全体师生的饮食环境和健康。此外，学生还可以在调查中加强对中国共产党和社会规则的认知，以及个人职业规划和价值观念的培养，为未来的发展做好准备。这样的调查不仅有利于食堂的改进，还有助于培养具有责任感和担当精神的青年一代，为社会的进步和发展做出积极的贡献。</p>
+<ol start="2">
+<li>责任担当</li>
+</ol>
+<p>高一18班的学生们对学校食堂满意度的调查充满了责任和担当的社会实践活动。通过这次调查，他们不仅是被调查对象，更是主动参与者和负责人，自发组织和分配任务，深入了解学校食堂现状，收集学生意见和建议，并把结果呈现给学校管理部门。此外，学生们还提高了自己的社会服务能力，并加强了对社会责任意识和法治观念的认知，主动参与志愿者和公益活动，培养了领导、沟通和问题解决能力。总之，这次调查反映了学生的责任担当精神和社会服务能力，同时也为学校和社区提供了有价值的信息和建议，促进了学校和社会的发展和进步。</p>
+<ol start="3">
+<li>问题解决</li>
+</ol>
+<p>高一18班对学校食堂满意度调查时，需要明确调查目的和问题指标，制定科学合理的调查方案，进行数据分析和解读，并提出实际可行的解决方案，同时保证解决方案的可持续性。</p>
+<ol start="4">
+<li>创意物化</li>
+</ol>
+<p>为了解决学生对学校食堂环境、菜品种类和质量方面的不满意，可以设计新的餐具和餐桌提高用餐体验，或者让学生自己制作简单的菜品增加多样性。这些方案不仅能解决问题，还有助于促进学生的创意设计、动手操作、技术应用和物化能力等综合素质发展。</p>
+<ol start="3">
+<li>开展方式</li>
+</ol>
+<p>为了更好地进行高一18班对学校食堂满意度的调查，我们可以采用以下方式开展：</p>
+<ol>
+<li>
+<p>设计问卷调查：设计一份问卷调查，包括对学校食堂的菜品种类、口味、价格、环境卫生等方面进行评价。可以采用多选、单选和填空等方式，以便学生们更准确地表达自己的意见。</p>
+</li>
+<li>
+<p>分组讨论：将学生们分成小组，让每个小组就某个方面展开讨论，如菜品种类、价格等，以便深入了解学生们的需求和意见。</p>
+</li>
+<li>
+<p>食堂参观：组织学生们参观学校食堂，让学生们直接感受食堂的环境、卫生情况，以及菜品的制作过程，进一步了解学生们的需求和意见。</p>
+</li>
+<li>
+<p>调查分析：通过对问卷、讨论和参观等方式收集到的信息进行分析，总结出学生们对学校食堂满意度的高低点，为学校改进食堂服务提供有针对性的建议和意见。</p>
+</li>
+</ol>
+<p>通过以上开展方式，能够让学生们更全面、更深入地了解学校食堂的情况，从而提出更有价值的建议和意见，为改进学校食堂服务贡献自己的力量。</p>
+<p><strong>第二部分：课题结题报告</strong></p>
+<ol>
+<li>研究背景</li>
+</ol>
+<p>住在学校之中，一日三餐是最基础的保障，学校饭堂是在校学生一日三餐就餐的地方，是每一位同学必到的场所，关系着学生的健康与安全，为了了解学生对学校饭堂的满意度，进一步提高学校饭堂的工作质量，我们开展相关调查。</p>
+<ol start="2">
+<li>研究目的和意义</li>
+</ol>
+<p>课题小组通过运用互联网问卷调查等形式，统计调查结果，并对数据进行分析，最后得出结论。对学校饭堂的满意度调查，充分了解学生对饭堂的真实反馈，从而向饭堂提供合理而又真实的建议。在此基础上，课题小组还希望能够在研究性学习中发现自身的不足，不断提升自己。</p>
+<ol start="3">
+<li>
+<p>研究内容和研究方法</p>
+<p>1  </p>
+</li>
+</ol>
+<p>| </p>
+<div class="highlight"><pre><span></span><code><span class="o">&lt;!--</span><span class="w"> </span><span class="o">--&gt;</span>
+</code></pre></div>
+
+<p>&mdash;|&mdash;  </p>
+<ol>
+<li>研究内容</li>
+</ol>
+<p>课题小组通过运用互联网问卷调查等形式，统计调查结果，并对数据进行分析，最后得出结论。对学校饭堂的满意度调查，充分了解学生对饭堂的真实反馈，从而向饭堂提供合理而又真实的建议。在此基础上，课题小组还希望能够在研究性学习中发现自身的不足，不断提升自己。</p>
+<ol start="2">
+<li>研究方法</li>
+</ol>
+<p>1.调查法：组建研究小组，确定课题，拟定开展的计划与方案，写出开题报告</p>
+<p>2.文献法：通过网络书籍的方式，搜索食堂数据，蔬菜营养均衡</p>
+<ol start="4">
+<li>研究过程</li>
+</ol>
+<p>（一）准备阶段</p>
+<div class="highlight"><pre><span></span><code><span class="mf">1</span>
+</code></pre></div>
+
+<p>| </p>
+<div class="highlight"><pre><span></span><code><span class="o">&lt;!--</span><span class="w"> </span><span class="o">--&gt;</span>
+</code></pre></div>
+
+<p>&mdash;|&mdash;  </p>
+<ol>
+<li>
+<p>确定研究主题：通过班会议讨论和投票，确定研究主题为”高一18班对学校食堂满意度的调查”。</p>
+</li>
+<li>
+<p>制定研究计划：根据研究主题，制定了详细的研究计划，包括研究目的、研究方法、研究工具、样本选择等。</p>
+</li>
+</ol>
+<p>（二）实施阶段</p>
+<div class="highlight"><pre><span></span><code><span class="mf">1</span>
+</code></pre></div>
+
+<p>| </p>
+<div class="highlight"><pre><span></span><code><span class="o">&lt;!--</span><span class="w"> </span><span class="o">--&gt;</span>
+</code></pre></div>
+
+<p>&mdash;|&mdash;  </p>
+<ol>
+<li>
+<p>采取问卷调查法：为了收集班级成员对学校食堂满意度的看法，我们采用问卷调查的方法。通过班会议讨论，设计了一份包括多个方面的调查问卷。</p>
+</li>
+<li>
+<p>发放问卷：我们通过班级群、纸质发放等方式，向班级成员发放了调查问卷，并告知调查的目的和重要性。我们要求班级成员在有空的时间内认真填写问卷，并保证对调查内容的保密性。</p>
+</li>
+<li>
+<p>收集和整理数据：在规定的时间内，我们收集了班级成员的问卷，并对数据进行了整理和统计。通过数据分析，得出了学校食堂的满意度指数和各方面的评价结果。</p>
+</li>
+</ol>
+<p>（三）总结阶段</p>
+<div class="highlight"><pre><span></span><code><span class="mf">1</span>
+</code></pre></div>
+
+<p>| </p>
+<div class="highlight"><pre><span></span><code><span class="o">&lt;!--</span><span class="w"> </span><span class="o">--&gt;</span>
+</code></pre></div>
+
+<p>&mdash;|&mdash;  </p>
+<ol>
+<li>
+<p>分析研究结果：通过数据分析和统计，我们得出了学校食堂的满意度指数和各方面的评价结果。我们分析了调查结果，发现学校食堂在一些方面需要改进。</p>
+</li>
+<li>
+<p>提出改进建议：基于调查结果和分析，我们提出了学校食堂改进的建议，包括菜品种类、食品质量、服务质量等方面的改进措施。</p>
+</li>
+<li>
+<p>撰写调查报告：最后，我们根据研究过程和结果，撰写了一份调查报告，详细介绍了调查的目的、方法、结果和改进建议。同时，我们还将调查结果和建议提交给了学校有关部门，以便学校进一步改进学校食堂的服务质量。</p>
+<p>1  </p>
+</li>
+</ol>
+<p>| </p>
+<div class="highlight"><pre><span></span><code><span class="o">&lt;!--</span><span class="w"> </span><span class="o">--&gt;</span>
+</code></pre></div>
+
+<p>&mdash;|&mdash;  </p>
+<ol start="5">
+<li>研究结果及结论</li>
+</ol>
+<p>（一）研究结果：</p>
+<p>经过对高一18班学生对学校食堂满意度的调查，我们获得了以下结果：</p>
+<p>1.绝大多数学生认为学校食堂的环境卫生较好，食品安全问题较少，但仍有部分学生认为有待改善；</p>
+<p>2.学生们对学校食堂的菜品种类和味道普遍不满意，建议增加菜品种类和改进味道；</p>
+<p>3.大部分学生对学校食堂的服务态度表示满意，但也有个别学生认为需要改进服务质量。</p>
+<p>（二）研究结论：</p>
+<p>通过对高一18班学生对学校食堂满意度的调查，我们可以得出以下结论：</p>
+<p>1.学校食堂的环境卫生需要保持和改善；</p>
+<p>2.学校食堂需要增加菜品种类和改进味道，以满足学生的需求；</p>
+<p>3.学校食堂的服务态度需要继续保持和提高，以提升学生的满意度。</p>
+<ol start="6">
+<li>交流评价</li>
+</ol>
+<p>（一）学生体会：</p>
+<p>通过这次学校食堂满意度的调查，我们收获了很多。首先，我们学会了如何设计调查问卷、如何进行数据分析和结果展示；其次，我们对学校食堂的管理和服务有了更深入的了解，也发现了其中存在的问题和不足；最重要的是，我们意识到了作为学生，我们应该积极参与学校事务，为改善学校环境和服务质量出一份力。</p>
+<p>（二）致谢：</p>
+<p>在此，我们要向所有参与这次调查的同学表示感谢，感谢你们的积极配合和参与。同时，也要感谢学校提供的资源和支持，让我们得以顺利完成这次调查。最后，我们还要特别感谢我们的指导教师，他们给予了我们无私的帮助和指导，让我们从中学到了很多。</p>
+<p>（三）指导教师评价：</p>
+<p>我非常欣赏在这次学校食堂满意度调查中所展现的团队合作精神和扎实的工作态度。他们认真分工、积极沟通，通过有效的调查问卷和数据分析，得出了有价值的研究结果。我相信，在这个过程中，他们不仅增强了自己的实践能力和创新意识，也为学校提供了宝贵的参考意见。我希望他们能够继续保持这种积极向上的态度，为自己的成长和学校的发展做出更大的贡献。</p>
+<p><strong>第三部分：研究论文</strong></p>
+<p><strong>高一18班对学校食堂满意度的调查</strong></p>
+<p>广东番禺中学</p>
+<p>研究小组成员：杨浩森，李世海，雷世学，林泰成</p>
+<p>指导教师：郭玉玲</p>
+<p><strong>摘要：</strong> 课题小组通过运用互联网问卷调查等形式，统计调查结果，并对数据进行分析，最后得出结论。对学校饭堂的满意度调查，充分了解学生对饭堂的真实反馈，从而向饭堂提供合理而又真实的建议。在此基础上，课题小组还希望能够在研究性学习中发现自身的不足，不断提升自己。</p>
+<p><strong>关键词：</strong> 学校食堂; 满意度调查; 学生评价; 购买习惯; 改进建议</p>
+<ol>
+<li>引言</li>
+</ol>
+<p>学校食堂作为学校日常生活中不可或缺的一部分，直接关系到学生们的身体健康和学习生活。然而，随着学校规模的不断扩大，食堂的管理和服务质量也面临着越来越多的挑战。因此，了解学生对学校食堂的满意度和不满意的原因，对于食堂的改进和提高服务质量具有重要意义。</p>
+<ol>
+<li>研究的目的与意义</li>
+</ol>
+<p>研究背景：</p>
+<p>学校食堂作为学校日常生活中不可或缺的一部分，直接关系到学生们的身体健康和学习生活。然而，随着学校规模的不断扩大，食堂的管理和服务质量也面临着越来越多的挑战。因此，了解学生对学校食堂的满意度和不满意的原因，对于食堂的改进和提高服务质量具有重要意义。</p>
+<p>研究意义：</p>
+<p>通过对高一18班学生对学校食堂的满意度进行调查，可以了解他们对食堂的看法和建议，从而为改善学校食堂的管理和服务质量提供参考。同时，研究结果也可以为其他学校的食堂管理提供参考，提高全国学生的饮食环境和健康水平。此外，通过此项调查，也可以加强学生与学校之间的沟通和联系，促进学校与学生之间的良好关系。</p>
+<ol start="2">
+<li>研究的对象与方法</li>
+</ol>
+<p>课题小组通过运用互联网问卷调查等形式，统计调查结果，并对数据进行分析，最后得出结论。对学校饭堂的满意度调查，充分了解学生对饭堂的真实反馈，从而向饭堂提供合理而又真实的建议。在此基础上，课题小组还希望能够在研究性学习中发现自身的不足，不断提升自己。</p>
+<p>研究内容</p>
+<p>课题小组通过运用互联网问卷调查等形式，统计调查结果，并对数据进行分析，最后得出结论。对学校饭堂的满意度调查，充分了解学生对饭堂的真实反馈，从而向饭堂提供合理而又真实的建议。在此基础上，课题小组还希望能够在研究性学习中发现自身的不足，不断提升自己。</p>
+<p>研究方法</p>
+<ul>
+<li>
+<p>调查法：准备阶段：确定课题，分小组（1-2周）</p>
+<ul>
+<li>组建研究小组，确定课题，拟定开展的计划与方案，写出开题报告</li>
+<li>
+<p>实施阶段：开题报告（3-4周）,资料收集（5-10周）</p>
+</li>
+<li>
+<p>制作调查问卷，给高一（18）班47名同学进行网络问卷调查</p>
+</li>
+<li>
+<p>对9位科任老师、5位家长专题访问</p>
+</li>
+<li>
+<p>在广东番禺中学食堂进行实地调查</p>
+</li>
+<li>
+<p>文献法：通过网络书籍的方式，搜索食堂数据，蔬菜营养均衡</p>
+</li>
+</ul>
+<p>1  </p>
+</li>
+</ul>
+<p>| </p>
+<div class="highlight"><pre><span></span><code><span class="o">&lt;!--</span><span class="w"> </span><span class="o">--&gt;</span>
+</code></pre></div>
+
+<p>&mdash;|&mdash;  </p>
+<ul>
+<li>
+<p>三、总结阶段：筛选、分析和研究资料，形成结果（11-17)</p>
+<ul>
+<li>修改整理，撰写研究报告，进行讨论分析，最后总结、修改、整理，完成课题研究</li>
+</ul>
+</li>
+</ul>
+<p>二、调查结果与分析</p>
+<p>1. 付款方式</p>
+<blockquote>
+<p>我们进行了一项关于学生食堂付款方式的调查，共收集到了43份有效问卷。在第一个问题——“您通常使用哪种付款方式？”中，结果显示，民生卡（饭卡）是最受欢迎的付款方式，共有33人选择，比例为76.74%；其次是手机支付，仅有9人选择，占比20.93%；只有1人选择了其他方式，仅占2.33%。可以看到，民生卡作为校园生活常用的卡种，在学生中得到了广泛的认可和使用。</p>
+<p>在第二个问题——“您认为学校食堂应该增加哪种付款方式？”中，我们得到了如下的反馈：36位受访者认为应当增加现金付款方式，占比83.72%；3位受访者提出应该增设银行卡付款方式，仅占6.98%，其他付款方式也不被广泛支持，只有4位受访者选择，占比9.3%。这说明尽管移动支付越来越普及，但现金仍然是消费者最怀念的”老朋友”，在校园食堂中依然具有重要地位。</p>
+<p>我们进一步分析发现，导致民生卡成为首选付款方式的原因可能包括以下几点：首先，民生卡在校园环境中具有广泛的应用场景，不仅可以在食堂等消费场所使用，还可以在图书馆、洗衣房等其他地方进行支付。其次，饭卡可以充值，在充值过程中，学生可以享受一定优惠，吸引了更多的消费者使用。此外，支付过程简便，满足快捷、便利的消费需求，广受好评。</p>
+<p>另一方面，虽然移动支付已经成为人们生活中不可或缺的支付方式，但是并没有完全取代现金支付。在校园中，现金仍然是许多学生首选的支付方式，除了方便快捷之外，还具有一定的安全性和便携性。特别是在食堂等实体场所，对于一些不熟悉手机支付或电子支付的老年人及外来人员来说，现金支付也可能是唯一可行的支付方式。</p>
+<p>综上所述，学校食堂应在提供电子支付的基础上，增加更多的现金支付窗口或自助设备，满足不同消费者的支付需求。同时，为了鼓励消费者使用更为便捷的支付方式，也可以提供相应的折扣或优惠政策，倡导更便于管理、高效的无现金支付方式。</p>
+</blockquote>
+<p>2.食品质量</p>
+<p>根据我们的调查结果显示，针对食品口感这一问题，其中32.56%的人认为较差，20.93%的人认为差，11.63%的人认为很好，16.28%的人认为好，而18.6%的人则不清楚。可以看出口感方面还有一些问题需要改进。</p>
+<p>在新鲜程度方面，有20.93%的人认为食品很新鲜，37.21%的人认为较新鲜，30.23%的人认为不新鲜，还有11.63%的人不清楚。这表明学校食堂的新鲜程度需要进一步提高。</p>
+<p>另外，考虑到学生们在买食品时会考虑价格因素，我们也对食品价格合理性进行了调查。结果显示，只有27.91%的人认为食品价格合理，而55.81%的人认为不合理，另外还有16.28%的人不确定。这说明学校需要进一步调整食品价格，以符合学生们的需求和预算。</p>
+<p>最后，关于学校食堂的食品安全保障，37.21%的人认为有保障，55.81%的人认为没有保障，还有6.98%的人无法确定。这表明学校需要加强食品安全保障管理，为师生们提供更可靠的食品。</p>
+<p>3.食堂环境</p>
+<p>我们对学生们对食堂环境的看法进行了调查。其中，针对食堂座位的舒适度问题，有41.86%的人认为座位舒适，48.84%的人认为不舒适，还有9.3%的人不清楚。可以看出座位的舒适度需要进一步关注。</p>
+<p>在食堂氛围和用餐空间方面，有23.26%的人认为氛围很好，62.79%的人认为好，9.3%的人认为较差，而4.65%的人无法确定。这表明学校的食堂氛围和用餐空间相对较好，但仍有一些改进的空间。</p>
+<p>最后，我们询问了学生们对食堂需要改进的地方有哪些看法。结果显示，39.53%的人认为小吃种类需要改进，32.56%的人关注卫生条件，16.28%的人认为菜品种类需要提高，另有11.63%的人选择其他需求。这表明学生们关注食品种类和卫生条件等方面的问题，学校可以针对这些需求进行改进，以提高对学生们的吸引力。</p>
+<p>三、结论与建议</p>
+<p>经过我们对学生食堂的付款方式、食品质量和食堂环境进行了调查，得出了一些结论和建议。</p>
+<p>首先，民生卡是学生们最常用的付款方式，因为它方便快捷并且具有一定的优惠政策。但是，我们也注意到现金支付仍然是许多人的首选支付方式，因为它安全便携。因此，学校应该在提供电子支付的同时增加更多的现金支付窗口或自助设备，以满足不同消费者的支付需求，并提供相应的折扣或优惠政策，鼓励消费者使用更便捷的支付方式。</p>
+<p>其次，针对食品质量问题，我们发现口感和新鲜程度还有待进一步改进，并且价格也需要调整以符合学生们的预算。同时，学校应该加强对食品安全的管理，提供更可靠的食品。</p>
+<p>最后，在食堂环境方面，学生们普遍认为座位不够舒适，虽然食堂氛围和用餐空间相对较好，但仍有改进的空间。学校应该关注学生们在小吃种类、卫生条件等方面的需求，并针对这些需求进行改进。</p>
+<p>综上所述，学校应该全面关注学生食堂的付款方式、食品质量和食堂环境等问题，并积极采取措施加以改进，以提高学生们的用餐体验和满意度。</p>
+<p>【<strong>参考文献</strong> 】</p>
+<p>[1]978-7-5361-5299-1，《综合实践活动（必修)研究性学习》[S]。 广东省：广东高等教育出版社，2022。</p>
+<p>[2] 王志勇. 高校学生饮食消费的调查与分析[J]. 食品工业, 2020,<br>
+41(05):231-232.</p>
+<p>[3] 杨丽君. 高校餐饮管理的现状分析及对策[J]. 小吃技术与创新, 2021,<br>
+19(14):81-82.</p>
+<p>[4] 邵明利, 马莉. 学生食堂营养餐的调查与研究[J]. 食品研究与开发,<br>
+2022, 43(05):152-153.</p>
+<p>[5] 王宁. 大学食堂服务质量满意度调查分析[J]. 经济管理, 2022,<br>
+44(04):204-205.</p>
+<p>[6] 张丹丹, 林静婷. 大学生食堂就餐意愿调查及分析[J]. 食品科技, 2020,<br>
+45(06):206-207。</p>
+<p>附件1：开题报告</p>
+<p><img alt="" src="../images/posts/2023-6-03/1.PNG"></p>
+<p>备注：</p>
+<ol>
+<li>研究步骤中的活动步骤分三个步骤：1）准备阶段（时间、任务、目标）2）实施阶段（时间、任务、目标）3）总结阶段（时间、任务、目标）；</li>
+</ol>
+<p>2、高中生开展研究性学习的基本方法有调查法、观察法、实验法、文献资料法、比较法、历史研究法等，有时要综合运用这些方法。</p>
+<p>附件2：思维导图</p>
+<p><img alt="" src="../images/posts/2023-6-03/2.PNG"></p>
+<p>4：调查结果</p>
+<p>链接：<a href="https://www.wjx.cn/report/223806634.aspx">https://www.wjx.cn/report/223806634.aspx</a></p>
+<p><strong>关于高一18班学生对学校食堂的满意度进行调查的问卷</strong><br>
+<img alt="" src="../images/posts/2023-6-03/3.PNG"><br>
+<img alt="" src="../images/posts/2023-6-03/4.PNG"><br>
+<img alt="" src="../images/posts/2023-6-03/5.PNG"><br>
+<img alt="" src="../images/posts/2023-6-03/6.PNG"></p></div>
+            </article>
+
+            <nav class="article-nav">
+                
+                <a href="RsearchLearning.html" class="nav-prev">
+                    <div class="nav-label">← 上一篇</div>
+                    <div class="nav-title">研究性学习相关内容</div>
+                </a>
+                
+                
+                <a href="Shcedule.html" class="nav-next">
+                    <div class="nav-label">下一篇 →</div>
+                    <div class="nav-title">关于六月七日回桥兴中学的相关信息</div>
+                </a>
+                
+            </nav>
+
+            
+            <!-- 评论区（与正文同宽） -->
+            <section class="comment-section">
+                <h3>💬 评论 (<span id="commentCount">0</span>)</h3>
+                <div class="comment-form" id="commentForm">
+                    <div class="row">
+                        <input type="text" id="cName" placeholder="昵称" maxlength="30">
+                        <input type="email" id="cEmail" placeholder="邮箱（选填）">
+                    </div>
+                    <textarea id="cContent" placeholder="说点什么吧…" maxlength="1000"></textarea>
+                    <button id="cSubmit">发表评论</button>
+                </div>
+                <div class="comment-list" id="commentList">
+                    <div class="comment-empty">加载中…</div>
+                </div>
+            </section>
+            
+        </main>
+
+        <!-- 右栏：弹幕 -->
+        
+        <aside class="danmaku-col" id="danmakuBar">
+            <div class="danmaku-sticky">
+                <div class="danmaku-widget">
+                    <div class="widget-title">💬 精选发言</div>
+                    <div class="danmaku-track">
+                        <div class="danmaku-scroll" id="danmakuScroll">
+                            <div class="danmaku-item"><div class="dm-author">加载中…</div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+        
+    </div>
+
+    <button class="back-to-top" id="backToTop" title="返回顶部" aria-label="返回顶部">↑</button>
+
+    <footer class="footer">
+        <div class="footer-stats" id="footerStats">
+            <span class="stat">🌐 <strong id="vGlobal">…</strong> 次全站浏览</span><span class="stat-divider">|</span>
+            <span class="stat">👁️ <strong id="vCounter">…</strong> 次阅读</span><span class="stat-divider">|</span>
+            <span class="stat">👤 <strong id="vUnique">…</strong> 位访客</span>
+        </div>
+        <p>Powered by <span>OpenBlogger</span> &copy; 2026</p>
+    </footer>
+
+    <script>
+    /* ═══════════ 粒子背景 ═══════════ */
+    !function(){const c=document.getElementById('particles'),x=c.getContext('2d');let w,h,p=[],N=45,D=120;function R(){w=c.width=innerWidth;h=c.height=innerHeight}R(),addEventListener('resize',R);function G(){return getComputedStyle(document.documentElement).getPropertyValue('--particle-color').trim().split(',').map(Number)}class T{constructor(){this.reset()}reset(){this.x=Math.random()*w;this.y=Math.random()*h;this.vx=(Math.random()-.5)*.4;this.vy=(Math.random()-.5)*.4;this.r=Math.random()*2+1}update(){this.x+=this.vx;this.y+=this.vy;if(this.x<0||this.x>w)this.vx*=-1;if(this.y<0||this.y>h)this.vy*=-1}draw(){const[r,g,b]=G();x.beginPath();x.arc(this.x,this.y,this.r,0,Math.PI*2);x.fillStyle=`rgba(${r},${g},${b},0.6)`;x.fill()}}for(let i=0;i<N;i++)p.push(new T);(function A(){x.clearRect(0,0,w,h);const[r,g,b]=G();for(let i=0;i<N;i++){p[i].update();p[i].draw();for(let j=i+1;j<N;j++){const dx=p[i].x-p[j].x,dy=p[i].y-p[j].y,ds=Math.sqrt(dx*dx+dy*dy);if(ds<D){x.beginPath();x.moveTo(p[i].x,p[i].y);x.lineTo(p[j].x,p[j].y);x.strokeStyle=`rgba(${r},${g},${b},${.12*(1-ds/D)})`;x.lineWidth=.5;x.stroke()}}}requestAnimationFrame(A)})()}();
+
+    /* ═══════════ 深色模式 ═══════════ */
+    !function(){const t=document.getElementById('themeToggle'),b=document.documentElement,s=localStorage.getItem('blog-theme');if(s==='dark'||(!s&&matchMedia('(prefers-color-scheme:dark)').matches)){b.classList.add('dark');t.textContent='☀️'}t.addEventListener('click',()=>{const d=b.classList.toggle('dark');t.textContent=d?'☀️':'🌙';localStorage.setItem('blog-theme',d?'dark':'light')})}();
+
+    /* ═══════════ 阅读进度条 ═══════════ */
+    !function(){const bar=document.getElementById('readingProgress');addEventListener('scroll',()=>{const h=document.documentElement.scrollHeight-innerHeight;bar.style.width=h>0?Math.min(100,Math.round(scrollY/h*100))+'%':'0%'})}();
+
+    /* ═══════════ 返回顶部 ═══════════ */
+    !function(){const b=document.getElementById('backToTop');addEventListener('scroll',()=>b.classList.toggle('visible',scrollY>400));b.addEventListener('click',()=>scrollTo({top:0,behavior:'smooth'}))}();
+
+    /* ═══════════ 页面转场 ═══════════ */
+    !function(){document.body.classList.add('page-entering');addEventListener('load',function(){setTimeout(function(){document.body.classList.remove('page-entering')},700)})}();
+    if(location.protocol!=='file:')!function(){document.addEventListener('click',function(e){var a=e.target.closest('a');if(!a)return;var h=a.getAttribute('href');if(!h||h[0]==='#'||h.indexOf('://')>0||h.indexOf('//')===0||a.target==='_blank')return;e.preventDefault();document.body.classList.add('page-exiting');setTimeout(function(){location.assign(h)},360)})}();
+    </script>
+
+    
+    <script>window.ViewerConfig={user:'aaaaa',secret:'d1bdf09a'};</script>
+    <script src="../js/viewer/counter.js"></script>
+    <script src="../js/viewer/unique.js"></script>
+    <script src="../js/viewer/global.js"></script>
+    <script src="../js/viewer/comment.js"></script>
+    <script>
+    (function(){
+        Viewer.getGlobalCount().then(function(n){var e=document.getElementById('vGlobal');if(e)e.innerHTML=n.toLocaleString()});
+        getVisitCount().then(function(n){var e=document.getElementById('vCounter');if(e)e.innerHTML=n.toLocaleString()});
+        Viewer.getUniqueCount().then(function(r){var e=document.getElementById('vUnique');if(e)e.innerHTML=r.count.toLocaleString()});
+        
+        /* ═══════════ 评论系统 ═══════════ */
+        var list=document.getElementById('commentList'),countEl=document.getElementById('commentCount'),
+            form=document.getElementById('commentForm'),nameEl=document.getElementById('cName'),
+            emailEl=document.getElementById('cEmail'),contentEl=document.getElementById('cContent'),
+            submitBtn=document.getElementById('cSubmit');
+        function fmtTime(iso){var d=new Date(iso),p=function(n){return n<10?'0'+n:n};
+            return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())+' '+p(d.getHours())+':'+p(d.getMinutes());}
+        function renderComments(comments){
+            if(!comments||!comments.length){list.innerHTML='<div class="comment-empty">还没有评论，来说点什么吧 🎉</div>';countEl.textContent='0';return}
+            countEl.textContent=comments.length;
+            list.innerHTML=comments.slice().reverse().map(function(c){
+                return '<div class="comment-card"><div class="comment-header"><span class="comment-author">'+
+                    (c.name||'匿名').replace(/</g,'&lt;')+'</span><span class="comment-time">'+fmtTime(c.time)+'</span></div>'+
+                    '<div class="comment-body">'+(c.content||'').replace(/</g,'&lt;').replace(/\n/g,'<br>')+'</div></div>';
+            }).join('');
+        }
+        Viewer.loadComments().then(renderComments).catch(function(){list.innerHTML='<div class="comment-error">评论加载失败，请稍后再试</div>'});
+        /* 弹幕：当前页评论滚动 */
+        var danmakuScroll=document.getElementById('danmakuScroll');
+        if(danmakuScroll){
+            function renderDanmaku(comments){
+                if(!comments||!comments.length){
+                    danmakuScroll.innerHTML='<div class="danmaku-item"><div class="dm-author">暂无发言…</div><div class="dm-body">来评论区说点什么吧</div></div>';
+                    return;
+                }
+                var items=comments.map(function(c){
+                    var name=(c.name||'匿名').replace(/</g,'&lt;');
+                    var body=(c.content||'').replace(/</g,'&lt;').substring(0,80);
+                    return '<div class="danmaku-item"><div class="dm-author">'+name+'</div><div class="dm-body">'+body+'</div></div>';
+                });
+                danmakuScroll.innerHTML=items.concat(items).join('');  // 翻倍无缝循环
+            }
+            Viewer.loadComments().then(renderDanmaku).catch(function(){});
+            // 提交评论后 3s 刷新弹幕
+            submitBtn.addEventListener('click',function(){
+                setTimeout(function(){Viewer.loadComments().then(renderDanmaku).catch(function(){});},3000);
+            });
+        }
+        submitBtn.addEventListener('click',function(){
+            var name=nameEl.value.trim(),content=contentEl.value.trim();
+            if(!name){nameEl.focus();return}
+            if(!content){contentEl.focus();return}
+            submitBtn.disabled=true;submitBtn.textContent='提交中…';
+            Viewer.submitComment({name:name,email:emailEl.value.trim(),content:content}).then(function(c){
+                contentEl.value='';submitBtn.disabled=false;submitBtn.textContent='发表评论';
+                Viewer.loadComments().then(renderComments);
+            }).catch(function(){submitBtn.disabled=false;submitBtn.textContent='发表评论';alert('提交失败，请稍后重试')});
+        });
+        
+    })();
+    </script>
+    
+</body>
+</html>
