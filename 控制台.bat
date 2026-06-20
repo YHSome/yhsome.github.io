@@ -7,20 +7,20 @@ setlocal enabledelayedexpansion
 :menu
 cls
 echo ==========================================
-echo   OpenBlogger 控制台
+echo   OpenBlogger Control Panel
 echo ==========================================
 echo.
-echo   [1] 写文章     打开 Raw 文件夹
-echo   [2] 改配置     打开 site.json
-echo   [3] 本地预览   构建 + 服务器 + 浏览器
-echo   [4] 仅构建     只渲染，不预览
-echo   [5] 推送源码   推送 main 分支
-echo   [6] 部署上线   构建 + 推送 gh-pages
-echo   [7] 全部推送   main + gh-pages
-echo   [8] 退出
+echo   [1] Write    Open Raw folder
+echo   [2] Config   Open site.json
+echo   [3] Preview  Build + Server + Browser
+echo   [4] Build    Render only
+echo   [5] PushSrc  Push main branch
+echo   [6] Deploy   Build + Push gh-pages
+echo   [7] PushAll  Push main + gh-pages
+echo   [8] Exit
 echo.
 set "opt="
-set /p "opt=请输入选项 [1-8]: "
+set /p "opt=Select [1-8]: "
 if "%opt%"=="1" goto write
 if "%opt%"=="2" goto config
 if "%opt%"=="3" goto serve
@@ -33,7 +33,7 @@ goto menu
 
 :write
 start "" "Raw"
-echo Raw 文件夹已打开
+echo Raw folder opened.
 pause
 goto menu
 
@@ -43,16 +43,16 @@ goto menu
 
 :build
 echo.
-echo [构建中...]
+echo Building...
 python -m OpenBlogger.cli build --force
 echo.
-echo 构建完成
+echo Build done.
 pause
 goto menu
 
 :serve
 echo.
-echo [构建 + 启动预览...]
+echo Building + preview...
 python -m OpenBlogger.cli build --force
 start "" http://localhost:8080
 python -m OpenBlogger.cli serve
@@ -60,22 +60,22 @@ goto menu
 
 :pushmain
 echo.
-echo [推送 main...]
+echo Pushing main...
 git add -A
 git diff --cached --quiet
 if errorlevel 1 (
-    set /p msg="commit 信息: "
+    set /p msg="Commit message: "
     git commit -m "!msg!"
 )
 git push origin main
 echo.
-echo 推送完成
+echo Push done.
 pause
 goto menu
 
 :deploy
 echo.
-echo [构建 + 推送 gh-pages...]
+echo Build + Deploy gh-pages...
 python -m OpenBlogger.cli build --force
 git add -f Rendered/
 git commit -m "gh-pages deploy [auto]" 2>nul
@@ -85,18 +85,18 @@ git branch -D _ghp_tmp 2>nul
 git reset --soft HEAD~1 2>nul
 git reset HEAD Rendered/ 2>nul
 echo.
-echo 部署完成
+echo Deploy done.
 pause
 goto menu
 
 :pushall
 echo.
-echo [构建 + 全部推送...]
+echo Build + Push All...
 python -m OpenBlogger.cli build --force
 git add -A
 git diff --cached --quiet
 if errorlevel 1 (
-    set /p msg="commit 信息: "
+    set /p msg="Commit message: "
     git commit -m "!msg!"
 )
 git push origin main
@@ -108,10 +108,10 @@ git branch -D _ghp_tmp 2>nul
 git reset --soft HEAD~1 2>nul
 git reset HEAD Rendered/ 2>nul
 echo.
-echo 全部推送完成
+echo All done.
 pause
 goto menu
 
 :exit
-echo 再见！
+echo Bye!
 timeout /t 1 >nul
