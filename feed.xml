@@ -5,15 +5,8 @@
     <link>https://example.com</link>
     <description>书山有径勤为路，学海无涯苦作舟</description>
     <language>zh-CN</language>
-    <lastBuildDate>Sun, 21 Jun 2026 00:04:28 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 21 Jun 2026 00:09:33 +0800</lastBuildDate>
     <atom:link href="https://example.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <item>
-      <title>OpenBlogger 静态博客渲染框架：介绍与使用指南</title>
-      <link>https://example.com/posts/OpenBlogger-静态博客渲染框架介绍与使用指南.html</link>
-      <description>概述 OpenBlogger 是一个轻量级静态博客渲染引擎。Markdown 写文章，Python 一键生成完整站点。 与 Hexo、Hugo 等传统静态站点生成器的最大区别：模板自包含。每一个 HTML 模板都是完整的——CSS 内联在 &lt;style&gt; 里，JS 内联在 &lt;script&gt; 里，不依…</description>
-      <pubDate>Fri, 19 Jun 2026 00:00:00 +0800</pubDate>
-      <guid isPermaLink="true">https://example.com/posts/OpenBlogger-静态博客渲染框架介绍与使用指南.html</guid>
-    </item>
     <item>
       <title>Claude 期末复习 Skill：把 PPT/PDF/Word 扔给 AI，生成可视化讲义</title>
       <link>https://example.com/posts/Claude期末复习Skill.html</link>
@@ -27,6 +20,13 @@
       <description>缘起 2023 年，刚接触静态博客的时候，最羡慕的就是别人的博客有阅读量统计和评论区。那时候 YHSome 用的是 Hexo + GitHub Pages，纯静态 HTML 托管，没有服务器、没有数据库。传统的评论方案——Disqus、Gitalk、 utterances——要么需要注册第三方服务，…</description>
       <pubDate>Fri, 19 Jun 2026 00:00:00 +0800</pubDate>
       <guid isPermaLink="true">https://example.com/posts/Viewer-纯前端访问计数与评论系统.html</guid>
+    </item>
+    <item>
+      <title>OpenBlogger 静态博客渲染框架：介绍与使用指南</title>
+      <link>https://example.com/posts/OpenBlogger-静态博客渲染框架介绍与使用指南.html</link>
+      <description>概述 OpenBlogger 是一个轻量级静态博客渲染引擎。Markdown 写文章，Python 一键生成完整站点。 与 Hexo、Hugo 等传统静态站点生成器的最大区别：模板自包含。每一个 HTML 模板都是完整的——CSS 内联在 &lt;style&gt; 里，JS 内联在 &lt;script&gt; 里，不依…</description>
+      <pubDate>Fri, 19 Jun 2026 00:00:00 +0800</pubDate>
+      <guid isPermaLink="true">https://example.com/posts/OpenBlogger-静态博客渲染框架介绍与使用指南.html</guid>
     </item>
     <item>
       <title>颂 YHSome 与 OpenBlogger：一个划时代的博客方案诞生记</title>
