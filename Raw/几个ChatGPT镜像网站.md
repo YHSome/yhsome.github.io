@@ -1,5 +1,5 @@
 time: 2023.4.9
-tag: AI, ChatGPT
+tag: 软件, AI
 title: 几个ChatGPT镜像网站
 
 ChatGPT，懂的都懂，相当于一个大号百度，还可以用它来写写作文，做下演讲稿之类的。  

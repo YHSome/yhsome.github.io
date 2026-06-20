@@ -1,5 +1,5 @@
 time: 2026.6.19
-tag: 项目, 软件
+tag: 项目
 title: OpenBlogger 静态博客渲染框架：介绍与使用指南
 
 # 概述
@@ -69,7 +69,7 @@ OpenBlogger 采用**框架与内容分离**的架构：
 
 ```
 time: 2026.6.19
-tag: 项目, 软件
+tag: 项目
 title: OpenBlogger 静态博客渲染框架
 
 正文开始...（Markdown 格式）

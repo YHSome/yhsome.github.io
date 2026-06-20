@@ -1,5 +1,5 @@
 time: 2023.7.25
-tag: 软件, 录屏
+tag: 软件
 title: 录屏软件bandicam下载
 
 下载地址：[点击下载](<../images/posts/2023-7-25/BandiCam.zip>)

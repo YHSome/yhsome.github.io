@@ -1,5 +1,5 @@
 time: 2026.6.19
-tag: 随笔, 项目
+tag: 项目
 title: 颂 YHSome 与 OpenBlogger：一个划时代的博客方案诞生记
 
 # 引言：厌倦了 Hexo 的那一天

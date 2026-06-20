@@ -1,5 +1,5 @@
 time: 2023.8.8
-tag: 软件, 压缩
+tag: 软件
 title: Bandizip专业版解锁及去除更新
 
 ### 前言

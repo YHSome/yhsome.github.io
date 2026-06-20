@@ -1,5 +1,5 @@
 time: 2026.6.19
-tag: 项目, AI, 学习
+tag: 项目, AI
 title: Claude 期末复习 Skill：把 PPT/PDF/Word 扔给 AI，生成可视化讲义
 
 # 这是什么
