@@ -589,6 +589,17 @@
                     
                 </a>
                 
+                <a href="posts/OpenBlogger-静态博客渲染框架介绍与使用指南.html" class="post-card" data-search-text="OpenBlogger 静态博客渲染框架：介绍与使用指南 概述 OpenBlogger 是一个轻量级静态博客渲染引擎。Markdown 写文章，Python 一键生成完整站点。 与 Hexo、Hugo 等传统静态站点生成器的最大区别：模板自包含。每一个 HTML 模板都是完整的——CSS 内联在 &lt;style&gt; 里，JS 内联在 &lt;script&gt; 里，不依… 项目">
+                    <div class="post-date">2026年06月19日</div>
+                    <div class="post-title">OpenBlogger 静态博客渲染框架：介绍与使用指南</div>
+                    <div class="post-excerpt">概述 OpenBlogger 是一个轻量级静态博客渲染引擎。Markdown 写文章，Python 一键生成完整站点。 与 Hexo、Hugo 等传统静态站点生成器的最大区别：模板自包含。每一个 HTML 模板都是完整的——CSS 内联在 &lt;style&gt; 里，JS 内联在 &lt;script&gt; 里，不依…</div>
+                    
+                    <div class="post-tags">
+                        <span class="tag">项目</span>
+                    </div>
+                    
+                </a>
+                
             
         </main>
 
@@ -738,8 +749,15 @@
                 c.classList.toggle('hidden', !match);
                 if (match) visible++;
             });
-            if (q) { count.textContent = visible > 0 ? `找到 ${visible} 篇相关文章` : '没有匹配的文章，换个关键词试试？'; count.classList.add('visible'); }
+            if (q) { count.textContent = visible > 0 ? `本页找到 ${visible} 篇，按回车搜索全部` : '本页无匹配，按回车搜索全部'; count.classList.add('visible'); }
             else { count.classList.remove('visible'); }
+        });
+        // 回车 → 跳到目录页搜索全站
+        input.addEventListener('keydown', function(e){
+            if(e.key === 'Enter'){
+                var q = input.value.trim();
+                if(q) location.href = 'directory.html?search=' + encodeURIComponent(q);
+            }
         });
     })();
 
