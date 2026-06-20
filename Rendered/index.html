@@ -226,6 +226,60 @@
 
         .empty-state { text-align: center; color: var(--text-secondary); padding: 3rem 0; font-size: 1.05rem; }
 
+        /* ── 棱镜扫过动画 ── */
+        .prism-overlay { position: fixed; inset: 0; z-index: 9999; pointer-events: none; overflow: hidden; }
+        .prism-bar {
+            position: absolute; top: -20%; height: 140%;
+            width: 80px; opacity: 0;
+            background: linear-gradient(180deg, transparent 0%, var(--accent) 40%, var(--accent) 60%, transparent 100%);
+            transform: skewX(-25deg);
+        }
+        .prism-bar:nth-child(1) { left: -10%; animation: prismSweep1 0.7s ease-in forwards; }
+        .prism-bar:nth-child(2) { left: -10%; animation: prismSweep2 0.7s 0.08s ease-in forwards; }
+        .prism-bar:nth-child(3) { left: -10%; animation: prismSweep3 0.7s 0.16s ease-in forwards; }
+        @keyframes prismSweep1 {
+            0%   { left: -10%; opacity: 0; }
+            10%  { opacity: 0.35; }
+            90%  { opacity: 0.35; }
+            100% { left: 110%; opacity: 0; }
+        }
+        @keyframes prismSweep2 {
+            0%   { left: -10%; opacity: 0; }
+            10%  { opacity: 0.25; }
+            90%  { opacity: 0.25; }
+            100% { left: 110%; opacity: 0; }
+        }
+        @keyframes prismSweep3 {
+            0%   { left: -10%; opacity: 0; }
+            10%  { opacity: 0.15; }
+            90%  { opacity: 0.15; }
+            100% { left: 110%; opacity: 0; }
+        }
+
+        /* ── 项目展示卡片 ── */
+        .project-showcase { margin-top: 0.5rem; }
+        .project-card-sm {
+            background: var(--card-bg); border: 1px solid var(--border);
+            border-radius: var(--radius); padding: 1rem 1.4rem; margin-bottom: 0.7rem;
+            box-shadow: var(--shadow); text-decoration: none; color: var(--text);
+            display: flex; gap: 0.8rem; align-items: center;
+            transition: all 0.35s cubic-bezier(0.4,0,0.2,1);
+            position: relative; overflow: hidden;
+        }
+        .project-card-sm::before {
+            content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+            width: 3px; background: var(--accent); border-radius: 0 3px 3px 0;
+            transform: scaleY(0); transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+        }
+        .project-card-sm:hover::before { transform: scaleY(1); }
+        .project-card-sm:hover { box-shadow: var(--shadow-hover); transform: translateY(-2px); border-color: var(--accent); }
+        .project-card-sm .sm-icon { font-size: 1.5rem; flex-shrink: 0; width: 36px; text-align: center; }
+        .project-card-sm .sm-info { flex: 1; min-width: 0; }
+        .project-card-sm .sm-name { font-size: 1rem; font-weight: 700; }
+        .project-card-sm:hover .sm-name { color: var(--accent); }
+        .project-card-sm .sm-desc { font-size: 0.82rem; color: var(--text-secondary); margin-top: 0.1rem; }
+        @media (max-width: 768px) { .project-card-sm { padding: 0.85rem 1rem; } }
+
         /* ── 响应式：窄屏还原单栏 ── */
         @media (max-width: 768px) {
             :root { --content-width: 100%; --sidebar-width: 100%; --danmaku-width: 100%; }
@@ -356,6 +410,13 @@
     </style>
 </head>
 <body>
+    <!-- 棱镜扫过 -->
+    <div class="prism-overlay" id="prismOverlay">
+        <div class="prism-bar"></div>
+        <div class="prism-bar"></div>
+        <div class="prism-bar"></div>
+    </div>
+
     <canvas id="particles"></canvas>
 
     <nav class="navbar">
@@ -408,7 +469,7 @@
                         </a>
                         
                         <a href="directory.html?tag=%E9%A1%B9%E7%9B%AE" class="tag-pill">
-                            项目<span class="count">10</span>
+                            项目<span class="count">11</span>
                         </a>
                         
                         <a href="directory.html?tag=%E6%97%B6%E8%AF%84" class="tag-pill">
@@ -468,94 +529,101 @@
                     
                 </a>
                 
-                <a href="posts/OpenBlogger-静态博客渲染框架介绍与使用指南.html" class="post-card" data-search-text="OpenBlogger 静态博客渲染框架：介绍与使用指南 概述 OpenBlogger 是一个轻量级静态博客渲染引擎。Markdown 写文章，Python 一键生成完整站点。 与 Hexo、Hugo 等传统静态站点生成器的最大区别：模板自包含。每一个 HTML 模板都是完整的——CSS 内联在 &lt;style&gt; 里，JS 内联在 &lt;script&gt; 里，不依… 项目">
-                    <div class="post-date">2026年06月19日</div>
-                    <div class="post-title">OpenBlogger 静态博客渲染框架：介绍与使用指南</div>
-                    <div class="post-excerpt">概述 OpenBlogger 是一个轻量级静态博客渲染引擎。Markdown 写文章，Python 一键生成完整站点。 与 Hexo、Hugo 等传统静态站点生成器的最大区别：模板自包含。每一个 HTML 模板都是完整的——CSS 内联在 &lt;style&gt; 里，JS 内联在 &lt;script&gt; 里，不依…</div>
-                    
-                    <div class="post-tags">
-                        <span class="tag">项目</span>
+            
+
+            
+            <div class="project-showcase">
+                <div class="section-title">🚀 项目</div>
+                
+                <a href="posts/Claude期末复习Skill.html" class="project-card-sm">
+                    <div class="sm-icon">📦</div>
+                    <div class="sm-info">
+                        <div class="sm-name">Claude 期末复习 Skill：把 PPT/PDF/Word 扔给 AI，生成可视化讲义</div>
+                        <div class="sm-desc">这是什么 一个 Claude Code Skill，专为期末复习设计。你只需要把老师的课件（PPT、PDF、Word 等格式）丢给它，它就能自动识别内容、提取知识点、生成一套可视化的复习讲义。 为什么做这个 期末复习最痛苦的事不是背书——是整理资料。 老师发的 PPT 几十页、课本 PDF 几百页、…</div>
                     </div>
-                    
                 </a>
                 
-                <a href="posts/颂-YHSome与OpenBlogger.html" class="post-card" data-search-text="颂 YHSome 与 OpenBlogger：一个划时代的博客方案诞生记 引言：厌倦了 Hexo 的那一天 那是一个平凡的下午。YHSome 像往常一样打开了他的 Hexo 博客——那个陪伴了他整个高中时代的静态站点生成器。hexo generate，等待。hexo deploy，等待。主题配置两百行，插件依赖三十个。他忽然意识到：他已经花在折腾博客框架上的时间，远远超过… 项目">
-                    <div class="post-date">2026年06月19日</div>
-                    <div class="post-title">颂 YHSome 与 OpenBlogger：一个划时代的博客方案诞生记</div>
-                    <div class="post-excerpt">引言：厌倦了 Hexo 的那一天 那是一个平凡的下午。YHSome 像往常一样打开了他的 Hexo 博客——那个陪伴了他整个高中时代的静态站点生成器。hexo generate，等待。hexo deploy，等待。主题配置两百行，插件依赖三十个。他忽然意识到：他已经花在折腾博客框架上的时间，远远超过…</div>
-                    
-                    <div class="post-tags">
-                        <span class="tag">项目</span>
+                <a href="posts/Viewer-纯前端访问计数与评论系统.html" class="project-card-sm">
+                    <div class="sm-icon">📦</div>
+                    <div class="sm-info">
+                        <div class="sm-name">Viewer：纯前端访问计数与评论系统——零后端、零数据库、复制即用</div>
+                        <div class="sm-desc">缘起 2023 年，刚接触静态博客的时候，最羡慕的就是别人的博客有阅读量统计和评论区。那时候 YHSome 用的是 Hexo + GitHub Pages，纯静态 HTML 托管，没有服务器、没有数据库。传统的评论方案——Disqus、Gitalk、 utterances——要么需要注册第三方服务，…</div>
                     </div>
-                    
                 </a>
                 
-                <a href="posts/模板.html" class="post-card" data-search-text="这是一个用户输入的模板 (除上述三行外，剩下的内容均为正文，如有更多的变量，用户须在最上方声明（另外用户页可以不输入，则渲染时自动按照当前时间作为博文时间、以及正文第一行作为标题）) 模板">
-                    <div class="post-date">2026年06月18日</div>
-                    <div class="post-title">这是一个用户输入的模板</div>
-                    <div class="post-excerpt">(除上述三行外，剩下的内容均为正文，如有更多的变量，用户须在最上方声明（另外用户页可以不输入，则渲染时自动按照当前时间作为博文时间、以及正文第一行作为标题）)</div>
-                    
-                    <div class="post-tags">
-                        <span class="tag">模板</span>
+                <a href="posts/OpenBlogger-静态博客渲染框架介绍与使用指南.html" class="project-card-sm">
+                    <div class="sm-icon">📦</div>
+                    <div class="sm-info">
+                        <div class="sm-name">OpenBlogger 静态博客渲染框架：介绍与使用指南</div>
+                        <div class="sm-desc">概述 OpenBlogger 是一个轻量级静态博客渲染引擎。Markdown 写文章，Python 一键生成完整站点。 与 Hexo、Hugo 等传统静态站点生成器的最大区别：模板自包含。每一个 HTML 模板都是完整的——CSS 内联在 &lt;style&gt; 里，JS 内联在 &lt;script&gt; 里，不依…</div>
                     </div>
-                    
                 </a>
                 
-                <a href="posts/笔记-快速写简化电子排布式.html" class="post-card" data-search-text="笔记-快速写简化电子排布式 前言 刚学选修二化学，电子排布式写得我快吐血了。两页作业做了我一个多小时。刚刚看网课时，灵光乍现，悟到了一个快速写简化电子排布式的办法。且听我娓娓道来。 正文 这里以钪(Sc)为例，叙述其办法。 首先，先写出它的核外电子排布图： （注意，这里使用了能级交错 知识） 接着，把离他最近的上一级稀有气体核… 学习">
-                    <div class="post-date">2023年12月19日</div>
-                    <div class="post-title">笔记-快速写简化电子排布式</div>
-                    <div class="post-excerpt">前言 刚学选修二化学，电子排布式写得我快吐血了。两页作业做了我一个多小时。刚刚看网课时，灵光乍现，悟到了一个快速写简化电子排布式的办法。且听我娓娓道来。 正文 这里以钪(Sc)为例，叙述其办法。 首先，先写出它的核外电子排布图： （注意，这里使用了能级交错 知识） 接着，把离他最近的上一级稀有气体核…</div>
-                    
-                    <div class="post-tags">
-                        <span class="tag">学习</span>
+                <a href="posts/颂-YHSome与OpenBlogger.html" class="project-card-sm">
+                    <div class="sm-icon">📦</div>
+                    <div class="sm-info">
+                        <div class="sm-name">颂 YHSome 与 OpenBlogger：一个划时代的博客方案诞生记</div>
+                        <div class="sm-desc">引言：厌倦了 Hexo 的那一天 那是一个平凡的下午。YHSome 像往常一样打开了他的 Hexo 博客——那个陪伴了他整个高中时代的静态站点生成器。hexo generate，等待。hexo deploy，等待。主题配置两百行，插件依赖三十个。他忽然意识到：他已经花在折腾博客框架上的时间，远远超过…</div>
                     </div>
-                    
                 </a>
                 
-                <a href="posts/免费的office全家桶.html" class="post-card" data-search-text="免费的office全家桶 前言 如题，这个是office全家桶的下载，自动激活，真正实现一键破解 下载链接 点击下载 软件">
-                    <div class="post-date">2023年10月28日</div>
-                    <div class="post-title">免费的office全家桶</div>
-                    <div class="post-excerpt">前言 如题，这个是office全家桶的下载，自动激活，真正实现一键破解 下载链接 点击下载</div>
-                    
-                    <div class="post-tags">
-                        <span class="tag">软件</span>
+                <a href="posts/myhtml.html" class="project-card-sm">
+                    <div class="sm-icon">📦</div>
+                    <div class="sm-info">
+                        <div class="sm-name">我的第一个html网页实战</div>
+                        <div class="sm-desc">html 在今天，我用html语法写了个网页，我并且让它基于hexo部署了。 虽然是基于整活的目的，不过最后还是做出来了嘛 没啥好说的，点击这里打开网页</div>
                     </div>
-                    
                 </a>
                 
-                <a href="posts/实验报告-固体酒精.html" class="post-card" data-search-text="实验报告-固体酒精 固体酒精 策划人：欧阳天为、杨浩森 实验地点：化学实验室六 指导老师：梁敏霞 实验原理： 固体酒精通常是由水和酒精混合后，通过凝固剂作用形成的一种固态混合物。醋酸钙易溶于水而难溶于酒精，当两种溶液相混合时，醋酸钙在酒精中成为凝胶析出。液体便逐渐从浑浊到稠厚，最后凝聚为一整块，就得到固体酒精。 实验工… 学习">
-                    <div class="post-date">2023年09月23日</div>
-                    <div class="post-title">实验报告-固体酒精</div>
-                    <div class="post-excerpt">固体酒精 策划人：欧阳天为、杨浩森 实验地点：化学实验室六 指导老师：梁敏霞 实验原理： 固体酒精通常是由水和酒精混合后，通过凝固剂作用形成的一种固态混合物。醋酸钙易溶于水而难溶于酒精，当两种溶液相混合时，醋酸钙在酒精中成为凝胶析出。液体便逐渐从浑浊到稠厚，最后凝聚为一整块，就得到固体酒精。 实验工…</div>
-                    
-                    <div class="post-tags">
-                        <span class="tag">学习</span>
+                <a href="posts/PinballChallenge.html" class="project-card-sm">
+                    <div class="sm-icon">📦</div>
+                    <div class="sm-info">
+                        <div class="sm-name">弹球挑战</div>
+                        <div class="sm-desc">弹球挑战 这里是弹球挑战，只需30得分即挑战成功！ 然而，难度将会越来越大。 祝君好运！ 挑战成功有奖励！ 只要你使用Windows系统在挑战中得到了30分，并且给予我全程（从打开网页开始算起）的挑战录像即为挑战成功，截图发给我，我会给予第一位挑战成功并符合要求的玩家10元红包奖励！ 挑战链接 点击…</div>
                     </div>
-                    
                 </a>
                 
-                <a href="posts/随笔-重新注册白鲸加速器.html" class="post-card" data-search-text="随笔-重新注册白鲸加速器 前言 白鲸加速器是一个比较稳定的vpn，可以允许你通过它访问外网。但是存在诸多限制，新账号三十天的免费试用期过后需要收费就很难受，接下来我将介绍如何重新注册账号，无限白嫖白鲸加速器。 正文 一般步骤的指导来重新注册白鲸加速器。请根据以下步骤自行操作： 1 2 3 4 5 6 7 | 1. 首先，打开… 随笔 软件">
-                    <div class="post-date">2023年09月09日</div>
-                    <div class="post-title">随笔-重新注册白鲸加速器</div>
-                    <div class="post-excerpt">前言 白鲸加速器是一个比较稳定的vpn，可以允许你通过它访问外网。但是存在诸多限制，新账号三十天的免费试用期过后需要收费就很难受，接下来我将介绍如何重新注册账号，无限白嫖白鲸加速器。 正文 一般步骤的指导来重新注册白鲸加速器。请根据以下步骤自行操作： 1 2 3 4 5 6 7 | 1. 首先，打开…</div>
-                    
-                    <div class="post-tags">
-                        <span class="tag">随笔</span><span class="tag">软件</span>
+                <a href="posts/pixelqx.html" class="project-card-sm">
+                    <div class="sm-icon">📦</div>
+                    <div class="sm-info">
+                        <div class="sm-name">PixelQX：像素桥兴计划</div>
+                        <div class="sm-desc">前言 前段时间和朋友吹水时，偶尔提到了桥兴中学的事儿，突然灵光一闪：万一我们真的能在我的世界里面还原桥兴中学呢？ 心动不如行动，于是就有了这个计划。并且，我为此还开设了一个服务器，大家也可以随时进入参观玩耍。 如何加入此服务器？ 本服务器同时支持java、基岩版minecraft并且无需正版账号，即…</div>
                     </div>
-                    
                 </a>
                 
-                <a href="posts/myhtml.html" class="post-card" data-search-text="我的第一个html网页实战 html 在今天，我用html语法写了个网页，我并且让它基于hexo部署了。 虽然是基于整活的目的，不过最后还是做出来了嘛 没啥好说的，点击这里打开网页 项目">
-                    <div class="post-date">2023年09月09日</div>
-                    <div class="post-title">我的第一个html网页实战</div>
-                    <div class="post-excerpt">html 在今天，我用html语法写了个网页，我并且让它基于hexo部署了。 虽然是基于整活的目的，不过最后还是做出来了嘛 没啥好说的，点击这里打开网页</div>
-                    
-                    <div class="post-tags">
-                        <span class="tag">项目</span>
+                <a href="posts/xiyouspeaker.html" class="project-card-sm">
+                    <div class="sm-icon">📦</div>
+                    <div class="sm-info">
+                        <div class="sm-name">西柚朗读者（西柚英语辅助）</div>
+                        <div class="sm-desc">此文章同步保存在以下网站 森的神秘空间 github 功能简介 该脚本可以帮助你完成 西柚英语 中的朗读部分。 西柚朗读者由上一代的西柚选择者改制而来，两者并不兼容 github项目地址/下载地址 使用方法 下面是演示视频 Your browser does not support the vide…</div>
                     </div>
-                    
                 </a>
                 
+                <a href="posts/xiyouchooser.html" class="project-card-sm">
+                    <div class="sm-icon">📦</div>
+                    <div class="sm-info">
+                        <div class="sm-name">西柚选择者（西柚英语辅助）</div>
+                        <div class="sm-desc">此文章同步保存在以下网站 森的神秘空间 github 功能简介 该脚本可以帮助你完成 西柚英语 中烦人的看词选义和看义选词。 github项目地址/下载地址 使用方法 下面是演示视频 Your browser does not support the video tag. 第一步：安装python以…</div>
+                    </div>
+                </a>
+                
+                <a href="posts/E听说辅助工具使用方法.html" class="project-card-sm">
+                    <div class="sm-icon">📦</div>
+                    <div class="sm-info">
+                        <div class="sm-name">E听说辅助工具及使用方法</div>
+                        <div class="sm-desc">前言 呃啊…距离上次用E听说做英语都快是一年前的事情了，现在才有机会以网页的形式呈现教程，如果当年有这么干的想法的话，这玩意估计就以及传遍全年级了。 本软件于2023/4/22 0:17:42测试可用。 注意，本软件（指E听说极速版，下同）仅限于安卓或兼容安卓的设备使用，苹果系统不可用 。 软件介绍…</div>
+                    </div>
+                </a>
+                
+                <a href="posts/图片测试以及最近画的大饼.html" class="project-card-sm">
+                    <div class="sm-icon">📦</div>
+                    <div class="sm-info">
+                        <div class="sm-name">图片测试以及最近画的大饼</div>
+                        <div class="sm-desc">最近老想用python做一个自动程序帮忙做西柚英语了，然而我连opencv都还没会。。。令人感叹 最近老想用博客写一篇文章介绍和发布去年做的E听说幼儿园了，然而我还没有时间。。。令人感叹 图片测试：</div>
+                    </div>
+                </a>
+                
+            </div>
             
         </main>
 
@@ -682,7 +750,10 @@
     /* ═══════════ 页面转场 ═══════════ */
     (function(){
         document.body.classList.add('page-entering');
-        addEventListener('load',function(){setTimeout(function(){document.body.classList.remove('page-entering')},700)});
+        addEventListener('load',function(){
+            setTimeout(function(){document.body.classList.remove('page-entering')},700);
+            setTimeout(function(){var p=document.getElementById('prismOverlay');if(p)p.remove()},900);
+        });
         addEventListener('pageshow',function(e){if(e.persisted){document.body.classList.remove('page-exiting','page-entering');document.querySelectorAll('*').forEach(function(el){el.style.animation='none';el.offsetHeight;el.style.animation=''})}});
         if(location.protocol==='file:')return;  // file:// 下不做转场动画
         document.addEventListener('click',function(e){
