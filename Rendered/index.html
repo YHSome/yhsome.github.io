@@ -277,37 +277,6 @@
             100% { left: 110%; opacity: 0; }
         }
 
-        /* ── 项目展示卡片 ── */
-        .project-showcase { margin-top: 0.5rem; }
-        .project-card-sm {
-            background: var(--card-bg); border: 1px solid var(--border);
-            border-radius: var(--radius); padding: 1.15rem 1.4rem; margin-bottom: 0.7rem;
-            box-shadow: var(--shadow); text-decoration: none; color: var(--text);
-            display: flex; gap: 1rem; align-items: center;
-            transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
-            position: relative; overflow: hidden;
-        }
-        .project-card-sm::after {
-            content: ''; position: absolute; inset: 0;
-            background: var(--gradient-accent); opacity: 0;
-            transition: opacity 0.4s; z-index: 0;
-        }
-        .project-card-sm:hover::after { opacity: 0.03; }
-        .project-card-sm::before {
-            content: ''; position: absolute; left: 0; top: 0; bottom: 0; z-index: 1;
-            width: 4px; background: var(--gradient-accent);
-            border-radius: 0 3px 3px 0;
-            transform: scaleY(0); transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
-        }
-        .project-card-sm:hover::before { transform: scaleY(1); }
-        .project-card-sm:hover { box-shadow: var(--shadow-lg); transform: translateY(-2px); border-color: var(--accent); }
-        .project-card-sm .sm-icon { font-size: 1.5rem; flex-shrink: 0; width: 36px; text-align: center; position: relative; z-index: 1; }
-        .project-card-sm .sm-info { flex: 1; min-width: 0; position: relative; z-index: 1; }
-        .project-card-sm .sm-name { font-size: 1.05rem; font-weight: 700; }
-        .project-card-sm:hover .sm-name { color: var(--accent); }
-        .project-card-sm .sm-desc { font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.15rem; }
-        @media (max-width: 768px) { .project-card-sm { padding: 0.9rem 1rem; } }
-
         /* ── 响应式：窄屏还原单栏 ── */
         @media (max-width: 768px) {
             :root { --content-width: 100%; --sidebar-width: 100%; --danmaku-width: 100%; }
@@ -319,9 +288,8 @@
             .theme-toggle { width: 30px; height: 30px; font-size: 0.9rem; }
             .main-layout { flex-direction: column; padding: 0 0.75rem 1.5rem; gap: 1.5rem; }
             .sidebar { flex: auto; order: 2; }
-            .danmaku-col { flex: auto; order: 3; }
-            .sidebar-sticky, .danmaku-sticky { position: static; }
-            .danmaku-col .danmaku-widget { max-height: 200px; }
+            .proj-col { flex: auto; order: 3; }
+            .sidebar-sticky, .proj-sticky { position: static; }
             .sidebar-widget { padding: 0.8rem 1rem; }
             .hero { padding: 3rem 1rem 1.5rem; }
             .hero h1 { font-size: 1.8rem; }
@@ -336,56 +304,58 @@
             .footer-stats { font-size: 0.78rem; gap: 0.4rem; }
         }
 
-        /* ── 弹幕评论栏（右侧第三列） ── */
-        .danmaku-col {
-            flex: 0 0 var(--danmaku-width);
-            display: flex; flex-direction: column; gap: 1.5rem;
-        }
-        .danmaku-col .danmaku-sticky {
-            position: sticky; top: calc(56px + 1.5rem);
-            display: flex; flex-direction: column; gap: 1.5rem;
-        }
-        .danmaku-col .danmaku-widget {
-            background: var(--card-bg); border: 1px solid var(--border);
-            border-radius: var(--radius); padding: 1.25rem 1.25rem;
-            box-shadow: var(--shadow); transition: background 0.4s, border 0.4s;
-            max-height: 360px;
-            display: flex; flex-direction: column; overflow: hidden;
-        }
-        .danmaku-col .widget-title {
-            font-size: 0.85rem; font-weight: 700; color: var(--text-secondary);
-            text-transform: uppercase; letter-spacing: 0.08em;
-            margin-bottom: 0.6rem; padding-bottom: 0.4rem;
-            border-bottom: 1.5px solid var(--border); text-align: center;
-            transition: border 0.4s;
-        }
-        .danmaku-col .danmaku-track {
+        /* ── 侧栏内嵌弹幕 ── */
+        .sidebar-danmaku { max-height: 280px; display: flex; flex-direction: column; overflow: hidden; }
+        .sidebar-danmaku-track {
             flex: 1; overflow: hidden; position: relative;
             mask-image: linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%);
         }
-        .danmaku-col .danmaku-scroll {
-            animation: danmakuFlow 22s linear infinite;
+        .sidebar-danmaku-scroll { animation: danmakuFlow 22s linear infinite; }
+        .sidebar-danmaku-scroll:hover { animation-play-state: paused; }
+        .sidebar-danmaku .danmaku-item {
+            padding: 0.4rem 0.5rem; margin-bottom: 0.35rem;
+            background: var(--tag-bg); border-radius: 5px;
+            font-size: 0.72rem; line-height: 1.4; color: var(--text-secondary);
         }
-        .danmaku-col .danmaku-scroll:hover { animation-play-state: paused; }
-        .danmaku-col .danmaku-item {
-            padding: 0.5rem 0.6rem; margin-bottom: 0.45rem;
-            background: var(--tag-bg); border-radius: 6px;
-            font-size: 0.75rem; line-height: 1.5; color: var(--text-secondary);
-            transition: background 0.3s;
-        }
-        .danmaku-col .danmaku-item .dm-author { font-weight: 600; color: var(--accent); font-size: 0.7rem; margin-bottom: 0.1rem; }
-        .danmaku-col .danmaku-item .dm-body { word-break: break-all; }
+        .sidebar-danmaku .danmaku-item .dm-author { font-weight: 600; color: var(--accent); font-size: 0.68rem; margin-bottom: 0.06rem; }
+        .sidebar-danmaku .danmaku-item .dm-body { word-break: break-all; }
         @keyframes danmakuFlow {
             0% { transform: translateY(0); }
             100% { transform: translateY(-50%); }
         }
+
+        /* ── 右侧项目栏 ── */
+        .proj-col {
+            flex: 0 0 var(--danmaku-width);
+            display: flex; flex-direction: column; gap: 1rem;
+        }
+        .proj-sticky {
+            position: sticky; top: calc(56px + 1.5rem);
+            display: flex; flex-direction: column; gap: 0.6rem;
+        }
+        .proj-card {
+            background: var(--card-bg); border: 1px solid var(--border);
+            border-radius: var(--radius); padding: 0.85rem 1.1rem;
+            box-shadow: var(--shadow); text-decoration: none; color: var(--text);
+            display: block; position: relative; overflow: hidden;
+            transition: all 0.35s cubic-bezier(0.4,0,0.2,1);
+        }
+        .proj-card::before {
+            content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+            width: 3px; background: var(--gradient-accent);
+            transform: scaleY(0); transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+        }
+        .proj-card:hover::before { transform: scaleY(1); }
+        .proj-card:hover { box-shadow: var(--shadow-hover); transform: translateY(-2px); border-color: var(--accent); }
+        .proj-card .proj-name { font-size: 0.92rem; font-weight: 700; }
+        .proj-card:hover .proj-name { color: var(--accent); }
 
         /* ═══════════ 页面转场 ═══════════ */
         body.page-exiting .navbar     { animation: exitUp   0.32s cubic-bezier(0.55,0,1,0.45) forwards; }
         body.page-exiting .hero       { animation: exitUp   0.30s 0.03s cubic-bezier(0.55,0,1,0.45) forwards; }
         body.page-exiting .search-bar { animation: exitLeft 0.28s 0.05s cubic-bezier(0.55,0,1,0.45) forwards; }
         body.page-exiting .sidebar    { animation: exitLeft  0.28s 0.07s cubic-bezier(0.55,0,1,0.45) forwards; }
-        body.page-exiting .danmaku-col{ animation: exitRight 0.28s 0.07s cubic-bezier(0.55,0,1,0.45) forwards; }
+        body.page-exiting .proj-col{ animation: exitRight 0.28s 0.07s cubic-bezier(0.55,0,1,0.45) forwards; }
         body.page-exiting .content-main{animation: exitDown  0.30s 0.09s cubic-bezier(0.55,0,1,0.45) forwards; }
         body.page-exiting .footer     { animation: exitDown 0.28s 0.09s cubic-bezier(0.55,0,1,0.45) forwards; }
         body.page-exiting .back-to-top{ animation: exitDown 0.20s cubic-bezier(0.55,0,1,0.45) forwards; }
@@ -401,7 +371,9 @@
         body.page-entering .hero       { animation: enterDown  0.50s 0.06s cubic-bezier(0.22,0.61,0.36,1) both; }
         body.page-entering .search-bar { animation: enterLeft  0.42s 0.10s cubic-bezier(0.22,0.61,0.36,1) both; }
         body.page-entering .sidebar    { animation: enterLeft  0.50s 0.14s cubic-bezier(0.22,0.61,0.36,1) both; }
-        body.page-entering .danmaku-col{animation: enterRight 0.50s 0.14s cubic-bezier(0.22,0.61,0.36,1) both; }
+        body.page-entering .proj-col{animation: enterRight 0.50s 0.14s cubic-bezier(0.22,0.61,0.36,1) both; }
+        body.page-entering .proj-card:nth-child(odd)  { animation: enterRight 0.45s 0.18s cubic-bezier(0.22,0.61,0.36,1) both; }
+        body.page-entering .proj-card:nth-child(even) { animation: enterLeft  0.45s 0.20s cubic-bezier(0.22,0.61,0.36,1) both; }
         body.page-entering .content-main{animation: enterUp    0.52s 0.18s cubic-bezier(0.22,0.61,0.36,1) both; }
         body.page-entering .post-card:nth-child(odd)  { animation: enterLeft  0.50s 0.20s cubic-bezier(0.22,0.61,0.36,1) both; }
         body.page-entering .post-card:nth-child(even) { animation: enterRight 0.50s 0.22s cubic-bezier(0.22,0.61,0.36,1) both; }
@@ -527,6 +499,17 @@
                     </div>
                 </div>
                 
+                
+                <!-- 精选发言 (侧栏) -->
+                <div class="sidebar-widget sidebar-danmaku" id="danmakuBar" data-max-pid="56">
+                    <div class="widget-title">💬 精选发言</div>
+                    <div class="sidebar-danmaku-track">
+                        <div class="sidebar-danmaku-scroll" id="danmakuScroll">
+                            <div class="danmaku-item"><div class="dm-author">加载中…</div></div>
+                        </div>
+                    </div>
+                </div>
+                
             </div>
         </aside>
 
@@ -558,115 +541,58 @@
                 </a>
                 
             
-
-            
-            <div class="project-showcase">
-                <div class="section-title">🚀 项目</div>
-                
-                <a href="posts/Claude期末复习Skill.html" class="project-card-sm">
-                    <div class="sm-icon">📦</div>
-                    <div class="sm-info">
-                        <div class="sm-name">Claude 期末复习 Skill：把 PPT/PDF/Word 扔给 AI，生成可视化讲义</div>
-                        <div class="sm-desc">这是什么 一个 Claude Code Skill，专为期末复习设计。你只需要把老师的课件（PPT、PDF、Word 等格式）丢给它，它就能自动识别内容、提取知识点、生成一套可视化的复习讲义。 为什么做这个 期末复习最痛苦的事不是背书——是整理资料。 老师发的 PPT 几十页、课本 PDF 几百页、…</div>
-                    </div>
-                </a>
-                
-                <a href="posts/Viewer-纯前端访问计数与评论系统.html" class="project-card-sm">
-                    <div class="sm-icon">📦</div>
-                    <div class="sm-info">
-                        <div class="sm-name">Viewer：纯前端访问计数与评论系统——零后端、零数据库、复制即用</div>
-                        <div class="sm-desc">缘起 2023 年，刚接触静态博客的时候，最羡慕的就是别人的博客有阅读量统计和评论区。那时候 YHSome 用的是 Hexo + GitHub Pages，纯静态 HTML 托管，没有服务器、没有数据库。传统的评论方案——Disqus、Gitalk、 utterances——要么需要注册第三方服务，…</div>
-                    </div>
-                </a>
-                
-                <a href="posts/OpenBlogger-静态博客渲染框架介绍与使用指南.html" class="project-card-sm">
-                    <div class="sm-icon">📦</div>
-                    <div class="sm-info">
-                        <div class="sm-name">OpenBlogger 静态博客渲染框架：介绍与使用指南</div>
-                        <div class="sm-desc">概述 OpenBlogger 是一个轻量级静态博客渲染引擎。Markdown 写文章，Python 一键生成完整站点。 与 Hexo、Hugo 等传统静态站点生成器的最大区别：模板自包含。每一个 HTML 模板都是完整的——CSS 内联在 &lt;style&gt; 里，JS 内联在 &lt;script&gt; 里，不依…</div>
-                    </div>
-                </a>
-                
-                <a href="posts/颂-YHSome与OpenBlogger.html" class="project-card-sm">
-                    <div class="sm-icon">📦</div>
-                    <div class="sm-info">
-                        <div class="sm-name">颂 YHSome 与 OpenBlogger：一个划时代的博客方案诞生记</div>
-                        <div class="sm-desc">引言：厌倦了 Hexo 的那一天 那是一个平凡的下午。YHSome 像往常一样打开了他的 Hexo 博客——那个陪伴了他整个高中时代的静态站点生成器。hexo generate，等待。hexo deploy，等待。主题配置两百行，插件依赖三十个。他忽然意识到：他已经花在折腾博客框架上的时间，远远超过…</div>
-                    </div>
-                </a>
-                
-                <a href="posts/myhtml.html" class="project-card-sm">
-                    <div class="sm-icon">📦</div>
-                    <div class="sm-info">
-                        <div class="sm-name">我的第一个html网页实战</div>
-                        <div class="sm-desc">html 在今天，我用html语法写了个网页，我并且让它基于hexo部署了。 虽然是基于整活的目的，不过最后还是做出来了嘛 没啥好说的，点击这里打开网页</div>
-                    </div>
-                </a>
-                
-                <a href="posts/PinballChallenge.html" class="project-card-sm">
-                    <div class="sm-icon">📦</div>
-                    <div class="sm-info">
-                        <div class="sm-name">弹球挑战</div>
-                        <div class="sm-desc">弹球挑战 这里是弹球挑战，只需30得分即挑战成功！ 然而，难度将会越来越大。 祝君好运！ 挑战成功有奖励！ 只要你使用Windows系统在挑战中得到了30分，并且给予我全程（从打开网页开始算起）的挑战录像即为挑战成功，截图发给我，我会给予第一位挑战成功并符合要求的玩家10元红包奖励！ 挑战链接 点击…</div>
-                    </div>
-                </a>
-                
-                <a href="posts/pixelqx.html" class="project-card-sm">
-                    <div class="sm-icon">📦</div>
-                    <div class="sm-info">
-                        <div class="sm-name">PixelQX：像素桥兴计划</div>
-                        <div class="sm-desc">前言 前段时间和朋友吹水时，偶尔提到了桥兴中学的事儿，突然灵光一闪：万一我们真的能在我的世界里面还原桥兴中学呢？ 心动不如行动，于是就有了这个计划。并且，我为此还开设了一个服务器，大家也可以随时进入参观玩耍。 如何加入此服务器？ 本服务器同时支持java、基岩版minecraft并且无需正版账号，即…</div>
-                    </div>
-                </a>
-                
-                <a href="posts/xiyouspeaker.html" class="project-card-sm">
-                    <div class="sm-icon">📦</div>
-                    <div class="sm-info">
-                        <div class="sm-name">西柚朗读者（西柚英语辅助）</div>
-                        <div class="sm-desc">此文章同步保存在以下网站 森的神秘空间 github 功能简介 该脚本可以帮助你完成 西柚英语 中的朗读部分。 西柚朗读者由上一代的西柚选择者改制而来，两者并不兼容 github项目地址/下载地址 使用方法 下面是演示视频 Your browser does not support the vide…</div>
-                    </div>
-                </a>
-                
-                <a href="posts/xiyouchooser.html" class="project-card-sm">
-                    <div class="sm-icon">📦</div>
-                    <div class="sm-info">
-                        <div class="sm-name">西柚选择者（西柚英语辅助）</div>
-                        <div class="sm-desc">此文章同步保存在以下网站 森的神秘空间 github 功能简介 该脚本可以帮助你完成 西柚英语 中烦人的看词选义和看义选词。 github项目地址/下载地址 使用方法 下面是演示视频 Your browser does not support the video tag. 第一步：安装python以…</div>
-                    </div>
-                </a>
-                
-                <a href="posts/E听说辅助工具使用方法.html" class="project-card-sm">
-                    <div class="sm-icon">📦</div>
-                    <div class="sm-info">
-                        <div class="sm-name">E听说辅助工具及使用方法</div>
-                        <div class="sm-desc">前言 呃啊…距离上次用E听说做英语都快是一年前的事情了，现在才有机会以网页的形式呈现教程，如果当年有这么干的想法的话，这玩意估计就以及传遍全年级了。 本软件于2023/4/22 0:17:42测试可用。 注意，本软件（指E听说极速版，下同）仅限于安卓或兼容安卓的设备使用，苹果系统不可用 。 软件介绍…</div>
-                    </div>
-                </a>
-                
-                <a href="posts/图片测试以及最近画的大饼.html" class="project-card-sm">
-                    <div class="sm-icon">📦</div>
-                    <div class="sm-info">
-                        <div class="sm-name">图片测试以及最近画的大饼</div>
-                        <div class="sm-desc">最近老想用python做一个自动程序帮忙做西柚英语了，然而我连opencv都还没会。。。令人感叹 最近老想用博客写一篇文章介绍和发布去年做的E听说幼儿园了，然而我还没有时间。。。令人感叹 图片测试：</div>
-                    </div>
-                </a>
-                
-            </div>
-            
         </main>
 
         
-        <!-- 右栏：弹幕评论 -->
-        <aside class="danmaku-col" id="danmakuBar" data-max-pid="56">
-            <div class="danmaku-sticky">
-                <div class="danmaku-widget">
-                    <div class="widget-title">💬 精选发言</div>
-                    <div class="danmaku-track">
-                        <div class="danmaku-scroll" id="danmakuScroll">
-                            <div class="danmaku-item"><div class="dm-author">加载中…</div></div>
-                        </div>
-                    </div>
-                </div>
+        <!-- 右栏：项目展示 -->
+        <aside class="proj-col">
+            <div class="proj-sticky">
+                <div class="section-title">🚀 项目</div>
+                
+                <a href="posts/Claude期末复习Skill.html" class="proj-card">
+                    <div class="proj-name">Claude 期末复习 Skill：把 PPT/PDF/Word 扔给 AI，生成可视化讲义</div>
+                </a>
+                
+                <a href="posts/Viewer-纯前端访问计数与评论系统.html" class="proj-card">
+                    <div class="proj-name">Viewer：纯前端访问计数与评论系统——零后端、零数据库、复制即用</div>
+                </a>
+                
+                <a href="posts/OpenBlogger-静态博客渲染框架介绍与使用指南.html" class="proj-card">
+                    <div class="proj-name">OpenBlogger 静态博客渲染框架：介绍与使用指南</div>
+                </a>
+                
+                <a href="posts/颂-YHSome与OpenBlogger.html" class="proj-card">
+                    <div class="proj-name">颂 YHSome 与 OpenBlogger：一个划时代的博客方案诞生记</div>
+                </a>
+                
+                <a href="posts/myhtml.html" class="proj-card">
+                    <div class="proj-name">我的第一个html网页实战</div>
+                </a>
+                
+                <a href="posts/PinballChallenge.html" class="proj-card">
+                    <div class="proj-name">弹球挑战</div>
+                </a>
+                
+                <a href="posts/pixelqx.html" class="proj-card">
+                    <div class="proj-name">PixelQX：像素桥兴计划</div>
+                </a>
+                
+                <a href="posts/xiyouspeaker.html" class="proj-card">
+                    <div class="proj-name">西柚朗读者（西柚英语辅助）</div>
+                </a>
+                
+                <a href="posts/xiyouchooser.html" class="proj-card">
+                    <div class="proj-name">西柚选择者（西柚英语辅助）</div>
+                </a>
+                
+                <a href="posts/E听说辅助工具使用方法.html" class="proj-card">
+                    <div class="proj-name">E听说辅助工具及使用方法</div>
+                </a>
+                
+                <a href="posts/图片测试以及最近画的大饼.html" class="proj-card">
+                    <div class="proj-name">图片测试以及最近画的大饼</div>
+                </a>
+                
             </div>
         </aside>
         
