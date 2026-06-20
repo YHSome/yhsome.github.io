@@ -9,19 +9,19 @@
     <title>E听说辅助工具及使用方法 — YHSome的神秘空间</title>
     <style>
         :root {
-            --bg: #fdfbf7; --card-bg: #ffffff; --text: #2c2416; --text-secondary: #6b5e4a;
-            --accent: #b1743e; --accent-hover: #8b5a2e; --border: #e5ddd0; --tag-bg: #f5efe3;
-            --code-bg: #f4f0e8; --shadow: 0 1px 3px rgba(44,36,22,0.06);
-            --shadow-hover: 0 8px 24px rgba(44,36,22,0.12); --radius: 10px;
+            --bg: #060810; --card-bg: #0d111a; --text: #b8d0e8; --text-secondary: #6090b8;
+            --accent: #00e5ff; --accent-hover: #40ffff; --border: #1a3050; --tag-bg: #0d1a2a;
+            --code-bg: #0a1220; --shadow: 0 0 10px rgba(0,229,255,0.08);
+            --shadow-hover: 0 0 30px rgba(0,229,255,0.25); --radius: 10px;
             --max-width: 1050px; --sidebar-width: 230px; --danmaku-width: 210px;
-            --nav-blur: blur(12px); --particle-color: 180,160,140;
+            --nav-blur: blur(12px); --particle-color: 64,255,255;
         }
         html.dark {
-            --bg: #1a1a1f; --card-bg: #25252b; --text: #d4d0c8; --text-secondary: #9a9488;
-            --accent: #d4945a; --accent-hover: #e8a86e; --border: #36363d;
-            --tag-bg: #2e2e35; --code-bg: #2e2e35;
-            --shadow: 0 1px 3px rgba(0,0,0,0.2); --shadow-hover: 0 8px 24px rgba(0,0,0,0.35);
-            --particle-color: 120,110,100;
+            --bg: #020408; --card-bg: #060c12; --text: #d0e4f8; --text-secondary: #80b0d8;
+            --accent: #40ffff; --accent-hover: #80ffff; --border: #1a3050;
+            --tag-bg: #0d1a2a; --code-bg: #0a1220;
+            --shadow: 0 0 10px rgba(0,229,255,0.08); --shadow-hover: 0 0 30px rgba(0,229,255,0.25);
+            --particle-color: 64,255,255;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -384,9 +384,11 @@
             55%  { opacity:1; transform:scale(1.12); }
             100% { opacity:1; transform:scale(1); }
         }
-    </style>
+    body::after{content:"";position:fixed;inset:0;z-index:9998;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,229,255,0.015) 2px,rgba(0,229,255,0.015) 4px)}
+</style>
 </head>
 <body>
+    <div class="scanlines"></div>
     <!-- 阅读进度条 -->
     <div class="reading-progress" id="readingProgress"></div>
 

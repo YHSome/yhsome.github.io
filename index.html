@@ -10,23 +10,29 @@
     <meta name="description" content="书山有径勤为路，学海无涯苦作舟">
     <style>
         :root {
-            --bg: #fdfbf7; --card-bg: #ffffff; --text: #2c2416; --text-secondary: #6b5e4a;
-            --accent: #b1743e; --accent-hover: #8b5a2e; --accent-light: #f5efe3;
-            --border: #e5ddd0; --tag-bg: #f5efe3;
-            --code-bg: #f4f0e8; --shadow: 0 1px 3px rgba(44,36,22,0.06);
-            --shadow-hover: 0 8px 24px rgba(44,36,22,0.12); --shadow-lg: 0 12px 40px rgba(44,36,22,0.18);
-            --radius: 12px;
+            --bg: #060810; --card-bg: #0d111a; --text: #b8d0e8; --text-secondary: #6090b8;
+            --accent: #00e5ff; --accent-hover: #40ffff; --accent-light: #0a1a2a;
+            --accent2: #ff00ff; --accent3: #00ff88;
+            --border: #1a3050; --tag-bg: #0d1a2a;
+            --code-bg: #0a1220; --shadow: 0 0 10px rgba(0,229,255,0.08);
+            --shadow-hover: 0 0 30px rgba(0,229,255,0.25); --shadow-lg: 0 0 50px rgba(0,229,255,0.35);
+            --radius: 8px;
             --content-width: 1120px; --sidebar-width: 250px; --danmaku-width: 220px;
-            --nav-blur: blur(12px); --particle-color: 180,160,140;
-            --gradient-accent: linear-gradient(135deg, #b1743e 0%, #d4945a 50%, #c08040 100%);
+            --nav-blur: blur(16px); --particle-color: 64,255,255;
+            --gradient-accent: linear-gradient(135deg, #00e5ff 0%, #ff00ff 50%, #00ff88 100%);
+            --neon-glow: 0 0 10px rgba(0,229,255,0.5), 0 0 30px rgba(0,229,255,0.2);
+            --neon-glow-strong: 0 0 15px rgba(0,229,255,0.8), 0 0 60px rgba(0,229,255,0.4);
         }
         html.dark {
-            --bg: #1a1a1f; --card-bg: #25252b; --text: #d4d0c8; --text-secondary: #9a9488;
-            --accent: #d4945a; --accent-hover: #e8a86e; --accent-light: #2e2e35;
-            --border: #36363d; --tag-bg: #2e2e35; --code-bg: #2e2e35;
-            --shadow: 0 1px 3px rgba(0,0,0,0.2); --shadow-hover: 0 8px 24px rgba(0,0,0,0.35);
-            --shadow-lg: 0 12px 40px rgba(0,0,0,0.45);
-            --gradient-accent: linear-gradient(135deg, #d4945a 0%, #e8a86e 50%, #c08040 100%);
+            --bg: #020408; --card-bg: #060c12; --text: #d0e4f8; --text-secondary: #80b0d8;
+            --accent: #40ffff; --accent-hover: #80ffff; --accent-light: #0a1a2a;
+            --accent2: #ff40ff; --accent3: #40ffaa;
+            --border: #1a3050; --tag-bg: #0d1a2a; --code-bg: #0a1220;
+            --shadow: 0 0 10px rgba(64,255,255,0.1);
+            --shadow-hover: 0 0 40px rgba(64,255,255,0.3); --shadow-lg: 0 0 60px rgba(64,255,255,0.45);
+            --gradient-accent: linear-gradient(135deg, #40ffff 0%, #ff40ff 50%, #40ffaa 100%);
+            --neon-glow: 0 0 10px rgba(64,255,255,0.6), 0 0 30px rgba(64,255,255,0.3);
+            --neon-glow-strong: 0 0 20px rgba(64,255,255,0.9), 0 0 80px rgba(64,255,255,0.5);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -38,15 +44,22 @@
             transition: background 0.4s, color 0.4s;
         }
 
-        #particles { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.5; }
-        html.dark #particles { opacity: 0.25; }
+        #particles { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.8; }
+        html.dark #particles { opacity: 0.6; }
+
+        /* ── 扫描线 ── */
+        body::after {
+            content: ''; position: fixed; inset: 0; z-index: 9998; pointer-events: none;
+            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,229,255,0.015) 2px, rgba(0,229,255,0.015) 4px);
+        }
 
         /* ── 导航栏 ── */
         .navbar {
-            background: color-mix(in srgb, var(--card-bg) 85%, transparent);
+            background: color-mix(in srgb, var(--card-bg) 80%, transparent);
             backdrop-filter: var(--nav-blur);
             border-bottom: 1px solid var(--border); padding: 0 2rem;
-            position: sticky; top: 0; z-index: 100; box-shadow: var(--shadow);
+            position: sticky; top: 0; z-index: 100;
+            box-shadow: 0 0 20px rgba(0,229,255,0.15), inset 0 1px 0 rgba(0,229,255,0.05);
             transition: background 0.4s, border 0.4s;
         }
         .navbar-inner {
@@ -234,7 +247,7 @@
         .post-card {
             background: var(--card-bg); border: 1px solid var(--border);
             border-radius: var(--radius); padding: 1.75rem 2rem;
-            margin-bottom: 1.1rem; box-shadow: var(--shadow);
+            margin-bottom: 1.1rem; box-shadow: var(--shadow), inset 0 0 30px rgba(0,229,255,0.02);
             transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
             display: block; text-decoration: none; color: var(--text);
             position: relative; overflow: hidden;
@@ -457,7 +470,8 @@
             55%  { opacity:1; transform:scale(1.12); }
             100% { opacity:1; transform:scale(1); }
         }
-    </style>
+    body::after{content:"";position:fixed;inset:0;z-index:9998;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,229,255,0.015) 2px,rgba(0,229,255,0.015) 4px)}
+</style>
 </head>
 <body>
     <!-- 棱镜扫过 -->
