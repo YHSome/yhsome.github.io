@@ -5,7 +5,7 @@
     <link>https://example.com</link>
     <description>书山有径勤为路，学海无涯苦作舟</description>
     <language>zh-CN</language>
-    <lastBuildDate>Fri, 19 Jun 2026 14:33:05 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 20 Jun 2026 23:54:14 +0800</lastBuildDate>
     <atom:link href="https://example.com/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
       <title>OpenBlogger 静态博客渲染框架：介绍与使用指南</title>

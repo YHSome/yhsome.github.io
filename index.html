@@ -229,18 +229,29 @@
         /* ── 响应式：窄屏还原单栏 ── */
         @media (max-width: 768px) {
             :root { --content-width: 100%; --sidebar-width: 100%; --danmaku-width: 100%; }
-            .main-layout { flex-direction: column; padding: 0 1.25rem 2rem; gap: 2rem; }
+            body { font-size: 0.95rem; }
+            .navbar { padding: 0 0.8rem; }
+            .navbar .brand { font-size: 1.1rem; }
+            .nav-links { gap: 0.6rem; }
+            .nav-links a { font-size: 0.85rem; }
+            .theme-toggle { width: 30px; height: 30px; font-size: 0.9rem; }
+            .main-layout { flex-direction: column; padding: 0 0.75rem 1.5rem; gap: 1.5rem; }
             .sidebar { flex: auto; order: 2; }
             .danmaku-col { flex: auto; order: 3; }
             .sidebar-sticky, .danmaku-sticky { position: static; }
-            .danmaku-col .danmaku-widget { max-height: 300px; }
-            .hero { padding: 4rem 1.25rem 2rem; }
-            .hero h1 { font-size: 2rem; }
-            .search-bar { padding: 0 1.25rem; }
-            .post-card { padding: 1.25rem 1.5rem; }
-            .nav-links { gap: 1rem; }
-            .navbar { padding: 0 1.25rem; }
-            .back-to-top { bottom: 1.2rem; right: 1.2rem; width: 38px; height: 38px; }
+            .danmaku-col .danmaku-widget { max-height: 200px; }
+            .sidebar-widget { padding: 0.8rem 1rem; }
+            .hero { padding: 3rem 1rem 1.5rem; }
+            .hero h1 { font-size: 1.8rem; }
+            .hero .subtitle { font-size: 0.95rem; }
+            .search-bar { padding: 0 0.75rem; margin-bottom: 1.2rem; }
+            .search-bar input { padding: 0.65rem 1rem; font-size: 0.9rem; }
+            .post-card { padding: 1rem 1.2rem; }
+            .post-card .post-title { font-size: 1.1rem; }
+            .post-card .post-excerpt { font-size: 0.88rem; }
+            .back-to-top { bottom: 1rem; right: 1rem; width: 36px; height: 36px; }
+            .footer { padding: 1.2rem 1rem; font-size: 0.78rem; }
+            .footer-stats { font-size: 0.78rem; gap: 0.4rem; }
         }
 
         /* ── 弹幕评论栏（右侧第三列） ── */
@@ -389,24 +400,32 @@
                     <div class="widget-title">🏷️ 精选标签</div>
                     <div class="widget-tags">
                         
+                        <a href="directory.html?tag=%E6%A0%A1%E5%9B%AD" class="tag-pill">
+                            校园<span class="count">5</span>
+                        </a>
+                        
+                        <a href="directory.html?tag=%E9%A1%B9%E7%9B%AE" class="tag-pill">
+                            项目<span class="count">6</span>
+                        </a>
+                        
                         <a href="directory.html?tag=%E9%9F%B3%E4%B9%90" class="tag-pill">
                             音乐<span class="count">2</span>
                         </a>
                         
-                        <a href="directory.html?tag=%E9%92%A2%E7%90%B4%E8%B0%B1" class="tag-pill">
-                            钢琴谱<span class="count">2</span>
+                        <a href="directory.html?tag=%E5%AD%A6%E4%B9%A0" class="tag-pill">
+                            学习<span class="count">9</span>
                         </a>
                         
-                        <a href="directory.html?tag=%E7%BA%A2%E6%A5%BC%E6%A2%A6" class="tag-pill">
-                            红楼梦<span class="count">3</span>
+                        <a href="directory.html?tag=%E6%B5%8B%E8%AF%95" class="tag-pill">
+                            测试<span class="count">2</span>
                         </a>
                         
-                        <a href="directory.html?tag=%E8%BD%AF%E4%BB%B6" class="tag-pill">
-                            软件<span class="count">9</span>
+                        <a href="directory.html?tag=AI" class="tag-pill">
+                            AI<span class="count">3</span>
                         </a>
                         
-                        <a href="directory.html?tag=%E6%97%B6%E8%AF%84" class="tag-pill">
-                            时评<span class="count">6</span>
+                        <a href="directory.html?tag=%E6%B8%B8%E6%88%8F" class="tag-pill">
+                            游戏<span class="count">3</span>
                         </a>
                         
                         <a href="directory.html?tag=%E5%BE%81%E6%96%87" class="tag-pill">
@@ -417,16 +436,8 @@
                             生活<span class="count">2</span>
                         </a>
                         
-                        <a href="directory.html?tag=%E9%9A%8F%E7%AC%94" class="tag-pill">
-                            随笔<span class="count">7</span>
-                        </a>
-                        
-                        <a href="directory.html?tag=%E8%8B%B1%E8%AF%AD" class="tag-pill">
-                            英语<span class="count">3</span>
-                        </a>
-                        
-                        <a href="directory.html?tag=AI" class="tag-pill">
-                            AI<span class="count">3</span>
+                        <a href="directory.html?tag=%E7%BA%A2%E6%A5%BC%E6%A2%A6" class="tag-pill">
+                            红楼梦<span class="count">3</span>
                         </a>
                         
                     </div>
