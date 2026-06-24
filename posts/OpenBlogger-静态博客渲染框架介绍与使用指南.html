@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="../images/favicon.jpg">
+    <meta name="x-viewer-page-id" content="55">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>(function(){var s=localStorage.getItem('blog-theme');if(s==='dark'||(!s&&matchMedia('(prefers-color-scheme:dark)').matches)){document.documentElement.classList.add('dark')}})();</script>
+    <title>OpenBlogger 静态博客渲染框架：介绍与使用指南 — YHSome的神秘空间</title>
+    <style>
+        :root {
+            --bg: #fdfbf7; --card-bg: #ffffff; --text: #2c2416; --text-secondary: #6b5e4a;
+            --accent: #b1743e; --accent-hover: #8b5a2e; --border: #e5ddd0; --tag-bg: #f5efe3;
+            --code-bg: #f4f0e8; --shadow: 0 1px 3px rgba(44,36,22,0.06);
+            --shadow-hover: 0 8px 24px rgba(44,36,22,0.12); --radius: 10px;
+            --max-width: 1050px; --sidebar-width: 230px; --danmaku-width: 210px;
+            --nav-blur: blur(12px); --particle-color: 180,160,140;
+        }
+        html.dark {
+            --bg: #1a1a1f; --card-bg: #25252b; --text: #d4d0c8; --text-secondary: #9a9488;
+            --accent: #d4945a; --accent-hover: #e8a86e; --border: #36363d;
+            --tag-bg: #2e2e35; --code-bg: #2e2e35;
+            --shadow: 0 1px 3px rgba(0,0,0,0.2); --shadow-hover: 0 8px 24px rgba(0,0,0,0.35);
+            --particle-color: 120,110,100;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            background: var(--bg); color: var(--text); line-height: 1.7;
+            min-height: 100vh; display: flex; flex-direction: column;
+            transition: background 0.4s, color 0.4s;
+        }
+
+        #particles { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.5; }
+        html.dark #particles { opacity: 0.25; }
+
+        /* ── 阅读进度条 ── */
+        .reading-progress {
+            position: fixed; top: 0; left: 0; height: 3px;
+            background: linear-gradient(90deg, var(--accent), #d4945a);
+            z-index: 1000; width: 0%;
+            transition: width 0.1s linear;
+            border-radius: 0 2px 2px 0;
+        }
+
+        .navbar {
+            background: var(--card-bg); border-bottom: 1px solid var(--border);
+            padding: 0 1.5rem; position: sticky; top: 0; z-index: 100;
+            box-shadow: var(--shadow); transition: background 0.4s, border 0.4s;
+            backdrop-filter: var(--nav-blur);
+            background: color-mix(in srgb, var(--card-bg) 85%, transparent);
+        }
+        .navbar-inner { max-width: var(--max-width); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 56px; }
+        .navbar .brand { font-size: 1.25rem; font-weight: 700; color: var(--text); text-decoration: none; letter-spacing: -0.02em; transition: color 0.3s; }
+        .navbar .brand:hover { color: var(--accent); }
+        .nav-links { display: flex; gap: 1.2rem; list-style: none; align-items: center; }
+        .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.95rem; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--accent); }
+        .theme-toggle {
+            background: none; border: 1.5px solid var(--border); color: var(--text-secondary);
+            width: 34px; height: 34px; border-radius: 50%; cursor: pointer;
+            font-size: 1rem; display: flex; align-items: center; justify-content: center;
+            transition: all 0.3s; margin-left: 0.25rem;
+        }
+        .theme-toggle:hover { border-color: var(--accent); color: var(--accent); background: var(--tag-bg); }
+
+        /* ── 文章头部 ── */
+        .article-header {
+            text-align: center; padding: 3.5rem 1.5rem 1.5rem;
+            max-width: var(--max-width); margin: 0 auto; position: relative; z-index: 1;
+        }
+        .article-header h1 {
+            font-size: 2.2rem; font-weight: 800; letter-spacing: -0.03em;
+            line-height: 1.3; margin-bottom: 1rem;
+            font-family: "Georgia","Noto Serif SC","Source Han Serif SC",serif;
+        }
+        .article-meta { display: flex; align-items: center; justify-content: center; gap: 1rem; flex-wrap: wrap; font-size: 0.9rem; color: var(--text-secondary); }
+        .article-meta .meta-divider { width: 4px; height: 4px; background: var(--border); border-radius: 50%; transition: background 0.4s; }
+        .article-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; justify-content: center; margin-top: 0.75rem; }
+        .article-tags .tag {
+            display: inline-block; background: var(--tag-bg); color: var(--accent);
+            font-size: 0.8rem; padding: 0.22rem 0.75rem; border-radius: 100px;
+            text-decoration: none; transition: all 0.3s;
+        }
+        .article-tags .tag:hover { background: var(--accent); color: #fff; transform: translateY(-1px); }
+
+        /* ── 正文 ── */
+        .article-content { padding: 0 0 1.5rem; }
+        .prose { font-size: 1.08rem; line-height: 1.85; color: var(--text); }
+        .prose h1,.prose h2,.prose h3,.prose h4 {
+            margin-top: 2em; margin-bottom: 0.6em; font-weight: 700; line-height: 1.3;
+            font-family: "Georgia","Noto Serif SC","Source Han Serif SC",serif;
+        }
+        .prose h1 { font-size: 1.8rem; }
+        .prose h2 { font-size: 1.5rem; border-bottom: 2px solid var(--border); padding-bottom: 0.3em; transition: border 0.4s; }
+        .prose h3 { font-size: 1.25rem; }
+        .prose h4 { font-size: 1.1rem; }
+        .prose p { margin-bottom: 1.2em; }
+        .prose a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; transition: color 0.3s; }
+        .prose a:hover { color: var(--accent-hover); }
+        .prose strong { font-weight: 700; }
+        .prose blockquote {
+            margin: 1.5em 0; padding: 0.85rem 1.35rem;
+            border-left: 4px solid var(--accent);
+            background: var(--tag-bg); border-radius: 0 var(--radius) var(--radius) 0;
+            color: var(--text-secondary); transition: background 0.4s;
+        }
+        .prose blockquote p { margin-bottom: 0.5em; }
+        .prose blockquote p:last-child { margin-bottom: 0; }
+        .prose ul,.prose ol { margin: 1em 0; padding-left: 1.5em; }
+        .prose li { margin-bottom: 0.35em; }
+        .prose img, .prose video { max-width: 100%; height: auto; border-radius: var(--radius); margin: 1.5em 0; box-shadow: var(--shadow); }
+        .prose img { cursor: zoom-in; transition: transform 0.3s, box-shadow 0.3s; }
+        .prose img:hover { transform: scale(1.01); box-shadow: var(--shadow-hover); }
+        .prose hr { border: none; border-top: 2px solid var(--border); margin: 2em 0; transition: border 0.4s; }
+        .prose table { width: 100%; border-collapse: collapse; margin: 1.5em 0; font-size: 0.95rem; }
+        .prose th,.prose td { border: 1px solid var(--border); padding: 0.6rem 1rem; text-align: left; transition: border 0.4s; }
+        .prose th { background: var(--tag-bg); font-weight: 600; transition: background 0.4s; }
+        .prose code {
+            background: var(--code-bg); padding: 0.15em 0.4em; border-radius: 4px;
+            font-size: 0.9em; font-family: "SF Mono","Fira Code","Consolas","Menlo",monospace;
+            color: var(--accent); transition: background 0.4s;
+        }
+        .prose pre {
+            background: #2c2416; color: #f5efe3; padding: 1.25rem 1.5rem;
+            border-radius: var(--radius); overflow-x: auto; margin: 1.5em 0;
+            font-size: 0.9rem; line-height: 1.6;
+        }
+        html.dark .prose pre { background: #111115; }
+        .prose pre code { background: transparent; color: inherit; padding: 0; font-size: inherit; }
+
+        /* ── 文章导航 ── */
+        .article-nav { margin: 0 0 1.5rem; display: flex; justify-content: space-between; gap: 1rem; }
+        .article-nav a {
+            flex: 1; padding: 1.1rem 1.35rem; border: 1px solid var(--border);
+            border-radius: var(--radius); text-decoration: none; color: var(--text);
+            background: var(--card-bg);
+            transition: all 0.35s cubic-bezier(0.4,0,0.2,1);
+        }
+        .article-nav a:hover { border-color: var(--accent); box-shadow: var(--shadow-hover); transform: translateY(-1px); }
+        .article-nav .nav-label { font-size: 0.8rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem; }
+        .article-nav .nav-title { font-weight: 600; font-size: 0.95rem; }
+        .article-nav .nav-prev { text-align: left; }
+        .article-nav .nav-next { text-align: right; margin-left: auto; }
+        .article-nav .nav-end {
+            flex: 1; padding: 1.1rem 1.35rem; border: 1px solid var(--border);
+            border-radius: var(--radius); color: var(--text-secondary); opacity: 0.5;
+            cursor: default; transition: border 0.4s;
+        }
+
+        /* ── 返回顶部 ── */
+        .back-to-top {
+            position: fixed; bottom: 2rem; right: 2rem; z-index: 200;
+            width: 44px; height: 44px; border-radius: 50%;
+            background: var(--card-bg); border: 2px solid var(--border);
+            color: var(--text-secondary); font-size: 1.2rem; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; transform: translateY(20px); pointer-events: none;
+            transition: all 0.35s cubic-bezier(0.4,0,0.2,1);
+            box-shadow: var(--shadow);
+        }
+        .back-to-top.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+        .back-to-top:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-3px); box-shadow: var(--shadow-hover); }
+
+        .footer { text-align: center; padding: 2rem 1.5rem; color: var(--text-secondary); font-size: 0.85rem; border-top: 1px solid var(--border); margin-top: auto; position: relative; z-index: 1; transition: border 0.4s; }
+        .footer span { color: var(--accent); }
+        .footer-stats {
+            display: flex; justify-content: center; align-items: center; gap: 0.6rem;
+            flex-wrap: wrap; margin-bottom: 0.4rem; font-size: 0.85rem; color: var(--text-secondary);
+        }
+        .footer-stats .stat { display: inline-flex; align-items: center; gap: 0.2rem; }
+        .footer-stats .stat strong { color: var(--accent); font-weight: 700; }
+        .footer-stats .stat-divider { color: var(--border); }
+
+        /* ── 评论区 ── */
+        .comment-section {
+            margin: 0 0 2rem; padding: 1.25rem 0 0;
+            border-top: 1px solid var(--border); transition: border 0.4s;
+        }
+        .comment-section h3 {
+            font-size: 1.2rem; font-weight: 700; margin-bottom: 1rem;
+            padding-bottom: 0.5rem; border-bottom: 2px solid var(--border);
+            transition: border 0.4s;
+        }
+        .comment-form { display: flex; flex-direction: column; gap: 0.7rem; margin-bottom: 2rem; }
+        .comment-form .row { display: flex; gap: 0.7rem; }
+        .comment-form input, .comment-form textarea {
+            flex: 1; padding: 0.65rem 1rem; font-size: 0.95rem; font-family: inherit;
+            border: 1px solid var(--border); border-radius: var(--radius);
+            background: var(--card-bg); color: var(--text); outline: none;
+            transition: all 0.3s;
+        }
+        .comment-form input:focus, .comment-form textarea:focus {
+            border-color: var(--accent); box-shadow: 0 0 0 3px rgba(177,116,62,0.08);
+        }
+        .comment-form textarea { min-height: 100px; resize: vertical; }
+        .comment-form button {
+            align-self: flex-end; padding: 0.6rem 1.8rem;
+            background: var(--accent); color: #fff; border: none;
+            border-radius: 100px; font-size: 0.95rem; cursor: pointer;
+            transition: all 0.3s; font-weight: 600;
+        }
+        .comment-form button:hover { background: var(--accent-hover); transform: translateY(-1px); }
+        .comment-form button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+        .comment-list { display: flex; flex-direction: column; gap: 1rem; }
+        .comment-card {
+            background: var(--card-bg); border: 1px solid var(--border);
+            border-radius: var(--radius); padding: 1rem 1.25rem;
+            transition: background 0.4s, border 0.4s;
+        }
+        .comment-card .comment-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 0.4rem; flex-wrap: wrap; gap: 0.5rem;
+        }
+        .comment-card .comment-author { font-weight: 700; color: var(--accent); font-size: 0.95rem; }
+        .comment-card .comment-time { font-size: 0.8rem; color: var(--text-secondary); }
+        .comment-card .comment-body { font-size: 0.95rem; color: var(--text); line-height: 1.6; }
+        .comment-empty { text-align: center; color: var(--text-secondary); padding: 2rem 0; font-size: 0.95rem; }
+        .comment-error { text-align: center; color: #c44; padding: 1rem; font-size: 0.9rem; }
+
+        @media (max-width: 768px) {
+            :root { --content-width: 100%; --sidebar-width: 100%; --danmaku-width: 100%; }
+            body { font-size: 0.95rem; }
+            .navbar { padding: 0 0.8rem; }
+            .navbar .brand { font-size: 1.1rem; }
+            .nav-links { gap: 0.6rem; }
+            .nav-links a { font-size: 0.85rem; }
+            .theme-toggle { width: 30px; height: 30px; font-size: 0.9rem; }
+            .article-header { padding: 2rem 1rem 1rem; }
+            .article-header h1 { font-size: 1.4rem; line-height: 1.35; }
+            .article-meta { font-size: 0.8rem; gap: 0.5rem; }
+            .prose { font-size: 0.95rem; line-height: 1.75; }
+            .prose h2 { font-size: 1.25rem; }
+            .prose h3 { font-size: 1.1rem; }
+            .article-nav { flex-direction: column; }
+            .article-nav a { padding: 0.8rem 1rem; }
+            .article-nav .nav-title { font-size: 0.88rem; }
+            .back-to-top { bottom: 1rem; right: 1rem; width: 36px; height: 36px; }
+            .main-layout { flex-direction: column; padding: 0 0.75rem 0.8rem; gap: 1rem; }
+            .sidebar, .danmaku-col { flex: auto; }
+            .sidebar-sticky, .danmaku-sticky { position: static; }
+            .sidebar-widget { padding: 0.8rem 1rem; }
+            .danmaku-col .danmaku-widget { max-height: 200px; }
+            .comment-section { padding: 0.8rem 0 0; }
+            .comment-form input, .comment-form textarea { font-size: 0.9rem; padding: 0.5rem 0.8rem; }
+            .comment-form button { padding: 0.5rem 1.2rem; font-size: 0.9rem; }
+            .footer { padding: 1.2rem 1rem; font-size: 0.78rem; }
+            .footer-stats { font-size: 0.78rem; gap: 0.4rem; }
+        }
+
+        /* ── 双栏/三栏布局 ── */
+        .main-layout {
+            max-width: var(--max-width); margin: 0 auto;
+            padding: 0 1.5rem 1rem; display: flex; gap: 1.5rem;
+            flex: 1; width: 100%; position: relative; z-index: 1;
+        }
+        .content-main { flex: 1; min-width: 0; }
+
+        /* ── 侧栏 ── */
+        .sidebar { flex: 0 0 var(--sidebar-width); display: flex; flex-direction: column; gap: 1rem; }
+        .sidebar-sticky { position: sticky; top: calc(56px + 1rem); display: flex; flex-direction: column; gap: 1rem; }
+        .sidebar-widget {
+            background: var(--card-bg); border: 1px solid var(--border);
+            border-radius: var(--radius); padding: 1rem 1.25rem;
+            box-shadow: var(--shadow); transition: background 0.4s, border 0.4s;
+        }
+        .sidebar-widget .widget-title {
+            font-size: 0.8rem; font-weight: 700; color: var(--text-secondary);
+            text-transform: uppercase; letter-spacing: 0.06em;
+            margin-bottom: 0.6rem; padding-bottom: 0.4rem;
+            border-bottom: 1.5px solid var(--border); transition: border 0.4s;
+        }
+        .widget-stats { display: flex; flex-direction: column; gap: 0.4rem; }
+        .widget-stats .stat-row {
+            display: flex; justify-content: space-between; align-items: center;
+            font-size: 0.85rem; color: var(--text-secondary);
+        }
+        .widget-stats .stat-row strong { color: var(--accent); font-size: 1rem; }
+        .widget-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+        .widget-tags .tag-pill {
+            display: inline-block; background: var(--tag-bg); color: var(--accent);
+            font-size: 0.78rem; padding: 0.3rem 0.7rem; border-radius: 100px;
+            text-decoration: none; transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+        }
+        .widget-tags .tag-pill:hover {
+            background: var(--accent); color: #fff;
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: var(--shadow-hover);
+        }
+
+        /* ── 弹幕栏 ── */
+        .danmaku-col {
+            flex: 0 0 var(--danmaku-width);
+            display: flex; flex-direction: column; gap: 1rem;
+        }
+        .danmaku-col .danmaku-sticky {
+            position: sticky; top: calc(56px + 1rem);
+            display: flex; flex-direction: column; gap: 1rem;
+        }
+        .danmaku-col .danmaku-widget {
+            background: var(--card-bg); border: 1px solid var(--border);
+            border-radius: var(--radius); padding: 1rem 1rem;
+            box-shadow: var(--shadow); transition: background 0.4s, border 0.4s;
+            max-height: 360px;
+            display: flex; flex-direction: column; overflow: hidden;
+        }
+        .danmaku-col .widget-title {
+            font-size: 0.8rem; font-weight: 700; color: var(--text-secondary);
+            text-transform: uppercase; letter-spacing: 0.06em;
+            margin-bottom: 0.5rem; padding-bottom: 0.35rem;
+            border-bottom: 1.5px solid var(--border); text-align: center;
+            transition: border 0.4s;
+        }
+        .danmaku-col .danmaku-track {
+            flex: 1; overflow: hidden; position: relative;
+            mask-image: linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%);
+        }
+        .danmaku-col .danmaku-scroll { animation: danmakuFlow 22s linear infinite; }
+        .danmaku-col .danmaku-scroll:hover { animation-play-state: paused; }
+        .danmaku-col .danmaku-item {
+            padding: 0.4rem 0.5rem; margin-bottom: 0.35rem;
+            background: var(--tag-bg); border-radius: 5px;
+            font-size: 0.72rem; line-height: 1.45; color: var(--text-secondary);
+            transition: background 0.3s;
+        }
+        .danmaku-col .danmaku-item .dm-author { font-weight: 600; color: var(--accent); font-size: 0.68rem; margin-bottom: 0.08rem; }
+        .danmaku-col .danmaku-item .dm-body { word-break: break-all; }
+        @keyframes danmakuFlow {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-50%); }
+        }
+
+        /* ═══════════ 页面转场 ═══════════ */
+        body.page-exiting .navbar         { animation: exitUp   0.32s cubic-bezier(0.55,0,1,0.45) forwards; }
+        body.page-exiting .article-header { animation: exitUp   0.30s 0.03s cubic-bezier(0.55,0,1,0.45) forwards; }
+        body.page-exiting .sidebar        { animation: exitLeft  0.28s 0.06s cubic-bezier(0.55,0,1,0.45) forwards; }
+        body.page-exiting .content-main   { animation: exitDown  0.30s 0.08s cubic-bezier(0.55,0,1,0.45) forwards; }
+        body.page-exiting .danmaku-col    { animation: exitRight 0.28s 0.06s cubic-bezier(0.55,0,1,0.45) forwards; }
+        body.page-exiting .footer         { animation: exitDown 0.28s 0.10s cubic-bezier(0.55,0,1,0.45) forwards; }
+        body.page-exiting .back-to-top    { animation: exitDown 0.20s cubic-bezier(0.55,0,1,0.45) forwards; }
+        body.page-exiting::after { content:''; position:fixed; inset:0; background:var(--bg); z-index:9999; animation: fadeIn 0.25s 0.2s both; }
+
+        @keyframes exitUp    { to { opacity:0; transform:translateY(-130%); } }
+        @keyframes exitDown  { to { opacity:0; transform:translateY(130%); } }
+        @keyframes exitLeft  { to { opacity:0; transform:translateX(-120%); } }
+        @keyframes exitRight { to { opacity:0; transform:translateX(120%); } }
+        @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+
+        body.page-entering .navbar         { animation: enterDown  0.55s cubic-bezier(0.22,0.61,0.36,1) both; }
+        body.page-entering .article-header { animation: enterDown  0.50s 0.06s cubic-bezier(0.22,0.61,0.36,1) both; }
+        body.page-entering .sidebar        { animation: enterLeft  0.50s 0.12s cubic-bezier(0.22,0.61,0.36,1) both; }
+        body.page-entering .content-main   { animation: enterUp    0.52s 0.16s cubic-bezier(0.22,0.61,0.36,1) both; }
+        body.page-entering .danmaku-col    { animation: enterRight 0.50s 0.12s cubic-bezier(0.22,0.61,0.36,1) both; }
+        body.page-entering .sidebar-widget { animation: enterPop   0.40s 0.18s cubic-bezier(0.22,0.61,0.36,1) both; }
+        body.page-entering .danmaku-widget { animation: enterPop   0.40s 0.18s cubic-bezier(0.22,0.61,0.36,1) both; }
+        body.page-entering .footer         { animation: enterUp    0.45s 0.24s cubic-bezier(0.22,0.61,0.36,1) both; }
+        body.page-entering .back-to-top    { animation: enterPop   0.35s 0.28s cubic-bezier(0.22,0.61,0.36,1) both; }
+
+        @keyframes enterDown {
+            0%   { opacity:0; transform:translateY(-100%); }
+            55%  { opacity:1; transform:translateY(12px); }
+            100% { opacity:1; transform:translateY(0); }
+        }
+        @keyframes enterUp {
+            0%   { opacity:0; transform:translateY(80px); }
+            55%  { opacity:1; transform:translateY(-8px); }
+            100% { opacity:1; transform:translateY(0); }
+        }
+        @keyframes enterLeft {
+            0%   { opacity:0; transform:translateX(-80px); }
+            55%  { opacity:1; transform:translateX(8px); }
+            100% { opacity:1; transform:translateX(0); }
+        }
+        @keyframes enterRight {
+            0%   { opacity:0; transform:translateX(80px); }
+            55%  { opacity:1; transform:translateX(-8px); }
+            100% { opacity:1; transform:translateX(0); }
+        }
+        @keyframes enterPop {
+            0%   { opacity:0; transform:scale(0.4); }
+            55%  { opacity:1; transform:scale(1.12); }
+            100% { opacity:1; transform:scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <!-- 阅读进度条 -->
+    <div class="reading-progress" id="readingProgress"></div>
+
+    <canvas id="particles"></canvas>
+
+    <nav class="navbar">
+        <div class="navbar-inner">
+            <a href="../index.html" class="brand">YHSome的神秘空间</a>
+            <ul class="nav-links">
+                <li><a href="../index.html">首页</a></li>
+                <li><a href="../directory.html">目录</a></li>
+                <li><a href="../tags.html">标签</a></li>
+                <li><a href="../resources.html">资源</a></li>
+                <li><a href="../friendlinks.html">友链</a></li>
+                <li><button class="theme-toggle" id="themeToggle" title="切换深色/浅色模式" aria-label="切换颜色模式">🌙</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="article-header">
+        <h1>OpenBlogger 静态博客渲染框架：介绍与使用指南</h1>
+        <div class="article-meta">
+            <span>📅 2026年06月19日</span>
+            <span class="meta-divider"></span><span>✍️ YHSome</span>
+        </div>
+        
+        <div class="article-tags">
+            
+            <a href="../directory.html?tag=%E9%A1%B9%E7%9B%AE" class="tag">项目</a>
+            
+        </div>
+        
+    </header>
+
+    <div class="main-layout">
+        <!-- 左栏：侧边栏 -->
+        <aside class="sidebar">
+            <div class="sidebar-sticky">
+                <div class="sidebar-widget">
+                    <div class="widget-title">📊 站点统计</div>
+                    <div class="widget-stats">
+                        <div class="stat-row"><span>文章总数</span><strong>51 篇</strong></div>
+                        <div class="stat-row"><span>标签</span><strong>12 个</strong></div>
+                        <div class="stat-row"><span>总字数</span><strong>66,519</strong></div>
+                    </div>
+                </div>
+                
+                <div class="sidebar-widget">
+                    <div class="widget-title">🏷️ 精选标签</div>
+                    <div class="widget-tags">
+                        
+                        <a href="../directory.html?tag=%E5%AD%A6%E4%B9%A0" class="tag-pill">
+                            学习
+                        </a>
+                        
+                        <a href="../directory.html?tag=%E8%BD%AF%E4%BB%B6" class="tag-pill">
+                            软件
+                        </a>
+                        
+                        <a href="../directory.html?tag=%E9%A1%B9%E7%9B%AE" class="tag-pill">
+                            项目
+                        </a>
+                        
+                        <a href="../directory.html?tag=%E6%97%B6%E8%AF%84" class="tag-pill">
+                            时评
+                        </a>
+                        
+                        <a href="../directory.html?tag=%E9%9A%8F%E7%AC%94" class="tag-pill">
+                            随笔
+                        </a>
+                        
+                        <a href="../directory.html?tag=AI" class="tag-pill">
+                            AI
+                        </a>
+                        
+                        <a href="../directory.html?tag=%E5%BE%81%E6%96%87" class="tag-pill">
+                            征文
+                        </a>
+                        
+                        <a href="../directory.html?tag=%E6%B8%B8%E6%88%8F" class="tag-pill">
+                            游戏
+                        </a>
+                        
+                        <a href="../directory.html?tag=%E9%9F%B3%E4%B9%90" class="tag-pill">
+                            音乐
+                        </a>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        </aside>
+
+        <!-- 中栏：文章内容 -->
+        <main class="content-main">
+            <article class="article-content">
+                <div class="prose"><h1 id="_1">概述<a class="toc-link" href="#_1" title="Permanent link"> ¶</a></h1>
+<p>OpenBlogger 是一个轻量级静态博客渲染引擎。Markdown 写文章，Python 一键生成完整站点。</p>
+<p>与 Hexo、Hugo 等传统静态站点生成器的最大区别：<strong>模板自包含</strong>。每一个 HTML 模板都是完整的——CSS 内联在 <code>&lt;style&gt;</code> 里，JS 内联在 <code>&lt;script&gt;</code> 里，不依赖任何外部样式库或构建工具。一个 Python 脚本 + 六个 HTML 模板 = 一个完整的博客。</p>
+<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>markdown<span class="w"> </span>Jinja2<span class="w"> </span>Pygments
+git<span class="w"> </span>clone<span class="w"> </span>--recurse-submodules<span class="w"> </span>https://github.com/YHSome/yhsome.github.io.git
+双击<span class="w"> </span>控制台.bat<span class="w"> </span>→<span class="w"> </span><span class="o">[</span><span class="m">3</span><span class="o">]</span><span class="w"> </span>本地预览
+</code></pre></div>
+
+<h1 id="_2">项目架构<a class="toc-link" href="#_2" title="Permanent link"> ¶</a></h1>
+<h2 id="_3">两层仓库<a class="toc-link" href="#_3" title="Permanent link"> ¶</a></h2>
+<p>OpenBlogger 采用<strong>框架与内容分离</strong>的架构：</p>
+<table>
+<thead>
+<tr>
+<th>仓库</th>
+<th>内容</th>
+<th>独立维护</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>YHSome/OpenBlogger</code></td>
+<td>渲染引擎 + 模板 + Viewer 插件</td>
+<td>框架更新</td>
+</tr>
+<tr>
+<td><code>YHSome/yhsome.github.io</code></td>
+<td>文章 + 图片 + 站点配置</td>
+<td>内容创作</td>
+</tr>
+</tbody>
+</table>
+<p>博客仓库通过 <strong>git submodule</strong> 引用框架仓库。更新框架不影响文章，写文章不涉及框架代码。</p>
+<h2 id="_4">目录结构<a class="toc-link" href="#_4" title="Permanent link"> ¶</a></h2>
+<div class="highlight"><pre><span></span><code>博客项目/
+├── Raw/                     ← 你的 Markdown 文章
+├── Image/                   ← 图片和下载资源
+├── OpenBlogger/             ← 框架（git submodule）
+│   ├── renderer.py          ← 核心渲染引擎
+│   ├── cli.py               ← 命令行工具
+│   └── Template/Default/    ← 6 个 HTML 模板
+├── Plugins/                 ← 博客专属插件
+│   └── GitHubProjects/      ← 仓库列表拉取
+├── site.json                ← 站点配置
+├── Rendered/                ← 构建输出（gitignored）
+├── .archive/                ← 历史存档（gitignored）
+├── .data/                   ← 运行时缓存（gitignored）
+└── 控制台.bat               ← 中控面板
+</code></pre></div>
+
+<h2 id="_5">控制台<a class="toc-link" href="#_5" title="Permanent link"> ¶</a></h2>
+<p>双击 <code>控制台.bat</code> 进入中控面板：</p>
+<div class="highlight"><pre><span></span><code>[1] 写文章     → 打开 Raw/ 文件夹
+[2] 改配置     → 打开 site.json
+[3] 本地预览   → 构建 + 启动服务器 + 浏览器
+[4] 仅构建     → 只渲染
+[5] 推送源码   → git push main
+[6] 部署上线   → 构建 + git subtree push gh-pages
+[7] 全部推送   → main + gh-pages
+[8] 退出
+</code></pre></div>
+
+<h1 id="_6">写作规范<a class="toc-link" href="#_6" title="Permanent link"> ¶</a></h1>
+<h2 id="_7">文章格式<a class="toc-link" href="#_7" title="Permanent link"> ¶</a></h2>
+<p>每篇文章是一个 <code>.md</code> 文件，放在 <code>Raw/</code> 目录。文件头部是元数据区，空行后是 Markdown 正文：</p>
+<div class="highlight"><pre><span></span><code>time: 2026.6.19
+tag: 项目
+title: OpenBlogger 静态博客渲染框架
+
+正文开始...（Markdown 格式）
+</code></pre></div>
+
+<h2 id="_8">元数据字段<a class="toc-link" href="#_8" title="Permanent link"> ¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>必填</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>time</code></td>
+<td>否</td>
+<td>发布日期，缺省取当前时间。格式：<code>2026.6.19</code></td>
+</tr>
+<tr>
+<td><code>title</code></td>
+<td>否</td>
+<td>文章标题，缺省取正文第一句（超 20 字截断加省略号）</td>
+</tr>
+<tr>
+<td><code>tag</code></td>
+<td>是</td>
+<td>标签，逗号分隔。如 <code>tag: 项目, 软件, Python</code></td>
+</tr>
+<tr>
+<td><code>author</code></td>
+<td>否</td>
+<td>作者名，缺省取 <code>site.json</code> 中的 <code>author</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="markdown">Markdown 支持<a class="toc-link" href="#markdown" title="Permanent link"> ¶</a></h2>
+<p>渲染器使用 Python <code>markdown</code> 库，启用了以下扩展：</p>
+<ul>
+<li><code>extra</code>：表格、脚注、定义列表、缩写</li>
+<li><code>codehilite</code>：代码语法高亮（Pygments）</li>
+<li><code>toc</code>：自动生成目录</li>
+<li><code>sane_lists</code>：更合理的列表解析</li>
+<li><code>smarty</code>：智能引号、破折号</li>
+</ul>
+<p>支持在 Markdown 中直接嵌入原始 HTML（如 <code>&lt;video&gt;</code> 标签）。</p>
+<h1 id="_9">站点配置<a class="toc-link" href="#_9" title="Permanent link"> ¶</a></h1>
+<p><code>site.json</code> 位于项目根目录：</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;site_title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;我的博客&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;site_description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;用文字记录思考与生活。&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;author&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;博主&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;site_url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://yhsome.github.io&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;posts_per_page&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;date_format&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;%Y年%m月%d日&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;enable_rss&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;enable_sitemap&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;viewer&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;enable_counter&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;enable_unique&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;enable_global&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;enable_comment&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;user&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;你的TinyWebDB用户名&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;secret&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;你的TinyWebDB密钥&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<h2 id="viewer">Viewer 配置<a class="toc-link" href="#viewer" title="Permanent link"> ¶</a></h2>
+<p>Viewer 是内置的访问计数与评论插件，基于 TinyWebDB 云数据库。</p>
+<p>去 <a href="https://tinywebdb.appinventor.space">tinywebdb.appinventor.space</a> 注册账号，把 <code>user</code> 和 <code>secret</code> 填入配置。不想用的话把 <code>enable_*</code> 都设为 <code>false</code>。</p>
+<h1 id="_10">模板系统<a class="toc-link" href="#_10" title="Permanent link"> ¶</a></h1>
+<p>6 个模板覆盖了博客的全部页面：</p>
+<table>
+<thead>
+<tr>
+<th>模板</th>
+<th>页面</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Homepage.html</code></td>
+<td>首页</td>
+<td>三栏布局：标签侧栏 + 文章卡片 + 弹幕</td>
+</tr>
+<tr>
+<td><code>Directory.html</code></td>
+<td>目录</td>
+<td>搜索 + 标签过滤 + 年月分组 + 日历定位</td>
+</tr>
+<tr>
+<td><code>Post.html</code></td>
+<td>文章</td>
+<td>三栏：统计/标签 + 正文 + 评论弹幕</td>
+</tr>
+<tr>
+<td><code>Tag.html</code></td>
+<td>标签</td>
+<td>悬停展开关联文章列表</td>
+</tr>
+<tr>
+<td><code>Projects.html</code></td>
+<td>项目</td>
+<td>GitHub 仓库卡片展示</td>
+</tr>
+<tr>
+<td><code>Links.html</code></td>
+<td>友链</td>
+<td>旧项目导航</td>
+</tr>
+</tbody>
+</table>
+<p>所有模板使用 Jinja2 语法，变量由渲染器注入。模板自包含——CSS 全部内联，不依赖外部样式库。</p>
+<h1 id="_11">构建流程<a class="toc-link" href="#_11" title="Permanent link"> ¶</a></h1>
+<p>双击 <code>控制台.bat</code> → <code>[4] 仅构建</code>，或直接运行 <code>python -m OpenBlogger.cli build --force</code>：</p>
+<div class="highlight"><pre><span></span><code>Step 1: 扫描 Raw/*.md → 解析元数据 + Markdown 正文
+Step 2: MD → HTML（代码高亮 + 智能引号 + 表格）
+Step 3: 按日期倒序排列
+Step 4: 渲染文章页 → posts/xxx.html（每篇独立）
+Step 5: 渲染列表页 → index/directory/tags/projects/links
+Step 6: 生成 RSS + Sitemap
+Step 7: 复制 Image/ → Rendered/images/posts/
+Step 8: 复制友链项目 → Rendered/friends/
+Step 9: 复制 Viewer JS → Rendered/js/viewer/
+Step 10: 保存缓存 + 页面编号
+</code></pre></div>
+
+<p>增量构建：文件哈希缓存，只重建变更页面。</p>
+<h1 id="_12">部署<a class="toc-link" href="#_12" title="Permanent link"> ¶</a></h1>
+<p>GitHub Pages 部署采用 <code>git subtree</code> 策略：</p>
+<ul>
+<li><code>main</code> 分支：完整源代码（文章、图片、配置、框架 submodule）</li>
+<li><code>gh-pages</code> 分支：仅 <code>Rendered/</code> 中的 HTML 文件</li>
+</ul>
+<p>双击 <code>控制台.bat</code> → <code>[6] 部署上线</code> 即可一键部署。部署后在仓库 Settings → Pages 中将源设为 <code>gh-pages</code> 分支。</p>
+<h1 id="_13">特色功能<a class="toc-link" href="#_13" title="Permanent link"> ¶</a></h1>
+<h2 id="_14">深色模式零闪屏<a class="toc-link" href="#_14" title="Permanent link"> ¶</a></h2>
+<p>在 <code>&lt;head&gt;</code> 最前面插入同步阻塞脚本，在 <code>&lt;body&gt;</code> 渲染前就根据 localStorage 或系统偏好确定颜色模式，避免&rdquo;先白后黑&rdquo;的闪光弹。</p>
+<h2 id="_15">页面转场动画<a class="toc-link" href="#_15" title="Permanent link"> ¶</a></h2>
+<p>CSS <code>cubic-bezier(0.22, 0.61, 0.36, 1)</code> 实现初速为负的加速入场——元素从边缘弹出时先冲过头再弹回。退场时各元素朝最近边缘飞走渐隐。导航拦截 + bfcache 恢复兼容。</p>
+<h2 id="_16">弹幕评论<a class="toc-link" href="#_16" title="Permanent link"> ¶</a></h2>
+<p>首页右侧精选发言——遍历全站所有页面拉取评论，翻倍拼接后 CSS <code>translateY(-50%)</code> 无缝循环。文章页弹幕仅展示当前页评论。鼠标悬停暂停滚动。</p>
+<h2 id="_17">标签体系<a class="toc-link" href="#_17" title="Permanent link"> ¶</a></h2>
+<p>每篇文章可打多个标签。侧栏&rdquo;精选标签&rdquo;从文章数 ≥2 的标签中随机抽取展示。标签页悬停标签即可展开该标签下所有文章列表。目录页支持标签筛选 + 年月分组 + 日历日期定位。</p>
+<h2 id="_18">项目展示<a class="toc-link" href="#_18" title="Permanent link"> ¶</a></h2>
+<p>通过 GitHub API 自动拉取仓库列表，渲染为项目卡片。有 GitHub Pages 的仓库自动链接到 Pages 地址。友链页面展示旧项目导航。</p>
+<h1 id="_19">自定义主题<a class="toc-link" href="#_19" title="Permanent link"> ¶</a></h1>
+<p>在 <code>OpenBlogger/Template/</code> 下新建文件夹（如 <code>Modern/</code>），放入你自己的模板文件。构建时指定主题：</p>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>OpenBlogger.cli<span class="w"> </span>build<span class="w"> </span>--theme<span class="w"> </span>Modern
+</code></pre></div>
+
+<p>模板变量参考各页面默认模板中的 Jinja2 语法。所有 CSS 和 JS 完全由你控制。</p>
+<h1 id="hexo">从 Hexo 迁移<a class="toc-link" href="#hexo" title="Permanent link"> ¶</a></h1>
+<p><code>import_legacy.py</code> 可以从 Hexo 渲染后的 HTML 逆向提取文章：</p>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>OpenBlogger/import_legacy.py
+</code></pre></div>
+
+<p>自动识别标题、日期、正文，<code>html2text</code> 转换 HTML → Markdown。标题前缀（如&rdquo;时评-&ldquo;、&rdquo;随笔-&ldquo;）自动提取为标签。</p>
+<h1 id="_20">项目链接<a class="toc-link" href="#_20" title="Permanent link"> ¶</a></h1>
+<ul>
+<li>框架仓库：<a href="https://github.com/YHSome/OpenBlogger">github.com/YHSome/OpenBlogger</a></li>
+<li>演示站点：<a href="https://yhsome.github.io">yhsome.github.io</a></li>
+<li>依赖：Python 3.9+ / markdown / Jinja2 / Pygments</li>
+</ul></div>
+            </article>
+
+            <nav class="article-nav">
+                
+                <a href="Viewer-纯前端访问计数与评论系统.html" class="nav-prev">
+                    <div class="nav-label">← 上一篇</div>
+                    <div class="nav-title">Viewer：纯前端访问计数与评论系统——零后端、零数据库、复制即用</div>
+                </a>
+                
+                
+                <a href="颂-YHSome与OpenBlogger.html" class="nav-next">
+                    <div class="nav-label">下一篇 →</div>
+                    <div class="nav-title">颂 YHSome 与 OpenBlogger：一个划时代的博客方案诞生记</div>
+                </a>
+                
+            </nav>
+
+            
+            <!-- 评论区（与正文同宽） -->
+            <section class="comment-section">
+                <h3>💬 评论 (<span id="commentCount">0</span>)</h3>
+                <div class="comment-form" id="commentForm">
+                    <div class="row">
+                        <input type="text" id="cName" placeholder="昵称" maxlength="30">
+                        <input type="email" id="cEmail" placeholder="邮箱（选填）">
+                    </div>
+                    <textarea id="cContent" placeholder="说点什么吧…" maxlength="1000"></textarea>
+                    <button id="cSubmit">发表评论</button>
+                </div>
+                <div class="comment-list" id="commentList">
+                    <div class="comment-empty">加载中…</div>
+                </div>
+            </section>
+            
+        </main>
+
+        <!-- 右栏：弹幕 -->
+        
+        <aside class="danmaku-col" id="danmakuBar">
+            <div class="danmaku-sticky">
+                <div class="danmaku-widget">
+                    <div class="widget-title">💬 精选发言</div>
+                    <div class="danmaku-track">
+                        <div class="danmaku-scroll" id="danmakuScroll">
+                            <div class="danmaku-item"><div class="dm-author">加载中…</div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+        
+    </div>
+
+    <button class="back-to-top" id="backToTop" title="返回顶部" aria-label="返回顶部">↑</button>
+
+    <footer class="footer">
+        <div class="footer-stats" id="footerStats">
+            <span class="stat">🌐 <strong id="vGlobal">…</strong> 次全站浏览</span><span class="stat-divider">|</span>
+            <span class="stat">👁️ <strong id="vCounter">…</strong> 次阅读</span><span class="stat-divider">|</span>
+            <span class="stat">👤 <strong id="vUnique">…</strong> 位访客</span>
+        </div>
+        <p>Powered by <span>OpenBlogger</span> &copy; 2026</p>
+    </footer>
+
+    <script>
+    /* ═══════════ 粒子背景 ═══════════ */
+    !function(){const c=document.getElementById('particles'),x=c.getContext('2d');let w,h,p=[],N=45,D=120;function R(){w=c.width=innerWidth;h=c.height=innerHeight}R(),addEventListener('resize',R);function G(){return getComputedStyle(document.documentElement).getPropertyValue('--particle-color').trim().split(',').map(Number)}class T{constructor(){this.reset()}reset(){this.x=Math.random()*w;this.y=Math.random()*h;this.vx=(Math.random()-.5)*.4;this.vy=(Math.random()-.5)*.4;this.r=Math.random()*2+1}update(){this.x+=this.vx;this.y+=this.vy;if(this.x<0||this.x>w)this.vx*=-1;if(this.y<0||this.y>h)this.vy*=-1}draw(){const[r,g,b]=G();x.beginPath();x.arc(this.x,this.y,this.r,0,Math.PI*2);x.fillStyle=`rgba(${r},${g},${b},0.6)`;x.fill()}}for(let i=0;i<N;i++)p.push(new T);(function A(){x.clearRect(0,0,w,h);const[r,g,b]=G();for(let i=0;i<N;i++){p[i].update();p[i].draw();for(let j=i+1;j<N;j++){const dx=p[i].x-p[j].x,dy=p[i].y-p[j].y,ds=Math.sqrt(dx*dx+dy*dy);if(ds<D){x.beginPath();x.moveTo(p[i].x,p[i].y);x.lineTo(p[j].x,p[j].y);x.strokeStyle=`rgba(${r},${g},${b},${.12*(1-ds/D)})`;x.lineWidth=.5;x.stroke()}}}requestAnimationFrame(A)})()}();
+
+    /* ═══════════ 深色模式 ═══════════ */
+    !function(){const t=document.getElementById('themeToggle'),b=document.documentElement,s=localStorage.getItem('blog-theme');if(s==='dark'||(!s&&matchMedia('(prefers-color-scheme:dark)').matches)){b.classList.add('dark');t.textContent='☀️'}t.addEventListener('click',()=>{const d=b.classList.toggle('dark');t.textContent=d?'☀️':'🌙';localStorage.setItem('blog-theme',d?'dark':'light')})}();
+
+    /* ═══════════ 阅读进度条 ═══════════ */
+    !function(){const bar=document.getElementById('readingProgress');addEventListener('scroll',()=>{const h=document.documentElement.scrollHeight-innerHeight;bar.style.width=h>0?Math.min(100,Math.round(scrollY/h*100))+'%':'0%'})}();
+
+    /* ═══════════ 返回顶部 ═══════════ */
+    !function(){const b=document.getElementById('backToTop');addEventListener('scroll',()=>b.classList.toggle('visible',scrollY>400));b.addEventListener('click',()=>scrollTo({top:0,behavior:'smooth'}))}();
+
+    /* ═══════════ 页面转场 ═══════════ */
+    !function(){document.body.classList.add('page-entering');addEventListener('load',function(){setTimeout(function(){document.body.classList.remove('page-entering')},700)});addEventListener('pageshow',function(e){if(e.persisted){document.body.classList.remove('page-exiting','page-entering');document.querySelectorAll('*').forEach(function(el){el.style.animation='none';el.offsetHeight;el.style.animation=''})}})}();
+    if(location.protocol!=='file:')!function(){document.addEventListener('click',function(e){var a=e.target.closest('a');if(!a)return;var h=a.getAttribute('href');if(!h||h[0]==='#'||h.indexOf('://')>0||h.indexOf('//')===0||a.target==='_blank')return;e.preventDefault();document.body.classList.add('page-exiting');setTimeout(function(){location.assign(h)},360)})}();
+    </script>
+
+    
+    <script>window.ViewerConfig={user:'aaaaa',secret:'d1bdf09a'};</script>
+    <script src="../js/viewer/counter.js"></script>
+    <script src="../js/viewer/unique.js"></script>
+    <script src="../js/viewer/global.js"></script>
+    <script src="../js/viewer/comment.js"></script>
+    <script>
+    (function(){
+        Viewer.getGlobalCount().then(function(n){var e=document.getElementById('vGlobal');if(e)e.innerHTML=n.toLocaleString()});
+        getVisitCount().then(function(n){var e=document.getElementById('vCounter');if(e)e.innerHTML=n.toLocaleString()});
+        Viewer.getUniqueCount().then(function(r){var e=document.getElementById('vUnique');if(e)e.innerHTML=r.count.toLocaleString()});
+        
+        /* ═══════════ 评论系统 ═══════════ */
+        var list=document.getElementById('commentList'),countEl=document.getElementById('commentCount'),
+            form=document.getElementById('commentForm'),nameEl=document.getElementById('cName'),
+            emailEl=document.getElementById('cEmail'),contentEl=document.getElementById('cContent'),
+            submitBtn=document.getElementById('cSubmit');
+        function fmtTime(iso){var d=new Date(iso),p=function(n){return n<10?'0'+n:n};
+            return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())+' '+p(d.getHours())+':'+p(d.getMinutes());}
+        function renderComments(comments){
+            if(!comments||!comments.length){list.innerHTML='<div class="comment-empty">还没有评论，来说点什么吧 🎉</div>';countEl.textContent='0';return}
+            countEl.textContent=comments.length;
+            list.innerHTML=comments.slice().reverse().map(function(c){
+                return '<div class="comment-card"><div class="comment-header"><span class="comment-author">'+
+                    (c.name||'匿名').replace(/</g,'&lt;')+'</span><span class="comment-time">'+fmtTime(c.time)+'</span></div>'+
+                    '<div class="comment-body">'+(c.content||'').replace(/</g,'&lt;').replace(/\n/g,'<br>')+'</div></div>';
+            }).join('');
+        }
+        Viewer.loadComments().then(renderComments).catch(function(){list.innerHTML='<div class="comment-error">评论加载失败，请稍后再试</div>'});
+        /* 弹幕：当前页评论滚动 */
+        var danmakuScroll=document.getElementById('danmakuScroll');
+        if(danmakuScroll){
+            function renderDanmaku(comments){
+                if(!comments||!comments.length){
+                    danmakuScroll.innerHTML='<div class="danmaku-item"><div class="dm-author">暂无发言…</div><div class="dm-body">来评论区说点什么吧</div></div>';
+                    return;
+                }
+                var items=comments.map(function(c){
+                    var name=(c.name||'匿名').replace(/</g,'&lt;');
+                    var body=(c.content||'').replace(/</g,'&lt;').substring(0,80);
+                    return '<div class="danmaku-item"><div class="dm-author">'+name+'</div><div class="dm-body">'+body+'</div></div>';
+                });
+                danmakuScroll.innerHTML=items.concat(items).join('');  // 翻倍无缝循环
+            }
+            Viewer.loadComments().then(renderDanmaku).catch(function(){});
+            // 提交评论后 3s 刷新弹幕
+            submitBtn.addEventListener('click',function(){
+                setTimeout(function(){Viewer.loadComments().then(renderDanmaku).catch(function(){});},3000);
+            });
+        }
+        submitBtn.addEventListener('click',function(){
+            var name=nameEl.value.trim(),content=contentEl.value.trim();
+            if(!name){nameEl.focus();return}
+            if(!content){contentEl.focus();return}
+            submitBtn.disabled=true;submitBtn.textContent='提交中…';
+            Viewer.submitComment({name:name,email:emailEl.value.trim(),content:content}).then(function(c){
+                contentEl.value='';submitBtn.disabled=false;submitBtn.textContent='发表评论';
+                Viewer.loadComments().then(renderComments);
+            }).catch(function(){submitBtn.disabled=false;submitBtn.textContent='发表评论';alert('提交失败，请稍后重试')});
+        });
+        
+    })();
+    </script>
+    
+</body>
+</html>
