@@ -16,5 +16,6 @@
         "enable_comment": true,
         "user": "aaaaa",
         "secret": "d1bdf09a"
-    }
+    },
+    "github_token": ""
 }

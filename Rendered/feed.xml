@@ -5,8 +5,15 @@
     <link>https://example.com</link>
     <description>书山有径勤为路，学海无涯苦作舟</description>
     <language>zh-CN</language>
-    <lastBuildDate>Sun, 21 Jun 2026 01:54:57 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 24 Jun 2026 23:31:00 +0800</lastBuildDate>
     <atom:link href="https://example.com/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>智学伴--基于生成式 AI 的异步学习解决方案</title>
+      <link>https://example.com/posts/智学伴-基于生成式ai的异步学习方案.html</link>
+      <description>📚 【广州大学第二届庆园杯项目】智学伴--一个基于AI的异步学习方案 基于生成式 AI 的异步学习解决方案——突破时空限制，以教促学，让 AI 成为你的私人助教。 ✨ 核心特色 🎓 以教促学（费曼学习法） 订正错题后，学生向 AI 讲解解题思路。AI 扮演&quot;学生&quot;角色追问验证，只有讲通了才算真正掌握…</description>
+      <pubDate>Wed, 24 Jun 2026 00:00:00 +0800</pubDate>
+      <guid isPermaLink="true">https://example.com/posts/智学伴-基于生成式ai的异步学习方案.html</guid>
+    </item>
     <item>
       <title>Claude 期末复习 Skill：把 PPT/PDF/Word 扔给 AI，生成可视化讲义</title>
       <link>https://example.com/posts/Claude期末复习Skill.html</link>
@@ -139,13 +146,6 @@
       <description>前言 送给新高一的好东西，如果你是番中的那么这些网页将很适合你。 资料 点击打开 一些乱七八糟的正文稿 2023年4月份的时事评论 高一下学期必读名著红楼梦思维导图 综合实践、美术这种可以随便应付的科目</description>
       <pubDate>Wed, 09 Aug 2023 00:00:00 +0800</pubDate>
       <guid isPermaLink="true">https://example.com/posts/随笔-一些给新高一的资料和建议.html</guid>
-    </item>
-    <item>
-      <title>随笔-平价零食超市真的平价吗</title>
-      <link>https://example.com/posts/随笔-平价零食超市真的平价吗.html</link>
-      <description>背景 今天被我妈强行拉去‘赵一鸣’零食店买零食了。观察店面可知，其装修风格极具现代化，大幅度使用led灯，似乎与其‘平价’产生了反差。这不免令我产生疑惑：其所标榜的‘平价’是真真切切的还是换种套路割韭菜呢？ 1.为何火遍大江南北？ 在我的观点下，年轻人普遍‘吝啬’的生活态度，疫情后报复消费，以及贪小…</description>
-      <pubDate>Wed, 09 Aug 2023 00:00:00 +0800</pubDate>
-      <guid isPermaLink="true">https://example.com/posts/随笔-平价零食超市真的平价吗.html</guid>
     </item>
   </channel>
 </rss>
