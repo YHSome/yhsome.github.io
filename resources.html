@@ -1,0 +1,3312 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="images/favicon.jpg">
+    <meta name="x-viewer-page-id" content="56">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>(function(){var s=localStorage.getItem('blog-theme');if(s==='dark'||(!s&&matchMedia('(prefers-color-scheme:dark)').matches)){document.documentElement.classList.add('dark')}})();</script>
+    <title>资源 — YHSome的神秘空间</title>
+    <style>
+        :root {
+            --bg: #fdfbf7; --card-bg: #ffffff; --text: #2c2416; --text-secondary: #6b5e4a;
+            --accent: #b1743e; --accent-hover: #8b5a2e; --border: #e5ddd0; --tag-bg: #f5efe3;
+            --shadow: 0 1px 3px rgba(44,36,22,0.06);
+            --shadow-hover: 0 8px 24px rgba(44,36,22,0.12); --radius: 10px;
+            --max-width: 800px; --nav-blur: blur(12px); --particle-color: 180,160,140;
+        }
+        html.dark {
+            --bg: #1a1a1f; --card-bg: #25252b; --text: #d4d0c8; --text-secondary: #9a9488;
+            --accent: #d4945a; --accent-hover: #e8a86e; --border: #36363d;
+            --tag-bg: #2e2e35; --shadow: 0 1px 3px rgba(0,0,0,0.2);
+            --shadow-hover: 0 8px 24px rgba(0,0,0,0.35); --particle-color: 120,110,100;
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            background: var(--bg); color: var(--text); line-height: 1.7;
+            min-height: 100vh; display: flex; flex-direction: column;
+            transition: background 0.4s, color 0.4s;
+        }
+        #particles { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.5; }
+        html.dark #particles { opacity: 0.25; }
+
+        .navbar {
+            background: color-mix(in srgb, var(--card-bg) 85%, transparent);
+            backdrop-filter: var(--nav-blur);
+            border-bottom: 1px solid var(--border); padding: 0 2rem;
+            position: sticky; top: 0; z-index: 100; box-shadow: var(--shadow);
+            transition: background 0.4s, border 0.4s;
+        }
+        .navbar-inner { max-width: var(--max-width); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 56px; }
+        .navbar .brand { font-size: 1.3rem; font-weight: 700; color: var(--text); text-decoration: none; letter-spacing: -0.02em; transition: color 0.3s; }
+        .navbar .brand:hover { color: var(--accent); }
+        .nav-links { display: flex; gap: 1.5rem; list-style: none; align-items: center; }
+        .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.95rem; transition: color 0.3s; }
+        .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+        .theme-toggle {
+            background: none; border: 1.5px solid var(--border); color: var(--text-secondary);
+            width: 34px; height: 34px; border-radius: 50%; cursor: pointer;
+            font-size: 1rem; display: flex; align-items: center; justify-content: center;
+            transition: all 0.3s; margin-left: 0.25rem;
+        }
+        .theme-toggle:hover { border-color: var(--accent); color: var(--accent); background: var(--tag-bg); }
+
+        .page-header {
+            text-align: center; padding: 3.5rem 2rem 2rem;
+            max-width: var(--max-width); margin: 0 auto; position: relative; z-index: 1;
+        }
+        .page-header h1 { font-size: 2.2rem; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 0.5rem; }
+        .page-header .subtitle { font-size: 1rem; color: var(--text-secondary); }
+
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 0 2rem 3rem; flex: 1; width: 100%; position: relative; z-index: 1; }
+        .section-title {
+            font-size: 1rem; font-weight: 600; color: var(--text-secondary);
+            text-transform: uppercase; letter-spacing: 0.08em;
+            margin: 2rem 0 1rem; padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border); transition: border 0.4s;
+        }
+        .section-title:first-child { margin-top: 0; }
+
+        /* ── 抽屉式折叠 ── */
+        .drawer { margin-bottom: 1.5rem; }
+        .drawer summary {
+            font-size: 1rem; font-weight: 700; color: var(--text);
+            padding: 0.75rem 1rem; cursor: pointer; list-style: none;
+            background: var(--card-bg); border: 1px solid var(--border);
+            border-radius: var(--radius); box-shadow: var(--shadow);
+            display: flex; justify-content: space-between; align-items: center;
+            transition: all 0.3s; user-select: none;
+        }
+        .drawer summary::-webkit-details-marker { display: none; }
+        .drawer summary:hover { border-color: var(--accent); }
+        .drawer summary::after { content: '▸'; font-size: 1.1rem; color: var(--text-secondary); transition: transform 0.3s; }
+        .drawer[open] summary::after { transform: rotate(90deg); }
+        .drawer[open] summary { border-radius: var(--radius) var(--radius) 0 0; border-bottom-color: transparent; }
+        .drawer .drawer-body { padding: 0.5rem 0.25rem 0; }
+
+        .res-card {
+            background: var(--card-bg); border: 1px solid var(--border);
+            border-radius: var(--radius); padding: 1.25rem 1.5rem; margin-bottom: 0.8rem;
+            box-shadow: var(--shadow); text-decoration: none; color: var(--text);
+            display: flex; gap: 1rem; align-items: center;
+            transition: all 0.35s cubic-bezier(0.4,0,0.2,1);
+            position: relative; overflow: hidden;
+        }
+        .res-card::before {
+            content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+            width: 3px; background: var(--accent); border-radius: 0 3px 3px 0;
+            transform: scaleY(0); transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+        }
+        .res-card:hover::before { transform: scaleY(1); }
+        .res-card:hover { box-shadow: var(--shadow-hover); transform: translateY(-2px); border-color: var(--accent); }
+        .res-card .res-icon { font-size: 1.8rem; flex-shrink: 0; width: 44px; text-align: center; }
+        .res-card .res-info { flex: 1; min-width: 0; }
+        .res-card .res-name { font-size: 1.1rem; font-weight: 700; transition: color 0.3s; }
+        .res-card:hover .res-name { color: var(--accent); }
+        .res-card .res-desc { font-size: 0.88rem; color: var(--text-secondary); margin-top: 0.2rem; }
+        .res-card .res-meta { display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center; font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.35rem; }
+        .res-card .res-lang { display: inline-flex; align-items: center; gap: 0.3rem; }
+        .res-card .res-lang-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+        .res-badge {
+            display: inline-block; padding: 0.15rem 0.55rem; border-radius: 100px;
+            font-size: 0.72rem; font-weight: 600;
+        }
+        .res-badge.pages { background: var(--accent); color: #fff; }
+        .res-badge.repo { background: var(--tag-bg); color: var(--accent); }
+        .res-badge.tool { background: var(--tag-bg); color: var(--accent); }
+        .res-card .res-arrow { color: var(--text-secondary); font-size: 1.2rem; flex-shrink: 0; transition: color 0.3s; }
+        .res-card:hover .res-arrow { color: var(--accent); }
+
+        /* 骨架屏加载动画 */
+        @keyframes skeleton-pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+        .skeleton-loading { pointer-events:none; animation:skeleton-pulse 1.5s ease-in-out infinite }
+        .skeleton-loading .res-icon { background:var(--border)!important; border-radius:8px }
+        .skeleton-loading .sk-line { height:0.75rem; background:var(--border); border-radius:4px }
+        .gh-error { text-align:center; padding:1.5rem; color:var(--text-secondary); font-size:0.9rem }
+        .gh-error a { color:var(--accent) }
+
+        /* 近期更新时间线 */
+        .tl-item {
+            display:flex; gap:0.7rem; align-items:flex-start;
+            padding:0.45rem 0; border-bottom:1px solid var(--border);
+            font-size:0.87rem; transition: all 0.3s;
+        }
+        .tl-item:last-child { border-bottom:none }
+        .tl-item:hover { color:var(--accent) }
+        .tl-item .tl-icon { font-size:1rem; width:24px;text-align:center;flex-shrink:0;margin-top:1px }
+        .tl-item .tl-body { flex:1; min-width:0 }
+        .tl-item .tl-repo { font-weight:600; color:var(--accent); text-decoration:none }
+        .tl-item .tl-repo:hover { text-decoration:underline }
+        .tl-item .tl-time { font-size:0.72rem; color:var(--text-secondary);white-space:nowrap;flex-shrink:0 }
+        .tl-item .tl-ref { font-size:0.72rem; color:var(--text-secondary); display:inline-block; margin-left:0.3rem }
+        .tl-msg { font-size:0.75rem; color:var(--text-secondary); margin-top:0.1rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:500px }
+        .tl-empty { text-align:center; padding:1rem; color:var(--text-secondary); font-size:0.85rem }
+        .tl-meta { font-size:0.72rem; color:var(--text-secondary); margin-top:0.5rem; text-align:right }
+
+        .back-to-top {
+            position: fixed; bottom: 2rem; right: 2rem; z-index: 200;
+            width: 44px; height: 44px; border-radius: 50%;
+            background: var(--card-bg); border: 2px solid var(--border);
+            color: var(--text-secondary); font-size: 1.2rem; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; transform: translateY(20px); pointer-events: none;
+            transition: all 0.35s cubic-bezier(0.4,0,0.2,1);
+            box-shadow: var(--shadow);
+        }
+        .back-to-top.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+        .back-to-top:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-3px); box-shadow: var(--shadow-hover); }
+
+        .footer { text-align: center; padding: 2rem; color: var(--text-secondary); font-size: 0.85rem; border-top: 1px solid var(--border); margin-top: auto; position: relative; z-index: 1; transition: border 0.4s; }
+        .footer span { color: var(--accent); }
+
+        @media (max-width: 768px) {
+            body { font-size: 0.95rem; }
+            .navbar { padding: 0 0.8rem; }
+            .navbar .brand { font-size: 1.1rem; }
+            .nav-links { gap: 0.6rem; }
+            .nav-links a { font-size: 0.85rem; }
+            .theme-toggle { width: 30px; height: 30px; font-size: 0.9rem; }
+            .page-header h1 { font-size: 1.5rem; }
+            .page-header { padding: 1.5rem 1rem 0.8rem; }
+            .container { padding: 0 0.75rem 1.5rem; }
+            .res-card { padding: 0.85rem 1rem; }
+            .res-card .res-name { font-size: 1rem; }
+            .res-card .res-desc { font-size: 0.82rem; }
+            .back-to-top { bottom: 1rem; right: 1rem; width: 36px; height: 36px; }
+            .footer { padding: 1.2rem 1rem; font-size: 0.78rem; }
+        }
+
+        /* ═══════════ 页面转场 ═══════════ */
+        body.page-exiting .navbar     { animation: exitUp   0.32s cubic-bezier(0.55,0,1,0.45) forwards; }
+        body.page-exiting .page-header{ animation: exitUp   0.30s 0.03s cubic-bezier(0.55,0,1,0.45) forwards; }
+        body.page-exiting .container  { animation: exitDown 0.30s 0.06s cubic-bezier(0.55,0,1,0.45) forwards; }
+        body.page-exiting .footer     { animation: exitDown 0.28s 0.08s cubic-bezier(0.55,0,1,0.45) forwards; }
+        body.page-exiting .back-to-top{ animation: exitDown 0.20s cubic-bezier(0.55,0,1,0.45) forwards; }
+        body.page-exiting::after { content:''; position:fixed; inset:0; background:var(--bg); z-index:9999; animation: fadeIn 0.25s 0.2s both; }
+
+        @keyframes exitUp    { to { opacity:0; transform:translateY(-130%); } }
+        @keyframes exitDown  { to { opacity:0; transform:translateY(130%); } }
+        @keyframes exitLeft  { to { opacity:0; transform:translateX(-120%); } }
+        @keyframes exitRight { to { opacity:0; transform:translateX(120%); } }
+        @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+
+        body.page-entering .navbar     { animation: enterDown  0.55s cubic-bezier(0.22,0.61,0.36,1) both; }
+        body.page-entering .page-header{ animation: enterDown  0.48s 0.06s cubic-bezier(0.22,0.61,0.36,1) both; }
+        body.page-entering .container  { animation: enterUp    0.48s 0.14s cubic-bezier(0.22,0.61,0.36,1) both; }
+        body.page-entering .res-card:nth-child(odd)  { animation: enterLeft  0.45s 0.18s cubic-bezier(0.22,0.61,0.36,1) both; }
+        body.page-entering .res-card:nth-child(even) { animation: enterRight 0.45s 0.20s cubic-bezier(0.22,0.61,0.36,1) both; }
+        body.page-entering .footer     { animation: enterUp    0.45s 0.24s cubic-bezier(0.22,0.61,0.36,1) both; }
+        body.page-entering .back-to-top{ animation: enterPop   0.35s 0.28s cubic-bezier(0.22,0.61,0.36,1) both; }
+
+        @keyframes enterDown {
+            0%   { opacity:0; transform:translateY(-100%); }
+            55%  { opacity:1; transform:translateY(12px); }
+            100% { opacity:1; transform:translateY(0); }
+        }
+        @keyframes enterUp {
+            0%   { opacity:0; transform:translateY(80px); }
+            55%  { opacity:1; transform:translateY(-8px); }
+            100% { opacity:1; transform:translateY(0); }
+        }
+        @keyframes enterLeft {
+            0%   { opacity:0; transform:translateX(-80px); }
+            55%  { opacity:1; transform:translateX(8px); }
+            100% { opacity:1; transform:translateX(0); }
+        }
+        @keyframes enterRight {
+            0%   { opacity:0; transform:translateX(80px); }
+            55%  { opacity:1; transform:translateX(-8px); }
+            100% { opacity:1; transform:translateX(0); }
+        }
+        @keyframes enterPop {
+            0%   { opacity:0; transform:scale(0.4); }
+            55%  { opacity:1; transform:scale(1.12); }
+            100% { opacity:1; transform:scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="particles"></canvas>
+
+    <nav class="navbar">
+        <div class="navbar-inner">
+            <a href="index.html" class="brand">YHSome的神秘空间</a>
+            <ul class="nav-links">
+                <li><a href="index.html">首页</a></li>
+                <li><a href="directory.html">目录</a></li>
+                <li><a href="tags.html">标签</a></li>
+                <li><a href="resources.html" class="active">资源</a></li>
+                <li><a href="friendlinks.html">友链</a></li>
+                <li><button class="theme-toggle" id="themeToggle" title="切换颜色模式" aria-label="切换颜色模式">🌙</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="page-header">
+        <h1>📦 资源</h1>
+        <p class="subtitle">开源项目 · 在线工具 · 实验作品</p>
+    </div>
+
+    <div class="container">
+        <details class="drawer" open>
+            <summary>🚀 GitHub 开源项目 <span id="gh-repo-count" style="font-weight:400;font-size:0.8rem;color:var(--text-secondary)">加载中…</span></summary>
+            <div class="drawer-body" id="github-projects">
+                <div class="res-card skeleton-loading"><div class="res-icon"></div><div class="res-info"><div class="sk-line" style="width:50%;margin-bottom:0.5rem"></div><div class="sk-line" style="width:80%"></div></div></div>
+                <div class="res-card skeleton-loading"><div class="res-icon"></div><div class="res-info"><div class="sk-line" style="width:55%;margin-bottom:0.5rem"></div><div class="sk-line" style="width:75%"></div></div></div>
+                <div class="res-card skeleton-loading"><div class="res-icon"></div><div class="res-info"><div class="sk-line" style="width:45%;margin-bottom:0.5rem"></div><div class="sk-line" style="width:70%"></div></div></div>
+                <div class="res-card skeleton-loading"><div class="res-icon"></div><div class="res-info"><div class="sk-line" style="width:52%;margin-bottom:0.5rem"></div><div class="sk-line" style="width:78%"></div></div></div>
+            </div>
+        </details>
+
+        
+        <details class="drawer" open>
+            <summary>🕐 近期更新 <span style="font-weight:400;font-size:0.8rem;color:var(--text-secondary)">262 条事件 · 11 个仓库</span></summary>
+            <div class="drawer-body">
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/TheFinalPuzzle" target="_blank" rel="noopener">TheFinalPuzzle</a>
+                
+                <div class="tl-msg" title="feat: PrintWindow direct capture — OCR works even when window is obscured">feat: PrintWindow direct capture — OCR works even when window is obscured</div>
+            </div>
+            <span class="tl-time">2026-07-02 06:52 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/TheFinalPuzzle" target="_blank" rel="noopener">TheFinalPuzzle</a>
+                
+                <div class="tl-msg" title="fix: EnumWindows thread error, DPI warning, batch encoding">fix: EnumWindows thread error, DPI warning, batch encoding</div>
+            </div>
+            <span class="tl-time">2026-07-02 06:47 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/TheFinalPuzzle" target="_blank" rel="noopener">TheFinalPuzzle</a>
+                
+                <div class="tl-msg" title="feat: add window scanner to settings dialog">feat: add window scanner to settings dialog</div>
+            </div>
+            <span class="tl-time">2026-07-02 06:44 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/TheFinalPuzzle" target="_blank" rel="noopener">TheFinalPuzzle</a>
+                
+                <div class="tl-msg" title="fix: allow editing settings while paused, sync to worker">fix: allow editing settings while paused, sync to worker</div>
+            </div>
+            <span class="tl-time">2026-07-02 06:41 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/TheFinalPuzzle" target="_blank" rel="noopener">TheFinalPuzzle</a>
+                
+                <div class="tl-msg" title="refactor: remove stop button, close window to quit directly">refactor: remove stop button, close window to quit directly</div>
+            </div>
+            <span class="tl-time">2026-07-02 06:40 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/TheFinalPuzzle" target="_blank" rel="noopener">TheFinalPuzzle</a>
+                
+                <div class="tl-msg" title="feat: add PySide6 GUI frontend with dark theme dashboard">feat: add PySide6 GUI frontend with dark theme dashboard</div>
+            </div>
+            <span class="tl-time">2026-07-02 06:37 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/ZhiXueBan" target="_blank" rel="noopener">ZhiXueBan</a>
+                
+                <div class="tl-msg" title="fix: AI助手回复截断、LaTeX换行渲染、分节loading锁">fix: AI助手回复截断、LaTeX换行渲染、分节loading锁</div>
+            </div>
+            <span class="tl-time">2026-07-02 06:14 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/ZhiXueBan" target="_blank" rel="noopener">ZhiXueBan</a>
+                
+                <div class="tl-msg" title="docs: 更新 README">docs: 更新 README</div>
+            </div>
+            <span class="tl-time">2026-06-25 09:29 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/ZhiXueBan" target="_blank" rel="noopener">ZhiXueBan</a>
+                
+                <div class="tl-msg" title="feat: 主页底部版本号+GitHub/Vercel链接">feat: 主页底部版本号+GitHub/Vercel链接</div>
+            </div>
+            <span class="tl-time">2026-06-25 08:34 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/ZhiXueBan" target="_blank" rel="noopener">ZhiXueBan</a>
+                
+                <div class="tl-msg" title="Revert &#34;rename: 智学伴 → 知学伴&#34;">Revert &#34;rename: 智学伴 → 知学伴&#34;</div>
+            </div>
+            <span class="tl-time">2026-06-25 08:07 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/ZhiXueBan" target="_blank" rel="noopener">ZhiXueBan</a>
+                
+                <div class="tl-msg" title="rename: 智学伴 → 知学伴">rename: 智学伴 → 知学伴</div>
+            </div>
+            <span class="tl-time">2026-06-25 07:46 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/ZhiXueBan" target="_blank" rel="noopener">ZhiXueBan</a>
+                
+                <div class="tl-msg" title="refine: 主页内容更新，功能卡片与实际一致">refine: 主页内容更新，功能卡片与实际一致</div>
+            </div>
+            <span class="tl-time">2026-06-25 07:19 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/ZhiXueBan" target="_blank" rel="noopener">ZhiXueBan</a>
+                
+                <div class="tl-msg" title="feat: 错题集、学习报告、导航优化">feat: 错题集、学习报告、导航优化</div>
+            </div>
+            <span class="tl-time">2026-06-25 07:16 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/ZhiXueBan" target="_blank" rel="noopener">ZhiXueBan</a>
+                
+                <div class="tl-msg" title="revert: TokenToast回退至稳定版，保留buffer处理+利用率">revert: TokenToast回退至稳定版，保留buffer处理+利用率</div>
+            </div>
+            <span class="tl-time">2026-06-25 06:21 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/ZhiXueBan" target="_blank" rel="noopener">ZhiXueBan</a>
+                
+                <div class="tl-msg" title="fix: token小球重构、利用率修复、试卷超时自动提交">fix: token小球重构、利用率修复、试卷超时自动提交</div>
+            </div>
+            <span class="tl-time">2026-06-25 06:20 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/ZhiXueBan" target="_blank" rel="noopener">ZhiXueBan</a>
+                
+                <div class="tl-msg" title="fix: 已完成试卷可正常打开查看批改结果">fix: 已完成试卷可正常打开查看批改结果</div>
+            </div>
+            <span class="tl-time">2026-06-25 05:32 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="智学伴">智学伴</div>
+            </div>
+            <span class="tl-time">2026-06-24 15:31 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/ZhiXueBan" target="_blank" rel="noopener">ZhiXueBan</a>
+                
+                <div class="tl-msg" title="docs: 中文README">docs: 中文README</div>
+            </div>
+            <span class="tl-time">2026-06-24 15:02 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/ZhiXueBan" target="_blank" rel="noopener">ZhiXueBan</a>
+                
+                <div class="tl-msg" title="feat: 首页添加GitHub logo链接">feat: 首页添加GitHub logo链接</div>
+            </div>
+            <span class="tl-time">2026-06-24 14:53 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/ZhiXueBan" target="_blank" rel="noopener">ZhiXueBan</a>
+                
+                <div class="tl-msg" title="feat: Electron桌面打包 + 启动脚本">feat: Electron桌面打包 + 启动脚本</div>
+            </div>
+            <span class="tl-time">2026-06-24 14:37 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/ZhiXueBan" target="_blank" rel="noopener">ZhiXueBan</a>
+                
+                <div class="tl-msg" title="feat: 流式AI调用、token实时显示、LaTeX中文渲染修复">feat: 流式AI调用、token实时显示、LaTeX中文渲染修复</div>
+            </div>
+            <span class="tl-time">2026-06-24 13:49 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/ZhiXueBan" target="_blank" rel="noopener">ZhiXueBan</a>
+                
+                <div class="tl-msg" title="feat: 试卷测评、字号调节、多项修复">feat: 试卷测评、字号调节、多项修复</div>
+            </div>
+            <span class="tl-time">2026-06-24 12:28 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/ZhiXueBan" target="_blank" rel="noopener">ZhiXueBan</a>
+                
+                <div class="tl-msg" title="feat: file parsing and optimizations">feat: file parsing and optimizations</div>
+            </div>
+            <span class="tl-time">2026-06-24 08:00 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/ZhiXueBan" target="_blank" rel="noopener">ZhiXueBan</a>
+                
+                <div class="tl-msg" title="fix: 知学伴 → 智学伴">fix: 知学伴 → 智学伴</div>
+            </div>
+            <span class="tl-time">2026-06-23 16:29 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">🆕</span>
+            <div class="tl-body">
+                <span>🆕 创建了</span>
+                <a class="tl-repo" href="https://github.com/YHSome/ZhiXueBan" target="_blank" rel="noopener">ZhiXueBan</a>
+                
+                
+            </div>
+            <span class="tl-time">2026-06-23 16:29 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/ZhiXueBan" target="_blank" rel="noopener">ZhiXueBan</a>
+                
+                <div class="tl-msg" title="feat: 知学伴初始版本 - 基于生成式AI的异步学习平台">feat: 知学伴初始版本 - 基于生成式AI的异步学习平台</div>
+            </div>
+            <span class="tl-time">2026-06-23 16:29 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">🌐</span>
+            <div class="tl-body">
+                <span>🌐 公开了仓库</span>
+                <a class="tl-repo" href="https://github.com/YHSome/ZhiXueBan" target="_blank" rel="noopener">ZhiXueBan</a>
+                
+                
+            </div>
+            <span class="tl-time">2026-06-23 16:28 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">🌐</span>
+            <div class="tl-body">
+                <span>🌐 公开了仓库</span>
+                <a class="tl-repo" href="https://github.com/YHSome/ZhiXueBan" target="_blank" rel="noopener">ZhiXueBan</a>
+                
+                
+            </div>
+            <span class="tl-time">2026-06-23 16:28 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/ZhiXueBan" target="_blank" rel="noopener">ZhiXueBan</a>
+                
+                <div class="tl-msg" title="Initial commit from Create Next App">Initial commit from Create Next App</div>
+            </div>
+            <span class="tl-time">2026-06-23 14:57 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/claude-final-exam-review" target="_blank" rel="noopener">claude-final-exam-review</a>
+                
+                <div class="tl-msg" title="新增章节完成存档机制: 学完一节后HTML归档到archive_index.json，支持随时回顾已学内容">新增章节完成存档机制: 学完一节后HTML归档到archive_index.json，支持随时回顾已学内容</div>
+            </div>
+            <span class="tl-time">2026-06-23 11:54 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/claude-final-exam-review" target="_blank" rel="noopener">claude-final-exam-review</a>
+                
+                <div class="tl-msg" title="强化规则: 终端不输出教学内容，必须启动HTML渲染 — 禁止在终端直接输出LaTeX公式/数学符号/长篇教学文字">强化规则: 终端不输出教学内容，必须启动HTML渲染 — 禁止在终端直接输出LaTeX公式/数学符号/长篇教学文字</div>
+            </div>
+            <span class="tl-time">2026-06-23 11:39 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">⭐</span>
+            <div class="tl-body">
+                <span>⭐ Star 了</span>
+                <a class="tl-repo" href="https://github.com/LangQi99/screen-skills" target="_blank" rel="noopener">screen-skills</a>
+                
+                
+            </div>
+            <span class="tl-time">2026-06-23 08:14 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/claude-final-exam-review" target="_blank" rel="noopener">claude-final-exam-review</a>
+                
+                <div class="tl-msg" title="整合MathJax本地渲染 + 服务器自动启动">整合MathJax本地渲染 + 服务器自动启动</div>
+            </div>
+            <span class="tl-time">2026-06-22 07:58 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/claude-final-exam-review" target="_blank" rel="noopener">claude-final-exam-review</a>
+                
+                <div class="tl-msg" title="修复skill格式: 改为目录结构 skills/final-exam-review/SKILL.md，去除多余嵌套层级">修复skill格式: 改为目录结构 skills/final-exam-review/SKILL.md，去除多余嵌套层级</div>
+            </div>
+            <span class="tl-time">2026-06-22 06:46 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/claude-final-exam-review" target="_blank" rel="noopener">claude-final-exam-review</a>
+                
+                <div class="tl-msg" title="修复skill加载: 恢复ZIP格式(.skill)并同步更新.md源文件，确保Claude Code能发现skill">修复skill加载: 恢复ZIP格式(.skill)并同步更新.md源文件，确保Claude Code能发现skill</div>
+            </div>
+            <span class="tl-time">2026-06-22 06:29 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/claude-final-exam-review" target="_blank" rel="noopener">claude-final-exam-review</a>
+                
+                <div class="tl-msg" title="修复skill: 将.skill文件从ZIP格式改为纯文本格式，修复skill无法被Claude Code发现的问题">修复skill: 将.skill文件从ZIP格式改为纯文本格式，修复skill无法被Claude Code发现的问题</div>
+            </div>
+            <span class="tl-time">2026-06-22 06:23 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/claude-final-exam-review" target="_blank" rel="noopener">claude-final-exam-review</a>
+                
+                <div class="tl-msg" title="更新skill: 新增自动检测并解压ZIP文件的前置步骤，智能归类到对应科目目录">更新skill: 新增自动检测并解压ZIP文件的前置步骤，智能归类到对应科目目录</div>
+            </div>
+            <span class="tl-time">2026-06-22 06:19 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="换回 default 主题构建">换回 default 主题构建</div>
+            </div>
+            <span class="tl-time">2026-06-20 17:55 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="更新 OpenBlogger submodule: SciFi 全页">更新 OpenBlogger submodule: SciFi 全页</div>
+            </div>
+            <span class="tl-time">2026-06-20 17:52 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="SciFi 主题 6 页全改：目录/文章/标签/资源/友链">SciFi 主题 6 页全改：目录/文章/标签/资源/友链</div>
+            </div>
+            <span class="tl-time">2026-06-20 17:52 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/OpenBlogger" target="_blank" rel="noopener">OpenBlogger</a>
+                
+                <div class="tl-msg" title="SciFi 6页全主题统一">SciFi 6页全主题统一</div>
+            </div>
+            <span class="tl-time">2026-06-20 17:52 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="更新 OpenBlogger submodule">更新 OpenBlogger submodule</div>
+            </div>
+            <span class="tl-time">2026-06-20 17:45 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="SciFi 首页完全重写：终端风格 + 竖排导航 + 网格背景 + 数据角标">SciFi 首页完全重写：终端风格 + 竖排导航 + 网格背景 + 数据角标</div>
+            </div>
+            <span class="tl-time">2026-06-20 17:45 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/OpenBlogger" target="_blank" rel="noopener">OpenBlogger</a>
+                
+                <div class="tl-msg" title="SciFi 首页完全重写">SciFi 首页完全重写</div>
+            </div>
+            <span class="tl-time">2026-06-20 17:45 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="更新 OpenBlogger submodule: 新增 SciFi 主题">更新 OpenBlogger submodule: 新增 SciFi 主题</div>
+            </div>
+            <span class="tl-time">2026-06-20 17:41 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="新增科幻主题 SciFi：霓虹配色/扫描线/发光边框/全息粒子">新增科幻主题 SciFi：霓虹配色/扫描线/发光边框/全息粒子</div>
+            </div>
+            <span class="tl-time">2026-06-20 17:41 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/OpenBlogger" target="_blank" rel="noopener">OpenBlogger</a>
+                
+                <div class="tl-msg" title="新增 SciFi 科幻主题">新增 SciFi 科幻主题</div>
+            </div>
+            <span class="tl-time">2026-06-20 17:41 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="更新 OpenBlogger submodule">更新 OpenBlogger submodule</div>
+            </div>
+            <span class="tl-time">2026-06-20 17:32 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="全站添加 favicon：6 模板统一引用 images/favicon.jpg">全站添加 favicon：6 模板统一引用 images/favicon.jpg</div>
+            </div>
+            <span class="tl-time">2026-06-20 17:32 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/OpenBlogger" target="_blank" rel="noopener">OpenBlogger</a>
+                
+                <div class="tl-msg" title="6 模板统一添加 favicon">6 模板统一添加 favicon</div>
+            </div>
+            <span class="tl-time">2026-06-20 17:32 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="更新 OpenBlogger submodule">更新 OpenBlogger submodule</div>
+            </div>
+            <span class="tl-time">2026-06-20 17:30 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="MKrari 头像放大 24→36px">MKrari 头像放大 24→36px</div>
+            </div>
+            <span class="tl-time">2026-06-20 17:30 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/OpenBlogger" target="_blank" rel="noopener">OpenBlogger</a>
+                
+                <div class="tl-msg" title="友链头像 24→36px">友链头像 24→36px</div>
+            </div>
+            <span class="tl-time">2026-06-20 17:30 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="更新 OpenBlogger submodule">更新 OpenBlogger submodule</div>
+            </div>
+            <span class="tl-time">2026-06-20 17:29 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="MKrari 头像改用本地 ksm1.webp，圆形裁切">MKrari 头像改用本地 ksm1.webp，圆形裁切</div>
+            </div>
+            <span class="tl-time">2026-06-20 17:29 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/OpenBlogger" target="_blank" rel="noopener">OpenBlogger</a>
+                
+                <div class="tl-msg" title="友链 MKrari 头像本地化">友链 MKrari 头像本地化</div>
+            </div>
+            <span class="tl-time">2026-06-20 17:29 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="更新 OpenBlogger submodule">更新 OpenBlogger submodule</div>
+            </div>
+            <span class="tl-time">2026-06-20 17:27 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="友链新增好友链接分组：MKrari 个人博客(含网站 favicon)">友链新增好友链接分组：MKrari 个人博客(含网站 favicon)</div>
+            </div>
+            <span class="tl-time">2026-06-20 17:27 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/OpenBlogger" target="_blank" rel="noopener">OpenBlogger</a>
+                
+                <div class="tl-msg" title="友链页: 好友分组+HTML icon safe渲染">友链页: 好友分组+HTML icon safe渲染</div>
+            </div>
+            <span class="tl-time">2026-06-20 17:27 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="更新 OpenBlogger submodule">更新 OpenBlogger submodule</div>
+            </div>
+            <span class="tl-time">2026-06-20 17:22 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="新增友情链接页：13 个常用工具/网站链接">新增友情链接页：13 个常用工具/网站链接</div>
+            </div>
+            <span class="tl-time">2026-06-20 17:22 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/OpenBlogger" target="_blank" rel="noopener">OpenBlogger</a>
+                
+                <div class="tl-msg" title="新增友情链接页">新增友情链接页</div>
+            </div>
+            <span class="tl-time">2026-06-20 17:22 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="更新 OpenBlogger submodule">更新 OpenBlogger submodule</div>
+            </div>
+            <span class="tl-time">2026-06-20 17:17 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="恢复首页搜索回车跳转目录页 + 展示3篇最近文章">恢复首页搜索回车跳转目录页 + 展示3篇最近文章</div>
+            </div>
+            <span class="tl-time">2026-06-20 17:17 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/OpenBlogger" target="_blank" rel="noopener">OpenBlogger</a>
+                
+                <div class="tl-msg" title="恢复: 首页搜索跳转+3篇+?search=参数">恢复: 首页搜索跳转+3篇+?search=参数</div>
+            </div>
+            <span class="tl-time">2026-06-20 17:17 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="回退 OpenBlogger submodule 搜索变更">回退 OpenBlogger submodule 搜索变更</div>
+            </div>
+            <span class="tl-time">2026-06-20 17:15 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/OpenBlogger" target="_blank" rel="noopener">OpenBlogger</a>
+                
+                <div class="tl-msg" title="Revert &#34;首页3篇+搜索跳转全站&#34;">Revert &#34;首页3篇+搜索跳转全站&#34;</div>
+            </div>
+            <span class="tl-time">2026-06-20 17:15 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/OpenBlogger" target="_blank" rel="noopener">OpenBlogger</a>
+                
+                <div class="tl-msg" title="Revert &#34;目录搜索相关性排序&#34;">Revert &#34;目录搜索相关性排序&#34;</div>
+            </div>
+            <span class="tl-time">2026-06-20 17:15 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/OpenBlogger" target="_blank" rel="noopener">OpenBlogger</a>
+                
+                <div class="tl-msg" title="Revert &#34;修复目录搜索宽松匹配&#34;">Revert &#34;修复目录搜索宽松匹配&#34;</div>
+            </div>
+            <span class="tl-time">2026-06-20 17:15 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="Revert &#34;更新 OpenBlogger submodule&#34;">Revert &#34;更新 OpenBlogger submodule&#34;</div>
+            </div>
+            <span class="tl-time">2026-06-20 17:15 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="Revert &#34;更新 OpenBlogger submodule&#34;">Revert &#34;更新 OpenBlogger submodule&#34;</div>
+            </div>
+            <span class="tl-time">2026-06-20 17:15 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="Revert &#34;更新 OpenBlogger submodule&#34;">Revert &#34;更新 OpenBlogger submodule&#34;</div>
+            </div>
+            <span class="tl-time">2026-06-20 17:15 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="Revert &#34;目录搜索改为相关性排序：精确匹配优先，部分匹配靠后&#34;">Revert &#34;目录搜索改为相关性排序：精确匹配优先，部分匹配靠后&#34;</div>
+            </div>
+            <span class="tl-time">2026-06-20 17:15 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="Revert &#34;修复目录搜索：回退为宽松匹配，移除有 bug 的 DOM 重排&#34;">Revert &#34;修复目录搜索：回退为宽松匹配，移除有 bug 的 DOM 重排&#34;</div>
+            </div>
+            <span class="tl-time">2026-06-20 17:15 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="更新 OpenBlogger submodule">更新 OpenBlogger submodule</div>
+            </div>
+            <span class="tl-time">2026-06-20 17:14 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="修复目录搜索：回退为宽松匹配，移除有 bug 的 DOM 重排">修复目录搜索：回退为宽松匹配，移除有 bug 的 DOM 重排</div>
+            </div>
+            <span class="tl-time">2026-06-20 17:14 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/OpenBlogger" target="_blank" rel="noopener">OpenBlogger</a>
+                
+                <div class="tl-msg" title="修复目录搜索宽松匹配">修复目录搜索宽松匹配</div>
+            </div>
+            <span class="tl-time">2026-06-20 17:14 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="更新 OpenBlogger submodule">更新 OpenBlogger submodule</div>
+            </div>
+            <span class="tl-time">2026-06-20 17:11 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="目录搜索改为相关性排序：精确匹配优先，部分匹配靠后">目录搜索改为相关性排序：精确匹配优先，部分匹配靠后</div>
+            </div>
+            <span class="tl-time">2026-06-20 17:11 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/OpenBlogger" target="_blank" rel="noopener">OpenBlogger</a>
+                
+                <div class="tl-msg" title="目录搜索相关性排序">目录搜索相关性排序</div>
+            </div>
+            <span class="tl-time">2026-06-20 17:11 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="更新 OpenBlogger submodule">更新 OpenBlogger submodule</div>
+            </div>
+            <span class="tl-time">2026-06-20 17:08 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="首页显示3篇 + 搜索框回车跳转目录页全站搜索">首页显示3篇 + 搜索框回车跳转目录页全站搜索</div>
+            </div>
+            <span class="tl-time">2026-06-20 17:08 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/OpenBlogger" target="_blank" rel="noopener">OpenBlogger</a>
+                
+                <div class="tl-msg" title="首页3篇+搜索跳转全站">首页3篇+搜索跳转全站</div>
+            </div>
+            <span class="tl-time">2026-06-20 17:08 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="更新 OpenBlogger submodule">更新 OpenBlogger submodule</div>
+            </div>
+            <span class="tl-time">2026-06-20 17:04 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="🚀 项目标题也启用 sticky 吸附">🚀 项目标题也启用 sticky 吸附</div>
+            </div>
+            <span class="tl-time">2026-06-20 17:04 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/OpenBlogger" target="_blank" rel="noopener">OpenBlogger</a>
+                
+                <div class="tl-msg" title="项目栏 section-title sticky">项目栏 section-title sticky</div>
+            </div>
+            <span class="tl-time">2026-06-20 17:04 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/OpenBlogger" target="_blank" rel="noopener">OpenBlogger</a>
+                
+                <div class="tl-msg" title="首页 section-title sticky 吸附导航栏">首页 section-title sticky 吸附导航栏</div>
+            </div>
+            <span class="tl-time">2026-06-20 16:59 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="section-title sticky: 滚动时不超出导航栏，右侧列除外">section-title sticky: 滚动时不超出导航栏，右侧列除外</div>
+            </div>
+            <span class="tl-time">2026-06-20 16:59 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="更新 OpenBlogger submodule">更新 OpenBlogger submodule</div>
+            </div>
+            <span class="tl-time">2026-06-20 16:56 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="副标题改字体缩放替代淡出：1.2→0.95rem 平滑过渡">副标题改字体缩放替代淡出：1.2→0.95rem 平滑过渡</div>
+            </div>
+            <span class="tl-time">2026-06-20 16:56 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/OpenBlogger" target="_blank" rel="noopener">OpenBlogger</a>
+                
+                <div class="tl-msg" title="首页副标题: opacity→font-size 过渡">首页副标题: opacity→font-size 过渡</div>
+            </div>
+            <span class="tl-time">2026-06-20 16:56 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="更新 OpenBlogger submodule">更新 OpenBlogger submodule</div>
+            </div>
+            <span class="tl-time">2026-06-20 16:54 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="移除后续滚动收缩：Hero 揭示后保持 280px 不变">移除后续滚动收缩：Hero 揭示后保持 280px 不变</div>
+            </div>
+            <span class="tl-time">2026-06-20 16:54 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/OpenBlogger" target="_blank" rel="noopener">OpenBlogger</a>
+                
+                <div class="tl-msg" title="首页: 移除后续滚动收缩">首页: 移除后续滚动收缩</div>
+            </div>
+            <span class="tl-time">2026-06-20 16:54 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="更新 OpenBlogger submodule">更新 OpenBlogger submodule</div>
+            </div>
+            <span class="tl-time">2026-06-20 16:51 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="修复首页动画连贯性：平滑两阶段过渡">修复首页动画连贯性：平滑两阶段过渡</div>
+            </div>
+            <span class="tl-time">2026-06-20 16:51 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/OpenBlogger" target="_blank" rel="noopener">OpenBlogger</a>
+                
+                <div class="tl-msg" title="首页动画连贯性修复：平滑两阶段过渡">首页动画连贯性修复：平滑两阶段过渡</div>
+            </div>
+            <span class="tl-time">2026-06-20 16:51 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="首页交互式揭示：按键/滚轮触发全屏 Hero→内容展开">首页交互式揭示：按键/滚轮触发全屏 Hero→内容展开</div>
+            </div>
+            <span class="tl-time">2026-06-20 16:46 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/OpenBlogger" target="_blank" rel="noopener">OpenBlogger</a>
+                
+                <div class="tl-msg" title="首页交互式揭示效果">首页交互式揭示效果</div>
+            </div>
+            <span class="tl-time">2026-06-20 16:46 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="更新 OpenBlogger submodule">更新 OpenBlogger submodule</div>
+            </div>
+            <span class="tl-time">2026-06-20 16:42 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="首页渐进揭示：打开仅见 Hero+导航，下滚后内容淡入">首页渐进揭示：打开仅见 Hero+导航，下滚后内容淡入</div>
+            </div>
+            <span class="tl-time">2026-06-20 16:42 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/OpenBlogger" target="_blank" rel="noopener">OpenBlogger</a>
+                
+                <div class="tl-msg" title="首页渐进揭示效果">首页渐进揭示效果</div>
+            </div>
+            <span class="tl-time">2026-06-20 16:42 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="更新 OpenBlogger submodule">更新 OpenBlogger submodule</div>
+            </div>
+            <span class="tl-time">2026-06-20 16:39 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="Hero 滚动顿挫：穿越阈值时短暂拦截滚轮 350ms">Hero 滚动顿挫：穿越阈值时短暂拦截滚轮 350ms</div>
+            </div>
+            <span class="tl-time">2026-06-20 16:39 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/OpenBlogger" target="_blank" rel="noopener">OpenBlogger</a>
+                
+                <div class="tl-msg" title="Hero 滚动顿挫效果">Hero 滚动顿挫效果</div>
+            </div>
+            <span class="tl-time">2026-06-20 16:39 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="更新 OpenBlogger submodule">更新 OpenBlogger submodule</div>
+            </div>
+            <span class="tl-time">2026-06-20 16:36 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="Hero 标题滚动融合入导航栏">Hero 标题滚动融合入导航栏</div>
+            </div>
+            <span class="tl-time">2026-06-20 16:36 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/OpenBlogger" target="_blank" rel="noopener">OpenBlogger</a>
+                
+                <div class="tl-msg" title="Hero 滚动融合导航栏">Hero 滚动融合导航栏</div>
+            </div>
+            <span class="tl-time">2026-06-20 16:36 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="更新 OpenBlogger submodule">更新 OpenBlogger submodule</div>
+            </div>
+            <span class="tl-time">2026-06-20 16:32 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="首页布局重组：弹幕归侧栏 + 项目独占右列">首页布局重组：弹幕归侧栏 + 项目独占右列</div>
+            </div>
+            <span class="tl-time">2026-06-20 16:32 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/OpenBlogger" target="_blank" rel="noopener">OpenBlogger</a>
+                
+                <div class="tl-msg" title="首页布局重组：弹幕入侧栏，项目独占右列">首页布局重组：弹幕入侧栏，项目独占右列</div>
+            </div>
+            <span class="tl-time">2026-06-20 16:32 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="更新 OpenBlogger submodule">更新 OpenBlogger submodule</div>
+            </div>
+            <span class="tl-time">2026-06-20 16:27 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/OpenBlogger" target="_blank" rel="noopener">OpenBlogger</a>
+                
+                <div class="tl-msg" title="首页大刀阔斧视觉改版">首页大刀阔斧视觉改版</div>
+            </div>
+            <span class="tl-time">2026-06-20 16:26 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="首页大刀阔斧改版：渐变标题 + 卡片升级 + 搜索增强">首页大刀阔斧改版：渐变标题 + 卡片升级 + 搜索增强</div>
+            </div>
+            <span class="tl-time">2026-06-20 16:26 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="更新 OpenBlogger submodule">更新 OpenBlogger submodule</div>
+            </div>
+            <span class="tl-time">2026-06-20 16:22 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="首页特别设计：棱镜扫过动画 + 项目展示区">首页特别设计：棱镜扫过动画 + 项目展示区</div>
+            </div>
+            <span class="tl-time">2026-06-20 16:22 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/OpenBlogger" target="_blank" rel="noopener">OpenBlogger</a>
+                
+                <div class="tl-msg" title="首页棱镜动画 + 项目展示区">首页棱镜动画 + 项目展示区</div>
+            </div>
+            <span class="tl-time">2026-06-20 16:22 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="控制台.bat 全英文重写，消除中文编码闪退">控制台.bat 全英文重写，消除中文编码闪退</div>
+            </div>
+            <span class="tl-time">2026-06-20 16:13 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="修复控制台.bat 闪退：choice→set/p，延时扩展修复">修复控制台.bat 闪退：choice→set/p，延时扩展修复</div>
+            </div>
+            <span class="tl-time">2026-06-20 16:12 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="标签大精简：40→12 个概括大类">标签大精简：40→12 个概括大类</div>
+            </div>
+            <span class="tl-time">2026-06-20 16:09 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="更新 OpenBlogger submodule">更新 OpenBlogger submodule</div>
+            </div>
+            <span class="tl-time">2026-06-20 16:04 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="资源页改为抽屉式折叠：4 个可展开/收起的 section">资源页改为抽屉式折叠：4 个可展开/收起的 section</div>
+            </div>
+            <span class="tl-time">2026-06-20 16:04 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/OpenBlogger" target="_blank" rel="noopener">OpenBlogger</a>
+                
+                <div class="tl-msg" title="资源页改为抽屉式折叠">资源页改为抽屉式折叠</div>
+            </div>
+            <span class="tl-time">2026-06-20 16:04 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="更新 OpenBlogger submodule">更新 OpenBlogger submodule</div>
+            </div>
+            <span class="tl-time">2026-06-20 16:00 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="合并项目页+友链页为资源页">合并项目页+友链页为资源页</div>
+            </div>
+            <span class="tl-time">2026-06-20 16:00 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/OpenBlogger" target="_blank" rel="noopener">OpenBlogger</a>
+                
+                <div class="tl-msg" title="合并项目+友链为资源页">合并项目+友链为资源页</div>
+            </div>
+            <span class="tl-time">2026-06-20 16:00 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="更新 OpenBlogger submodule">更新 OpenBlogger submodule</div>
+            </div>
+            <span class="tl-time">2026-06-20 15:54 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="全面优化手机端响应式：6 模板统一 768px 断点">全面优化手机端响应式：6 模板统一 768px 断点</div>
+            </div>
+            <span class="tl-time">2026-06-20 15:54 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/OpenBlogger" target="_blank" rel="noopener">OpenBlogger</a>
+                
+                <div class="tl-msg" title="6 模板手机端响应式全面优化">6 模板手机端响应式全面优化</div>
+            </div>
+            <span class="tl-time">2026-06-20 15:54 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="更新 OpenBlogger submodule">更新 OpenBlogger submodule</div>
+            </div>
+            <span class="tl-time">2026-06-19 06:33 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="无标签文章自动归入默认标签未分类">无标签文章自动归入默认标签未分类</div>
+            </div>
+            <span class="tl-time">2026-06-19 06:33 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/OpenBlogger" target="_blank" rel="noopener">OpenBlogger</a>
+                
+                <div class="tl-msg" title="无标签文章默认归入未分类">无标签文章默认归入未分类</div>
+            </div>
+            <span class="tl-time">2026-06-19 06:33 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="更新 OpenBlogger submodule">更新 OpenBlogger submodule</div>
+            </div>
+            <span class="tl-time">2026-06-19 06:30 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="修复同日文章排序：副键用文件修改时间倒序">修复同日文章排序：副键用文件修改时间倒序</div>
+            </div>
+            <span class="tl-time">2026-06-19 06:30 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/OpenBlogger" target="_blank" rel="noopener">OpenBlogger</a>
+                
+                <div class="tl-msg" title="同日文章按文件修改时间排序">同日文章按文件修改时间排序</div>
+            </div>
+            <span class="tl-time">2026-06-19 06:30 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="新增文章: OpenBlogger 介绍与使用指南">新增文章: OpenBlogger 介绍与使用指南</div>
+            </div>
+            <span class="tl-time">2026-06-19 06:27 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="更新 OpenBlogger submodule">更新 OpenBlogger submodule</div>
+            </div>
+            <span class="tl-time">2026-06-19 06:25 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="修复 Alt+左键返回页面空白：bfcache 恢复时清除残留动画状态">修复 Alt+左键返回页面空白：bfcache 恢复时清除残留动画状态</div>
+            </div>
+            <span class="tl-time">2026-06-19 06:25 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/OpenBlogger" target="_blank" rel="noopener">OpenBlogger</a>
+                
+                <div class="tl-msg" title="6 模板统一: bfcache pageshow 修复返回空白">6 模板统一: bfcache pageshow 修复返回空白</div>
+            </div>
+            <span class="tl-time">2026-06-19 06:25 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="更新 OpenBlogger submodule">更新 OpenBlogger submodule</div>
+            </div>
+            <span class="tl-time">2026-06-19 06:21 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="修复日历过滤无效：F/dateFilter 提升为全局变量">修复日历过滤无效：F/dateFilter 提升为全局变量</div>
+            </div>
+            <span class="tl-time">2026-06-19 06:21 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/OpenBlogger" target="_blank" rel="noopener">OpenBlogger</a>
+                
+                <div class="tl-msg" title="目录页日历：F/dateFilter 全局化修复闭包访问">目录页日历：F/dateFilter 全局化修复闭包访问</div>
+            </div>
+            <span class="tl-time">2026-06-19 06:21 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="更新 OpenBlogger submodule">更新 OpenBlogger submodule</div>
+            </div>
+            <span class="tl-time">2026-06-19 06:18 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="日期筛选改用标签提示，不再污染搜索框">日期筛选改用标签提示，不再污染搜索框</div>
+            </div>
+            <span class="tl-time">2026-06-19 06:18 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/OpenBlogger" target="_blank" rel="noopener">OpenBlogger</a>
+                
+                <div class="tl-msg" title="目录页日期筛选：badge 标签替代搜索框提示">目录页日期筛选：badge 标签替代搜索框提示</div>
+            </div>
+            <span class="tl-time">2026-06-19 06:18 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="更新 OpenBlogger submodule: 日历布局修复">更新 OpenBlogger submodule: 日历布局修复</div>
+            </div>
+            <span class="tl-time">2026-06-19 06:16 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/OpenBlogger" target="_blank" rel="noopener">OpenBlogger</a>
+                
+                <div class="tl-msg" title="目录页日历：右侧定位 + data-date 过滤 + active 高亮">目录页日历：右侧定位 + data-date 过滤 + active 高亮</div>
+            </div>
+            <span class="tl-time">2026-06-19 06:16 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="修复日历：移至筛选栏右侧 + 日期过滤改为 data-date 匹配">修复日历：移至筛选栏右侧 + 日期过滤改为 data-date 匹配</div>
+            </div>
+            <span class="tl-time">2026-06-19 06:16 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="更新 OpenBlogger submodule: 目录页日历功能">更新 OpenBlogger submodule: 目录页日历功能</div>
+            </div>
+            <span class="tl-time">2026-06-19 06:11 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/OpenBlogger" target="_blank" rel="noopener">OpenBlogger</a>
+                
+                <div class="tl-msg" title="目录页新增日历：日期高亮 + 点击定位 + 月份切换">目录页新增日历：日期高亮 + 点击定位 + 月份切换</div>
+            </div>
+            <span class="tl-time">2026-06-19 06:11 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="目录页添加日历：右侧迷你日历，有文章的日期高亮可点击">目录页添加日历：右侧迷你日历，有文章的日期高亮可点击</div>
+            </div>
+            <span class="tl-time">2026-06-19 06:10 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="更新 OpenBlogger submodule：添加 README">更新 OpenBlogger submodule：添加 README</div>
+            </div>
+            <span class="tl-time">2026-06-19 05:58 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/OpenBlogger" target="_blank" rel="noopener">OpenBlogger</a>
+                
+                <div class="tl-msg" title="添加 README：项目说明/结构/功能/模板变量/插件/CLI">添加 README：项目说明/结构/功能/模板变量/插件/CLI</div>
+            </div>
+            <span class="tl-time">2026-06-19 05:54 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="OpenBlogger 改为 git submodule 引用">OpenBlogger 改为 git submodule 引用</div>
+            </div>
+            <span class="tl-time">2026-06-19 05:53 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">🆕</span>
+            <div class="tl-body">
+                <span>🆕 创建了</span>
+                <a class="tl-repo" href="https://github.com/YHSome/OpenBlogger" target="_blank" rel="noopener">OpenBlogger</a>
+                
+                
+            </div>
+            <span class="tl-time">2026-06-19 05:53 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/OpenBlogger" target="_blank" rel="noopener">OpenBlogger</a>
+                
+                <div class="tl-msg" title="OpenBlogger 静态博客渲染引擎 v1.0">OpenBlogger 静态博客渲染引擎 v1.0</div>
+            </div>
+            <span class="tl-time">2026-06-19 05:52 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="框架分离准备：OpenBlogger 可独立为仓库">框架分离准备：OpenBlogger 可独立为仓库</div>
+            </div>
+            <span class="tl-time">2026-06-19 05:50 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="新增控制台.bat：一键写文章/构建/推送中控面板">新增控制台.bat：一键写文章/构建/推送中控面板</div>
+            </div>
+            <span class="tl-time">2026-06-19 05:47 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="修复目录页月份分隔条过滤无效：跳过文本节点">修复目录页月份分隔条过滤无效：跳过文本节点</div>
+            </div>
+            <span class="tl-time">2026-06-19 05:42 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="修复目录页标签筛选后空月份仍显示分隔条">修复目录页标签筛选后空月份仍显示分隔条</div>
+            </div>
+            <span class="tl-time">2026-06-19 05:38 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="新增文章: Claude 期末复习 Skill 介绍">新增文章: Claude 期末复习 Skill 介绍</div>
+            </div>
+            <span class="tl-time">2026-06-19 05:33 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="新增文章: Viewer 纯前端访问计数与评论系统介绍">新增文章: Viewer 纯前端访问计数与评论系统介绍</div>
+            </div>
+            <span class="tl-time">2026-06-19 05:22 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="标签页悬停弹出关联文章列表">标签页悬停弹出关联文章列表</div>
+            </div>
+            <span class="tl-time">2026-06-19 05:20 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="目录页添加年/月分隔条">目录页添加年/月分隔条</div>
+            </div>
+            <span class="tl-time">2026-06-19 05:14 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">🆕</span>
+            <div class="tl-body">
+                <span>🆕 创建了</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                
+            </div>
+            <span class="tl-time">2026-06-19 04:25 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="gh-pages deploy">gh-pages deploy</div>
+            </div>
+            <span class="tl-time">2026-06-19 04:20 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="友链改为本地路径：构建时复制子项目到 Rendered/friends/">友链改为本地路径：构建时复制子项目到 Rendered/friends/</div>
+            </div>
+            <span class="tl-time">2026-06-19 04:10 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="项目页+友链页补充页面转场动画">项目页+友链页补充页面转场动画</div>
+            </div>
+            <span class="tl-time">2026-06-19 04:06 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="项目目录重构：清理冗余，归档旧数据">项目目录重构：清理冗余，归档旧数据</div>
+            </div>
+            <span class="tl-time">2026-06-19 04:01 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="友链清理：移除有 pyignore 标记的内部目录">友链清理：移除有 pyignore 标记的内部目录</div>
+            </div>
+            <span class="tl-time">2026-06-19 03:54 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="排除 yhsome.github.io 子仓库，仅本地保留作友链参考">排除 yhsome.github.io 子仓库，仅本地保留作友链参考</div>
+            </div>
+            <span class="tl-time">2026-06-19 03:51 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="新增友情链接页：整合 yhsome.github.io 旧项目">新增友情链接页：整合 yhsome.github.io 旧项目</div>
+            </div>
+            <span class="tl-time">2026-06-19 03:50 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="统一三个 bat 脚本：移除 chcp，全用英文提示 + PYTHONIOENCODING=utf-8">统一三个 bat 脚本：移除 chcp，全用英文提示 + PYTHONIOENCODING=utf-8</div>
+            </div>
+            <span class="tl-time">2026-06-19 03:45 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="修复 serve.bat 编码问题：移除 chcp，改用英文提示 + PYTHONIOENCODING">修复 serve.bat 编码问题：移除 chcp，改用英文提示 + PYTHONIOENCODING</div>
+            </div>
+            <span class="tl-time">2026-06-19 03:45 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="部署方案：git subtree 推送 Rendered/ → gh-pages 分支">部署方案：git subtree 推送 Rendered/ → gh-pages 分支</div>
+            </div>
+            <span class="tl-time">2026-06-19 03:41 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="GitHubProjects 插件化：移入 OpenBlogger/Plugins/">GitHubProjects 插件化：移入 OpenBlogger/Plugins/</div>
+            </div>
+            <span class="tl-time">2026-06-19 03:34 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="修复项目页中文乱码：重新拉取 projects.json + fetch_repos.py 编码修复">修复项目页中文乱码：重新拉取 projects.json + fetch_repos.py 编码修复</div>
+            </div>
+            <span class="tl-time">2026-06-19 03:32 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="添加 fetch_repos.py：一键更新 GitHub 仓库数据">添加 fetch_repos.py：一键更新 GitHub 仓库数据</div>
+            </div>
+            <span class="tl-time">2026-06-19 03:31 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="新增项目展示页：展示 GitHub 仓库列表，自动识别 Pages">新增项目展示页：展示 GitHub 仓库列表，自动识别 Pages</div>
+            </div>
+            <span class="tl-time">2026-06-19 03:31 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="添加一键渲染脚本：build.bat / serve.bat">添加一键渲染脚本：build.bat / serve.bat</div>
+            </div>
+            <span class="tl-time">2026-06-18 18:40 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="精选标签池过滤：仅文章数≥2的标签才有机会被抽中">精选标签池过滤：仅文章数≥2的标签才有机会被抽中</div>
+            </div>
+            <span class="tl-time">2026-06-18 18:33 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="弹幕框缩短：max-height 100vh→360px，与侧栏高度匹配">弹幕框缩短：max-height 100vh→360px，与侧栏高度匹配</div>
+            </div>
+            <span class="tl-time">2026-06-18 18:28 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="新增长文《颂 YHSome 与 OpenBlogger》+ 15 条机器人评论">新增长文《颂 YHSome 与 OpenBlogger》+ 15 条机器人评论</div>
+            </div>
+            <span class="tl-time">2026-06-18 18:25 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="重写 xiyouchooser + xiyouspeaker：修复 html2text 破坏的代码块和表格">重写 xiyouchooser + xiyouspeaker：修复 html2text 破坏的代码块和表格</div>
+            </div>
+            <span class="tl-time">2026-06-18 18:19 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="Revert &#34;移除 nl2br 扩展 + 修复 toc permalink ¶ 符号&#34;">Revert &#34;移除 nl2br 扩展 + 修复 toc permalink ¶ 符号&#34;</div>
+            </div>
+            <span class="tl-time">2026-06-18 18:15 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="移除 nl2br 扩展 + 修复 toc permalink ¶ 符号">移除 nl2br 扩展 + 修复 toc permalink ¶ 符号</div>
+            </div>
+            <span class="tl-time">2026-06-18 18:14 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="修复视频显示：恢复被 html2text 吞掉的 &lt;video&gt; 标签">修复视频显示：恢复被 html2text 吞掉的 &lt;video&gt; 标签</div>
+            </div>
+            <span class="tl-time">2026-06-18 18:11 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="侧栏标签改为精选标签：每次构建随机抽 10 个显示">侧栏标签改为精选标签：每次构建随机抽 10 个显示</div>
+            </div>
+            <span class="tl-time">2026-06-18 18:06 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="丰富标签体系：6→40 个标签，覆盖全站 46 篇文章">丰富标签体系：6→40 个标签，覆盖全站 46 篇文章</div>
+            </div>
+            <span class="tl-time">2026-06-18 18:01 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="站点统计添加全站总字数">站点统计添加全站总字数</div>
+            </div>
+            <span class="tl-time">2026-06-18 17:53 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="补漏: 从 Legacy 复制缺失的 image/2023-12-19 和 2023-10-28 图片目录">补漏: 从 Legacy 复制缺失的 image/2023-12-19 和 2023-10-28 图片目录</div>
+            </div>
+            <span class="tl-time">2026-06-18 17:44 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="file:// 协议下跳过页面转场动画，避免浏览器安全报错">file:// 协议下跳过页面转场动画，避免浏览器安全报错</div>
+            </div>
+            <span class="tl-time">2026-06-18 17:42 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="修复目录排序：日期字符串比较 &#39;10&#39; &lt; &#39;4&#39; 导致10/12月排错">修复目录排序：日期字符串比较 &#39;10&#39; &lt; &#39;4&#39; 导致10/12月排错</div>
+            </div>
+            <span class="tl-time">2026-06-18 17:40 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="修复首页摘要：MD→HTML→剥标签，彻底去除语法残留">修复首页摘要：MD→HTML→剥标签，彻底去除语法残留</div>
+            </div>
+            <span class="tl-time">2026-06-18 17:29 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="文章上下篇导航：首/尾篇显示提示而非隐藏">文章上下篇导航：首/尾篇显示提示而非隐藏</div>
+            </div>
+            <span class="tl-time">2026-06-18 17:24 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="恢复首页左侧栏：站点统计卡片 + 标签云">恢复首页左侧栏：站点统计卡片 + 标签云</div>
+            </div>
+            <span class="tl-time">2026-06-18 17:21 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="修复：首页加回统计横条 + 评论框宽度与正文对齐">修复：首页加回统计横条 + 评论框宽度与正文对齐</div>
+            </div>
+            <span class="tl-time">2026-06-18 17:18 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="布局重组：侧栏(统计+标签)搬到文章页，弹幕改用当前页评论">布局重组：侧栏(统计+标签)搬到文章页，弹幕改用当前页评论</div>
+            </div>
+            <span class="tl-time">2026-06-18 17:14 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="修复全站图片路径：168 处旧路径 + 渲染器自动复制 image/">修复全站图片路径：168 处旧路径 + 渲染器自动复制 image/</div>
+            </div>
+            <span class="tl-time">2026-06-18 17:04 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="弹幕改为遍历所有页面全量加载评论">弹幕改为遍历所有页面全量加载评论</div>
+            </div>
+            <span class="tl-time">2026-06-18 16:58 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="弹幕优化：精选发言标题 + 加速滚动 + 无缝循环">弹幕优化：精选发言标题 + 加速滚动 + 无缝循环</div>
+            </div>
+            <span class="tl-time">2026-06-18 16:56 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="弹幕改为第三列嵌入布局，文章居中">弹幕改为第三列嵌入布局，文章居中</div>
+            </div>
+            <span class="tl-time">2026-06-18 16:54 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="首页右侧弹幕评论条：全站评论随机滚动展示">首页右侧弹幕评论条：全站评论随机滚动展示</div>
+            </div>
+            <span class="tl-time">2026-06-18 16:51 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="侧栏换到左边：标签在左，文章在右">侧栏换到左边：标签在左，文章在右</div>
+            </div>
+            <span class="tl-time">2026-06-18 16:48 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="首页双栏布局：左文章右标签侧栏 + 排版大方化">首页双栏布局：左文章右标签侧栏 + 排版大方化</div>
+            </div>
+            <span class="tl-time">2026-06-18 16:46 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="从 Hexo 博客导入 45 篇历史文章 + 迁移工具">从 Hexo 博客导入 45 篇历史文章 + 迁移工具</div>
+            </div>
+            <span class="tl-time">2026-06-18 16:38 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="集成 Viewer 插件：访问计数 + 评论系统">集成 Viewer 插件：访问计数 + 评论系统</div>
+            </div>
+            <span class="tl-time">2026-06-18 16:10 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="页面转场动画：进场边缘弹入 + 退场边缘飞走">页面转场动画：进场边缘弹入 + 退场边缘飞走</div>
+            </div>
+            <span class="tl-time">2026-06-18 16:00 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="修复深色模式闪屏：anti-flash 脚本在 head 中同步执行">修复深色模式闪屏：anti-flash 脚本在 head 中同步执行</div>
+            </div>
+            <span class="tl-time">2026-06-18 15:53 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="🦋 Butterfly 风格升级：深色模式 + 粒子背景 + 阅读进度条 + 返回顶部">🦋 Butterfly 风格升级：深色模式 + 粒子背景 + 阅读进度条 + 返回顶部</div>
+            </div>
+            <span class="tl-time">2026-06-18 15:51 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="首页添加搜索框：支持按标题/内容/标签实时过滤文章卡片">首页添加搜索框：支持按标题/内容/标签实时过滤文章卡片</div>
+            </div>
+            <span class="tl-time">2026-06-18 15:44 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="修复页面层级路径：文章页导航链接使用 ../ 回到根目录">修复页面层级路径：文章页导航链接使用 ../ 回到根目录</div>
+            </div>
+            <span class="tl-time">2026-06-18 15:42 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="修复 serve 命令自动构建；修复 Post 模板 HTML 转义">修复 serve 命令自动构建；修复 Post 模板 HTML 转义</div>
+            </div>
+            <span class="tl-time">2026-06-18 15:38 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="完成 OpenBlogger 博客渲染引擎">完成 OpenBlogger 博客渲染引擎</div>
+            </div>
+            <span class="tl-time">2026-06-18 15:38 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener">yhsome.github.io</a>
+                
+                <div class="tl-msg" title="初始提交：博客渲染器框架">初始提交：博客渲染器框架</div>
+            </div>
+            <span class="tl-time">2026-06-18 15:33 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/Viewer" target="_blank" rel="noopener">Viewer</a>
+                
+                <div class="tl-msg" title="docs: 统一所有文件标题">docs: 统一所有文件标题</div>
+            </div>
+            <span class="tl-time">2026-06-15 08:59 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/Viewer" target="_blank" rel="noopener">Viewer</a>
+                
+                <div class="tl-msg" title="docs: 更新 README 加入多页面支持和 assign_pages 说明">docs: 更新 README 加入多页面支持和 assign_pages 说明</div>
+            </div>
+            <span class="tl-time">2026-06-15 08:53 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/Viewer" target="_blank" rel="noopener">Viewer</a>
+                
+                <div class="tl-msg" title="chore: .viewer_pages.json 移入 tools/ 目录">chore: .viewer_pages.json 移入 tools/ 目录</div>
+            </div>
+            <span class="tl-time">2026-06-15 08:51 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/Viewer" target="_blank" rel="noopener">Viewer</a>
+                
+                <div class="tl-msg" title="fix: 修复首页 comment.js 路径未更新">fix: 修复首页 comment.js 路径未更新</div>
+            </div>
+            <span class="tl-time">2026-06-15 08:42 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/Viewer" target="_blank" rel="noopener">Viewer</a>
+                
+                <div class="tl-msg" title="chore: 项目文件整理，JS 移入 js/ 目录">chore: 项目文件整理，JS 移入 js/ 目录</div>
+            </div>
+            <span class="tl-time">2026-06-15 08:22 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/Viewer" target="_blank" rel="noopener">Viewer</a>
+                
+                <div class="tl-msg" title="chore: 脚本移入 tools/ 目录">chore: 脚本移入 tools/ 目录</div>
+            </div>
+            <span class="tl-time">2026-06-15 08:17 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/Viewer" target="_blank" rel="noopener">Viewer</a>
+                
+                <div class="tl-msg" title="feat: 全站计数器 global.js + 页面编号持久化不复用">feat: 全站计数器 global.js + 页面编号持久化不复用</div>
+            </div>
+            <span class="tl-time">2026-06-15 08:15 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/Viewer" target="_blank" rel="noopener">Viewer</a>
+                
+                <div class="tl-msg" title="feat: index1.html 加入古诗 + 改名">feat: index1.html 加入古诗 + 改名</div>
+            </div>
+            <span class="tl-time">2026-06-15 08:11 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/Viewer" target="_blank" rel="noopener">Viewer</a>
+                
+                <div class="tl-msg" title="feat: 新增第二页演示 demo.html + 双页互链">feat: 新增第二页演示 demo.html + 双页互链</div>
+            </div>
+            <span class="tl-time">2026-06-15 08:08 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/Viewer" target="_blank" rel="noopener">Viewer</a>
+                
+                <div class="tl-msg" title="feat: Python 脚本自动编号 + JS 多页面独立数据">feat: Python 脚本自动编号 + JS 多页面独立数据</div>
+            </div>
+            <span class="tl-time">2026-06-15 08:04 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/Viewer" target="_blank" rel="noopener">Viewer</a>
+                
+                <div class="tl-msg" title="docs: 教程新增独立访客 + 评论系统说明">docs: 教程新增独立访客 + 评论系统说明</div>
+            </div>
+            <span class="tl-time">2026-06-15 07:58 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/Viewer" target="_blank" rel="noopener">Viewer</a>
+                
+                <div class="tl-msg" title="chore: 统一使用新 TinyWebDB 账号 aaaaa/d1bdf09a">chore: 统一使用新 TinyWebDB 账号 aaaaa/d1bdf09a</div>
+            </div>
+            <span class="tl-time">2026-06-15 07:54 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/Viewer" target="_blank" rel="noopener">Viewer</a>
+                
+                <div class="tl-msg" title="fix: 独立访客改用 localStorage 判重">fix: 独立访客改用 localStorage 判重</div>
+            </div>
+            <span class="tl-time">2026-06-15 07:53 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/Viewer" target="_blank" rel="noopener">Viewer</a>
+                
+                <div class="tl-msg" title="feat: 新增独立访客计数器（Cookie 判重）">feat: 新增独立访客计数器（Cookie 判重）</div>
+            </div>
+            <span class="tl-time">2026-06-15 07:50 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/Viewer" target="_blank" rel="noopener">Viewer</a>
+                
+                <div class="tl-msg" title="feat: 评论区显示邮箱">feat: 评论区显示邮箱</div>
+            </div>
+            <span class="tl-time">2026-06-15 07:47 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/Viewer" target="_blank" rel="noopener">Viewer</a>
+                
+                <div class="tl-msg" title="feat: 新增 TinyWebDB 评论系统">feat: 新增 TinyWebDB 评论系统</div>
+            </div>
+            <span class="tl-time">2026-06-15 07:43 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/Viewer" target="_blank" rel="noopener">Viewer</a>
+                
+                <div class="tl-msg" title="docs: README_en 同步中文前记">docs: README_en 同步中文前记</div>
+            </div>
+            <span class="tl-time">2026-06-13 18:40 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/Viewer" target="_blank" rel="noopener">Viewer</a>
+                
+                <div class="tl-msg" title="Update README.md">Update README.md</div>
+            </div>
+            <span class="tl-time">2026-06-13 18:38 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/Viewer" target="_blank" rel="noopener">Viewer</a>
+                
+                <div class="tl-msg" title="fix: 修复 favicon 404 + 更新标题为观者吟">fix: 修复 favicon 404 + 更新标题为观者吟</div>
+            </div>
+            <span class="tl-time">2026-06-13 18:31 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/Viewer" target="_blank" rel="noopener">Viewer</a>
+                
+                <div class="tl-msg" title="chore: 移除调试日志，发布干净版本">chore: 移除调试日志，发布干净版本</div>
+            </div>
+            <span class="tl-time">2026-06-13 18:29 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/Viewer" target="_blank" rel="noopener">Viewer</a>
+                
+                <div class="tl-msg" title="fix: 修复 TinyWebDB 返回对象格式导致 parse 失败">fix: 修复 TinyWebDB 返回对象格式导致 parse 失败</div>
+            </div>
+            <span class="tl-time">2026-06-13 18:27 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/Viewer" target="_blank" rel="noopener">Viewer</a>
+                
+                <div class="tl-msg" title="debug: counter.js 详细日志">debug: counter.js 详细日志</div>
+            </div>
+            <span class="tl-time">2026-06-13 18:23 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/Viewer" target="_blank" rel="noopener">Viewer</a>
+                
+                <div class="tl-msg" title="debug: 加计数器日志">debug: 加计数器日志</div>
+            </div>
+            <span class="tl-time">2026-06-13 18:19 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/Viewer" target="_blank" rel="noopener">Viewer</a>
+                
+                <div class="tl-msg" title="feat: Viewer 页面访问计数器">feat: Viewer 页面访问计数器</div>
+            </div>
+            <span class="tl-time">2026-06-13 18:15 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">🆕</span>
+            <div class="tl-body">
+                <span>🆕 创建了</span>
+                <a class="tl-repo" href="https://github.com/YHSome/Viewer" target="_blank" rel="noopener">Viewer</a>
+                
+                
+            </div>
+            <span class="tl-time">2026-06-13 18:13 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/TheFinalPuzzle" target="_blank" rel="noopener">TheFinalPuzzle</a>
+                
+                <div class="tl-msg" title="docs: update README titles and project origin, fix screen refresh">docs: update README titles and project origin, fix screen refresh</div>
+            </div>
+            <span class="tl-time">2026-06-12 12:51 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">🆕</span>
+            <div class="tl-body">
+                <span>🆕 创建了</span>
+                <a class="tl-repo" href="https://github.com/YHSome/TheFinalPuzzle" target="_blank" rel="noopener">TheFinalPuzzle</a>
+                
+                
+            </div>
+            <span class="tl-time">2026-06-12 12:42 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/TheFinalPuzzle" target="_blank" rel="noopener">TheFinalPuzzle</a>
+                
+                <div class="tl-msg" title="fix: use clear screen + redraw, fix window resize layout corruption">fix: use clear screen + redraw, fix window resize layout corruption</div>
+            </div>
+            <span class="tl-time">2026-06-12 12:26 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/TheFinalPuzzle" target="_blank" rel="noopener">TheFinalPuzzle</a>
+                
+                <div class="tl-msg" title="docs: update README for cls refresh, anti keyboard-grabbing, timeline format">docs: update README for cls refresh, anti keyboard-grabbing, timeline format</div>
+            </div>
+            <span class="tl-time">2026-06-12 12:10 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/TheFinalPuzzle" target="_blank" rel="noopener">TheFinalPuzzle</a>
+                
+                <div class="tl-msg" title="docs: make Chinese the default README, add README_EN.md">docs: make Chinese the default README, add README_EN.md</div>
+            </div>
+            <span class="tl-time">2026-06-12 12:06 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/TheFinalPuzzle" target="_blank" rel="noopener">TheFinalPuzzle</a>
+                
+                <div class="tl-msg" title="docs: rename project to TheFinalPuzzle">docs: rename project to TheFinalPuzzle</div>
+            </div>
+            <span class="tl-time">2026-06-12 12:01 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/TheFinalPuzzle" target="_blank" rel="noopener">TheFinalPuzzle</a>
+                
+                <div class="tl-msg" title="docs: add English README, rename CN version, add language switcher">docs: add English README, rename CN version, add language switcher</div>
+            </div>
+            <span class="tl-time">2026-06-12 11:55 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/TheFinalPuzzle" target="_blank" rel="noopener">TheFinalPuzzle</a>
+                
+                <div class="tl-msg" title="feat: Claude Auto-Responder - 自动监测并应答 Claude 选项提示">feat: Claude Auto-Responder - 自动监测并应答 Claude 选项提示</div>
+            </div>
+            <span class="tl-time">2026-06-12 11:52 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📝</span>
+            <div class="tl-body">
+                <span>📝 Issue</span>
+                <a class="tl-repo" href="https://github.com/xgcxy/-" target="_blank" rel="noopener">-</a>
+                
+                
+            </div>
+            <span class="tl-time">2026-06-10 13:47 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/claude-final-exam-review" target="_blank" rel="noopener">claude-final-exam-review</a>
+                
+                <div class="tl-msg" title="新增英文版README，中英双版互链">新增英文版README，中英双版互链</div>
+            </div>
+            <span class="tl-time">2026-06-09 10:36 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/claude-final-exam-review" target="_blank" rel="noopener">claude-final-exam-review</a>
+                
+                <div class="tl-msg" title="新增面向计算机专业学生的简洁版使用说明及技术文档链接">新增面向计算机专业学生的简洁版使用说明及技术文档链接</div>
+            </div>
+            <span class="tl-time">2026-06-09 10:33 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/claude-final-exam-review" target="_blank" rel="noopener">claude-final-exam-review</a>
+                
+                <div class="tl-msg" title="完善README：面向非计算机专业学生的详细使用教程">完善README：面向非计算机专业学生的详细使用教程</div>
+            </div>
+            <span class="tl-time">2026-06-09 10:27 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/claude-final-exam-review" target="_blank" rel="noopener">claude-final-exam-review</a>
+                
+                <div class="tl-msg" title="更新skill: Edit工具追加HTML(零转义)、HTTP服务器、纯HTML输出规则">更新skill: Edit工具追加HTML(零转义)、HTTP服务器、纯HTML输出规则</div>
+            </div>
+            <span class="tl-time">2026-06-09 10:21 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">⭐</span>
+            <div class="tl-body">
+                <span>⭐ Star 了</span>
+                <a class="tl-repo" href="https://github.com/YHSome/claude-final-exam-review" target="_blank" rel="noopener">claude-final-exam-review</a>
+                
+                
+            </div>
+            <span class="tl-time">2026-06-09 10:00 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">🆕</span>
+            <div class="tl-body">
+                <span>🆕 创建了</span>
+                <a class="tl-repo" href="https://github.com/YHSome/claude-final-exam-review" target="_blank" rel="noopener">claude-final-exam-review</a>
+                
+                
+            </div>
+            <span class="tl-time">2026-06-09 09:57 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/claude-final-exam-review" target="_blank" rel="noopener">claude-final-exam-review</a>
+                
+                <div class="tl-msg" title="Initial commit: 期末复习AI导师 skill">Initial commit: 期末复习AI导师 skill</div>
+            </div>
+            <span class="tl-time">2026-06-09 09:51 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/xiyouchooser" target="_blank" rel="noopener">xiyouchooser</a>
+                
+                <div class="tl-msg" title="添加快速配置功能，新增演示视频">添加快速配置功能，新增演示视频</div>
+            </div>
+            <span class="tl-time">2023-08-30 10:58 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/xiyouspeaker" target="_blank" rel="noopener">xiyouspeaker</a>
+                
+                <div class="tl-msg" title="添加了快速配置功能，新增演示视频">添加了快速配置功能，新增演示视频</div>
+            </div>
+            <span class="tl-time">2023-08-30 10:53 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/xiyouspeaker" target="_blank" rel="noopener">xiyouspeaker</a>
+                
+                <div class="tl-msg" title="Add files via upload">Add files via upload</div>
+            </div>
+            <span class="tl-time">2023-08-22 17:07 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/xiyouchooser" target="_blank" rel="noopener">xiyouchooser</a>
+                
+                <div class="tl-msg" title="Add files via upload">Add files via upload</div>
+            </div>
+            <span class="tl-time">2023-08-22 17:00 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/my_picture_tools" target="_blank" rel="noopener">my_picture_tools</a>
+                
+                <div class="tl-msg" title="Add files via upload">Add files via upload</div>
+            </div>
+            <span class="tl-time">2023-05-20 11:35 UTC</span>
+        </div>
+        
+        <div class="tl-item">
+            <span class="tl-icon">📤</span>
+            <div class="tl-body">
+                <span>📤 推送了代码</span>
+                <a class="tl-repo" href="https://github.com/YHSome/my_picture_tools" target="_blank" rel="noopener">my_picture_tools</a>
+                
+                <div class="tl-msg" title="Initial commit">Initial commit</div>
+            </div>
+            <span class="tl-time">2023-05-20 11:21 UTC</span>
+        </div>
+        
+                <div class="tl-meta">📡 数据来源: GitHub Events API · 抓取于 2026-07-02 07:34:14</div>
+            </div>
+        </details>
+        
+
+        
+        <details class="drawer">
+            <summary>🎮 在线小工具 <span style="font-weight:400;font-size:0.8rem;color:var(--text-secondary)">4 个项目</span></summary>
+            <div class="drawer-body">
+        
+        <a href="friends/PinballChallenge/" class="res-card" target="_blank" rel="noopener">
+            <div class="res-icon">🕹️</div>
+            <div class="res-info">
+                <span class="res-name">弹球挑战</span>
+                <span class="res-badge tool">游戏</span>
+                <div class="res-desc">浏览器弹球游戏，30分挑战成功有红包</div>
+            </div>
+            <span class="res-arrow">→</span>
+        </a>
+        
+        <a href="friends/sgsrecord/" class="res-card" target="_blank" rel="noopener">
+            <div class="res-icon">🃏</div>
+            <div class="res-info">
+                <span class="res-name">三国杀记牌工具</span>
+                <span class="res-badge tool">桌游</span>
+                <div class="res-desc">三国杀在线记牌辅助</div>
+            </div>
+            <span class="res-arrow">→</span>
+        </a>
+        
+        <a href="friends/fakemail/" class="res-card" target="_blank" rel="noopener">
+            <div class="res-icon">📧</div>
+            <div class="res-info">
+                <span class="res-name">假邮件生成器</span>
+                <span class="res-badge tool">整活</span>
+                <div class="res-desc">恭喜你，你被坑了——在线整蛊页面</div>
+            </div>
+            <span class="res-arrow">→</span>
+        </a>
+        
+        <a href="friends/xiyou/" class="res-card" target="_blank" rel="noopener">
+            <div class="res-icon">🔍</div>
+            <div class="res-info">
+                <span class="res-name">西柚搜索工具</span>
+                <span class="res-badge tool">学习</span>
+                <div class="res-desc">西柚英语在线信息搜索工具</div>
+            </div>
+            <span class="res-arrow">→</span>
+        </a>
+        
+            </div>
+        </details>
+        
+        <details class="drawer">
+            <summary>🧪 实验性项目 <span style="font-weight:400;font-size:0.8rem;color:var(--text-secondary)">1 个项目</span></summary>
+            <div class="drawer-body">
+        
+        <a href="friends/genshin/" class="res-card" target="_blank" rel="noopener">
+            <div class="res-icon">✨</div>
+            <div class="res-info">
+                <span class="res-name">原神启动页</span>
+                <span class="res-badge tool">前端</span>
+                <div class="res-desc">原神风格网页还原练习</div>
+            </div>
+            <span class="res-arrow">→</span>
+        </a>
+        
+            </div>
+        </details>
+        
+        <details class="drawer">
+            <summary>📚 参考资源 <span style="font-weight:400;font-size:0.8rem;color:var(--text-secondary)">1 个项目</span></summary>
+            <div class="drawer-body">
+        
+        <a href="friends/3500researcher/" class="res-card" target="_blank" rel="noopener">
+            <div class="res-icon">📊</div>
+            <div class="res-info">
+                <span class="res-name">3500 词研究器</span>
+                <span class="res-badge tool">数据</span>
+                <div class="res-desc">英语 3500 词汇研究与数据库</div>
+            </div>
+            <span class="res-arrow">→</span>
+        </a>
+        
+            </div>
+        </details>
+        
+    </div>
+
+    <button class="back-to-top" id="backToTop" title="返回顶部" aria-label="返回顶部">↑</button>
+
+    <footer class="footer"><p>Powered by <span>OpenBlogger</span> &copy; 2026</p></footer>
+
+    <script>
+    !function(){const c=document.getElementById('particles'),x=c.getContext('2d');let w,h,p=[],N=45,D=120;function R(){w=c.width=innerWidth;h=c.height=innerHeight}R(),addEventListener('resize',R);function G(){return getComputedStyle(document.documentElement).getPropertyValue('--particle-color').trim().split(',').map(Number)}class T{constructor(){this.reset()}reset(){this.x=Math.random()*w;this.y=Math.random()*h;this.vx=(Math.random()-.5)*.4;this.vy=(Math.random()-.5)*.4;this.r=Math.random()*2+1}update(){this.x+=this.vx;this.y+=this.vy;if(this.x<0||this.x>w)this.vx*=-1;if(this.y<0||this.y>h)this.vy*=-1}draw(){const[r,g,b]=G();x.beginPath();x.arc(this.x,this.y,this.r,0,Math.PI*2);x.fillStyle=`rgba(${r},${g},${b},0.6)`;x.fill()}}for(let i=0;i<N;i++)p.push(new T);(function A(){x.clearRect(0,0,w,h);const[r,g,b]=G();for(let i=0;i<N;i++){p[i].update();p[i].draw();for(let j=i+1;j<N;j++){const dx=p[i].x-p[j].x,dy=p[i].y-p[j].y,ds=Math.sqrt(dx*dx+dy*dy);if(ds<D){x.beginPath();x.moveTo(p[i].x,p[i].y);x.lineTo(p[j].x,p[j].y);x.strokeStyle=`rgba(${r},${g},${b},${.15*(1-ds/D)})`;x.lineWidth=.6;x.stroke()}}}requestAnimationFrame(A)})()}();
+    !function(){const t=document.getElementById('themeToggle'),b=document.documentElement,s=localStorage.getItem('blog-theme');if(s==='dark'||(!s&&matchMedia('(prefers-color-scheme:dark)').matches)){b.classList.add('dark');t.textContent='☀️'}t.addEventListener('click',()=>{const d=b.classList.toggle('dark');t.textContent=d?'☀️':'🌙';localStorage.setItem('blog-theme',d?'dark':'light')})}();
+    !function(){const b=document.getElementById('backToTop');addEventListener('scroll',()=>b.classList.toggle('visible',scrollY>400));b.addEventListener('click',()=>scrollTo({top:0,behavior:'smooth'}))}();
+    !function(){document.body.classList.add('page-entering');addEventListener('load',function(){setTimeout(function(){document.body.classList.remove('page-entering')},700)});addEventListener('pageshow',function(e){if(e.persisted){document.body.classList.remove('page-exiting','page-entering');document.querySelectorAll('*').forEach(function(el){el.style.animation='none';el.offsetHeight;el.style.animation=''})}})}();
+    if(location.protocol!=='file:')!function(){document.addEventListener('click',function(e){var a=e.target.closest('a');if(!a)return;var h=a.getAttribute('href');if(!h||h[0]==='#'||h.indexOf('://')>0||h.indexOf('//')===0||a.target==='_blank')return;e.preventDefault();document.body.classList.add('page-exiting');setTimeout(function(){location.assign(h)},360)})}();
+
+    // ═══════════ GitHub 开源项目：实时从 API 加载 ═══════════
+    !function(){
+        var LANG_COLORS={"Python":"#3572A5","JavaScript":"#f1e05a","TypeScript":"#3178c6","HTML":"#e34c26","CSS":"#563d7c","Java":"#b07219","C++":"#f34b7d","C":"#555555","Go":"#00ADD8","Rust":"#dea584","Shell":"#89e051","Vue":"#41b883","Kotlin":"#A97BFF","Swift":"#F05138","Dart":"#00B4AB","Ruby":"#701516"};
+        function icon(l){if(!l)return'📂';if(l.indexOf('Python')>-1)return'🐍';if(l.indexOf('JavaScript')>-1||l.indexOf('TypeScript')>-1)return'📜';if(l.indexOf('HTML')>-1)return'🌐';if(l.indexOf('Vue')>-1)return'💚';if(l.indexOf('Go')>-1)return'🔵';if(l.indexOf('Rust')>-1)return'🦀';if(l.indexOf('Java')>-1)return'☕';return'📂'}
+        var CACHE_KEY='gh_repos_v2',CACHE_TTL=60*60*1000;
+        var container=document.getElementById('github-projects');
+        var countEl=document.getElementById('gh-repo-count');
+        var USER='YHSome';
+
+        function buildCard(r){
+            var lang=r.language||'';
+            var hasPages=!!r.has_pages;
+            var link=hasPages?'https://yhsome.github.io/'+r.name+'/':r.html_url;
+            var stars=r.stargazers_count||0;
+            var forks=r.forks_count||0;
+            var desc=r.description||'';
+            var h='<a href="'+link+'" class="res-card" target="_blank" rel="noopener">';
+            h+='<div class="res-icon">'+icon(lang)+'</div>';
+            h+='<div class="res-info">';
+            h+='<span class="res-name">'+r.name+'</span>';
+            if(desc) h+='<div class="res-desc">'+desc+'</div>';
+            h+='<div class="res-meta">';
+            if(lang) h+='<span class="res-lang"><span class="res-lang-dot" style="background:'+(LANG_COLORS[lang]||'#8b8b8b')+'"></span>'+lang+'</span>';
+            h+='<span>⭐ '+stars+'</span>';
+            h+='<span>🍴 '+forks+'</span>';
+            h+='<span class="res-badge '+(hasPages?'pages':'repo')+'">'+(hasPages?'GitHub Pages':'仓库')+'</span>';
+            h+='</div></div><span class="res-arrow">→</span></a>';
+            return h
+        }
+
+        async function load(){
+            var cached=localStorage.getItem(CACHE_KEY);
+            if(cached){try{var d=JSON.parse(cached);if(Date.now()-d.ts<CACHE_TTL){render(d.repos);return}}catch(e){}}
+            try{
+                var headers={};
+                var token='';
+                if(token) headers['Authorization']='Bearer '+token;
+                var resp=await fetch('https://api.github.com/users/'+USER+'/repos?sort=updated&per_page=50',{headers:headers});
+                if(!resp.ok) throw new Error('API '+resp.status);
+                var repos=await resp.json();
+                var own=repos.filter(function(r){return!r.fork});
+                localStorage.setItem(CACHE_KEY,JSON.stringify({ts:Date.now(),repos:own}));
+                render(own)
+            }catch(e){
+                if(cached){try{var cd=JSON.parse(cached);render(cd.repos)}catch(e2){}}
+                container.innerHTML='<div class="gh-error">⚠️ GitHub 数据加载失败，请稍后刷新重试<br><small>'+e.message+'</small></div>';
+                countEl.textContent='加载失败'
+            }
+        }
+
+        function render(repos){
+            if(!repos.length){container.innerHTML='<div class="gh-error">暂无公开仓库</div>';countEl.textContent='0 个仓库';return}
+            countEl.textContent=repos.length+' 个仓库';
+            var html='';
+            for(var i=0;i<repos.length;i++) html+=buildCard(repos[i]);
+            container.innerHTML=html
+        }
+
+        load()
+    }();
+    </script>
+</body>
+</html>
