@@ -5,8 +5,15 @@
     <link>https://example.com</link>
     <description>书山有径勤为路，学海无涯苦作舟</description>
     <language>zh-CN</language>
-    <lastBuildDate>Thu, 02 Jul 2026 17:32:30 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 19 Jul 2026 01:20:32 +0800</lastBuildDate>
     <atom:link href="https://example.com/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>数据结构六讲 —— 从栈到线段树</title>
+      <link>https://example.com/posts/数据结构六讲题解.html</link>
+      <description>数据结构六讲 —— 从栈到线段树 题解基于 AtCoder ABC 六道真题，涵盖六种核心数据结构，难度从 200pt 逐级爬升至 525pt。 每道题提供 Java 和 C++ 双语言代码，C++ 版本附详细解析。 目录 讲次 数据结构 题目 分数 AtCoder 链接 一 Stack 栈 ABC…</description>
+      <pubDate>Sun, 19 Jul 2026 00:00:00 +0800</pubDate>
+      <guid isPermaLink="true">https://example.com/posts/数据结构六讲题解.html</guid>
+    </item>
     <item>
       <title>智学伴--基于生成式 AI 的异步学习解决方案</title>
       <link>https://example.com/posts/智学伴-基于生成式ai的异步学习方案.html</link>
@@ -139,13 +146,6 @@
       <description>b站收集的一些钢琴谱，主要都是著名电子音乐改编，有需要可以自行下载。 altale钢琴谱 cryout钢琴谱 Distorted Fate钢琴谱 WATER钢琴谱 With You钢琴谱</description>
       <pubDate>Sat, 12 Aug 2023 00:00:00 +0800</pubDate>
       <guid isPermaLink="true">https://example.com/posts/一些钢琴谱下载.html</guid>
-    </item>
-    <item>
-      <title>随笔-一些给新高一的资料</title>
-      <link>https://example.com/posts/随笔-一些给新高一的资料和建议.html</link>
-      <description>前言 送给新高一的好东西，如果你是番中的那么这些网页将很适合你。 资料 点击打开 一些乱七八糟的正文稿 2023年4月份的时事评论 高一下学期必读名著红楼梦思维导图 综合实践、美术这种可以随便应付的科目</description>
-      <pubDate>Wed, 09 Aug 2023 00:00:00 +0800</pubDate>
-      <guid isPermaLink="true">https://example.com/posts/随笔-一些给新高一的资料和建议.html</guid>
     </item>
   </channel>
 </rss>
