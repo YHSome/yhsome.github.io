@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <link rel="icon" href="../images/favicon.jpg">
-    <meta name="x-viewer-page-id" content="38">
+    <meta name="x-viewer-page-id" content="62">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script>(function(){var s=localStorage.getItem('blog-theme');if(s==='dark'||(!s&&matchMedia('(prefers-color-scheme:dark)').matches)){document.documentElement.classList.add('dark')}})();</script>
-    <title>时评-马克龙访问中山大学 — YHSome的神秘空间</title>
+    <title>qq-goal-email：让 Codex 干完活主动给你发 QQ 邮件 — YHSome的神秘空间</title>
     <style>
         :root {
             --bg: #fdfbf7; --card-bg: #ffffff; --text: #2c2416; --text-secondary: #6b5e4a;
@@ -409,15 +409,15 @@
     </nav>
 
     <header class="article-header">
-        <h1>时评-马克龙访问中山大学</h1>
+        <h1>qq-goal-email：让 Codex 干完活主动给你发 QQ 邮件</h1>
         <div class="article-meta">
-            <span>📅 2023年04月09日</span>
+            <span>📅 2026年08月12日</span>
             <span class="meta-divider"></span><span>✍️ YHSome</span>
         </div>
         
         <div class="article-tags">
             
-            <a href="../directory.html?tag=%E6%97%B6%E8%AF%84%E5%92%8C%E9%9A%8F%E7%AC%94" class="tag">时评和随笔</a>
+            <a href="../directory.html?tag=%E9%A1%B9%E7%9B%AE" class="tag">项目</a>
             
         </div>
         
@@ -477,29 +477,75 @@
         <!-- 中栏：文章内容 -->
         <main class="content-main">
             <article class="article-content">
-                <div class="prose"><p>马克龙总统此次到访中国，不仅仅是一次国事访问，更是中法两国之间的友谊和合作的体现。在演讲中，他回顾了17世纪末法国数学家到达广州的历史，强调科学与知识是中法友谊的基石，通过这种方式可以让友谊持续下去。同时，他也提出了中法双方可以携手应对气候变化、保护生物多样性等重要挑战的建议。<br>
-值得我们注意的是，马克龙总统还强调了人文交流的重要性。在当今世界日益紧密的联系中，人文交流已经成为各国相互了解、尊重、信任的重要途径。而中法两国的人文交流具有独特的意义，因为两国文化之间的差异性和互补性都非常明显。这也为两国未来的合作提供了更广阔的空间。<br>
-总之，中法两国之间的友谊和合作需要不断地加强和深化。无论是在科学技术、环境保护，还是在人文交流等方面，两国都应该加强合作，共同推动中法关系的发展。希望中法两国在未来的合作中，能够实现共赢、互利和互信。</p>
-<p>下面是原文：<br>
-4月7日，正在中国进行国事访问的法国总统马克龙到访中山大学，并在中山大学体育馆与该校逾千名师生展开互动交流。<br>
-马克龙在演讲中首先以法语、普通话、粤语向大家问好，并回顾了一段17世纪末法国数学家到达广州的历史。他以这段历史来说明，通过科学和知识，中法能够创建友谊。他深信通过这样的途径可以让友谊持续下去。<br>
-据悉，本次访华是马克龙担任法国总统以来第三次到访中国，也是他第二个总统任期内首次访华。他在交流会上表示，非常高兴在疫情三年之后回到中国，重新恢复双方的对话，和中国共同探索未来的道路，探讨双方如何能够为两国人民和世界做更多的事。<br>
-他分享道，中法双方可以携手做很多工作，来应对当今世界面临的挑战。包括应对气候变化、保护生物多样性，在这些方面，中法、中欧仍然任重道远。<br>
-此外，他强调人文交流的重要性，认为双方可以通过人文交流更好地认识和了解彼此。<br>
-<a href="https://m.chinanews.com/wap/detail/chs/sp/9986202.shtml">https://m.chinanews.com/wap/detail/chs/sp/9986202.shtml</a></p></div>
+                <div class="prose"><h1 id="_1">缘起<a class="toc-link" href="#_1" title="Permanent link"> ¶</a></h1>
+<p>长任务跑起来之后，最怕的就是人不在电脑前。</p>
+<p>改一堆文件、部署上线、跑自动化……这些活儿丢给 Codex 之后，你往往就切去做别的事了。等回来一看，任务十分钟前就结束了，白等。</p>
+<p>&ldquo;能不能让它干完活自己来通知我？&rdquo;</p>
+<p>于是就有了这个 skill：<strong>qq-goal-email</strong>——目标或长任务完成后，自动往你的 QQ 邮箱发一封详细的完成摘要。</p>
+<h1 id="_2">这是什么<a class="toc-link" href="#_2" title="Permanent link"> ¶</a></h1>
+<p>一个 Codex Skill，放在 <code>~/.codex/skills/</code> 里就能被 Codex 自动发现。它的工作方式很简单：</p>
+<blockquote>
+<p>完成一个目标（goal）、跑完一个耗时长或改动大的任务后，不用你开口，Codex 自动整理一份详细的结构化摘要，通过 QQ 邮箱 SMTP 发到你的邮箱。</p>
+</blockquote>
+<h1 id="_3">它能做什么<a class="toc-link" href="#_3" title="Permanent link"> ¶</a></h1>
+<ol>
+<li><strong>完成即自动发送</strong>：目标结束后自动触发，不需要手动提醒&rdquo;记得发邮件&rdquo;</li>
+<li><strong>主动判断该不该发</strong>：改动文件多、耗时长、涉及仓库/部署/自动化，或你可能不在电脑前——这些情况都会自动发；闲聊和小改动不会打扰你</li>
+<li><strong>详细的结构化摘要</strong>：目标、时间、执行过程、结果与产出、问题与解决、未完成与风险，一项不落</li>
+<li><strong>HTML 渲染</strong>：带样式的 HTML 邮件，同时自动附带纯文本兜底，兼容各种邮件客户端</li>
+<li><strong>只依赖 Python 标准库</strong>：smtplib + email，零第三方依赖</li>
+<li><strong>支持预览</strong>：<code>--dry-run</code> 可以先生成邮件内容看效果，不真的发送</li>
+</ol>
+<h1 id="_4">使用方式<a class="toc-link" href="#_4" title="Permanent link"> ¶</a></h1>
+<p>安装：把 <code>qq-goal-email</code> 文件夹复制到 Codex 的 skills 目录。</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Windows</span>
+copy<span class="w"> </span>/y<span class="w"> </span>qq-goal-email<span class="w"> </span>%USERPROFILE%<span class="se">\.</span>codex<span class="se">\s</span>kills<span class="se">\</span>
+
+<span class="c1"># macOS / Linux</span>
+cp<span class="w"> </span>-r<span class="w"> </span>qq-goal-email<span class="w"> </span>~/.codex/skills/
+</code></pre></div>
+
+<p>重启 Codex 后，skill 自动生效。</p>
+<p>首次配置需要 QQ 邮箱的 SMTP 授权码（不是登录密码）：QQ邮箱 → 设置 → 账户 → 开启 POP3/SMTP 服务 → 生成授权码。</p>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>qq-goal-email/scripts/send_qq_email.py<span class="w"> </span>--save-config<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--from<span class="w"> </span>me@qq.com<span class="w"> </span>--auth-code<span class="w"> </span>xxxx<span class="w"> </span>--to<span class="w"> </span>me@qq.com
+</code></pre></div>
+
+<p>配置保存在 <code>~/.config/qq-goal-email/config.json</code>。也可以直接用环境变量：</p>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">QQ_MAIL_FROM</span><span class="o">=</span>me@qq.com
+<span class="nb">export</span><span class="w"> </span><span class="nv">QQ_MAIL_AUTH_CODE</span><span class="o">=</span>xxxx
+<span class="nb">export</span><span class="w"> </span><span class="nv">QQ_MAIL_TO</span><span class="o">=</span>me@qq.com
+</code></pre></div>
+
+<p>之后只要对 Codex 说一句&rdquo;完成后发 QQ 邮箱给我&rdquo;，它就会照做。</p>
+<h1 id="_5">技术实现<a class="toc-link" href="#_5" title="Permanent link"> ¶</a></h1>
+<p>整个 skill 就两个核心部分：</p>
+<ul>
+<li><strong>SKILL.md</strong>：告诉 Codex 什么时候该主动发邮件、摘要怎么写、HTML 模板长什么样</li>
+<li><strong>scripts/send_qq_email.py</strong>：发送脚本，基于 <code>smtplib</code> + <code>email</code>，连 <code>smtp.qq.com:465</code>（SSL）</li>
+</ul>
+<p>几个设计细节：</p>
+<p><strong>配置优先级。</strong> 命令行参数 &gt; 环境变量 &gt; 配置文件，三层覆盖，灵活不冲突。</p>
+<p><strong>自动签名。</strong> 每封邮件末尾自动附带&rdquo;本邮件由 Codex 的 qq-goal-email skill 自动发送&rdquo;，不用手动加。</p>
+<p><strong>权限保护。</strong> 保存授权码时自动把配置文件权限收紧到 600，README 里也明确警告不要把授权码提交到仓库。</p>
+<p><strong>发件人可自定义。</strong> 默认显示名 <code>Codex</code>，可以用 <code>--from-name</code> 或 <code>QQ_MAIL_FROM_NAME</code> 环境变量改。</p>
+<h1 id="_6">项目链接<a class="toc-link" href="#_6" title="Permanent link"> ¶</a></h1>
+<ul>
+<li>GitHub: <a href="https://github.com/YHSome/SentMeGoal">github.com/YHSome/SentMeGoal</a></li>
+</ul></div>
             </article>
 
             <nav class="article-nav">
                 
-                <a href="这是一条测试帖.html" class="nav-prev">
+                <a href="数据结构六讲题解.html" class="nav-prev">
                     <div class="nav-label">← 上一篇</div>
-                    <div class="nav-title">这是一条测试帖~</div>
+                    <div class="nav-title">数据结构六讲 —— 从栈到线段树</div>
                 </a>
                 
                 
-                <a href="几个ChatGPT镜像网站.html" class="nav-next">
+                <a href="智学伴-基于生成式ai的异步学习方案.html" class="nav-next">
                     <div class="nav-label">下一篇 →</div>
-                    <div class="nav-title">几个ChatGPT镜像网站</div>
+                    <div class="nav-title">智学伴--基于生成式 AI 的异步学习解决方案</div>
                 </a>
                 
             </nav>

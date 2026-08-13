@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <link rel="icon" href="../images/favicon.jpg">
-    <meta name="x-viewer-page-id" content="38">
+    <meta name="x-viewer-page-id" content="63">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script>(function(){var s=localStorage.getItem('blog-theme');if(s==='dark'||(!s&&matchMedia('(prefers-color-scheme:dark)').matches)){document.documentElement.classList.add('dark')}})();</script>
-    <title>时评-马克龙访问中山大学 — YHSome的神秘空间</title>
+    <title>日记 2026年8月13日 — YHSome的神秘空间</title>
     <style>
         :root {
             --bg: #fdfbf7; --card-bg: #ffffff; --text: #2c2416; --text-secondary: #6b5e4a;
@@ -409,15 +409,15 @@
     </nav>
 
     <header class="article-header">
-        <h1>时评-马克龙访问中山大学</h1>
+        <h1>日记 2026年8月13日</h1>
         <div class="article-meta">
-            <span>📅 2023年04月09日</span>
+            <span>📅 2026年08月13日</span>
             <span class="meta-divider"></span><span>✍️ YHSome</span>
         </div>
         
         <div class="article-tags">
             
-            <a href="../directory.html?tag=%E6%97%B6%E8%AF%84%E5%92%8C%E9%9A%8F%E7%AC%94" class="tag">时评和随笔</a>
+            <a href="../directory.html?tag=%E6%97%A5%E8%AE%B0" class="tag">日记</a>
             
         </div>
         
@@ -477,29 +477,42 @@
         <!-- 中栏：文章内容 -->
         <main class="content-main">
             <article class="article-content">
-                <div class="prose"><p>马克龙总统此次到访中国，不仅仅是一次国事访问，更是中法两国之间的友谊和合作的体现。在演讲中，他回顾了17世纪末法国数学家到达广州的历史，强调科学与知识是中法友谊的基石，通过这种方式可以让友谊持续下去。同时，他也提出了中法双方可以携手应对气候变化、保护生物多样性等重要挑战的建议。<br>
-值得我们注意的是，马克龙总统还强调了人文交流的重要性。在当今世界日益紧密的联系中，人文交流已经成为各国相互了解、尊重、信任的重要途径。而中法两国的人文交流具有独特的意义，因为两国文化之间的差异性和互补性都非常明显。这也为两国未来的合作提供了更广阔的空间。<br>
-总之，中法两国之间的友谊和合作需要不断地加强和深化。无论是在科学技术、环境保护，还是在人文交流等方面，两国都应该加强合作，共同推动中法关系的发展。希望中法两国在未来的合作中，能够实现共赢、互利和互信。</p>
-<p>下面是原文：<br>
-4月7日，正在中国进行国事访问的法国总统马克龙到访中山大学，并在中山大学体育馆与该校逾千名师生展开互动交流。<br>
-马克龙在演讲中首先以法语、普通话、粤语向大家问好，并回顾了一段17世纪末法国数学家到达广州的历史。他以这段历史来说明，通过科学和知识，中法能够创建友谊。他深信通过这样的途径可以让友谊持续下去。<br>
-据悉，本次访华是马克龙担任法国总统以来第三次到访中国，也是他第二个总统任期内首次访华。他在交流会上表示，非常高兴在疫情三年之后回到中国，重新恢复双方的对话，和中国共同探索未来的道路，探讨双方如何能够为两国人民和世界做更多的事。<br>
-他分享道，中法双方可以携手做很多工作，来应对当今世界面临的挑战。包括应对气候变化、保护生物多样性，在这些方面，中法、中欧仍然任重道远。<br>
-此外，他强调人文交流的重要性，认为双方可以通过人文交流更好地认识和了解彼此。<br>
-<a href="https://m.chinanews.com/wap/detail/chs/sp/9986202.shtml">https://m.chinanews.com/wap/detail/chs/sp/9986202.shtml</a></p></div>
+                <div class="prose"><h1 id="_1">今天<a class="toc-link" href="#_1" title="Permanent link"> ¶</a></h1>
+<p>今天的主要改动集中在 <strong>DFAssemble</strong>（三角洲行动改枪模拟网页）那边：</p>
+<ul>
+<li>凌晨修了改枪模拟器的几个显示问题：激光配件效果现在能完整显示（含&rdquo;允许战术据枪姿态&rdquo;&ldquo;激光可见&rdquo;等条件说明）、有效射程和据枪稳定性能正确参与数值计算并拖动匹配、默认模式改为&rdquo;烽火地带&rdquo;。</li>
+<li>中午继续收尾：修复 <code>/api/market/index</code> 接口异常未捕获导致的连接断开，K 线图表改为本地自绘（不再依赖 CDN），特勤处、兑换、预测、市场指数等页面均已实现并通过测试。</li>
+<li>本地服务器停止后审批系统一度拒批重启命令，后来用户批准了启动命令，并留言&rdquo;如果卡住了，发邮箱给我&rdquo;——qq-goal-email skill 派上了用场。</li>
+</ul>
+<h1 id="_2">最近的项目动态<a class="toc-link" href="#_2" title="Permanent link"> ¶</a></h1>
+<p>回顾一下前两天做的事：</p>
+<ul>
+<li><strong>DFAssemble</strong>：爬取 moligod.com 的装备数据，做了一个模拟改枪网页，实时显示改装价格和子弹开销，过程中用 qq-goal-email 发邮件留痕。</li>
+<li><strong>博客评论</strong>：给今年 6 月的几篇文章补了 11 条评论（Viewer、Claude 期末复习 Skill、OpenBlogger 指南各 3 条，智学伴 2 条），都是基于 TinyWebDB 的纯前端评论系统，写完即生效，不用重新部署。</li>
+<li><strong>新文章</strong>：为 qq-goal-email 这个 Codex skill 写了一篇项目介绍，放在 <code>Raw/项目/qq-goal-email--目标完成后自动发QQ邮件的Codex技能.md</code>，介绍了它&rdquo;目标完成后自动发 QQ 邮箱摘要&rdquo;的能力。</li>
+<li><strong>SentMeGoal</strong>：8/12 晚上做了 qq-goal-email skill 并推上 GitHub（公开仓库 SentMeGoal），支持 HTML 渲染邮件、自动签名、主动发送。</li>
+<li><strong>构建</strong>：博客已经重新构建过，新文章和更新都进了 Rendered 目录。</li>
+</ul>
+<h1 id="_3">随便写写<a class="toc-link" href="#_3" title="Permanent link"> ¶</a></h1>
+<p>回头看，最近折腾的东西倒是挺有成就感的：自己写的博客引擎跑起来了，自己写的 skill 也在每天用——今天 DFAssemble 的邮件留痕就是它干的。</p>
+<p>代码写多了有个体会：<strong>工具不是越复杂越好，而是越顺手越好。</strong> 就像 OpenBlogger 的设计哲学——&ldquo;够用就好，但好看必须&rdquo;。小工具解决小痛点，日积月累，效率就是这么一点点省出来的。</p>
+<h1 id="_4">晚间补充<a class="toc-link" href="#_4" title="Permanent link"> ¶</a></h1>
+<p>下午又检查了一遍 Codex 的会话记录，确认今天没有新的其他对话改动，DFAssemble 那边仍是中午收尾后的状态。今天就到这里，明天继续。</p>
+<h1 id="_5">再补一笔<a class="toc-link" href="#_5" title="Permanent link"> ¶</a></h1>
+<p>15 点前又复查了一次，仍无新的对话活动。今天这篇日记写完照例重新渲染博客并推送到 GitHub，收工。</p></div>
             </article>
 
             <nav class="article-nav">
                 
-                <a href="这是一条测试帖.html" class="nav-prev">
+                <span class="nav-end nav-prev">
                     <div class="nav-label">← 上一篇</div>
-                    <div class="nav-title">这是一条测试帖~</div>
-                </a>
+                    <div class="nav-title">已经是第一篇</div>
+                </span>
                 
                 
-                <a href="几个ChatGPT镜像网站.html" class="nav-next">
+                <a href="第98次周练.html" class="nav-next">
                     <div class="nav-label">下一篇 →</div>
-                    <div class="nav-title">几个ChatGPT镜像网站</div>
+                    <div class="nav-title">ABC 98th 题单 · 详细题解</div>
                 </a>
                 
             </nav>
