@@ -432,7 +432,7 @@
                     <div class="widget-stats">
                         <div class="stat-row"><span>文章总数</span><strong>55 篇</strong></div>
                         <div class="stat-row"><span>标签</span><strong>8 个</strong></div>
-                        <div class="stat-row"><span>总字数</span><strong>100,931</strong></div>
+                        <div class="stat-row"><span>总字数</span><strong>101,208</strong></div>
                     </div>
                 </div>
                 
@@ -497,9 +497,13 @@
 <p>回头看，最近折腾的东西倒是挺有成就感的：自己写的博客引擎跑起来了，自己写的 skill 也在每天用——今天 DFAssemble 的邮件留痕就是它干的。</p>
 <p>代码写多了有个体会：<strong>工具不是越复杂越好，而是越顺手越好。</strong> 就像 OpenBlogger 的设计哲学——&ldquo;够用就好，但好看必须&rdquo;。小工具解决小痛点，日积月累，效率就是这么一点点省出来的。</p>
 <h1 id="_4">晚间补充<a class="toc-link" href="#_4" title="Permanent link"> ¶</a></h1>
-<p>下午又检查了一遍 Codex 的会话记录，确认今天没有新的其他对话改动，DFAssemble 那边仍是中午收尾后的状态。今天就到这里，明天继续。</p>
-<h1 id="_5">再补一笔<a class="toc-link" href="#_5" title="Permanent link"> ¶</a></h1>
-<p>15 点前又复查了一次，仍无新的对话活动。今天这篇日记写完照例重新渲染博客并推送到 GitHub，收工。</p></div>
+<p>下午之后又查了一遍 Codex 的会话记录，今天还有两处其他项目的动态：</p>
+<ul>
+<li><strong>GunShooter</strong>：更新了训练目标——把物理模型调得更接近现实世界，训练 AI 实现站立、左右走动、跳跃，跳跃之后还要学开枪控制（手能指向目标发射子弹，枪带后坐力）。用户特别叮嘱：每次训练和测试完都要发 QQ 邮件汇报。</li>
+<li><strong>vjudge 爬题</strong>（VS Code 新会话）：爬取 vjudge.net/group/gzhu-coding 里每一场比赛的题目，把题目出处（如 abc-001-a）整理成 Excel 表格，统计每道 ABC 题在各场比赛中出现过的次数。过程中用到了账号登录。</li>
+</ul>
+<p>另外今天下午还改了 <strong>OpenBlogger</strong> 的渲染逻辑：raw 里缺 <code>title</code>/<code>time</code> 元数据的 md 文件，构建时自动写回源文件补全（标题取正文第一句，日期取当前时间），并且是幂等的——<code>数据结构六讲题解</code> 和 <code>第98次周练</code> 两篇已自动补上。</p>
+<p>今天这篇日记写完照例重新渲染博客并推送到 GitHub，收工。</p></div>
             </article>
 
             <nav class="article-nav">
