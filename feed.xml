@@ -5,28 +5,35 @@
     <link>https://example.com</link>
     <description>书山有径勤为路，学海无涯苦作舟</description>
     <language>zh-CN</language>
-    <lastBuildDate>Wed, 12 Aug 2026 19:02:59 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 13 Aug 2026 14:52:35 +0800</lastBuildDate>
     <atom:link href="https://example.com/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
-      <title>qq-goal-email：让 Codex 干完活主动给你发 QQ 邮件</title>
-      <link>https://example.com/posts/qq-goal-email-目标完成后自动发QQ邮件的Codex技能.html</link>
-      <description>缘起 长任务跑起来之后，最怕的就是人不在电脑前。 改一堆文件、部署上线、跑自动化……这些活儿丢给 Codex 之后，你往往就切去做别的事了。等回来一看，任务十分钟前就结束了，白等。 &quot;能不能让它干完活自己来通知我？&quot; 于是就有了这个 skill：qq-goal-email——目标或长任务完成后，自动…</description>
-      <pubDate>Wed, 12 Aug 2026 00:00:00 +0800</pubDate>
-      <guid isPermaLink="true">https://example.com/posts/qq-goal-email-目标完成后自动发QQ邮件的Codex技能.html</guid>
+      <title>日记 2026年8月13日</title>
+      <link>https://example.com/posts/2026年08月13日日记.html</link>
+      <description>今天 今天的主要改动集中在 DFAssemble（三角洲行动改枪模拟网页）那边： 凌晨修了改枪模拟器的几个显示问题：激光配件效果现在能完整显示（含&quot;允许战术据枪姿态&quot;&quot;激光可见&quot;等条件说明）、有效射程和据枪稳定性能正确参与数值计算并拖动匹配、默认模式改为&quot;烽火地带&quot;。 中午继续收尾：修复 /api/…</description>
+      <pubDate>Thu, 13 Aug 2026 00:00:00 +0800</pubDate>
+      <guid isPermaLink="true">https://example.com/posts/2026年08月13日日记.html</guid>
     </item>
     <item>
       <title>ABC 98th 题单 · 详细题解</title>
       <link>https://example.com/posts/第98次周练.html</link>
       <description>ABC 98th 题单 · 详细题解 涵盖 AtCoder Beginner Contest 六道经典题目 + 一道附加题，从入门到进阶，逐题精讲。 目录 A题 · 五百元硬币 (ABC 150 A) B题 · 自助取餐 (ABC 140 B) C题 · 计票 (ABC 155 C) D题 · 数字…</description>
-      <pubDate>Wed, 12 Aug 2026 00:00:00 +0800</pubDate>
+      <pubDate>Thu, 13 Aug 2026 00:00:00 +0800</pubDate>
       <guid isPermaLink="true">https://example.com/posts/第98次周练.html</guid>
     </item>
     <item>
       <title>数据结构六讲 —— 从栈到线段树</title>
       <link>https://example.com/posts/数据结构六讲题解.html</link>
       <description>数据结构六讲 —— 从栈到线段树 题解基于 AtCoder ABC 六道真题，涵盖六种核心数据结构，难度从 200pt 逐级爬升至 525pt。 每道题提供 Java 和 C++ 双语言代码，C++ 版本附详细解析。 目录 讲次 数据结构 题目 分数 AtCoder 链接 一 Stack 栈 ABC…</description>
-      <pubDate>Wed, 12 Aug 2026 00:00:00 +0800</pubDate>
+      <pubDate>Thu, 13 Aug 2026 00:00:00 +0800</pubDate>
       <guid isPermaLink="true">https://example.com/posts/数据结构六讲题解.html</guid>
+    </item>
+    <item>
+      <title>qq-goal-email：让 Codex 干完活主动给你发 QQ 邮件</title>
+      <link>https://example.com/posts/qq-goal-email-目标完成后自动发QQ邮件的Codex技能.html</link>
+      <description>缘起 长任务跑起来之后，最怕的就是人不在电脑前。 改一堆文件、部署上线、跑自动化……这些活儿丢给 Codex 之后，你往往就切去做别的事了。等回来一看，任务十分钟前就结束了，白等。 &quot;能不能让它干完活自己来通知我？&quot; 于是就有了这个 skill：qq-goal-email——目标或长任务完成后，自动…</description>
+      <pubDate>Wed, 12 Aug 2026 00:00:00 +0800</pubDate>
+      <guid isPermaLink="true">https://example.com/posts/qq-goal-email-目标完成后自动发QQ邮件的Codex技能.html</guid>
     </item>
     <item>
       <title>智学伴--基于生成式 AI 的异步学习解决方案</title>
@@ -139,13 +146,6 @@
       <description>此文章同步保存在以下网站 森的神秘空间 github 功能简介 该脚本可以帮助你完成 西柚英语 中的朗读部分。 西柚朗读者由上一代的西柚选择者改制而来，两者并不兼容 github项目地址/下载地址 使用方法 下面是演示视频 Your browser does not support the vide…</description>
       <pubDate>Tue, 22 Aug 2023 00:00:00 +0800</pubDate>
       <guid isPermaLink="true">https://example.com/posts/xiyouspeaker.html</guid>
-    </item>
-    <item>
-      <title>西柚选择者（西柚英语辅助）</title>
-      <link>https://example.com/posts/xiyouchooser.html</link>
-      <description>此文章同步保存在以下网站 森的神秘空间 github 功能简介 该脚本可以帮助你完成 西柚英语 中烦人的看词选义和看义选词。 github项目地址/下载地址 使用方法 下面是演示视频 Your browser does not support the video tag. 第一步：安装python以…</description>
-      <pubDate>Sat, 19 Aug 2023 00:00:00 +0800</pubDate>
-      <guid isPermaLink="true">https://example.com/posts/xiyouchooser.html</guid>
     </item>
   </channel>
 </rss>
