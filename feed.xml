@@ -5,8 +5,15 @@
     <link>https://example.com</link>
     <description>书山有径勤为路，学海无涯苦作舟</description>
     <language>zh-CN</language>
-    <lastBuildDate>Thu, 13 Aug 2026 22:01:58 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 14 Aug 2026 22:02:50 +0800</lastBuildDate>
     <atom:link href="https://example.com/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>日记 2026年8月14日</title>
+      <link>https://example.com/posts/2026年08月14日日记.html</link>
+      <description>今天 今天开了两个新会话，另外两个老项目也在继续推进： OpenBlogger 模板优化（下午，新会话）：要求持续不断地优化博客模板、新建一个渲染模板，反复迭代不设停，每次更新都要发 QQ 邮件说明改了哪些组件和内容。 ClashRoyal 私服（晚上，新会话）：准备学习并制作皇室战争旧版本的私服（…</description>
+      <pubDate>Fri, 14 Aug 2026 00:00:00 +0800</pubDate>
+      <guid isPermaLink="true">https://example.com/posts/2026年08月14日日记.html</guid>
+    </item>
     <item>
       <title>日记 2026年8月13日</title>
       <link>https://example.com/posts/2026年08月13日日记.html</link>
@@ -139,13 +146,6 @@
       <description>前言 前段时间和朋友吹水时，偶尔提到了桥兴中学的事儿，突然灵光一闪：万一我们真的能在我的世界里面还原桥兴中学呢？ 心动不如行动，于是就有了这个计划。并且，我为此还开设了一个服务器，大家也可以随时进入参观玩耍。 如何加入此服务器？ 本服务器同时支持java、基岩版minecraft并且无需正版账号，即…</description>
       <pubDate>Mon, 28 Aug 2023 00:00:00 +0800</pubDate>
       <guid isPermaLink="true">https://example.com/posts/pixelqx.html</guid>
-    </item>
-    <item>
-      <title>西柚朗读者（西柚英语辅助）</title>
-      <link>https://example.com/posts/xiyouspeaker.html</link>
-      <description>此文章同步保存在以下网站 森的神秘空间 github 功能简介 该脚本可以帮助你完成 西柚英语 中的朗读部分。 西柚朗读者由上一代的西柚选择者改制而来，两者并不兼容 github项目地址/下载地址 使用方法 下面是演示视频 Your browser does not support the vide…</description>
-      <pubDate>Tue, 22 Aug 2023 00:00:00 +0800</pubDate>
-      <guid isPermaLink="true">https://example.com/posts/xiyouspeaker.html</guid>
     </item>
   </channel>
 </rss>
