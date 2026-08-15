@@ -9,6 +9,7 @@
     "enable_rss": true,
     "enable_sitemap": true,
     "excerpt_length": 150,
+    "theme": "aurora",
     "viewer": {
         "enable_counter": true,
         "enable_unique": true,
