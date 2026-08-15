@@ -5,8 +5,15 @@
     <link>https://example.com</link>
     <description>书山有径勤为路，学海无涯苦作舟</description>
     <language>zh-CN</language>
-    <lastBuildDate>Sat, 15 Aug 2026 13:20:41 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 15 Aug 2026 22:01:11 +0800</lastBuildDate>
     <atom:link href="https://example.com/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>日记 2026年8月15日</title>
+      <link>https://example.com/posts/2026年08月15日日记.html</link>
+      <description>今天 今天其他项目都没有新的动静——查了 Codex 的会话记录，今天活跃的只有博客这个对话本身。 博客这边只发生了一件事：下午 13:20 左右重新构建了一次站点（Default 主题），渲染产物和已提交内容一致，没有产生新的文件变化。 待办/记录 OpenBlogger submodule 里还…</description>
+      <pubDate>Sat, 15 Aug 2026 00:00:00 +0800</pubDate>
+      <guid isPermaLink="true">https://example.com/posts/2026年08月15日日记.html</guid>
+    </item>
     <item>
       <title>日记 2026年8月14日</title>
       <link>https://example.com/posts/2026年08月14日日记.html</link>
@@ -139,13 +146,6 @@
       <description>前言 这个文心一言光是在申请这一栏就拦住我了。捏麻申请给我拖了大半年才通过，在这期间我都不知道换了多少个chatgpt的镜像网站了。 正文 其实网上说的文心一言有多烂我是不太认可的，现在的文心一言在中文的问答方面以及比较正常了。chatgpt的语料库是来自众多语言的，而以英语为主，文心一言则是以中文…</description>
       <pubDate>Mon, 28 Aug 2023 00:00:00 +0800</pubDate>
       <guid isPermaLink="true">https://example.com/posts/随笔-文心一言使用感受.html</guid>
-    </item>
-    <item>
-      <title>PixelQX：像素桥兴计划</title>
-      <link>https://example.com/posts/pixelqx.html</link>
-      <description>前言 前段时间和朋友吹水时，偶尔提到了桥兴中学的事儿，突然灵光一闪：万一我们真的能在我的世界里面还原桥兴中学呢？ 心动不如行动，于是就有了这个计划。并且，我为此还开设了一个服务器，大家也可以随时进入参观玩耍。 如何加入此服务器？ 本服务器同时支持java、基岩版minecraft并且无需正版账号，即…</description>
-      <pubDate>Mon, 28 Aug 2023 00:00:00 +0800</pubDate>
-      <guid isPermaLink="true">https://example.com/posts/pixelqx.html</guid>
     </item>
   </channel>
 </rss>
