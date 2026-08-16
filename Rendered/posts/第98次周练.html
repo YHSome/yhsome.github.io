@@ -432,7 +432,7 @@
                     <div class="widget-stats">
                         <div class="stat-row"><span>文章总数</span><strong>57 篇</strong></div>
                         <div class="stat-row"><span>标签</span><strong>7 个</strong></div>
-                        <div class="stat-row"><span>总字数</span><strong>101,994</strong></div>
+                        <div class="stat-row"><span>总字数</span><strong>105,279</strong></div>
                     </div>
                 </div>
                 
@@ -546,9 +546,14 @@
 <span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">K</span><span class="p">,</span><span class="w"> </span><span class="n">X</span><span class="p">;</span>
 <span class="w">    </span><span class="n">cin</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">K</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">X</span><span class="p">;</span>
-<span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="p">(</span><span class="n">K</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">500</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">X</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s">&quot;Yes&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s">&quot;No&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
+<span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="p">(</span><span class="n">K</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">500</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">X</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s">&quot;Yes&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s">&quot;No&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
 <span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
 <span class="p">}</span>
+</code></pre></div>
+
+<h4 id="python">Python<a class="toc-link" href="#python" title="Permanent link"> ¶</a></h4>
+<div class="highlight"><pre><span></span><code><span class="n">k</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">input</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Yes&quot;</span> <span class="k">if</span> <span class="n">k</span> <span class="o">*</span> <span class="mi">500</span> <span class="o">&gt;=</span> <span class="n">x</span> <span class="k">else</span> <span class="s2">&quot;No&quot;</span><span class="p">)</span>
 </code></pre></div>
 
 <hr>
@@ -648,6 +653,21 @@
 <span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">ans</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
 <span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
 <span class="p">}</span>
+</code></pre></div>
+
+<h4 id="python_1">Python<a class="toc-link" href="#python_1" title="Permanent link"> ¶</a></h4>
+<div class="highlight"><pre><span></span><code><span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">())</span>
+<span class="n">a</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">input</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()))</span>
+<span class="n">b</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">input</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()))</span>
+<span class="n">c</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">input</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()))</span>
+
+<span class="n">ans</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">ans</span> <span class="o">+=</span> <span class="n">b</span><span class="p">[</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="c1"># 若吃完菜品 A[i] 后紧接着吃 A[i]+1，额外获得 C[A[i]]</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="n">n</span> <span class="ow">and</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">==</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]:</span>
+        <span class="n">ans</span> <span class="o">+=</span> <span class="n">c</span><span class="p">[</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ans</span><span class="p">)</span>
 </code></pre></div>
 
 <hr>
@@ -752,6 +772,17 @@
 
 <span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
 <span class="p">}</span>
+</code></pre></div>
+
+<h4 id="python_2">Python<a class="toc-link" href="#python_2" title="Permanent link"> ¶</a></h4>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">Counter</span>
+
+<span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">())</span>
+<span class="n">cnt</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="nb">input</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+
+<span class="n">max_cnt</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">cnt</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+<span class="n">ans</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">s</span> <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cnt</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="n">max_cnt</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ans</span><span class="p">))</span>
 </code></pre></div>
 
 <hr>
@@ -897,6 +928,27 @@
 <span class="p">}</span>
 </code></pre></div>
 
+<h4 id="python_3">Python<a class="toc-link" href="#python_3" title="Permanent link"> ¶</a></h4>
+<div class="highlight"><pre><span></span><code><span class="n">MOD</span> <span class="o">=</span> <span class="mi">1_000_000_007</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="nb">input</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+<span class="c1"># dp[r] = 当前已处理前缀中，数值模 13 余 r 的方案数</span>
+<span class="n">dp</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">13</span>
+<span class="n">dp</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="k">for</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+    <span class="n">ndp</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">13</span>
+    <span class="n">digits</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="k">if</span> <span class="n">ch</span> <span class="o">==</span> <span class="s1">&#39;?&#39;</span> <span class="k">else</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">ch</span><span class="p">)]</span>
+    <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">digits</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">13</span><span class="p">):</span>
+            <span class="n">nr</span> <span class="o">=</span> <span class="p">(</span><span class="n">r</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">+</span> <span class="n">d</span><span class="p">)</span> <span class="o">%</span> <span class="mi">13</span>
+            <span class="n">ndp</span><span class="p">[</span><span class="n">nr</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">ndp</span><span class="p">[</span><span class="n">nr</span><span class="p">]</span> <span class="o">+</span> <span class="n">dp</span><span class="p">[</span><span class="n">r</span><span class="p">])</span> <span class="o">%</span> <span class="n">MOD</span>
+    <span class="n">dp</span> <span class="o">=</span> <span class="n">ndp</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">dp</span><span class="p">[</span><span class="mi">5</span><span class="p">])</span>
+</code></pre></div>
+
 <hr>
 <h2 id="e-abc-145-e">E题 · 自助餐 (ABC 145 E)<a class="toc-link" href="#e-abc-145-e" title="Permanent link"> ¶</a></h2>
 <table>
@@ -1035,6 +1087,33 @@
 <span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">ans</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
 <span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
 <span class="p">}</span>
+</code></pre></div>
+
+<h4 id="python_4">Python<a class="toc-link" href="#python_4" title="Permanent link"> ¶</a></h4>
+<div class="highlight"><pre><span></span><code><span class="n">n</span><span class="p">,</span> <span class="n">t</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">input</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+<span class="n">a</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">b</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">input</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+    <span class="n">a</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">b</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+
+<span class="c1"># dp[time] = 总点菜时间恰好为 time（time &lt; T）时的最大美味度</span>
+<span class="n">dp</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">t</span>
+<span class="n">dp</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="n">ans</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="c1"># 把第 i 道菜当作&quot;最后一道&quot;：之前所有菜的总时间必须 &lt; T</span>
+    <span class="k">for</span> <span class="n">tt</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">dp</span><span class="p">[</span><span class="n">tt</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">ans</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">ans</span><span class="p">,</span> <span class="n">dp</span><span class="p">[</span><span class="n">tt</span><span class="p">]</span> <span class="o">+</span> <span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="c1"># 0/1 背包：把第 i 道菜加入（倒序保证每道菜只选一次）</span>
+    <span class="k">for</span> <span class="n">tt</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">t</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">dp</span><span class="p">[</span><span class="n">tt</span> <span class="o">-</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">dp</span><span class="p">[</span><span class="n">tt</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">dp</span><span class="p">[</span><span class="n">tt</span><span class="p">],</span> <span class="n">dp</span><span class="p">[</span><span class="n">tt</span> <span class="o">-</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">+</span> <span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">ans</span><span class="p">)</span>
 </code></pre></div>
 
 <hr>
@@ -1410,6 +1489,120 @@
 <span class="p">}</span>
 </code></pre></div>
 
+<h4 id="python_5">Python<a class="toc-link" href="#python_5" title="Permanent link"> ¶</a></h4>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">add_intersections</span><span class="p">(</span><span class="n">cand</span><span class="p">,</span> <span class="n">ha</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">va</span><span class="p">,</span> <span class="n">hb</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">vb</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;两条直线 a + va*t 与 b + vb*t 的交点时刻 t = (b-a)/(va-vb)&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">ha</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">hb</span><span class="p">:</span>
+        <span class="k">return</span>
+    <span class="k">if</span> <span class="n">va</span> <span class="o">==</span> <span class="n">vb</span><span class="p">:</span>      <span class="c1"># 平行，无交点</span>
+        <span class="k">return</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="p">(</span><span class="n">b</span> <span class="o">-</span> <span class="n">a</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">va</span> <span class="o">-</span> <span class="n">vb</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">t</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">cand</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">area</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">hasR</span><span class="p">,</span> <span class="n">xMaxR</span><span class="p">,</span> <span class="n">xMinR</span><span class="p">,</span> <span class="n">hasL</span><span class="p">,</span> <span class="n">xMaxL</span><span class="p">,</span> <span class="n">xMinL</span><span class="p">,</span> <span class="n">hasUD</span><span class="p">,</span> <span class="n">xMaxUD</span><span class="p">,</span> <span class="n">xMinUD</span><span class="p">,</span>
+         <span class="n">hasU</span><span class="p">,</span> <span class="n">yMaxU</span><span class="p">,</span> <span class="n">yMinU</span><span class="p">,</span> <span class="n">hasD</span><span class="p">,</span> <span class="n">yMaxD</span><span class="p">,</span> <span class="n">yMinD</span><span class="p">,</span> <span class="n">hasRL</span><span class="p">,</span> <span class="n">yMaxRL</span><span class="p">,</span> <span class="n">yMinRL</span><span class="p">):</span>
+    <span class="n">x_max</span> <span class="o">=</span> <span class="n">x_min</span> <span class="o">=</span> <span class="n">y_max</span> <span class="o">=</span> <span class="n">y_min</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">x_max</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1e18</span>
+    <span class="n">x_min</span> <span class="o">=</span> <span class="mf">1e18</span>
+    <span class="n">y_max</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1e18</span>
+    <span class="n">y_min</span> <span class="o">=</span> <span class="mf">1e18</span>
+    <span class="k">if</span> <span class="n">hasR</span><span class="p">:</span>
+        <span class="n">x_max</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">x_max</span><span class="p">,</span> <span class="n">xMaxR</span> <span class="o">+</span> <span class="n">t</span><span class="p">)</span>
+        <span class="n">x_min</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">x_min</span><span class="p">,</span> <span class="n">xMinR</span> <span class="o">+</span> <span class="n">t</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">hasL</span><span class="p">:</span>
+        <span class="n">x_max</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">x_max</span><span class="p">,</span> <span class="n">xMaxL</span> <span class="o">-</span> <span class="n">t</span><span class="p">)</span>
+        <span class="n">x_min</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">x_min</span><span class="p">,</span> <span class="n">xMinL</span> <span class="o">-</span> <span class="n">t</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">hasUD</span><span class="p">:</span>
+        <span class="n">x_max</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">x_max</span><span class="p">,</span> <span class="n">xMaxUD</span><span class="p">)</span>
+        <span class="n">x_min</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">x_min</span><span class="p">,</span> <span class="n">xMinUD</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">hasU</span><span class="p">:</span>
+        <span class="n">y_max</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">y_max</span><span class="p">,</span> <span class="n">yMaxU</span> <span class="o">+</span> <span class="n">t</span><span class="p">)</span>
+        <span class="n">y_min</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">y_min</span><span class="p">,</span> <span class="n">yMinU</span> <span class="o">+</span> <span class="n">t</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">hasD</span><span class="p">:</span>
+        <span class="n">y_max</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">y_max</span><span class="p">,</span> <span class="n">yMaxD</span> <span class="o">-</span> <span class="n">t</span><span class="p">)</span>
+        <span class="n">y_min</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">y_min</span><span class="p">,</span> <span class="n">yMinD</span> <span class="o">-</span> <span class="n">t</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">hasRL</span><span class="p">:</span>
+        <span class="n">y_max</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">y_max</span><span class="p">,</span> <span class="n">yMaxRL</span><span class="p">)</span>
+        <span class="n">y_min</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">y_min</span><span class="p">,</span> <span class="n">yMinRL</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">x_max</span> <span class="o">-</span> <span class="n">x_min</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">y_max</span> <span class="o">-</span> <span class="n">y_min</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+    <span class="nb">input</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">readline</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">())</span>
+
+    <span class="n">NEG</span> <span class="o">=</span> <span class="o">-</span><span class="mi">10</span><span class="o">**</span><span class="mi">30</span>
+    <span class="n">POS</span> <span class="o">=</span> <span class="mi">10</span><span class="o">**</span><span class="mi">30</span>
+    <span class="n">xMaxR</span> <span class="o">=</span> <span class="n">xMaxL</span> <span class="o">=</span> <span class="n">xMaxUD</span> <span class="o">=</span> <span class="n">NEG</span>
+    <span class="n">xMinR</span> <span class="o">=</span> <span class="n">xMinL</span> <span class="o">=</span> <span class="n">xMinUD</span> <span class="o">=</span> <span class="n">POS</span>
+    <span class="n">yMaxU</span> <span class="o">=</span> <span class="n">yMaxD</span> <span class="o">=</span> <span class="n">yMaxRL</span> <span class="o">=</span> <span class="n">NEG</span>
+    <span class="n">yMinU</span> <span class="o">=</span> <span class="n">yMinD</span> <span class="o">=</span> <span class="n">yMinRL</span> <span class="o">=</span> <span class="n">POS</span>
+    <span class="n">hasR</span> <span class="o">=</span> <span class="n">hasL</span> <span class="o">=</span> <span class="n">hasU</span> <span class="o">=</span> <span class="n">hasD</span> <span class="o">=</span> <span class="n">hasUD</span> <span class="o">=</span> <span class="n">hasRL</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">d</span> <span class="o">=</span> <span class="nb">input</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">d</span> <span class="o">==</span> <span class="s1">&#39;R&#39;</span><span class="p">:</span>
+            <span class="n">hasR</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">xMaxR</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">xMaxR</span><span class="p">,</span> <span class="n">x</span><span class="p">);</span> <span class="n">xMinR</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">xMinR</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+            <span class="n">hasRL</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">yMaxRL</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">yMaxRL</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span> <span class="n">yMinRL</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">yMinRL</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">d</span> <span class="o">==</span> <span class="s1">&#39;L&#39;</span><span class="p">:</span>
+            <span class="n">hasL</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">xMaxL</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">xMaxL</span><span class="p">,</span> <span class="n">x</span><span class="p">);</span> <span class="n">xMinL</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">xMinL</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+            <span class="n">hasRL</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">yMaxRL</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">yMaxRL</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span> <span class="n">yMinRL</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">yMinRL</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">d</span> <span class="o">==</span> <span class="s1">&#39;U&#39;</span><span class="p">:</span>
+            <span class="n">hasU</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">yMaxU</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">yMaxU</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span> <span class="n">yMinU</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">yMinU</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+            <span class="n">hasUD</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">xMaxUD</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">xMaxUD</span><span class="p">,</span> <span class="n">x</span><span class="p">);</span> <span class="n">xMinUD</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">xMinUD</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>  <span class="c1"># &#39;D&#39;</span>
+            <span class="n">hasD</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">yMaxD</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">yMaxD</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span> <span class="n">yMinD</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">yMinD</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+            <span class="n">hasUD</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">xMaxUD</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">xMaxUD</span><span class="p">,</span> <span class="n">x</span><span class="p">);</span> <span class="n">xMinUD</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">xMinUD</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+
+    <span class="n">cand</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">]</span>
+    <span class="c1"># x_max / x_min：R(+t)、L(-t)、UD(常量) 两两求交点</span>
+    <span class="n">add_intersections</span><span class="p">(</span><span class="n">cand</span><span class="p">,</span> <span class="n">hasR</span><span class="p">,</span> <span class="n">xMaxR</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">hasL</span><span class="p">,</span> <span class="n">xMaxL</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">add_intersections</span><span class="p">(</span><span class="n">cand</span><span class="p">,</span> <span class="n">hasR</span><span class="p">,</span> <span class="n">xMaxR</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">hasUD</span><span class="p">,</span> <span class="n">xMaxUD</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">add_intersections</span><span class="p">(</span><span class="n">cand</span><span class="p">,</span> <span class="n">hasL</span><span class="p">,</span> <span class="n">xMaxL</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">hasUD</span><span class="p">,</span> <span class="n">xMaxUD</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">add_intersections</span><span class="p">(</span><span class="n">cand</span><span class="p">,</span> <span class="n">hasR</span><span class="p">,</span> <span class="n">xMinR</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">hasL</span><span class="p">,</span> <span class="n">xMinL</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">add_intersections</span><span class="p">(</span><span class="n">cand</span><span class="p">,</span> <span class="n">hasR</span><span class="p">,</span> <span class="n">xMinR</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">hasUD</span><span class="p">,</span> <span class="n">xMinUD</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">add_intersections</span><span class="p">(</span><span class="n">cand</span><span class="p">,</span> <span class="n">hasL</span><span class="p">,</span> <span class="n">xMinL</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">hasUD</span><span class="p">,</span> <span class="n">xMinUD</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="c1"># y_max / y_min：U(+t)、D(-t)、RL(常量)</span>
+    <span class="n">add_intersections</span><span class="p">(</span><span class="n">cand</span><span class="p">,</span> <span class="n">hasU</span><span class="p">,</span> <span class="n">yMaxU</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">hasD</span><span class="p">,</span> <span class="n">yMaxD</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">add_intersections</span><span class="p">(</span><span class="n">cand</span><span class="p">,</span> <span class="n">hasU</span><span class="p">,</span> <span class="n">yMaxU</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">hasRL</span><span class="p">,</span> <span class="n">yMaxRL</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">add_intersections</span><span class="p">(</span><span class="n">cand</span><span class="p">,</span> <span class="n">hasD</span><span class="p">,</span> <span class="n">yMaxD</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">hasRL</span><span class="p">,</span> <span class="n">yMaxRL</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">add_intersections</span><span class="p">(</span><span class="n">cand</span><span class="p">,</span> <span class="n">hasU</span><span class="p">,</span> <span class="n">yMinU</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">hasD</span><span class="p">,</span> <span class="n">yMinD</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">add_intersections</span><span class="p">(</span><span class="n">cand</span><span class="p">,</span> <span class="n">hasU</span><span class="p">,</span> <span class="n">yMinU</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">hasRL</span><span class="p">,</span> <span class="n">yMinRL</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">add_intersections</span><span class="p">(</span><span class="n">cand</span><span class="p">,</span> <span class="n">hasD</span><span class="p">,</span> <span class="n">yMinD</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">hasRL</span><span class="p">,</span> <span class="n">yMinRL</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="n">ans</span> <span class="o">=</span> <span class="mf">1e30</span>
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">cand</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">t</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">ans</span><span class="p">,</span> <span class="n">area</span><span class="p">(</span><span class="n">t</span><span class="p">,</span>
+                            <span class="n">hasR</span><span class="p">,</span> <span class="n">xMaxR</span><span class="p">,</span> <span class="n">xMinR</span><span class="p">,</span>
+                            <span class="n">hasL</span><span class="p">,</span> <span class="n">xMaxL</span><span class="p">,</span> <span class="n">xMinL</span><span class="p">,</span>
+                            <span class="n">hasUD</span><span class="p">,</span> <span class="n">xMaxUD</span><span class="p">,</span> <span class="n">xMinUD</span><span class="p">,</span>
+                            <span class="n">hasU</span><span class="p">,</span> <span class="n">yMaxU</span><span class="p">,</span> <span class="n">yMinU</span><span class="p">,</span>
+                            <span class="n">hasD</span><span class="p">,</span> <span class="n">yMaxD</span><span class="p">,</span> <span class="n">yMinD</span><span class="p">,</span>
+                            <span class="n">hasRL</span><span class="p">,</span> <span class="n">yMaxRL</span><span class="p">,</span> <span class="n">yMinRL</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ans</span><span class="si">:</span><span class="s2">.10f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</code></pre></div>
+
 <hr>
 <h2 id="g">G题 · 数学嘉豪<a class="toc-link" href="#g" title="Permanent link"> ¶</a></h2>
 <table>
@@ -1607,6 +1800,29 @@
 <span class="p">}</span>
 </code></pre></div>
 
+<h4 id="python_6">Python（查表法）<a class="toc-link" href="#python_6" title="Permanent link"> ¶</a></h4>
+<div class="highlight"><pre><span></span><code><span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">input</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+
+<span class="c1"># cycle[d] 存储 d 的幂次个位数循环</span>
+<span class="n">cycle</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">[</span><span class="mi">0</span><span class="p">],</span>          <span class="c1"># 0</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">],</span>          <span class="c1"># 1</span>
+    <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="c1"># 2</span>
+    <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="c1"># 3</span>
+    <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span>       <span class="c1"># 4</span>
+    <span class="p">[</span><span class="mi">5</span><span class="p">],</span>          <span class="c1"># 5</span>
+    <span class="p">[</span><span class="mi">6</span><span class="p">],</span>          <span class="c1"># 6</span>
+    <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="c1"># 7</span>
+    <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="c1"># 8</span>
+    <span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>        <span class="c1"># 9</span>
+<span class="p">]</span>
+
+<span class="n">d</span> <span class="o">=</span> <span class="n">a</span> <span class="o">%</span> <span class="mi">10</span>
+<span class="c1"># b-1 是因为 cycle[d][0] 对应 d^1</span>
+<span class="n">idx</span> <span class="o">=</span> <span class="p">(</span><span class="n">b</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">cycle</span><span class="p">[</span><span class="n">d</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cycle</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="n">idx</span><span class="p">])</span>
+</code></pre></div>
+
 <h4 id="c_7">C++（快速幂法）<a class="toc-link" href="#c_7" title="Permanent link"> ¶</a></h4>
 <div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
 <span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span>
@@ -1623,6 +1839,19 @@
 <span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
 <span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
 <span class="p">}</span>
+</code></pre></div>
+
+<h4 id="python_7">Python（快速幂法）<a class="toc-link" href="#python_7" title="Permanent link"> ¶</a></h4>
+<div class="highlight"><pre><span></span><code><span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">input</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+<span class="n">base</span><span class="p">,</span> <span class="n">result</span><span class="p">,</span> <span class="n">exp</span> <span class="o">=</span> <span class="n">a</span> <span class="o">%</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">b</span>
+
+<span class="k">while</span> <span class="n">exp</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">exp</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="p">(</span><span class="n">result</span> <span class="o">*</span> <span class="n">base</span><span class="p">)</span> <span class="o">%</span> <span class="mi">10</span>
+    <span class="n">base</span> <span class="o">=</span> <span class="p">(</span><span class="n">base</span> <span class="o">*</span> <span class="n">base</span><span class="p">)</span> <span class="o">%</span> <span class="mi">10</span>
+    <span class="n">exp</span> <span class="o">&gt;&gt;=</span> <span class="mi">1</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
 </code></pre></div>
 
 <hr>
@@ -1693,15 +1922,15 @@
 
             <nav class="article-nav">
                 
-                <a href="2026年08月13日日记.html" class="nav-prev">
+                <a href="2026年08月14日日记.html" class="nav-prev">
                     <div class="nav-label">← 上一篇</div>
-                    <div class="nav-title">日记 2026年8月13日</div>
+                    <div class="nav-title">日记 2026年8月14日</div>
                 </a>
                 
                 
-                <a href="数据结构六讲题解.html" class="nav-next">
+                <a href="2026年08月13日日记.html" class="nav-next">
                     <div class="nav-label">下一篇 →</div>
-                    <div class="nav-title">数据结构六讲 —— 从栈到线段树</div>
+                    <div class="nav-title">日记 2026年8月13日</div>
                 </a>
                 
             </nav>
