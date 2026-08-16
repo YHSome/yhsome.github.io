@@ -3,6 +3,7 @@
   <url><loc>https://example.com/index.html</loc><lastmod>2026-08-16</lastmod><priority>1.0</priority></url>
   <url><loc>https://example.com/directory.html</loc><lastmod>2026-08-16</lastmod><priority>0.8</priority></url>
   <url><loc>https://example.com/tags.html</loc><lastmod>2026-08-16</lastmod><priority>0.6</priority></url>
+  <url><loc>https://example.com/posts/2026年08月16日日记.html</loc><lastmod>2026-08-16</lastmod><priority>0.9</priority></url>
   <url><loc>https://example.com/posts/2026年08月15日日记.html</loc><lastmod>2026-08-16</lastmod><priority>0.9</priority></url>
   <url><loc>https://example.com/posts/2026年08月14日日记.html</loc><lastmod>2026-08-16</lastmod><priority>0.9</priority></url>
   <url><loc>https://example.com/posts/第98次周练.html</loc><lastmod>2026-08-16</lastmod><priority>0.9</priority></url>
