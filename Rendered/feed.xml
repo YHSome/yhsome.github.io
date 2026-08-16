@@ -5,8 +5,15 @@
     <link>https://example.com</link>
     <description>书山有径勤为路，学海无涯苦作舟</description>
     <language>zh-CN</language>
-    <lastBuildDate>Sun, 16 Aug 2026 12:45:36 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 16 Aug 2026 22:02:13 +0800</lastBuildDate>
     <atom:link href="https://example.com/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>日记 2026年8月16日</title>
+      <link>https://example.com/posts/2026年08月16日日记.html</link>
+      <description>今天 今天有三个项目在推进： ClashRoyal 私服：继续折腾皇室战争旧版私服——进入了游戏，手机没电后让 AI 继续分析；创建了一张仿照哥布林飞桶的新卡牌（爆出两只野蛮人精锐 + 三只烈焰精灵 + 狂暴法术）；用 adb 安装 APK 后遇到闪退，排查了 Redmi 上的崩溃日志（libg.s…</description>
+      <pubDate>Sun, 16 Aug 2026 00:00:00 +0800</pubDate>
+      <guid isPermaLink="true">https://example.com/posts/2026年08月16日日记.html</guid>
+    </item>
     <item>
       <title>日记 2026年8月15日</title>
       <link>https://example.com/posts/2026年08月15日日记.html</link>
@@ -139,13 +146,6 @@
       <description>前言 按照惯例先写个开头，2023年8月31日由于台风登陆粤东，众多学校停课至九月四日开学。 正文 正文其实没啥好说的，只能感叹一下学校拖延的习惯太夸张了。 通知明明是五点四十多分下发的，结果学校拖到六点五十，学生都回学校上交手机了才通知。 结果就是上了一个小时学又把学生赶回家了。 其实这对于我来说…</description>
       <pubDate>Thu, 31 Aug 2023 00:00:00 +0800</pubDate>
       <guid isPermaLink="true">https://example.com/posts/随笔-台风-停课.html</guid>
-    </item>
-    <item>
-      <title>随笔-文心一言使用感受</title>
-      <link>https://example.com/posts/随笔-文心一言使用感受.html</link>
-      <description>前言 这个文心一言光是在申请这一栏就拦住我了。捏麻申请给我拖了大半年才通过，在这期间我都不知道换了多少个chatgpt的镜像网站了。 正文 其实网上说的文心一言有多烂我是不太认可的，现在的文心一言在中文的问答方面以及比较正常了。chatgpt的语料库是来自众多语言的，而以英语为主，文心一言则是以中文…</description>
-      <pubDate>Mon, 28 Aug 2023 00:00:00 +0800</pubDate>
-      <guid isPermaLink="true">https://example.com/posts/随笔-文心一言使用感受.html</guid>
     </item>
   </channel>
 </rss>
