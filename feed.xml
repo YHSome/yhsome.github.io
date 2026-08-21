@@ -5,8 +5,15 @@
     <link>https://example.com</link>
     <description>书山有径勤为路，学海无涯苦作舟</description>
     <language>zh-CN</language>
-    <lastBuildDate>Wed, 19 Aug 2026 22:01:43 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 21 Aug 2026 14:34:57 +0800</lastBuildDate>
     <atom:link href="https://example.com/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>日记 2026年8月21日</title>
+      <link>https://example.com/posts/2026年08月21日日记.html</link>
+      <description>今天 今天其他项目都没有新动静——查了 Codex 的会话记录，活跃的只有博客这个对话本身。 博客侧也没有内容更新，纯粹是例行日记。 记录 8/18、8/20 的日记缺失：那两天的自动化心跳没有触发（8/19 补写过一次，其中记录了 8/18 缺失；8/20 这次又断了一档）。想补的话说一声即可。…</description>
+      <pubDate>Fri, 21 Aug 2026 00:00:00 +0800</pubDate>
+      <guid isPermaLink="true">https://example.com/posts/2026年08月21日日记.html</guid>
+    </item>
     <item>
       <title>日记 2026年8月19日</title>
       <link>https://example.com/posts/2026年08月19日日记.html</link>
@@ -139,13 +146,6 @@
       <description>前言 白鲸加速器是一个比较稳定的vpn，可以允许你通过它访问外网。但是存在诸多限制，新账号三十天的免费试用期过后需要收费就很难受，接下来我将介绍如何重新注册账号，无限白嫖白鲸加速器。 正文 一般步骤的指导来重新注册白鲸加速器。请根据以下步骤自行操作： 1 2 3 4 5 6 7 | 1. 首先，打开…</description>
       <pubDate>Sat, 09 Sep 2023 00:00:00 +0800</pubDate>
       <guid isPermaLink="true">https://example.com/posts/随笔-重新注册白鲸加速器.html</guid>
-    </item>
-    <item>
-      <title>我的第一个html网页实战</title>
-      <link>https://example.com/posts/myhtml.html</link>
-      <description>html 在今天，我用html语法写了个网页，我并且让它基于hexo部署了。 虽然是基于整活的目的，不过最后还是做出来了嘛 没啥好说的，点击这里打开网页</description>
-      <pubDate>Sat, 09 Sep 2023 00:00:00 +0800</pubDate>
-      <guid isPermaLink="true">https://example.com/posts/myhtml.html</guid>
     </item>
   </channel>
 </rss>
