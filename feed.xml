@@ -5,12 +5,12 @@
     <link>https://example.com</link>
     <description>书山有径勤为路，学海无涯苦作舟</description>
     <language>zh-CN</language>
-    <lastBuildDate>Fri, 28 Aug 2026 00:21:08 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 28 Aug 2026 00:53:00 +0800</lastBuildDate>
     <atom:link href="https://example.com/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
       <title>日记 2026年8月28日</title>
       <link>https://example.com/posts/2026年08月28日日记.html</link>
-      <description>今天 今天主要在「智学伴」小程序版（ZhiXueBan/miniprogram）收尾审核模式。查了 Codex 今天的会话记录和项目的 Git 提交记录：今天没有新增提交，但小程序工作区有一批尚未提交的功能改动。 记录 把 AI 功能改成严格的礼包码门禁：每次小程序启动或从后台回到前台都会重新锁定，…</description>
+      <description>昨天（8 月 27 日） 今天还很早，先把昨天在「智学伴」小程序版（ZhiXueBan/miniprogram）收尾审核模式的工作记下来。查了 Codex 昨天的会话记录和项目的 Git 提交记录：昨天没有新增提交，但小程序工作区有一批尚未提交的功能改动。 记录 把 AI 功能改成严格的礼包码门禁：…</description>
       <pubDate>Fri, 28 Aug 2026 00:00:00 +0800</pubDate>
       <guid isPermaLink="true">https://example.com/posts/2026年08月28日日记.html</guid>
     </item>
