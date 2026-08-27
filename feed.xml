@@ -5,8 +5,22 @@
     <link>https://example.com</link>
     <description>书山有径勤为路，学海无涯苦作舟</description>
     <language>zh-CN</language>
-    <lastBuildDate>Fri, 21 Aug 2026 14:34:57 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 28 Aug 2026 00:13:50 +0800</lastBuildDate>
     <atom:link href="https://example.com/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>日记 2026年8月28日</title>
+      <link>https://example.com/posts/2026年08月28日日记.html</link>
+      <description>今天 今天主要在「智学伴」小程序版（ZhiXueBan/miniprogram）收尾审核模式。查了 Codex 今天的会话记录和项目的 Git 提交记录：今天没有新增提交，但小程序工作区有一批尚未提交的功能改动。 记录 把 AI 功能改成严格的礼包码门禁：每次小程序启动或从后台回到前台都会重新锁定，…</description>
+      <pubDate>Fri, 28 Aug 2026 00:00:00 +0800</pubDate>
+      <guid isPermaLink="true">https://example.com/posts/2026年08月28日日记.html</guid>
+    </item>
+    <item>
+      <title>日记 2026年8月25日</title>
+      <link>https://example.com/posts/2026年08月25日日记.html</link>
+      <description>今天 今天其他项目都没有新动静——查了 Codex 的会话记录和 git 提交记录，今天没有其他对话在活动，仓库也没有新提交。 记录 遗留问题仍在：.git/index.lock 残留锁还没有删除，导致 8/21 晚间补充以及之后几天的日记都无法提交推送。 缺失的日记：8/22、8/23、8/24（…</description>
+      <pubDate>Tue, 25 Aug 2026 00:00:00 +0800</pubDate>
+      <guid isPermaLink="true">https://example.com/posts/2026年08月25日日记.html</guid>
+    </item>
     <item>
       <title>日记 2026年8月21日</title>
       <link>https://example.com/posts/2026年08月21日日记.html</link>
@@ -132,20 +146,6 @@
       <description>前言 如题，这个是office全家桶的下载，自动激活，真正实现一键破解 下载链接 点击下载</description>
       <pubDate>Sat, 28 Oct 2023 00:00:00 +0800</pubDate>
       <guid isPermaLink="true">https://example.com/posts/免费的office全家桶.html</guid>
-    </item>
-    <item>
-      <title>实验报告-固体酒精</title>
-      <link>https://example.com/posts/实验报告-固体酒精.html</link>
-      <description>固体酒精 策划人：欧阳天为、杨浩森 实验地点：化学实验室六 指导老师：梁敏霞 实验原理： 固体酒精通常是由水和酒精混合后，通过凝固剂作用形成的一种固态混合物。醋酸钙易溶于水而难溶于酒精，当两种溶液相混合时，醋酸钙在酒精中成为凝胶析出。液体便逐渐从浑浊到稠厚，最后凝聚为一整块，就得到固体酒精。 实验工…</description>
-      <pubDate>Sat, 23 Sep 2023 00:00:00 +0800</pubDate>
-      <guid isPermaLink="true">https://example.com/posts/实验报告-固体酒精.html</guid>
-    </item>
-    <item>
-      <title>随笔-重新注册白鲸加速器</title>
-      <link>https://example.com/posts/随笔-重新注册白鲸加速器.html</link>
-      <description>前言 白鲸加速器是一个比较稳定的vpn，可以允许你通过它访问外网。但是存在诸多限制，新账号三十天的免费试用期过后需要收费就很难受，接下来我将介绍如何重新注册账号，无限白嫖白鲸加速器。 正文 一般步骤的指导来重新注册白鲸加速器。请根据以下步骤自行操作： 1 2 3 4 5 6 7 | 1. 首先，打开…</description>
-      <pubDate>Sat, 09 Sep 2023 00:00:00 +0800</pubDate>
-      <guid isPermaLink="true">https://example.com/posts/随笔-重新注册白鲸加速器.html</guid>
     </item>
   </channel>
 </rss>
