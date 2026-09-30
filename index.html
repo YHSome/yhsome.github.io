@@ -457,6 +457,56 @@
             55%  { opacity:1; transform:scale(1.12); }
             100% { opacity:1; transform:scale(1); }
         }
+
+        /* ── 合成大奶蛙 引导弹窗 ── */
+        .bnw-overlay {
+            position: fixed; inset: 0; z-index: 10000;
+            display: flex; align-items: center; justify-content: center;
+            padding: 1.5rem;
+            background: rgba(20,14,8,0.5);
+            backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        html.dark .bnw-overlay { background: rgba(0,0,0,0.62); }
+        .bnw-overlay.show { opacity: 1; pointer-events: auto; }
+        .bnw-modal {
+            width: 100%; max-width: 420px;
+            background: var(--card-bg); border: 1px solid var(--border);
+            border-radius: 22px; padding: 2.4rem 2rem;
+            text-align: center; box-shadow: var(--shadow-lg);
+            transform: translateY(24px) scale(0.96);
+            transition: transform 0.4s cubic-bezier(0.22,0.61,0.36,1);
+        }
+        .bnw-overlay.show .bnw-modal { transform: translateY(0) scale(1); }
+        .bnw-emoji { font-size: 3.4rem; line-height: 1; margin-bottom: 0.6rem; }
+        .bnw-title { font-size: 1.35rem; font-weight: 800; margin-bottom: 0.6rem; color: var(--text); }
+        .bnw-desc { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.7; margin-bottom: 1.6rem; }
+        .bnw-actions { display: flex; flex-direction: column; gap: 0.7rem; }
+        .bnw-btn {
+            display: block; width: 100%; padding: 0.8rem 1rem;
+            font-size: 0.98rem; font-weight: 700; border-radius: 100px;
+            text-decoration: none; cursor: pointer; text-align: center;
+            transition: all 0.25s; border: none; font-family: inherit;
+        }
+        .bnw-play {
+            background: var(--gradient-accent); color: #fff;
+            box-shadow: 0 6px 18px rgba(177,116,62,0.35);
+        }
+        .bnw-play:hover { transform: translateY(-2px); box-shadow: 0 10px 26px rgba(177,116,62,0.45); }
+        .bnw-skip { background: transparent; color: var(--text-secondary); border: 1.5px solid var(--border); }
+        .bnw-skip:hover { color: var(--accent); border-color: var(--accent); background: var(--tag-bg); }
+        .bnw-never {
+            background: transparent; color: var(--text-secondary);
+            border: none; font-size: 0.8rem; font-weight: 600;
+            padding: 0.35rem; opacity: 0.7;
+        }
+        .bnw-never:hover { color: var(--accent); opacity: 1; }
+        @media (max-width: 480px) {
+            .bnw-modal { padding: 1.8rem 1.3rem; }
+            .bnw-title { font-size: 1.2rem; }
+            .bnw-desc { font-size: 0.88rem; }
+        }
     </style>
 </head>
 <body>
@@ -501,9 +551,9 @@
                 <div class="sidebar-widget">
                     <div class="widget-title">📊 站点统计</div>
                     <div class="widget-stats">
-                        <div class="stat-row"><span>文章总数</span><strong>63 篇</strong></div>
+                        <div class="stat-row"><span>文章总数</span><strong>65 篇</strong></div>
                         <div class="stat-row"><span>标签</span><strong>7 个</strong></div>
-                        <div class="stat-row"><span>总字数</span><strong>108,593</strong></div>
+                        <div class="stat-row"><span>总字数</span><strong>119,592</strong></div>
                     </div>
                 </div>
                 
@@ -527,12 +577,12 @@
                             软件<span class="count">5</span>
                         </a>
                         
-                        <a href="directory.html?tag=%E6%B5%8B%E8%AF%95" class="tag-pill">
-                            测试<span class="count">3</span>
+                        <a href="directory.html?tag=gzhu%E4%BB%A3%E7%A0%81%E8%AE%AD%E7%BB%83" class="tag-pill">
+                            gzhu代码训练<span class="count">4</span>
                         </a>
                         
-                        <a href="directory.html?tag=gzhu%E4%BB%A3%E7%A0%81%E8%AE%AD%E7%BB%83" class="tag-pill">
-                            gzhu代码训练<span class="count">2</span>
+                        <a href="directory.html?tag=%E6%B5%8B%E8%AF%95" class="tag-pill">
+                            测试<span class="count">3</span>
                         </a>
                         
                         <a href="directory.html?tag=%E9%92%A2%E7%90%B4%E8%B0%B1" class="tag-pill">
@@ -550,41 +600,41 @@
                     
                     <div style="padding:0.35rem 0;border-bottom:1px solid var(--border);font-size:0.78rem;line-height:1.35">
                         <span style="margin-right:0.25rem">📤</span>
-                        <a href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener" style="font-weight:600;color:var(--accent);text-decoration:none">yhsome.github.io</a>
-                        <span style="font-size:0.65rem;color:var(--text-secondary);display:block">📤 推送了代码 · 2026-08-27</span>
-                        <span style="font-size:0.66rem;color:var(--text-secondary);display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px" title="补充 8 月 27 日项目日记">补充 8 月 27 日项目日记</span>
+                        <a href="https://github.com/YHSome/BigNaiWa" target="_blank" rel="noopener" style="font-weight:600;color:var(--accent);text-decoration:none">BigNaiWa</a>
+                        <span style="font-size:0.65rem;color:var(--text-secondary);display:block">📤 推送了代码 · 2026-09-29</span>
+                        <span style="font-size:0.66rem;color:var(--text-secondary);display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px" title="辣条按钮改成显眼样式">辣条按钮改成显眼样式</span>
+                        
+                    </div>
+                    
+                    <div style="padding:0.35rem 0;border-bottom:1px solid var(--border);font-size:0.78rem;line-height:1.35">
+                        <span style="margin-right:0.25rem">📤</span>
+                        <a href="https://github.com/YHSome/BigNaiWa" target="_blank" rel="noopener" style="font-weight:600;color:var(--accent);text-decoration:none">BigNaiWa</a>
+                        <span style="font-size:0.65rem;color:var(--text-secondary);display:block">📤 推送了代码 · 2026-09-29</span>
+                        <span style="font-size:0.66rem;color:var(--text-secondary);display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px" title="赞助入口文案改得口语化一点">赞助入口文案改得口语化一点</span>
+                        
+                    </div>
+                    
+                    <div style="padding:0.35rem 0;border-bottom:1px solid var(--border);font-size:0.78rem;line-height:1.35">
+                        <span style="margin-right:0.25rem">📤</span>
+                        <a href="https://github.com/YHSome/BigNaiWa" target="_blank" rel="noopener" style="font-weight:600;color:var(--accent);text-decoration:none">BigNaiWa</a>
+                        <span style="font-size:0.65rem;color:var(--text-secondary);display:block">📤 推送了代码 · 2026-09-29</span>
+                        <span style="font-size:0.66rem;color:var(--text-secondary);display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px" title="结算页加「赞助作者」">结算页加「赞助作者」</span>
+                        
+                    </div>
+                    
+                    <div style="padding:0.35rem 0;border-bottom:1px solid var(--border);font-size:0.78rem;line-height:1.35">
+                        <span style="margin-right:0.25rem">📤</span>
+                        <a href="https://github.com/YHSome/BigNaiWa" target="_blank" rel="noopener" style="font-weight:600;color:var(--accent);text-decoration:none">BigNaiWa</a>
+                        <span style="font-size:0.65rem;color:var(--text-secondary);display:block">📤 推送了代码 · 2026-09-29</span>
+                        <span style="font-size:0.66rem;color:var(--text-secondary);display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px" title="移除全部广告相关代码">移除全部广告相关代码</span>
                         
                     </div>
                     
                     <div style="padding:0.35rem 0;border-bottom:1px solid var(--border);font-size:0.78rem;line-height:1.35">
                         <span style="margin-right:0.25rem">📤</span>
                         <a href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener" style="font-weight:600;color:var(--accent);text-decoration:none">yhsome.github.io</a>
-                        <span style="font-size:0.65rem;color:var(--text-secondary);display:block">📤 推送了代码 · 2026-08-27</span>
-                        <span style="font-size:0.66rem;color:var(--text-secondary);display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px" title="续写 2026-08-28 日记">续写 2026-08-28 日记</span>
-                        
-                    </div>
-                    
-                    <div style="padding:0.35rem 0;border-bottom:1px solid var(--border);font-size:0.78rem;line-height:1.35">
-                        <span style="margin-right:0.25rem">📤</span>
-                        <a href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener" style="font-weight:600;color:var(--accent);text-decoration:none">yhsome.github.io</a>
-                        <span style="font-size:0.65rem;color:var(--text-secondary);display:block">📤 推送了代码 · 2026-08-27</span>
-                        <span style="font-size:0.66rem;color:var(--text-secondary);display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px" title="添加 2026-08-28 日记并重新渲染">添加 2026-08-28 日记并重新渲染</span>
-                        
-                    </div>
-                    
-                    <div style="padding:0.35rem 0;border-bottom:1px solid var(--border);font-size:0.78rem;line-height:1.35">
-                        <span style="margin-right:0.25rem">📤</span>
-                        <a href="https://github.com/YHSome/ZhiXueBan" target="_blank" rel="noopener" style="font-weight:600;color:var(--accent);text-decoration:none">ZhiXueBan</a>
-                        <span style="font-size:0.65rem;color:var(--text-secondary);display:block">📤 推送了代码 · 2026-08-24</span>
-                        <span style="font-size:0.66rem;color:var(--text-secondary);display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px" title="chore: 小程序代码拆分至 miniprogram 分支，master 仅保留 Web 版">chore: 小程序代码拆分至 miniprogram 分支，master 仅保留 Web 版</span>
-                        
-                    </div>
-                    
-                    <div style="padding:0.35rem 0;border-bottom:1px solid var(--border);font-size:0.78rem;line-height:1.35">
-                        <span style="margin-right:0.25rem">📤</span>
-                        <a href="https://github.com/YHSome/ZhiXueBan" target="_blank" rel="noopener" style="font-weight:600;color:var(--accent);text-decoration:none">ZhiXueBan</a>
-                        <span style="font-size:0.65rem;color:var(--text-secondary);display:block">📤 推送了代码 · 2026-08-24</span>
-                        <span style="font-size:0.66rem;color:var(--text-secondary);display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px" title="fix: 预加载点击小球可停止全部加载——加全局停止标志">fix: 预加载点击小球可停止全部加载——加全局停止标志</span>
+                        <span style="font-size:0.65rem;color:var(--text-secondary);display:block">📤 推送了代码 · 2026-09-29</span>
+                        <span style="font-size:0.66rem;color:var(--text-secondary);display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px" title="删除 bdunion.txt（百度联盟验证文件不再需要）">删除 bdunion.txt（百度联盟验证文件不再需要）</span>
                         
                     </div>
                     
@@ -599,6 +649,28 @@
         <main class="content-main" id="postList">
             <div class="section-title">📝 最近文章</div>
             
+                
+                <a href="posts/算法竞赛平台操作指南.html" class="post-card" data-search-text="算法竞赛平台操作指南 算法竞赛平台操作指南 本指南汇总了 Virtual Judge、AtCoder、洛谷和牛客网的账号注册、团队加入、账号绑定，以及在 Virtual Judge 中提交题目的操作方法。 目录 平台注册与加入团队 Virtual Judge AtCoder 洛谷 在 Virtual Judge 中做题与… gzhu代码训练">
+                    <div class="post-date">2026年09月01日</div>
+                    <div class="post-title">算法竞赛平台操作指南</div>
+                    <div class="post-excerpt">算法竞赛平台操作指南 本指南汇总了 Virtual Judge、AtCoder、洛谷和牛客网的账号注册、团队加入、账号绑定，以及在 Virtual Judge 中提交题目的操作方法。 目录 平台注册与加入团队 Virtual Judge AtCoder 洛谷 在 Virtual Judge 中做题与…</div>
+                    
+                    <div class="post-tags">
+                        <span class="tag">gzhu代码训练</span>
+                    </div>
+                    
+                </a>
+                
+                <a href="posts/第101次周练.html" class="post-card" data-search-text="第 101 次训练 · 题解 第 101 次训练 · 题解 共八题（A–H），难度从入门到数据结构压轴逐级递进。 每题附 C++、Java、Python 参考实现。 题目总览 题号 分值 洛谷 ID 题目 核心知识点 A 1 U722360 嗯对 字符串拼接、输入输出 B 1 U722380 嗯对2 数位和、整除性质 C 2 U… gzhu代码训练">
+                    <div class="post-date">2026年08月31日</div>
+                    <div class="post-title">第 101 次训练 · 题解</div>
+                    <div class="post-excerpt">第 101 次训练 · 题解 共八题（A–H），难度从入门到数据结构压轴逐级递进。 每题附 C++、Java、Python 参考实现。 题目总览 题号 分值 洛谷 ID 题目 核心知识点 A 1 U722360 嗯对 字符串拼接、输入输出 B 1 U722380 嗯对2 数位和、整除性质 C 2 U…</div>
+                    
+                    <div class="post-tags">
+                        <span class="tag">gzhu代码训练</span>
+                    </div>
+                    
+                </a>
                 
                 <a href="posts/2026年08月28日日记.html" class="post-card" data-search-text="日记 2026年8月28日 昨天（8 月 27 日） 今天还很早，先把昨天在「智学伴」小程序版（ZhiXueBan/miniprogram）收尾审核模式的工作记下来。查了 Codex 昨天的会话记录和项目的 Git 提交记录：昨天没有新增提交，但小程序工作区有一批尚未提交的功能改动。 记录 把 AI 功能改成严格的礼包码门禁：… 时评和随笔">
                     <div class="post-date">2026年08月28日</div>
@@ -637,28 +709,6 @@
                     <div class="post-date">2026年08月19日</div>
                     <div class="post-title">日记 2026年8月19日</div>
                     <div class="post-excerpt">今天 今天其他项目都没有新动静——查了 Codex 的会话记录，活跃的只有博客这个对话本身。 博客侧也没有内容更新，纯粹是例行日记。 记录 8/18 的日记缺失：那天的自动化心跳没有触发，所以从 8/17 直接跳到了今天。如果之后想补一篇 8/18 的，说一声即可。 OpenBlogger subm…</div>
-                    
-                    <div class="post-tags">
-                        <span class="tag">时评和随笔</span>
-                    </div>
-                    
-                </a>
-                
-                <a href="posts/2026年08月17日日记.html" class="post-card" data-search-text="日记 2026年8月17日 今天 今天只有 ClashRoyal 私服 在推进，而且从昨晚一直干到下午： 凌晨让 AI 设计&#34;一个火枪手&#34;卡牌：前三发是火箭弹，后面恢复普通攻击；还要求做一门类似天鹰火炮的迫击炮——攻击间隔 10 秒，发射一个没有碰撞体积、带 7 秒部署倒计时的物体，部署期间跟随最近的单位，倒计时结束时从后方发… 时评和随笔">
-                    <div class="post-date">2026年08月17日</div>
-                    <div class="post-title">日记 2026年8月17日</div>
-                    <div class="post-excerpt">今天 今天只有 ClashRoyal 私服 在推进，而且从昨晚一直干到下午： 凌晨让 AI 设计&#34;一个火枪手&#34;卡牌：前三发是火箭弹，后面恢复普通攻击；还要求做一门类似天鹰火炮的迫击炮——攻击间隔 10 秒，发射一个没有碰撞体积、带 7 秒部署倒计时的物体，部署期间跟随最近的单位，倒计时结束时从后方发…</div>
-                    
-                    <div class="post-tags">
-                        <span class="tag">时评和随笔</span>
-                    </div>
-                    
-                </a>
-                
-                <a href="posts/2026年08月16日日记.html" class="post-card" data-search-text="日记 2026年8月16日 今天 今天有三个项目在推进： ClashRoyal 私服：继续折腾皇室战争旧版私服——进入了游戏，手机没电后让 AI 继续分析；创建了一张仿照哥布林飞桶的新卡牌（爆出两只野蛮人精锐 + 三只烈焰精灵 + 狂暴法术）；用 adb 安装 APK 后遇到闪退，排查了 Redmi 上的崩溃日志（libg.s… 时评和随笔">
-                    <div class="post-date">2026年08月16日</div>
-                    <div class="post-title">日记 2026年8月16日</div>
-                    <div class="post-excerpt">今天 今天有三个项目在推进： ClashRoyal 私服：继续折腾皇室战争旧版私服——进入了游戏，手机没电后让 AI 继续分析；创建了一张仿照哥布林飞桶的新卡牌（爆出两只野蛮人精锐 + 三只烈焰精灵 + 狂暴法术）；用 adb 安装 APK 后遇到闪退，排查了 Redmi 上的崩溃日志（libg.s…</div>
                     
                     <div class="post-tags">
                         <span class="tag">时评和随笔</span>
@@ -722,6 +772,46 @@
         </div>
         <p>Powered by <span>OpenBlogger</span> &copy; 2026</p>
     </footer>
+
+    <!-- ── 合成大奶蛙 引导弹窗 ── -->
+    <div class="bnw-overlay" id="bnwOverlay" role="dialog" aria-modal="true" aria-labelledby="bnwTitle">
+        <div class="bnw-modal">
+            <div class="bnw-emoji">🐸</div>
+            <h2 class="bnw-title" id="bnwTitle">想玩「合成大奶蛙」吗？</h2>
+            <p class="bnw-desc">你好像来到了 YHSome 的博客主页。<br>要直接跳转去玩这个小游戏吗？</p>
+            <div class="bnw-actions">
+                <a class="bnw-btn bnw-play" href="https://yhsome.github.io/BigNaiWa">🎮 立即去玩</a>
+                <button class="bnw-btn bnw-skip" id="bnwClose" type="button">📖 继续看博客</button>
+                <button class="bnw-btn bnw-never" id="bnwNever" type="button">🚫 不再提示</button>
+            </div>
+        </div>
+    </div>
+    <script>
+    /* ═══════════ 合成大奶蛙 引导弹窗 ═══════════ */
+    (function(){
+        var KEY = 'bnw_no_prompt_v1';
+        var overlay = document.getElementById('bnwOverlay');
+        if(!overlay) return;
+        if(localStorage.getItem(KEY)) return;   // 用户选择过「不再提示」
+        function close(){ overlay.classList.remove('show'); }
+        function never(){
+            localStorage.setItem(KEY, '1');
+            close();
+        }
+        // 稍等页面入场动画结束后再弹出
+        setTimeout(function(){ overlay.classList.add('show'); }, 700);
+        var closeBtn = document.getElementById('bnwClose');
+        if(closeBtn) closeBtn.addEventListener('click', close);
+        var neverBtn = document.getElementById('bnwNever');
+        if(neverBtn) neverBtn.addEventListener('click', never);
+        // 点击遮罩空白处也可关闭（等同于「继续看博客」，下次仍会弹出）
+        overlay.addEventListener('click', function(e){ if(e.target === overlay) close(); });
+        // Esc 关闭
+        document.addEventListener('keydown', function(e){
+            if(e.key === 'Escape' && overlay.classList.contains('show')) close();
+        });
+    })();
+    </script>
 
     <script>
     /* ═══════════ 粒子背景 ═══════════ */

@@ -1,0 +1,3709 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="images/favicon.jpg">
+    <meta name="x-viewer-page-id" content="74">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>(function(){var s=localStorage.getItem('blog-theme');if(s==='dark'||(!s&&matchMedia('(prefers-color-scheme:dark)').matches)){document.documentElement.classList.add('dark')}})();</script>
+    <title>项目 README — YHSome的神秘空间</title>
+    <style>
+        :root {
+            --bg: #fdfbf7; --card-bg: #ffffff; --text: #2c2416; --text-secondary: #6b5e4a;
+            --accent: #b1743e; --accent-hover: #8b5a2e; --border: #e5ddd0; --tag-bg: #f5efe3;
+            --code-bg: #f4f0e8; --shadow: 0 1px 3px rgba(44,36,22,0.06);
+            --shadow-hover: 0 8px 24px rgba(44,36,22,0.12); --radius: 10px;
+            --max-width: 800px; --nav-blur: blur(12px); --particle-color: 180,160,140;
+        }
+        html.dark {
+            --bg: #1a1a1f; --card-bg: #25252b; --text: #d4d0c8; --text-secondary: #9a9488;
+            --accent: #d4945a; --accent-hover: #e8a86e; --border: #36363d;
+            --tag-bg: #2e2e35; --code-bg: #2e2e35;
+            --shadow: 0 1px 3px rgba(0,0,0,0.2); --shadow-hover: 0 8px 24px rgba(0,0,0,0.35);
+            --particle-color: 120,110,100;
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            background: var(--bg); color: var(--text); line-height: 1.7;
+            min-height: 100vh; display: flex; flex-direction: column;
+            transition: background 0.4s, color 0.4s;
+        }
+        #particles { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.5; }
+        html.dark #particles { opacity: 0.25; }
+
+        .navbar {
+            background: color-mix(in srgb, var(--card-bg) 85%, transparent);
+            backdrop-filter: var(--nav-blur);
+            border-bottom: 1px solid var(--border); padding: 0 2rem;
+            position: sticky; top: 0; z-index: 100; box-shadow: var(--shadow);
+            transition: background 0.4s, border 0.4s;
+        }
+        .navbar-inner { max-width: var(--max-width); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 56px; }
+        .navbar .brand { font-size: 1.3rem; font-weight: 700; color: var(--text); text-decoration: none; letter-spacing: -0.02em; transition: color 0.3s; }
+        .navbar .brand:hover { color: var(--accent); }
+        .nav-links { display: flex; gap: 1.5rem; list-style: none; align-items: center; }
+        .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.95rem; transition: color 0.3s; }
+        .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+        .theme-toggle {
+            background: none; border: 1.5px solid var(--border); color: var(--text-secondary);
+            width: 34px; height: 34px; border-radius: 50%; cursor: pointer;
+            font-size: 1rem; display: flex; align-items: center; justify-content: center;
+            transition: all 0.3s; margin-left: 0.25rem;
+        }
+        .theme-toggle:hover { border-color: var(--accent); color: var(--accent); background: var(--tag-bg); }
+
+        .page-header {
+            text-align: center; padding: 3.5rem 2rem 2rem;
+            max-width: var(--max-width); margin: 0 auto; position: relative; z-index: 1;
+        }
+        .page-header h1 { font-size: 2.2rem; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 0.5rem; }
+        .page-header .subtitle { font-size: 1rem; color: var(--text-secondary); }
+
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 0 2rem 3rem; flex: 1; width: 100%; position: relative; z-index: 1; }
+
+        /* 摘要横幅 */
+        .summary-banner {
+            background: var(--card-bg); border: 1px solid var(--border);
+            border-radius: var(--radius); padding: 1rem 1.5rem; margin-bottom: 1.5rem;
+            box-shadow: var(--shadow); display: flex; gap: 1.5rem; flex-wrap: wrap;
+            justify-content: center; font-size: 0.9rem; color: var(--text-secondary);
+        }
+        .summary-banner strong { color: var(--accent); font-size: 1.1rem; }
+
+        /* ── 仓库 README 折叠抽屉 ── */
+        .drawer { margin-bottom: 1.2rem; }
+        .drawer summary {
+            font-size: 1rem; font-weight: 700; color: var(--text);
+            padding: 0.8rem 1rem; cursor: pointer; list-style: none;
+            background: var(--card-bg); border: 1px solid var(--border);
+            border-radius: var(--radius); box-shadow: var(--shadow);
+            display: flex; justify-content: space-between; align-items: center;
+            gap: 0.75rem; transition: all 0.3s; user-select: none;
+        }
+        .drawer summary::-webkit-details-marker { display: none; }
+        .drawer summary:hover { border-color: var(--accent); }
+        .drawer summary::after { content: '▸'; font-size: 1.1rem; color: var(--text-secondary); transition: transform 0.3s; flex-shrink: 0; }
+        .drawer[open] summary::after { transform: rotate(90deg); }
+        .drawer[open] summary { border-radius: var(--radius) var(--radius) 0 0; border-bottom-color: transparent; }
+        .drawer .drawer-body {
+            padding: 1rem 1.25rem 1.25rem;
+            background: var(--card-bg); border: 1px solid var(--border);
+            border-top: none; border-radius: 0 0 var(--radius) var(--radius);
+            box-shadow: var(--shadow);
+        }
+        .drawer .repo-head { display: flex; align-items: center; gap: 0.6rem; min-width: 0; flex-wrap: wrap; }
+        .drawer .repo-name { font-weight: 700; color: var(--accent); }
+        .drawer .repo-lang { font-size: 0.75rem; color: var(--text-secondary); background: var(--tag-bg); padding: 0.1rem 0.55rem; border-radius: 100px; }
+        .drawer .repo-stars { font-size: 0.75rem; color: var(--text-secondary); }
+        .drawer .gh-link { font-size: 0.78rem; color: var(--accent); text-decoration: none; }
+        .drawer .gh-link:hover { text-decoration: underline; }
+        .drawer .repo-desc { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem; }
+
+        /* ── README 正文（Markdown 渲染） ── */
+        .prose { font-size: 1rem; line-height: 1.8; color: var(--text); }
+        .prose h1,.prose h2,.prose h3,.prose h4 {
+            margin-top: 1.8em; margin-bottom: 0.6em; font-weight: 700; line-height: 1.3;
+            font-family: "Georgia","Noto Serif SC","Source Han Serif SC",serif;
+        }
+        .prose h1 { font-size: 1.6rem; }
+        .prose h2 { font-size: 1.35rem; border-bottom: 2px solid var(--border); padding-bottom: 0.3em; transition: border 0.4s; }
+        .prose h3 { font-size: 1.15rem; }
+        .prose h4 { font-size: 1.05rem; }
+        .prose p { margin-bottom: 1em; }
+        .prose a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; transition: color 0.3s; }
+        .prose a:hover { color: var(--accent-hover); }
+        .prose strong { font-weight: 700; }
+        .prose blockquote {
+            margin: 1.2em 0; padding: 0.75rem 1.2rem;
+            border-left: 4px solid var(--accent);
+            background: var(--tag-bg); border-radius: 0 var(--radius) var(--radius) 0;
+            color: var(--text-secondary); transition: background 0.4s;
+        }
+        .prose blockquote p { margin-bottom: 0.5em; }
+        .prose blockquote p:last-child { margin-bottom: 0; }
+        .prose ul,.prose ol { margin: 1em 0; padding-left: 1.5em; }
+        .prose li { margin-bottom: 0.3em; }
+        .prose img, .prose video { max-width: 100%; height: auto; border-radius: var(--radius); margin: 1.2em 0; box-shadow: var(--shadow); }
+        .prose hr { border: none; border-top: 2px solid var(--border); margin: 2em 0; transition: border 0.4s; }
+        .prose table { width: 100%; border-collapse: collapse; margin: 1.2em 0; font-size: 0.92rem; }
+        .prose th,.prose td { border: 1px solid var(--border); padding: 0.5rem 0.85rem; text-align: left; transition: border 0.4s; }
+        .prose th { background: var(--tag-bg); font-weight: 600; transition: background 0.4s; }
+        .prose code {
+            background: var(--code-bg); padding: 0.15em 0.4em; border-radius: 4px;
+            font-size: 0.88em; font-family: "SF Mono","Fira Code","Consolas","Menlo",monospace;
+            color: var(--accent); transition: background 0.4s;
+        }
+        .prose pre {
+            background: #2c2416; color: #f5efe3; padding: 1.1rem 1.3rem;
+            border-radius: var(--radius); overflow-x: auto; margin: 1.2em 0;
+            font-size: 0.88rem; line-height: 1.6;
+        }
+        html.dark .prose pre { background: #111115; }
+        .prose pre code { background: transparent; color: inherit; padding: 0; font-size: inherit; }
+
+        .readme-empty { text-align: center; padding: 3rem; color: var(--text-secondary); font-size: 1rem; }
+
+        .back-to-top {
+            position: fixed; bottom: 2rem; right: 2rem; z-index: 200;
+            width: 44px; height: 44px; border-radius: 50%;
+            background: var(--card-bg); border: 2px solid var(--border);
+            color: var(--text-secondary); font-size: 1.2rem; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; transform: translateY(20px); pointer-events: none;
+            transition: all 0.35s cubic-bezier(0.4,0,0.2,1);
+            box-shadow: var(--shadow);
+        }
+        .back-to-top.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+        .back-to-top:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-3px); box-shadow: var(--shadow-hover); }
+
+        .footer { text-align: center; padding: 2rem; color: var(--text-secondary); font-size: 0.85rem; border-top: 1px solid var(--border); margin-top: auto; position: relative; z-index: 1; transition: border 0.4s; }
+        .footer span { color: var(--accent); }
+
+        @media (max-width: 768px) {
+            body { font-size: 0.95rem; }
+            .navbar { padding: 0 0.8rem; }
+            .navbar .brand { font-size: 1.1rem; }
+            .nav-links { gap: 0.6rem; }
+            .nav-links a { font-size: 0.85rem; }
+            .theme-toggle { width: 30px; height: 30px; font-size: 0.9rem; }
+            .page-header h1 { font-size: 1.5rem; }
+            .page-header { padding: 1.5rem 1rem 0.8rem; }
+            .container { padding: 0 0.75rem 1.5rem; }
+            .drawer .drawer-body { padding: 0.85rem 0.9rem 1rem; }
+            .prose { font-size: 0.95rem; line-height: 1.75; }
+            .back-to-top { bottom: 1rem; right: 1rem; width: 36px; height: 36px; }
+            .footer { padding: 1.2rem 1rem; font-size: 0.78rem; }
+        }
+
+        /* ═══════════ 页面转场 ═══════════ */
+        body.page-exiting .navbar     { animation: exitUp   0.32s cubic-bezier(0.55,0,1,0.45) forwards; }
+        body.page-exiting .page-header{ animation: exitUp   0.30s 0.03s cubic-bezier(0.55,0,1,0.45) forwards; }
+        body.page-exiting .container  { animation: exitDown 0.30s 0.06s cubic-bezier(0.55,0,1,0.45) forwards; }
+        body.page-exiting .footer     { animation: exitDown 0.28s 0.08s cubic-bezier(0.55,0,1,0.45) forwards; }
+        body.page-exiting .back-to-top{ animation: exitDown 0.20s cubic-bezier(0.55,0,1,0.45) forwards; }
+        body.page-exiting::after { content:''; position:fixed; inset:0; background:var(--bg); z-index:9999; animation: fadeIn 0.25s 0.2s both; }
+
+        @keyframes exitUp    { to { opacity:0; transform:translateY(-130%); } }
+        @keyframes exitDown  { to { opacity:0; transform:translateY(130%); } }
+        @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+
+        body.page-entering .navbar     { animation: enterDown  0.55s cubic-bezier(0.22,0.61,0.36,1) both; }
+        body.page-entering .page-header{ animation: enterDown  0.48s 0.06s cubic-bezier(0.22,0.61,0.36,1) both; }
+        body.page-entering .container  { animation: enterUp    0.48s 0.14s cubic-bezier(0.22,0.61,0.36,1) both; }
+        body.page-entering .drawer     { animation: enterUp    0.45s 0.16s cubic-bezier(0.22,0.61,0.36,1) both; }
+        body.page-entering .footer     { animation: enterUp    0.45s 0.24s cubic-bezier(0.22,0.61,0.36,1) both; }
+        body.page-entering .back-to-top{ animation: enterPop   0.35s 0.28s cubic-bezier(0.22,0.61,0.36,1) both; }
+
+        @keyframes enterDown {
+            0%   { opacity:0; transform:translateY(-100%); }
+            55%  { opacity:1; transform:translateY(12px); }
+            100% { opacity:1; transform:translateY(0); }
+        }
+        @keyframes enterUp {
+            0%   { opacity:0; transform:translateY(80px); }
+            55%  { opacity:1; transform:translateY(-8px); }
+            100% { opacity:1; transform:translateY(0); }
+        }
+        @keyframes enterPop {
+            0%   { opacity:0; transform:scale(0.4); }
+            55%  { opacity:1; transform:scale(1.12); }
+            100% { opacity:1; transform:scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="particles"></canvas>
+
+    <nav class="navbar">
+        <div class="navbar-inner">
+            <a href="index.html" class="brand">YHSome的神秘空间</a>
+            <ul class="nav-links">
+                <li><a href="index.html">首页</a></li>
+                <li><a href="directory.html">目录</a></li>
+                <li><a href="tags.html">标签</a></li>
+                <li><a href="resources.html" class="active">资源</a></li>
+                <li><a href="friendlinks.html">友链</a></li>
+                <li><button class="theme-toggle" id="themeToggle" title="切换颜色模式" aria-label="切换颜色模式">🌙</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="page-header">
+        <h1>📖 项目 README</h1>
+        <p class="subtitle">从 GitHub 抓取的各开源仓库说明文档</p>
+    </div>
+
+    <div class="container">
+        
+        <div class="summary-banner">
+            <span>📦 <strong>16</strong> 个仓库</span>
+            <span>📖 点击仓库名展开 / 收起 README</span>
+        </div>
+
+        
+        <details class="drawer" open>
+            <summary>
+                <span class="repo-head">
+                    <span class="repo-name">BigNaiWa</span>
+                    <span class="repo-lang">JavaScript</span>
+                    <span class="repo-stars">⭐ 19</span>
+                </span>
+                <a class="gh-link" href="https://github.com/YHSome/BigNaiWa" target="_blank" rel="noopener" onclick="event.stopPropagation()">在 GitHub 查看 ↗</a>
+            </summary>
+            <div class="drawer-body">
+                <div class="repo-desc">合成大奶娃 · 纯前端小游戏（自研 PBD 物理 + 按图片轮廓的碰撞箱 + TinyWebDB 在线排行榜），零依赖零构建</div>
+                <div class="prose"><h1 id="_1">合成大奶娃<a class="toc-link" href="#_1" title="Permanent link"> ¶</a></h1>
+<p>纯 <strong>HTML + CSS + JavaScript</strong> 的静态网页小游戏，零依赖、零构建、离线可玩。<br>
+物理引擎（PBD 位置约束求解）是自己写的，没有引入 matter.js 等任何第三方库。</p>
+<h2 id="_2">🎮 在线玩<a class="toc-link" href="#_2" title="Permanent link"> ¶</a></h2>
+<p><strong><a href="https://yhsome.github.io/BigNaiWa/">https://yhsome.github.io/BigNaiWa/</a></strong></p>
+<p>（GitHub Pages 托管，手机浏览器打开就能玩，也可以「添加到主屏幕」当 App 用。）</p>
+<p><img alt="预览" src="preview.png"></p>
+<h2 id="_3">玩法<a class="toc-link" href="#_3" title="Permanent link"> ¶</a></h2>
+<ul>
+<li><strong>鼠标</strong>：移动瞄准，点击即投放。</li>
+<li><strong>触屏</strong>：按住拖动瞄准，<strong>松手才投放</strong>——手指不会挡住落点，也方便微调。</li>
+<li>棋盘右上角的「下一个」是<strong>下一颗</strong>；当前这颗画在准星位置（虚线顶端）。<br>
+  投放后的冷却期间当前这颗会<strong>变淡</strong>显示（还不能投），这样两个位置始终各是各的，不会看混。</li>
+<li>两个<strong>同级别</strong>的碰到一起就合成为高一级，并获得分数。</li>
+<li>顶上虚线是<strong>警戒线</strong>：有水果<strong>卡在线的上方并且基本停住</strong>、累计超过 1.5 秒即判负<br>
+  （被弹起来飞过线的不算，详见下面的「失败规则」）。</li>
+<li>结束后<strong>自动上榜</strong>（进不了前 20 就不提交）；没填昵称就记作「默认用户」，<br>
+  昵称随时可以在排行榜弹窗里改。</li>
+<li><code>←</code> <code>→</code> 微调位置，<code>Space</code> / <code>Enter</code> 投放，<code>R</code> 重新开始。<br>
+  （结束后空格/回车不再重开，避免手快连开新局。）</li>
+</ul>
+<p>合成链（11 级）：</p>
+<div class="highlight"><pre><span></span><code>葡萄 → 樱桃 → 橘子 → 柠檬 → 猕猴桃 → 番茄 → 桃子 → 菠萝 → 椰子 → 半西瓜 → 大西瓜
+</code></pre></div>
+
+<p>合成得分采用三角数：1 / 3 / 6 / 10 / 15 / 21 / 28 / 36 / 45 / 55，<br>
+两个大西瓜撞在一起会一起消失并额外加 100 分。</p>
+<h2 id="_4">失败规则<a class="toc-link" href="#_4" title="Permanent link"> ¶</a></h2>
+<p><strong>唯一判负条件：有水果卡在警戒线上方、且基本停住，累计超过 1.5 秒。</strong></p>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">DANGER_Y</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="mf">142</span><span class="p">;</span><span class="w">   </span><span class="c1">// 警戒线</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">OVER_LIMIT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.5</span><span class="p">;</span><span class="w">   </span><span class="c1">// 累计秒数</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">REST_SPEED</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">140</span><span class="p">;</span><span class="w">   </span><span class="c1">// 低于这个速度才算“卡住了”（px/s）</span>
+
+<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">const</span><span class="w"> </span><span class="nx">b</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nx">balls</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">b</span><span class="p">.</span><span class="nx">dead</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">!</span><span class="nx">b</span><span class="p">.</span><span class="nx">landed</span><span class="p">)</span><span class="w"> </span><span class="k">continue</span><span class="p">;</span><span class="w">         </span><span class="c1">// 还没落地的不算</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">b</span><span class="p">.</span><span class="nx">y</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">b</span><span class="p">.</span><span class="nx">r</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nx">DANGER_Y</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">                </span><span class="c1">// 这只在线上面</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">b</span><span class="p">.</span><span class="nx">vx</span><span class="o">*</span><span class="nx">b</span><span class="p">.</span><span class="nx">vx</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">b</span><span class="p">.</span><span class="nx">vy</span><span class="o">*</span><span class="nx">b</span><span class="p">.</span><span class="nx">vy</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nx">REST_SPEED2</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">b</span><span class="p">.</span><span class="nx">overTime</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="nx">dt</span><span class="p">;</span><span class="w">                      </span><span class="c1">// 停住的才计时</span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">b</span><span class="p">.</span><span class="nx">overTime</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nx">OVER_LIMIT</span><span class="p">)</span><span class="w"> </span><span class="nx">gameOver</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">b</span><span class="p">.</span><span class="nx">overTime</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="nx">dt</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">2</span><span class="p">;</span><span class="w">                  </span><span class="c1">// 正在飞 → 倒扣</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">b</span><span class="p">.</span><span class="nx">overTime</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="nx">dt</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">2</span><span class="p">;</span><span class="w">                    </span><span class="c1">// 回到线下方 → 倒扣（2 倍速）</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>几个容易被误解的点：</p>
+<table>
+<thead>
+<tr>
+<th>疑问</th>
+<th>答案</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>好几只轮流在线上方，时间会加在一起吗？</strong></td>
+<td><strong>不会。</strong> <code>overTime</code> 是<strong>每只各自</strong>的变量，必须<strong>同一只</strong>累计满 1.5 秒</td>
+</tr>
+<tr>
+<td><strong>被弹飞、路过线上的算吗？</strong></td>
+<td><strong>不算。</strong> 速度 ≥ 140px/s 时不计时，而且还在倒扣</td>
+</tr>
+<tr>
+<td><strong>贴着线上下反复弹会攒起来吗？</strong></td>
+<td>得看比例：线下方按 2 倍速扣，净变化率 = <code>3f − 2</code>（<code>f</code> = 在线上方的时间占比），<strong>只有 f &gt; 2/3 才攒得起来</strong></td>
+</tr>
+<tr>
+<td><strong>会不会永远输不了？</strong></td>
+<td>不会。实测灌满棋盘第 161 次投放判负，那时堆顶 y=45、线上方 4 只里 3 只是静止的</td>
+</tr>
+<tr>
+<td><strong>除了这个还有别的失败条件吗？</strong></td>
+<td>没有。不限步数、不限数量、不限时间</td>
+</tr>
+</tbody>
+</table>
+<p>想调：<code>DANGER_Y</code> 调高低、<code>OVER_LIMIT</code> 调容忍时间、<code>REST_SPEED</code> 调“多慢才算卡住”。<br>
+<code>node physics.test.js</code> 的第 7 组会把这三条规则各验一遍。</p>
+<h2 id="_5">运行<a class="toc-link" href="#_5" title="Permanent link"> ¶</a></h2>
+<p>线上直接开 <a href="https://yhsome.github.io/BigNaiWa/">https://yhsome.github.io/BigNaiWa/</a>；<br>
+本地双击 <code>index.html</code> 即可（<code>file://</code> 协议下也能跑，排行榜同样可用）。<br>
+也可以起个静态服务：</p>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>http.server<span class="w"> </span><span class="m">8080</span>
+<span class="c1"># 打开 http://localhost:8080</span>
+</code></pre></div>
+
+<p>部署：仓库打开 <strong>Settings → Pages → Source = Deploy from a branch → main / (root)</strong> 即可，<br>
+根目录已经放了 <code>.nojekyll</code>，静态文件原样发布。</p>
+<h2 id="_6">文件<a class="toc-link" href="#_6" title="Permanent link"> ¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>文件</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>index.html</code></td>
+<td>页面结构：棋盘、结束遮罩、侧边面板、排行榜弹窗</td>
+</tr>
+<tr>
+<td><code>style.css</code></td>
+<td>全部样式：玻璃拟态面板、响应式布局、结束动画、排行榜</td>
+</tr>
+<tr>
+<td><code>game.js</code></td>
+<td>游戏逻辑 + 自研物理 + Canvas 渲染 + WebAudio 音效</td>
+</tr>
+<tr>
+<td><code>leaderboard.min.js</code></td>
+<td>在线排行榜的构建产物（TinyWebDB 接口 + 弹窗渲染），页面直接引用它</td>
+</tr>
+<tr>
+<td><code>sponsor.js</code></td>
+<td>结算页「赞助作者」弹窗（展示微信收款码），纯静态、无网络请求</td>
+</tr>
+<tr>
+<td><code>assets/fruits/</code></td>
+<td>11 张统一后的水果贴图（512×512 PNG，透明底）+ <code>parts.js</code> 碰撞形状</td>
+</tr>
+<tr>
+<td><code>tools/normalize_assets.py</code></td>
+<td>素材统一脚本：抠底、去噪、统一画布、烤暗边</td>
+</tr>
+<tr>
+<td><code>tools/build_parts.py</code></td>
+<td>按贴图轮廓生成碰撞形状，产出 <code>assets/fruits/parts.js</code></td>
+</tr>
+<tr>
+<td><code>src/</code></td>
+<td>原始素材（11 张，格式/尺寸/底色都不统一），只作为脚本输入</td>
+</tr>
+<tr>
+<td><code>physics.test.js</code></td>
+<td>物理手感自检脚本（<code>node physics.test.js</code>）</td>
+</tr>
+<tr>
+<td><code>preview.png</code></td>
+<td>预览图</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_7">排行榜<a class="toc-link" href="#_7" title="Permanent link"> ¶</a></h2>
+<p>用的是 <strong>TinyWebDB</strong>（<code>https://tinywebdb.appinventor.space/api</code>）——一个给 App Inventor 用的<br>
+极简 key-value 云存储，靠 POST 表单调用，跨域头是 <code>Access-Control-Allow-Origin: *</code>，<br>
+所以<strong>纯静态页也能直接读写</strong>，不需要自建后端。</p>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>接口</td>
+<td><code>POST https://tinywebdb.appinventor.space/api</code></td>
+</tr>
+<tr>
+<td>账号</td>
+<td><code>user</code> / <code>secret</code> 以编码形式存在，运行时还原</td>
+</tr>
+<tr>
+<td>用到的 action</td>
+<td><code>update</code>（写）、<code>search</code>（按 tag 前缀读）</td>
+</tr>
+<tr>
+<td>tag</td>
+<td><code>dnw_&lt;时间戳36进制&gt;_&lt;随机4位&gt;</code></td>
+</tr>
+<tr>
+<td>value</td>
+<td><code>{"n":"昵称","s":分数,"t":时间戳}</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>榜单内容 = 最近 20 次提交</strong>。服务端按提交时间倒序返回，所以只要拿最新两页<br>
+（<code>no=1</code> 和 <code>no=101</code>）就够覆盖这 20 条，再多请求也没意义；取回来之后在窗口内按分数排名展示。<br>
+这个设计的用意是：<strong>榜单是一条滚动的时间窗，不是历史最高分榜</strong>——分数只在自己还在窗口里的<br>
+那段时间有效，后来的人会不断把你挤出去，所以卡在榜首或者长期占位没有意义。</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// 提交</span>
+<span class="nx">POST</span><span class="w"> </span><span class="nx">user</span><span class="o">=&lt;</span><span class="nx">你的</span><span class="w"> </span><span class="nx">user</span><span class="o">&gt;&amp;</span><span class="nx">secret</span><span class="o">=&lt;</span><span class="nx">你的</span><span class="w"> </span><span class="nx">secret</span><span class="o">&gt;&amp;</span><span class="nx">action</span><span class="o">=</span><span class="nx">update</span>
+<span class="w">     </span><span class="o">&amp;</span><span class="nx">tag</span><span class="o">=</span><span class="nx">dnw_mukuffr8_435q</span>
+<span class="w">     </span><span class="o">&amp;</span><span class="nx">value</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;n&quot;</span><span class="o">:</span><span class="s2">&quot;奶娃大王&quot;</span><span class="p">,</span><span class="s2">&quot;s&quot;</span><span class="o">:</span><span class="mf">4321</span><span class="p">,</span><span class="s2">&quot;t&quot;</span><span class="o">:</span><span class="mf">1759000000000</span><span class="p">}</span>
+
+<span class="c1">// 读榜（只要最新两页）</span>
+<span class="nx">POST</span><span class="w"> </span><span class="nx">user</span><span class="o">=&lt;</span><span class="nx">你的</span><span class="w"> </span><span class="nx">user</span><span class="o">&gt;&amp;</span><span class="nx">secret</span><span class="o">=&lt;</span><span class="nx">你的</span><span class="w"> </span><span class="nx">secret</span><span class="o">&gt;&amp;</span><span class="nx">action</span><span class="o">=</span><span class="nx">search</span><span class="o">&amp;</span><span class="nx">no</span><span class="o">=</span><span class="mf">1</span><span class="o">&amp;</span><span class="nx">count</span><span class="o">=</span><span class="mf">100</span><span class="o">&amp;</span><span class="nx">tag</span><span class="o">=</span><span class="nx">dnw_</span><span class="o">&amp;</span><span class="nx">type</span><span class="o">=</span><span class="nx">both</span>
+<span class="err">→</span><span class="w"> </span><span class="p">{</span><span class="s2">&quot;dnw_mukuffr8_435q&quot;</span><span class="o">:</span><span class="s2">&quot;{\&quot;n\&quot;:\&quot;奶娃大王\&quot;,\&quot;s\&quot;:4321,\&quot;t\&quot;:1759000000000}&quot;</span><span class="p">}</span>
+</code></pre></div>
+
+<p><strong>结算流程</strong>（打完自动上榜，不需要手动点提交）：</p>
+<ol>
+<li>游戏结束 → 直接提交，昵称取 <code>localStorage</code> 里存的，<strong>没填就用「默认用户」</strong>；</li>
+<li>提交成功 → 重新读一次榜单，把窗口内的排名显示出来；</li>
+<li>提交失败 → 显示错误并给一个「重试提交」按钮。</li>
+</ol>
+<p>排行榜从头到尾<strong>只写自己那条记录，不读也不动别人的数据</strong>：没有任何 <code>delete</code>，<br>
+旧成绩是自然被挤出时间窗的，不是被清掉的。</p>
+<p>昵称在排行榜弹窗顶部的「我的昵称」里随时能改（<code>change</code> / <code>blur</code> / 回车时落盘）。</p>
+<p>实现上的几个小处理：</p>
+<ul>
+<li><strong>昵称</strong>存 <code>localStorage</code>（<code>danaiwa.name</code>），去掉控制字符、限长 12 字，空串一律当「默认用户」；</li>
+<li><strong>防手抖</strong>：自动提交时校验「两次提交至少间隔 3 秒」，0 分不上榜，<br>
+  分数明显离谱（&gt; 99999999）的不收；</li>
+<li><strong>不抢按键</strong>：焦点在输入框里时，<code>game.js</code> 的键盘处理直接让路（不然打字会掉水果）；</li>
+<li><strong>容错</strong>：网络不通只是排行榜打不开，游戏照常玩；接口偶发 502 会自动重试一次；<br>
+  返回不是 JSON 会给出可读的错误提示；</li>
+<li><strong>XSS</strong>：榜单全部用 <code>textContent</code> 渲染，不拼 HTML；</li>
+<li>榜单是最近 20 次提交（最新两页足够覆盖），弹窗底部有标注。</li>
+</ul>
+<p>换账号：改排行榜源码顶部的 <code>USER</code> / <code>SECRET</code> / <code>PREFIX</code> 即可，改完跑一遍构建脚本产出<br>
+<code>leaderboard.min.js</code>（换 <code>PREFIX</code> 相当于另开一个榜）。</p>
+<h2 id="_8">碰撞形状（不是圆）<a class="toc-link" href="#_8" title="Permanent link"> ¶</a></h2>
+<p><strong>每个水果的碰撞箱按贴图轮廓来</strong>：<code>tools/build_parts.py</code> 读 <code>assets/fruits/*.png</code> 的 alpha，<br>
+用一组<strong>内接小圆</strong>铺满轮廓，写出 <code>assets/fruits/parts.js</code>：</p>
+<div class="highlight"><pre><span></span><code><span class="nb">window</span><span class="p">.</span><span class="nx">SUIKA_PARTS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">rb</span><span class="o">:</span><span class="w"> </span><span class="mf">1.083</span><span class="p">,</span><span class="w"> </span><span class="nx">parts</span><span class="o">:</span><span class="w"> </span><span class="p">[[</span><span class="mf">0.012</span><span class="p">,</span><span class="o">-</span><span class="mf">0.31</span><span class="p">,</span><span class="mf">0.42</span><span class="p">],</span><span class="w"> </span><span class="p">...]</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="p">];</span>
+<span class="c1">// parts = [ox, oy, s]，单位是「以 r 为 1」；rb = 包围圆半径（快速粗筛用）</span>
+</code></pre></div>
+
+<p>游戏里球的碰撞就是这些子圆：</p>
+<table>
+<thead>
+<tr>
+<th>环节</th>
+<th>做法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>粗筛</td>
+<td>两个水果的包围圆 <code>rb</code> 不相交直接跳过</td>
+</tr>
+<tr>
+<td>球球</td>
+<td>子圆两两求交，取<strong>最深/最近的那一对</strong>产生法线与修正量，推力按逆质量分配到刚体中心</td>
+</tr>
+<tr>
+<td>合成</td>
+<td>任意一对子圆「贴上」（含 0.8px 容差）即合成</td>
+</tr>
+<tr>
+<td>撞墙</td>
+<td>每个子圆各自贴墙，取各方向最深穿透量一次性加到刚体中心上</td>
+</tr>
+<tr>
+<td>旋转</td>
+<td>子圆跟着刚体 <code>angle</code> 一起转，所以形状会随滚动改变落点</td>
+</tr>
+</tbody>
+</table>
+<p>圆一律取<strong>内接</strong>（半径 = 到轮廓的欧氏距离，用 chamfer 距离变换算），<br>
+所以<strong>不会出现&rdquo;看不见的碰撞&rdquo;</strong>；覆盖率不够的地方再贪心补圆，覆盖率到 97% 就提前收工。</p>
+<p>实测贴合度（IoU，1.0 = 与图片完全一致）：</p>
+<div class="highlight"><pre><span></span><code>tier  0   1   2   3   4   5   6   7   8   9  10
+IoU .94 .96 .95 .92 .85 .90 .81 .96 .94 .96 .78   ← 平均 0.91
+超出轮廓 ≤1.2%（几乎为零）  圆个数 9~16（形状简单自动用更少）
+</code></pre></div>
+
+<p><code>parts.js</code> 缺失或某级没数据时，自动退回成单圆（半径 r），行为与旧版一致，不会白屏。</p>
+<p>重新生成（换了贴图之后跑一次）：</p>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>tools/build_parts.py<span class="w"> </span>--max-parts<span class="w"> </span><span class="m">16</span><span class="w"> </span>--preview
+<span class="c1"># --preview 会导出 _parts_preview.png：红=图片轮廓 绿=碰撞箱 黄=重合</span>
+</code></pre></div>
+
+<p>成本：12~30 个水果在场时，整套物理每帧 <strong>0.14~0.34 ms</strong>（60fps 预算是 16.7ms）。</p>
+<h2 id="_9">素材（换图）<a class="toc-link" href="#_9" title="Permanent link"> ¶</a></h2>
+<p>11 级各对应 <code>assets/fruits/NN-&lt;名字&gt;.png</code> 一张，<strong>棋盘、下一个预览、合成表、粒子全部复用同一张</strong>，<br>
+不需要做多倍图（不同尺寸由 canvas 缩放）：</p>
+<div class="highlight"><pre><span></span><code><span class="mf">01</span><span class="o">-</span><span class="n">grape</span><span class="w">       </span><span class="mf">02</span><span class="o">-</span><span class="n">cherry</span><span class="w">    </span><span class="mf">03</span><span class="o">-</span><span class="ow">or</span><span class="n">ange</span><span class="w">   </span><span class="mf">04</span><span class="o">-</span><span class="n">lemon</span><span class="w">    </span><span class="mf">05</span><span class="o">-</span><span class="n">kiwi</span><span class="w">      </span><span class="mf">06</span><span class="o">-</span><span class="kr">to</span><span class="n">mato</span>
+<span class="mf">07</span><span class="o">-</span><span class="n">peach</span><span class="w">       </span><span class="mf">08</span><span class="o">-</span><span class="n">pineapple</span><span class="w"> </span><span class="mf">09</span><span class="o">-</span><span class="n">coconut</span><span class="w">  </span><span class="mf">10</span><span class="o">-</span><span class="n">halfmelon</span><span class="w"> </span><span class="mf">11</span><span class="o">-</span><span class="n">watermelon</span>
+</code></pre></div>
+
+<p>规格：<strong>512×512 正方形、PNG-32 透明底、主体居中占长边 92%</strong>，贴图会跟着水果一起滚动/旋转。</p>
+<p>换图的两种方式：</p>
+<ol>
+<li><strong>偷懒</strong>：直接把新图命名成上面的文件名丢进 <code>assets/fruits/</code> 覆盖即可<br>
+   （脚本已经统一过格式，直接可用）。</li>
+<li><strong>正规</strong>：把 11 张原始图按 <code>src/1..11.*</code>（jpg/png/webp 混着都行）放好，然后跑</li>
+</ol>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>tools/normalize_assets.py
+</code></pre></div>
+
+<p>脚本会：从四边向内<strong>区域生长抠底</strong>、丢掉零碎噪点、填掉主体内部小孔、<br>
+裁剪并按长边 92% 居中到统一画布、最后在主体底下<strong>烤一圈柔和暗边</strong><br>
+（浅色角色在奶油色棋盘上才分得清，运行时零开销），并把每级的平均色打印出来<br>
+（可填进 <code>FRUITS</code> 的 <code>pc1/pc2</code> 作为粒子颜色）。</p>
+<p>三道闸门可按图切换，<code>tools/normalize_assets.py</code> 顶部 <code>CFG</code> 里逐张配置：</p>
+<table>
+<thead>
+<tr>
+<th>闸门</th>
+<th>作用</th>
+<th>用在</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>sat_max</code></td>
+<td>饱和度高于它的像素永不算背景</td>
+<td>浅底图（1~10）</td>
+</tr>
+<tr>
+<td><code>lum_min</code></td>
+<td>亮度高于它的像素永不算背景（深底反向）</td>
+<td>星空底（11）</td>
+</tr>
+<tr>
+<td><code>val_min</code></td>
+<td>最暗通道低于它的像素永不算背景</td>
+<td>9 号「接近白但非纯白」的翅膀</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>9 号天使的白翅膀是 223~241，背景是纯白 253~255。只靠饱和度闸门时翅膀会被判成背景，<br>
+只剩一圈碎渣，缩放旋转后糊成一大块米色色块；加上 <code>val_min=246</code> 后翅膀被完整保住。</p>
+</blockquote>
+<p><strong>缺图不影响游玩</strong>：任何一张加载失败都会自动回退成程序化绘制的圆形水果（<code>FRUITS[i].c1/c2</code>）。</p>
+<h2 id="_10">实现要点<a class="toc-link" href="#_10" title="Permanent link"> ¶</a></h2>
+<ul>
+<li><strong>物理</strong>：位置约束求解（PBD）。每帧 3 个子步 × 6 次迭代，<br>
+  每个水果带一组按图片轮廓生成的子圆（见上一节），<br>
+  速度由位置差反推 —— 堆叠稳定、不抖动，且能正确处理 124px 大西瓜压在 17px 葡萄上的极端质量比。</li>
+<li><strong>Q 弹回弹</strong>：位置约束会把法向速度吃掉，所以在每个子步末尾额外做一次弹性冲量，<br>
+  把法向相对速度直接改写成 <code>e × 碰撞前速度</code>（球球 <code>e=0.38</code>、墙 <code>e=0.45</code>），<br>
+  回弹量只由 <code>e</code> 决定、不受子步/迭代次数影响。<br>
+  撞速低于 <code>REST_THRESHOLD</code> 时完全不弹，所以静止堆叠依然零抖动：<br>
+  从顶部掉落的水果能弹起约 110px、连弹 5 次才停。<br>
+  另外撞击时按法线做挤压变形（压扁 + 垂直拉伸，0.4 秒回弹），果冻感更强。</li>
+<li><strong>合成判定</strong>：接触容差 0.8px，同级别贴身即合，手感跟手；<br>
+  合成只在每个子步的第 0 次迭代判定一次，避免重复合成。</li>
+<li><strong>渲染</strong>：整体按 devicePixelRatio 缩放。有贴图就画贴图（<code>box = 2r / 0.92</code>，<br>
+  保证<strong>视觉大小 = 物理直径</strong>，四边不会露馅），没贴图就画程序化水果。<br>
+  贴图跟着 <code>b.angle</code> 一起旋转，和物理滚动一致；撞击时的挤压变形同样作用于贴图。<br>
+  合成时有粒子爆裂、飘分文字与新品弹出动画。</li>
+<li><strong>素材加载</strong>：等 <code>img.decode()</code> 完成才交给 <code>drawImage</code>，避免画出没解码完的半成品。</li>
+<li><strong>音效</strong>：WebAudio 振荡器实时合成，无音频文件；可一键静音并记忆设置。</li>
+<li><strong>存档</strong>：最高分与静音状态存 <code>localStorage</code>。</li>
+<li><strong>调试</strong>：控制台可用 <code>__SUIKA__.state</code>、<code>__SUIKA__.reset()</code>、<code>__SUIKA__.drop()</code>、<br>
+<code>__SUIKA__.FRUITS</code>、<code>__SUIKA__.render()</code>。</li>
+</ul>
+<h2 id="_11">物理自检<a class="toc-link" href="#_11" title="Permanent link"> ¶</a></h2>
+<div class="highlight"><pre><span></span><code>node<span class="w"> </span>physics.test.js
+</code></pre></div>
+
+<p>用桩件模拟 DOM/Canvas，在 Node 里跑真物理（连 <code>parts.js</code> 一起加载，用的是真实碰撞形状），覆盖：<br>
+自由落体回弹高度、球对球弹起、12 秒堆叠稳定性（残余速度 / 漂移 / 穿墙 / NaN）、<br>
+<strong>静止后形状之间无穿透</strong>、自动投放 60 次不走样、<br>
+触屏「拖动瞄准 / 松手投放」与鼠标「按下即投」两套输入、<br>
+<strong>结束后空格/回车不再重开而 R 可以、输入框里不抢按键</strong>。</p>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>tools/build_parts.py<span class="w"> </span>--max-parts<span class="w"> </span><span class="m">16</span><span class="w"> </span>--preview<span class="w">   </span><span class="c1"># 换了贴图后重新生成碰撞形状</span>
+node<span class="w"> </span>physics.test.js<span class="w">                                   </span><span class="c1"># 物理自检</span>
+</code></pre></div>
+
+<h2 id="_12">手机端适配<a class="toc-link" href="#_12" title="Permanent link"> ¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>做法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>布局</td>
+<td>窄屏（≤860px）下 <code>.panel</code> 用 <code>order:-1</code> 提到棋盘上方，横过来压成<strong>顶部信息条</strong>：左边分数、右边按钮，标题/合成表/提示收起</td>
+</tr>
+<tr>
+<td>棋盘尺寸</td>
+<td><code>height: min(可用高度, 96vw × 700/420)</code>，宽度由 <code>aspect-ratio</code> 反推 —— 不拉伸、不溢出，任何机型都不出滚动条</td>
+</tr>
+<tr>
+<td>视口高度</td>
+<td>用 <code>100dvh</code>（带 <code>100vh</code> 回退），避开手机地址栏吃掉高度的问题</td>
+</tr>
+<tr>
+<td>安全区</td>
+<td><code>padding</code> 叠 <code>env(safe-area-inset-*)</code>，刘海 / 小白条不会压住内容</td>
+</tr>
+<tr>
+<td>触控</td>
+<td>棋盘 <code>touch-action:none</code>；<code>body</code> 上 <code>touch-action:manipulation</code> + <code>overscroll-behavior:none</code>，干掉双击缩放和下拉刷新</td>
+</tr>
+<tr>
+<td>按钮</td>
+<td>最小 46px 高、带内边距，小屏（≤380px）再压一档；<code>pointerdown</code> 时 <code>setPointerCapture</code>，手指滑出棋盘也能收到 <code>pointerup</code></td>
+</tr>
+<tr>
+<td>反馈</td>
+<td>合成时按等级给 <code>navigator.vibrate</code> 轻震（跟随静音开关）</td>
+</tr>
+<tr>
+<td>性能</td>
+<td>canvas 内部分辨率按 <code>devicePixelRatio</code> 缩放但<strong>封顶 2×</strong>，高分屏不炸填充率</td>
+</tr>
+<tr>
+<td>弹窗</td>
+<td>结束弹窗按钮撑满宽度、加大触摸目标</td>
+</tr>
+</tbody>
+</table>
+<p>横屏（<code>orientation: landscape</code>）自动切回左右布局：棋盘占满高度、信息条竖排在右侧。</p>
+<h2 id="gamejs">参数速查（<code>game.js</code> 顶部）<a class="toc-link" href="#gamejs" title="Permanent link"> ¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>常量</th>
+<th>默认值</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GRAVITY</code></td>
+<td><code>2600</code></td>
+<td>重力加速度 px/s²</td>
+</tr>
+<tr>
+<td><code>SUBSTEPS</code> / <code>ITER</code></td>
+<td><code>3</code> / <code>6</code></td>
+<td>物理精度，调高更稳更费 CPU</td>
+</tr>
+<tr>
+<td><code>RESTITUTION</code></td>
+<td><code>0.38</code></td>
+<td>球与球之间的弹性，调大更弹</td>
+</tr>
+<tr>
+<td><code>WALL_RESTITUTION</code></td>
+<td><code>0.45</code></td>
+<td>撞墙 / 撞地面的弹性</td>
+</tr>
+<tr>
+<td><code>REST_THRESHOLD</code></td>
+<td><code>55</code></td>
+<td>撞速低于此值不反弹（保堆叠稳定）</td>
+</tr>
+<tr>
+<td><code>FRICTION</code></td>
+<td><code>0.955</code></td>
+<td>接触切向摩擦，调小更滑、调大更快停住</td>
+</tr>
+<tr>
+<td><code>SQUASH_MAX</code> / <code>SQUASH_DECAY</code></td>
+<td><code>0.30</code> / <code>9</code></td>
+<td>撞击挤压的最大变形与回弹速度</td>
+</tr>
+<tr>
+<td><code>DROP_MS</code></td>
+<td><code>360</code></td>
+<td>两次投放的最小间隔</td>
+</tr>
+<tr>
+<td><code>OVER_LIMIT</code></td>
+<td><code>1.5</code></td>
+<td>越线判负秒数</td>
+</tr>
+<tr>
+<td><code>DANGER_Y</code></td>
+<td><code>142</code></td>
+<td>警戒线高度</td>
+</tr>
+<tr>
+<td><code>MERGE_PAD</code></td>
+<td><code>0.8</code></td>
+<td>合成接触容差（子圆之间）</td>
+</tr>
+<tr>
+<td><code>OVER_LIMIT</code></td>
+<td><code>1.5</code></td>
+<td>卡在警戒线上方多少秒判负</td>
+</tr>
+<tr>
+<td><code>REST_SPEED</code></td>
+<td><code>140</code></td>
+<td>低于这个速度才算“卡住了”，飞过去的不计时</td>
+</tr>
+<tr>
+<td><code>AVOID_REPEAT</code></td>
+<td><code>true</code></td>
+<td>「下一个」避开与当前相同的等级（改成 <code>false</code> 恢复完全随机，会有 ~22% 概率两边同图）</td>
+</tr>
+<tr>
+<td><code>SPAWN_WEIGHTS</code></td>
+<td><code>[.28 .24 .20 .16 .12]</code></td>
+<td>前 5 级的掉落权重；开了 <code>AVOID_REPEAT</code> 后实测摊平为 25.6/23.2/20.6/17.2/13.4%</td>
+</tr>
+<tr>
+<td><code>ASSET_FILL</code></td>
+<td><code>0.92</code></td>
+<td>贴图主体占画布比例，<strong>必须与生成脚本的 <code>FILL</code> 一致</strong></td>
+</tr>
+<tr>
+<td><code>FRUITS</code></td>
+<td>11 项</td>
+<td>每级的半径 / 贴图路径 / 兜底配色，改这里即可换皮</td>
+</tr>
+<tr>
+<td><code>FRUITS[i].c1/c2</code></td>
+<td>11 组</td>
+<td>贴图缺失时的程序化水果配色</td>
+</tr>
+<tr>
+<td><code>FRUITS[i].pc1/pc2</code></td>
+<td>11 组</td>
+<td>粒子/汁水颜色（取自贴图主体平均色）</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_13">参考的开源项目<a class="toc-link" href="#_13" title="Permanent link"> ¶</a></h2>
+<p>本项目的玩法与水果链设计参考了以下开源实现（代码为本仓库原创，未复制其源码）：</p>
+<ul>
+<li><a href="https://github.com/Ikapricity/daxigua">Ikapricity/daxigua</a> — 合成大西瓜未修改版本源码，可直接在浏览器运行</li>
+<li><a href="https://github.com/CaptainAries/dxg">CaptainAries/dxg</a></li>
+<li><a href="https://github.com/moonfloof/suika-game">moonfloof/suika-game</a> — 使用 matter.js 的英文版克隆</li>
+<li><a href="https://github.com/IceburgLettuce17/suika-game-js-beta">IceburgLettuce17/suika-game-js-beta</a></li>
+</ul>
+<h2 id="_14">许可<a class="toc-link" href="#_14" title="Permanent link"> ¶</a></h2>
+<p>仅供学习娱乐使用。</p></div>
+            </div>
+        </details>
+        
+        <details class="drawer">
+            <summary>
+                <span class="repo-head">
+                    <span class="repo-name">yhsome.github.io</span>
+                    <span class="repo-lang">HTML</span>
+                    
+                </span>
+                <a class="gh-link" href="https://github.com/YHSome/yhsome.github.io" target="_blank" rel="noopener" onclick="event.stopPropagation()">在 GitHub 查看 ↗</a>
+            </summary>
+            <div class="drawer-body">
+                <div class="repo-desc">个人主页（含博客）</div>
+                <div class="prose"><p>ai助手你好：</p>
+<p>我刚刚为你做好了一个博客渲染器的框架，但是目前还没有具体落地的代码；</p>
+<p>你需要做的事：</p>
+<div class="highlight"><pre><span></span><code><span class="mf">1.</span><span class="n">在动手前先提交一次git</span><span class="err">，</span><span class="n">即将当前空白项目提交至git</span>
+<span class="mf">2.</span><span class="n">将</span><span class="o">/</span><span class="kr">Open</span><span class="n">Blogger</span><span class="o">/</span><span class="n">template</span><span class="o">/</span><span class="kd">def</span><span class="n">ault中的所有html文件按照我在html内提的要求完成该html的代码书写</span><span class="err">（</span><span class="n">风格不限</span><span class="err">，</span><span class="n">但要求风格统一</span><span class="err">）</span>
+<span class="mf">3.</span><span class="n">写一个python代码</span><span class="err">，</span><span class="n">代码文件存放在</span><span class="mf">.</span><span class="o">/</span><span class="kr">Open</span><span class="n">Blogger中</span><span class="err">，</span><span class="n">功能</span><span class="err">：</span><span class="n">将</span><span class="mf">.</span><span class="o">/</span><span class="n">Raw中的所有</span><span class="o">**</span><span class="n">未渲染</span><span class="o">**</span><span class="n">的md文件按照用户指定的模板进行渲染</span><span class="err">（</span><span class="n">默认为default</span><span class="p">,</span><span class="n">即对应</span><span class="mf">.</span><span class="o">/</span><span class="n">Template</span><span class="o">/</span><span class="kd">Def</span><span class="n">ault</span><span class="err">），</span><span class="n">将输出的文件放置在Rendered文件夹中</span><span class="err">，</span><span class="n">同时</span><span class="err">，</span><span class="n">对于格式不规范的md文件</span><span class="err">，</span><span class="n">补全渲染的日期</span><span class="err">（</span><span class="n">当前时间</span><span class="err">）</span><span class="n">与标题</span><span class="err">（</span><span class="n">默认第一句</span><span class="err">，</span><span class="n">字数超出20字后用省略号</span><span class="err">）</span>
+</code></pre></div>
+
+<p>注意：你所写的所有python代码文件要放在./OpenBlogger里面，以保证根目录的整洁性</p></div>
+            </div>
+        </details>
+        
+        <details class="drawer">
+            <summary>
+                <span class="repo-head">
+                    <span class="repo-name">OIworld</span>
+                    <span class="repo-lang">TypeScript</span>
+                    
+                </span>
+                <a class="gh-link" href="https://github.com/YHSome/OIworld" target="_blank" rel="noopener" onclick="event.stopPropagation()">在 GitHub 查看 ↗</a>
+            </summary>
+            <div class="drawer-body">
+                <div class="repo-desc">纯前端的 C++ 基础语法学习靶场：clang 编译为 WebAssembly，代码在浏览器本地编译运行，7 个阶段 42 道题，零基础友好</div>
+                <div class="prose"><h1 id="oiworld-c">OIworld · C++ 基础语法学习靶场<a class="toc-link" href="#oiworld-c" title="Permanent link"> ¶</a></h1>
+<p>一个<strong>纯前端</strong>的 C++ 零基础教学靶场：用户在网页里写 C++ 代码，点「运行」后由编译成<br>
+<strong>WebAssembly 的真实 clang 编译器</strong>在浏览器本地编译、在 WASI 沙箱里执行，实时看到输出或编译错误。</p>
+<p>没有后端、没有容器、没有远程判题机——代码不会离开用户的浏览器。</p>
+<p>另有独立的 <strong>Python 基础语法靶场</strong>（<code>/python</code>）：包含 7 个学习阶段、42 道可运行与提交评测的练习题，覆盖输出、输入、变量、判断、循环、列表、字符串、函数与字典。每题均包含本关新知识、动手前思考、常见错误与提示。Python 由 Pyodide（WebAssembly）在浏览器本地运行，题目进度与 C++ 靶场分开保存；<code>/python/guide</code> 还提供零基础语法指南。</p>
+<p><strong>Java 基础语法靶场</strong>（<code>/java</code>）：同样 <strong>7 个阶段、42 道题</strong>，使用 Doppio JVM 与 Java 8 类库在浏览器本地编译、运行和评测 Java 代码——从类与 <code>main</code>、<code>System.out.println</code>、变量与 <code>Scanner</code> 输入，一路到判断、循环、数组与字符串、方法与递归、类与对象、<code>HashMap</code> 集合。</p>
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>主题</th>
+<th>知识点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>一</td>
+<td>类与 main</td>
+<td><code>System.out.println</code>、变量、<code>Scanner</code> 输入、<code>double</code></td>
+</tr>
+<tr>
+<td>二</td>
+<td>运算符与判断</td>
+<td>算术 / 关系 / 逻辑运算、<code>if / else</code>、<code>switch</code></td>
+</tr>
+<tr>
+<td>三</td>
+<td>循环</td>
+<td><code>for</code>、<code>while</code>、嵌套循环、<code>break</code>、标志变量</td>
+</tr>
+<tr>
+<td>四</td>
+<td>数组与字符串</td>
+<td>数组遍历与最值、<code>String.length()</code> / <code>charAt()</code>、回文判断</td>
+</tr>
+<tr>
+<td>五</td>
+<td>方法</td>
+<td>定义与调用、<code>static</code>、数组参数、值传递、递归、重载</td>
+</tr>
+<tr>
+<td>六</td>
+<td>类与对象</td>
+<td>定义类、字段、构造方法、对象数组、冒泡排序</td>
+</tr>
+<tr>
+<td>七</td>
+<td>集合与哈希表</td>
+<td><code>ArrayList</code>、<code>HashMap</code> 计数与查找、按顺序输出</td>
+</tr>
+</tbody>
+</table>
+<p>Java 靶场同样支持：顺序解锁与开发者模式、<code>写到哪？</code>（光标跳到 <code>// TODO</code>）、<br>
+javac 报错与中文标点的中文自查提示（<code>src/java/diagnostics.ts</code>）、每道题统一的<br>
+「题目背景 → 任务 → 本关新知识 → 输入格式 → 输出格式 → 样例 → 常见错误 → 小贴士」讲解结构，<br>
+以及 <code>/java/guide</code> 入门指南。</p>
+<blockquote>
+<p>浏览器里的 Java 运行时是纯 JavaScript 实现的 Doppio JVM，<strong>第一次编译约需 1~2 分钟</strong>（之后同一会话内更快）；<br>
+因此题库里的程序都刻意保持轻量：循环几千次以内、输出几十行以内。</p>
+</blockquote>
+<p><strong>Pro 靶场</strong>（<code>/pro</code>）：面向&rdquo;已经会基础语法、开始学数据结构与算法&rdquo;的读者，同样 <strong>7 个阶段、42 道题</strong>，<br>
+用 C++ 编写，<strong>判题交给洛谷</strong>：题目页只有「Monaco 编辑器 + 提交到洛谷」，<br>
+没有本地运行 / 提交 / 测试用例面板，因此打开 Pro 题目页<strong>不需要下载 90MB 的编译器</strong>。</p>
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>主题</th>
+<th>知识点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>一</td>
+<td>栈与队列</td>
+<td>数组实现栈/队列、括号匹配、后缀表达式、单调栈、单调队列</td>
+</tr>
+<tr>
+<td>二</td>
+<td>链表与字符串进阶</td>
+<td>数组模拟链表、反转/合并链表、KMP、字符串哈希、Trie</td>
+</tr>
+<tr>
+<td>三</td>
+<td>树与堆</td>
+<td>二叉树遍历与统计、BST、堆的上浮下沉、哈夫曼、并查集</td>
+</tr>
+<tr>
+<td>四</td>
+<td>排序与二分</td>
+<td>快排、归并求逆序对、二分查找、二分答案、前缀和、差分</td>
+</tr>
+<tr>
+<td>五</td>
+<td>图论基础</td>
+<td>图存储、DFS/BFS、拓扑排序、Kruskal、Dijkstra</td>
+</tr>
+<tr>
+<td>六</td>
+<td>动态规划入门</td>
+<td>数字三角形、01 背包、完全背包、LIS、LCS、编辑距离</td>
+</tr>
+<tr>
+<td>七</td>
+<td>进阶技巧</td>
+<td>快速幂、线性筛、扩展欧几里得、树状数组、线段树、贪心</td>
+</tr>
+</tbody>
+</table>
+<p>Pro 题目的讲解结构是「题目背景 → 任务 → <strong>思路与知识点</strong> → 输入格式 → 输出格式 → 样例 → 常见错误 → 小贴士」，<br>
+重点是<strong>算法思路、复杂度分析与边界处理</strong>（而不是基础语法）。每道题都标注了<strong>洛谷对应题目</strong>，<br>
+写完代码点「提交到洛谷」即可拿到洛谷官方的评测结果——<strong>洛谷返回 AC 才算通过本题，并解锁下一题</strong>。</p>
+<h3 id="luogu">洛谷远程提交（<code>/luogu</code>）<a class="toc-link" href="#luogu" title="Permanent link"> ¶</a></h3>
+<p>绑定一次洛谷账号后，题目页会出现「提交到洛谷」面板：洛谷题号<strong>已经按题库标注预填好</strong>（也可以自己改，改完会记住）、<br>
+选洛谷评测语言（默认按靶场自动选：C++20 / Python 3 / Java 8 = 洛谷语言 27 / 7 / 8）、一键提交，<br>
+<strong>实时轮询洛谷的评测结果</strong>（AC / WA / TLE / MLE / RE / CE……，含编译错误原文），<br>
+<strong>评测结束后自动刷新该题的提交记录列表</strong>，也可以随时手动刷新——就是 vjudge 那种远程提交体验。<br>
+<strong>四个靶场的题目页都有这个面板</strong>。</p>
+<p>四个靶场的题目列表也都多了一列「洛谷」，点题号直接去洛谷；没有标注的题显示 <code>—</code>。</p>
+<p>绑定页 <code>/luogu</code> 的交互与 vjudge 的「远程账号管理」一致（保护 / 账号 / 状态 / 更新时间 / 操作 表格，<br>
+下面是可以粘贴 <code>__client_id</code> 与 <code>_uid</code> 的绑定表单），也支持<strong>一键使用浏览器里已登录的洛谷会话</strong>。</p>
+<p><strong>两种使用方式，都完全跑在你自己的浏览器里：</strong></p>
+<table>
+<thead>
+<tr>
+<th>方式</th>
+<th>安装成本</th>
+<th>体验</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>桥接脚本</strong>（推荐）</td>
+<td>装一次油猴脚本（Tampermonkey / Violentmonkey）</td>
+<td>在 OIworld 里点按钮就能提交、实时看结果、拉提交记录</td>
+</tr>
+<tr>
+<td><strong>书签提交</strong>（免安装）</td>
+<td>把 <code>/luogu</code> 页的「📤 OIworld 提交」按钮拖到书签栏</td>
+<td>点「书签提交」→ 自动复制代码并打开洛谷题目页 → 在洛谷页面点一下书签 → 右上角浮层显示评测结果</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>为什么至少需要其中之一？</strong> 这是浏览器规则决定的，不是实现选择：<br>
+洛谷的响应里<strong>没有 CORS 头</strong>（本站页面读不到洛谷的任何返回），而 <code>Cookie</code> 是 fetch/XHR 的<br>
+<strong>禁止请求头</strong>（网页 JS 无法携带登录凭据）。vjudge 能只让用户粘一次 Cookie，是因为它把 Cookie<br>
+存到<strong>它自己的服务器</strong>上、由服务器代发请求；本项目不引入服务器，于是用两种<strong>不离开浏览器</strong>的办法：<br>
+桥接脚本由扩展代发请求；书签脚本则干脆在<strong>洛谷自己的页面里</strong>运行（同源，天然能用登录态）。<br>
+代码与 Cookie 都不会离开你的机器：绑定信息只存 <code>localStorage</code>（键 <code>oiworld:luogu</code>），解绑即清空，<br>
+本站没有任何后端。</p>
+<p>详情、实测证据、接口清单、消息协议与安全边界见 <strong><a href="docs/luogu-bridge.md">docs/luogu-bridge.md</a></strong>。</p>
+</blockquote>
+<p><strong>Pro 靶场的 42 道题对应到洛谷的精确题号</strong>（41 道有题号，每道都用 <code>npm run validate:luogu</code> 对着洛谷真实页面核对过，<br>
+例如 p1-5 下一个更大元素 → <code>P5788 【模板】单调栈</code>），题目页上这一栏写的是「洛谷对应题目」。</p>
+<p><strong>C++ / Python / Java 这三个基础靶场也各自标注了洛谷题目</strong>（126 道题里 122 道有题号），<br>
+映射表在 <code>src/data/luogu-codes.ts</code>，一次人工核对、三轨共用。这三个靶场的题是本站自撰的，<br>
+所以那一栏的文案是「洛谷<strong>同类型练习</strong>」而不是&rdquo;原题&rdquo;——例如：</p>
+<table>
+<thead>
+<tr>
+<th>本站题目</th>
+<th>洛谷同类型练习</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>你好，世界 / 你好，Python / 你好，Java</td>
+<td><code>B2002 Hello,World!</code></td>
+</tr>
+<tr>
+<td>两数之和</td>
+<td><code>P1001 A+B Problem</code></td>
+</tr>
+<tr>
+<td>温度换算</td>
+<td><code>B2013 温度表达转化</code></td>
+</tr>
+<tr>
+<td>简易计算器</td>
+<td><code>B2052 简单计算器</code></td>
+</tr>
+<tr>
+<td>闰年判断</td>
+<td><code>B2150 判断闰年</code></td>
+</tr>
+<tr>
+<td>九九乘法表</td>
+<td><code>P8723 [蓝桥杯 2020 省 AB3] 乘法表</code></td>
+</tr>
+<tr>
+<td>回文串判断</td>
+<td><code>B2124 判断字符串是否为回文</code></td>
+</tr>
+<tr>
+<td>第一个只出现一次的字符</td>
+<td><code>B2110 找第一个只出现一次的字符</code></td>
+</tr>
+<tr>
+<td>按成绩排名（结构体排序）</td>
+<td><code>P1093 [NOIP 2007 普及组] 奖学金</code></td>
+</tr>
+</tbody>
+</table>
+<p>洛谷确实没有的练习就<strong>留空</strong>（例如&rdquo;交换两个数&rdquo;和 Pro 的&rdquo;反转链表&rdquo;），不硬塞一道不相关的题。</p>
+<p>本站仍然<strong>不抓取、不缓存洛谷题面</strong>：题目描述、测试用例与参考题解都是本站自撰，洛谷只作为&rdquo;在线评测与额外练习&rdquo;使用。</p>
+<p>四个靶场是<strong>同一套页面结构</strong>，用顶栏右上角的 <code>C++ / Python / Java / Pro 靶场</code> 按钮切换（各自的进度互相独立）：</p>
+<div class="highlight"><pre><span></span><code>首页（阶段卡片 + 进度统计 + 搜索筛选）
+  └─ 阶段页（阶段简介 + 题目列表：状态 / 难度 / 知识点 / 洛谷题号）
+       ├─ C++ / Python / Java 题目页（左侧题目描述 + 提示 + 题解 ｜ 右侧编辑器 + 标准输入 / 运行结果 + 测试用例）
+       └─ Pro 题目页（左侧题目描述 + 提示 + 题解 ｜ 右侧编辑器 + 提交到洛谷，判题在洛谷）
+            └─ 进度页（统计 + 各阶段完成情况）   ·   指南页（零基础语法速查）
+</code></pre></div>
+
+<p>Java 靶场同样支持：顺序解锁与开发者模式、<code>写到哪？</code>（光标跳到 <code>// TODO</code>）、<br>
+中文标点与 javac 报错的中文自查提示、每题的本关新知识与常见错误。<br>
+C++ 靶场还多一个<strong>开发者面板</strong>（编译参数 / 工具链来源 / 耗时 / 原始诊断 / 复制题目 JSON）；<br>
+Pro 靶场因为不本地编译，开发者模式下提供「填入参考题解」与「复制题目 JSON」两个按钮。</p>
+<p><strong>在线试玩</strong>：<a href="https://yhsome.github.io/OIworld/">https://yhsome.github.io/OIworld/</a>（GitHub Pages 自动部署，推送到 <code>main</code> 即发布）</p>
+<div class="highlight"><pre><span></span><code>首页（7 个阶段 / 42 道题） → 阶段题目列表 → 题目详情（左题目 · 右编辑器） → 运行 / 提交评测 → 进度存本地
+</code></pre></div>
+
+<hr>
+<h2 id="_1">快速开始<a class="toc-link" href="#_1" title="Permanent link"> ¶</a></h2>
+<div class="highlight"><pre><span></span><code>npm<span class="w"> </span>install<span class="w">          </span><span class="c1"># 安装依赖（含 browsercc 提供的编译器 Wasm 工具链）</span>
+npm<span class="w"> </span>run<span class="w"> </span>dev<span class="w">          </span><span class="c1"># 开发模式，默认 http://localhost:5173</span>
+npm<span class="w"> </span>run<span class="w"> </span>build<span class="w">        </span><span class="c1"># 类型检查 + 生产构建</span>
+npm<span class="w"> </span>run<span class="w"> </span>preview<span class="w">      </span><span class="c1"># 预览生产构建，默认 http://localhost:4173</span>
+</code></pre></div>
+
+<p>首次打开题目页时，浏览器需要加载约 <strong>90MB</strong> 的编译器资源<br>
+（<code>clang.wasm</code> 40MB + <code>lld.wasm</code> 22MB + <code>sysroot.tar</code> 27MB），<br>
+页面顶部会显示下载进度；下载后由浏览器缓存，后续打开只需不到 1 秒。<br>
+之后每次编译约 <strong>2 秒</strong>（在本机实测：从点击「运行」到看到输出 2.4 秒）。</p>
+<hr>
+<h2 id="_2">面向零基础的设计<a class="toc-link" href="#_2" title="Permanent link"> ¶</a></h2>
+<p>这个靶场的默认读者是<strong>完全没有写过代码</strong>的人。除了题目本身，还有三层&rdquo;手把手&rdquo;设计：</p>
+<ol>
+<li>
+<p><strong>新手指南 · 第零课（<code>/guide</code>）</strong> —— 一页完整的入门读物：<br>
+   这个网站怎么工作、程序 / 语言 / 编译器是什么、题目页每个按钮干什么、<br>
+<strong>逐行读懂第一段代码</strong>、把 <code>cout &lt;&lt; "..." &lt;&lt; endl;</code> 拆成表格一个符号一个符号地解释、<br>
+   四步做完第一题、<strong>中文标点这个大坑</strong>、常见报错中英对照表、英文小词典。<br>
+   首页、顶栏都有入口，第一题页面上还有引导卡片。</p>
+</li>
+<li>
+<p><strong>每道题都带「本关新知识」和「常见错误」</strong> —— 题目描述不只有&rdquo;要做什么&rdquo;，还有&rdquo;怎么写&rdquo;：<br>
+   本关新知识用大白话 + 可运行代码 + 要点表格，讲清<strong>这道题</strong>需要的语法<br>
+   （<code>for</code> 的三个部分与执行顺序、<code>struct</code> 末尾的分号、<code>map</code> 的 <code>kv.first</code> / <code>kv.second</code>……）；<br>
+   常见错误表格列出新手在<strong>这道题</strong>上真实会踩的坑<br>
+   （<code>i &lt; n</code> 还是 <code>i &lt;= n</code>、值传递为什么改不动外面的变量、依赖 <code>unordered_map</code> 遍历顺序会出错……）。</p>
+</li>
+<li>
+<p><strong>编译器会说人话</strong> —— 编译失败时，结果面板先给「零基础自查提示」：<br>
+   自动扫描代码里的<strong>中文标点</strong>（会先剔除注释与字符串，避免误报 <code>cout &lt;&lt; "你好，世界"</code>），<br>
+   指出第几行第几列、该换成哪个英文符号；并把 <code>expected ';'</code>、<br>
+<code>use of undeclared identifier 'cout'</code>、<code>no matching function</code> 等常见报错翻译成中文的建议。<br>
+   工具栏的「写到哪？」按钮会把光标直接定位到 <code>// TODO</code> 那一行。</p>
+</li>
+</ol>
+<hr>
+<h2 id="_3">开发者模式<a class="toc-link" href="#_3" title="Permanent link"> ¶</a></h2>
+<p>题库作者 / 前端开发者想抽查被锁住的题目时用它 —— 因为<strong>做题顺序是固定的「按顺序解锁」规则，<br>
+页面上没有关闭它的开关</strong>，开发者模式是唯一的解锁途径。</p>
+<p><strong>三种打开方式</strong>（都会持久化，刷新后仍有效）：</p>
+<table>
+<thead>
+<tr>
+<th>方式</th>
+<th>用法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>URL</td>
+<td><code>http://localhost:4173/?dev=1</code> 打开、<code>?dev=0</code> 关闭（参数会自动从地址栏清掉，不会反复提示）</td>
+</tr>
+<tr>
+<td>快捷键</td>
+<td><code>Ctrl + Shift + D</code> 随时切换（不用离开当前题目页）</td>
+</tr>
+<tr>
+<td>设置页</td>
+<td>「我的进度 → 设置与数据 → 开发者模式」开关</td>
+</tr>
+</tbody>
+</table>
+<p>打开后：</p>
+<ul>
+<li><strong>所有题目解锁</strong>，不再受「按顺序解锁」的限制，可以直接打开任意一题<br>
+  （顶栏出现紫色 <code>DEV</code> 标记）；</li>
+<li><strong>未通过也能查看参考题解</strong>，还能一键「把参考题解填进编辑器」，顺手点「提交」就能验证这道题的判题数据；</li>
+<li>题目页底部多出<strong>开发者面板</strong>：题目元信息（ID / 阶段 / 难度 / 知识点 / 用例数 / 代码行数）、<br>
+  实际编译参数（<code>-std=c++20 -O0 -Wall -fno-exceptions</code>）、工具链来源与版本、<br>
+  上次编译与运行耗时、<strong>编译器原始 stderr</strong>，以及「复制题目 JSON」「下载 <code>sX-pY.json</code>」按钮（方便直接改题库）。</li>
+</ul>
+<blockquote>
+<p>日常练习保持关闭即可。它只是一个纯前端开关，只影响你自己的浏览器。</p>
+</blockquote>
+<hr>
+<h2 id="github-pages">部署到 GitHub Pages<a class="toc-link" href="#github-pages" title="Permanent link"> ¶</a></h2>
+<p>仓库自带 <code>.github/workflows/deploy-pages.yml</code>：<strong>推送到 <code>main</code> 就自动构建并发布</strong>（也可在 Actions 里手动触发）。<br>
+线上地址：<a href="https://yhsome.github.io/OIworld/">https://yhsome.github.io/OIworld/</a></p>
+<p>部署形态与本地开发有三点差异，工作流里已经处理好：</p>
+<table>
+<thead>
+<tr>
+<th>差异</th>
+<th>本地开发</th>
+<th>GitHub Pages</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>base 路径</td>
+<td><code>/</code></td>
+<td><code>/&lt;仓库名&gt;/</code> —— 项目站点不在域名根下，资源与 Worker 都必须带前缀</td>
+</tr>
+<tr>
+<td>路由</td>
+<td><code>BrowserRouter</code>（干净 URL）</td>
+<td><code>HashRouter</code>（<code>#/problem/s1-p1</code>）—— 刷新深链不会 404</td>
+</tr>
+<tr>
+<td>编译器工具链</td>
+<td><code>&lt;base&gt;/toolchain</code>（dev 中间件映射 <code>node_modules</code>）</td>
+<td>jsDelivr CDN（Pages 上没有 <code>/toolchain</code>，<code>fetchManifest</code> 失败后自动回退）</td>
+</tr>
+</tbody>
+</table>
+<p><code>public/404.html</code> 会把「本地开发的干净链接」（如 <code>/OIworld/problem/s1-p1</code>）重定向成对应的 hash 路由，<br>
+所以老书签也不会失效。</p>
+<p><strong>想改成同源加载编译器（完全不依赖外部 CDN）：</strong></p>
+<div class="highlight"><pre><span></span><code>npm<span class="w"> </span>run<span class="w"> </span>setup:toolchain<span class="w">     </span><span class="c1"># 生成 public/toolchain（约 90MB）</span>
+<span class="c1"># 然后把 .gitignore 里的 public/toolchain 一行去掉，一起提交</span>
+</code></pre></div>
+
+<p>代价：仓库体积涨到约 95MB（<code>clang.wasm</code> 单文件 43MB，未超 GitHub 的 100MB 限制每文件），<br>
+且 GitHub Pages 每月 100GB 的软带宽上限大约只够 1000 个首次访问者。</p>
+<p><strong>本地验证部署形态：</strong></p>
+<div class="highlight"><pre><span></span><code>npm<span class="w"> </span>run<span class="w"> </span>build<span class="w"> </span>--<span class="w"> </span>--base<span class="o">=</span>/OIworld/<span class="w">     </span><span class="c1"># 配合环境变量 VITE_HASH_ROUTER=1</span>
+npx<span class="w"> </span>vite<span class="w"> </span>preview<span class="w"> </span>--base<span class="o">=</span>/OIworld/
+node<span class="w"> </span>scripts/e2e-static.mjs<span class="w"> </span>http://localhost:4173/OIworld/
+</code></pre></div>
+
+<blockquote>
+<p>本站在 Pages 上不需要任何自定义响应头（没有使用 SharedArrayBuffer 与线程），<br>
+所以&rdquo;Pages 不能设置 header&rdquo;这条限制对我们没有影响。</p>
+</blockquote>
+<hr>
+<h2 id="_4">技术栈<a class="toc-link" href="#_4" title="Permanent link"> ¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>方向</th>
+<th>选型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>框架</td>
+<td>React 18 + TypeScript 5</td>
+</tr>
+<tr>
+<td>构建</td>
+<td>Vite 6</td>
+</tr>
+<tr>
+<td>代码编辑器</td>
+<td>Monaco Editor（VS Code 同款，本地打包，不走 CDN）+ <code>@monaco-editor/react</code></td>
+</tr>
+<tr>
+<td>C++ 编译器</td>
+<td>clang / wasm-ld 的 WebAssembly 构建，来自 <a href="https://github.com/BertalanD/browsercc"><code>browsercc</code></a></td>
+</tr>
+<tr>
+<td>运行沙箱</td>
+<td>WASI（<a href="https://www.npmjs.com/package/@bjorn3/browser_wasi_shim"><code>@bjorn3/browser_wasi_shim</code></a>）</td>
+</tr>
+<tr>
+<td>状态管理</td>
+<td>Zustand（+ <code>persist</code> 中间件写 localStorage）</td>
+</tr>
+<tr>
+<td>UI</td>
+<td>Ant Design 5</td>
+</tr>
+<tr>
+<td>路由</td>
+<td>React Router 6</td>
+</tr>
+<tr>
+<td>题目数据</td>
+<td><code>src/data/problems/stage-*.json</code>（JSON 文件，打包进产物，离线可用）</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="_5">编译 / 执行链路<a class="toc-link" href="#_5" title="Permanent link"> ¶</a></h2>
+<div class="highlight"><pre><span></span><code>       主线程                      compile.worker                run.worker
+┌────────────────────┐      ┌────────────────────────┐    ┌──────────────────────┐
+│ Monaco 编辑器       │      │ clang.wasm（cc1）       │    │ WebAssembly 实例化     │
+│ 代码 + 标准输入      │─────▶│   ↓ 目标文件             │    │  + WASI shim         │
+│ compilerService     │      │ lld.wasm（wasm-ld）     │    │  stdin → fd0         │
+│  ├ 编译一次          │◀─────│   ↓ 可执行 wasm 字节码   │───▶│  stdout/stderr 捕获   │
+│  └ 跑 N 个测试用例   │      └────────────────────────┘    └──────────────────────┘
+│ 超时 → terminate()  │                                       每用例一个全新沙箱
+└────────────────────┘
+</code></pre></div>
+
+<p>设计要点：</p>
+<ol>
+<li><strong>编译与执行分成两个 Worker。</strong> 编译器（<code>clang</code>）只编译不执行，产物是一段 wasm 字节码；<br>
+   执行放在另一个 Worker 里，这样<strong>一次提交只需要编译一次</strong>，N 个测试用例复用同一份产物。</li>
+<li><strong>硬超时靠 <code>worker.terminate()</code>。</strong> 死循环的用户代码是无法从内部中断的，<br>
+   所以主线程计时超时后直接杀掉执行 Worker（默认 3 秒），再新建一个继续下一个用例。<br>
+   编译器 Worker 是常驻的，不受影响。</li>
+<li><strong>编译器实例不可复用。</strong> Emscripten 构建的 clang 在 <code>callMain</code> 之后运行时即退出，<br>
+   再次调用会崩；因此每次编译都新建 clang / wasm-ld 实例（与 browsercc 官方实现一致），<br>
+   但<strong>编译参数（<code>-###</code> 解析结果）只计算一次</strong>，省掉每次编译的额外开销。</li>
+<li><strong><code>callMain</code> 会污染入参数组</strong>（Emscripten 内部 <code>args.unshift(thisProgram)</code>），<br>
+   所以传入前必须复制一份，否则第二次编译会报 <code>unknown argument: '-cc1'</code>。</li>
+<li><strong>输出防护。</strong> 单流输出超过 64KB 立即中止并提示；stdout / stderr 分别捕获。</li>
+<li><strong>错误可视化。</strong> clang 的 <code>文件:行:列: error: …</code> 会被解析成结构化诊断，<br>
+   既显示在结果面板（可点击），也转成 Monaco 的红点标记。</li>
+</ol>
+<h3 id="_6">编译参数（固定）<a class="toc-link" href="#_6" title="Permanent link"> ¶</a></h3>
+<div class="highlight"><pre><span></span><code>-std=c++20 -O0 -Wall -fno-exceptions
+</code></pre></div>
+
+<p><code>-fno-exceptions</code> <strong>是必须的</strong>：本工具链的 wasi-sysroot 中 libc++ 是关闭异常编译的，<br>
+不加这个参数链接时会报 <code>undefined symbol: __cxa_throw</code>。<br>
+因此<strong>题库中不能使用 <code>try / catch / throw</code>，也不要用会抛异常的 <code>.at()</code></strong>。</p>
+<hr>
+<h2 id="_7">编译器工具链从哪里来<a class="toc-link" href="#_7" title="Permanent link"> ¶</a></h2>
+<p><code>src/compiler/toolchain.ts</code> 按以下优先级解析：</p>
+<ol>
+<li>环境变量 <code>VITE_TOOLCHAIN_BASE</code></li>
+<li>同源静态目录 <code>/toolchain</code>（执行过 <code>npm run setup:toolchain</code> 时存在）</li>
+<li>jsDelivr CDN：<code>https://cdn.jsdelivr.net/npm/browsercc@0.1.1/dist</code></li>
+</ol>
+<p>开发服务器（<code>vite.config.ts</code> 里的 <code>oiworld-toolchain-dev-server</code> 插件）会把 <code>/toolchain/*</code><br>
+映射到 <code>node_modules/browsercc/dist/*</code>，所以 <strong><code>npm run dev</code> 开箱即用、无需任何额外步骤</strong>，<br>
+也不会把 90MB 文件复制进仓库。</p>
+<p>需要<strong>完全离线</strong>（或部署到内网）时：</p>
+<div class="highlight"><pre><span></span><code>npm<span class="w"> </span>run<span class="w"> </span>setup:toolchain<span class="w">     </span><span class="c1"># 把工具链复制到 public/toolchain/（约 90MB，已在 .gitignore 中）</span>
+npm<span class="w"> </span>run<span class="w"> </span>build<span class="w">               </span><span class="c1"># dist 产物会自带编译器，运行时不再访问外网</span>
+</code></pre></div>
+
+<p>部署提示：<code>/toolchain/*.wasm</code> 需要以 <code>application/wasm</code> 提供；<br>
+本站不需要 COOP/COEP 头（没有使用 SharedArrayBuffer / 线程）。</p>
+<hr>
+<h2 id="_8">目录结构<a class="toc-link" href="#_8" title="Permanent link"> ¶</a></h2>
+<div class="highlight"><pre><span></span><code><span class="n">src</span><span class="o">/</span>
+<span class="err">├─</span><span class="w"> </span><span class="n">compiler</span><span class="o">/</span><span class="w">            </span><span class="n">C</span><span class="o">++</span><span class="w"> </span><span class="err">编译与运行链路：</span><span class="n">client</span><span class="o">.</span><span class="n">ts</span><span class="err">（编译服务）、</span><span class="n">compile</span><span class="o">.</span><span class="n">worker</span><span class="o">.</span><span class="n">ts</span><span class="err">（</span><span class="n">clang</span><span class="err">）、</span>
+<span class="err">│</span><span class="w">                      </span><span class="n">run</span><span class="o">.</span><span class="n">worker</span><span class="o">.</span><span class="n">ts</span><span class="err">（</span><span class="n">WASI</span><span class="w"> </span><span class="err">沙箱）、</span><span class="n">toolchain</span><span class="o">.</span><span class="n">ts</span><span class="err">（工具链定位与预加载）、</span>
+<span class="err">│</span><span class="w">                      </span><span class="n">diagnostics</span><span class="o">.</span><span class="n">ts</span><span class="err">（</span><span class="n">clang</span><span class="w"> </span><span class="err">诊断</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="err">中文标点检测）、</span><span class="n">judge</span><span class="o">.</span><span class="n">ts</span><span class="err">（输出比对）</span>
+<span class="err">├─</span><span class="w"> </span><span class="n">python</span><span class="o">/</span><span class="w">              </span><span class="n">Python</span><span class="w"> </span><span class="err">靶场：</span><span class="n">data</span><span class="o">.</span><span class="n">ts</span><span class="err">（阶段与题库）、</span><span class="n">compiler</span><span class="o">.</span><span class="n">ts</span><span class="err">（</span><span class="n">Pyodide</span><span class="err">）、</span>
+<span class="err">│</span><span class="w">                      </span><span class="n">diagnostics</span><span class="o">.</span><span class="n">ts</span><span class="err">（报错自查提示）、</span><span class="n">usePythonProgressStore</span><span class="o">.</span><span class="n">ts</span>
+<span class="err">├─</span><span class="w"> </span><span class="n">java</span><span class="o">/</span><span class="w">                </span><span class="n">Java</span><span class="w"> </span><span class="err">靶场：</span><span class="n">data</span><span class="o">.</span><span class="n">ts</span><span class="err">（阶段与题库）、</span><span class="n">service</span><span class="o">.</span><span class="n">ts</span><span class="err">（</span><span class="n">Doppio</span><span class="w"> </span><span class="n">JVM</span><span class="err">）、</span>
+<span class="err">│</span><span class="w">                      </span><span class="n">diagnostics</span><span class="o">.</span><span class="n">ts</span><span class="err">（</span><span class="n">javac</span><span class="w"> </span><span class="err">报错自查提示）、</span><span class="n">useJavaProgressStore</span><span class="o">.</span><span class="n">ts</span><span class="err">、</span>
+<span class="err">│</span><span class="w">                      </span><span class="n">runtimeInfo</span><span class="o">.</span><span class="n">ts</span><span class="err">（运行时文案）</span>
+<span class="err">├─</span><span class="w"> </span><span class="n">pro</span><span class="o">/</span><span class="w">                 </span><span class="n">Pro</span><span class="w"> </span><span class="err">靶场：</span><span class="n">data</span><span class="o">.</span><span class="n">ts</span><span class="err">（阶段与题库）、</span><span class="n">lesson</span><span class="o">.</span><span class="n">ts</span><span class="err">（题面模板）、</span><span class="n">stages</span><span class="o">/</span><span class="n">stage</span><span class="o">-</span><span class="mf">1.</span><span class="o">.</span><span class="mf">7.</span><span class="n">ts</span><span class="err">、</span>
+<span class="err">│</span><span class="w">                      </span><span class="n">useProProgressStore</span><span class="o">.</span><span class="n">ts</span>
+<span class="err">├─</span><span class="w"> </span><span class="n">luogu</span><span class="o">/</span><span class="w">               </span><span class="err">洛谷远程提交：</span><span class="n">bridge</span><span class="o">.</span><span class="n">ts</span><span class="err">（</span><span class="n">postMessage</span><span class="w"> </span><span class="err">客户端）、</span><span class="n">service</span><span class="o">.</span><span class="n">ts</span><span class="err">（提交</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="err">轮询</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="err">记录）、</span>
+<span class="err">│</span><span class="w">                      </span><span class="n">verdict</span><span class="o">.</span><span class="n">ts</span><span class="err">（洛谷评测状态表）、</span><span class="n">languages</span><span class="o">.</span><span class="n">ts</span><span class="err">（洛谷语言编号）、</span>
+<span class="err">│</span><span class="w">                      </span><span class="n">bookmarklet</span><span class="o">.</span><span class="n">ts</span><span class="err">（免安装的「书签提交」脚本）、</span>
+<span class="err">│</span><span class="w">                      </span><span class="n">useLuoguStore</span><span class="o">.</span><span class="n">ts</span><span class="err">（账号绑定，</span><span class="n">localStorage</span><span class="err">）、</span><span class="n">useLuoguBridge</span><span class="o">.</span><span class="n">ts</span><span class="err">（桥检测）</span>
+<span class="err">├─</span><span class="w"> </span><span class="n">data</span><span class="o">/</span>
+<span class="err">│</span><span class="w">  </span><span class="err">├─</span><span class="w"> </span><span class="n">index</span><span class="o">.</span><span class="n">ts</span><span class="w">           </span><span class="err">题库加载、搜索筛选、解锁规则、统计</span>
+<span class="err">│</span><span class="w">  </span><span class="err">├─</span><span class="w"> </span><span class="n">luogu</span><span class="o">-</span><span class="n">codes</span><span class="o">.</span><span class="n">ts</span><span class="w">     </span><span class="n">C</span><span class="o">++</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">Python</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">Java</span><span class="w"> </span><span class="err">三轨共用的「洛谷同类型练习」映射表</span>
+<span class="err">│</span><span class="w">  </span><span class="err">├─</span><span class="w"> </span><span class="n">guide</span><span class="o">.</span><span class="n">md</span><span class="w">           </span><span class="n">C</span><span class="o">++</span><span class="w"> </span><span class="err">新手指南（第零课）</span>
+<span class="err">│</span><span class="w">  </span><span class="err">├─</span><span class="w"> </span><span class="n">java</span><span class="o">-</span><span class="n">guide</span><span class="o">.</span><span class="n">md</span><span class="w">      </span><span class="n">Java</span><span class="w"> </span><span class="err">入门指南</span>
+<span class="err">│</span><span class="w">  </span><span class="err">└─</span><span class="w"> </span><span class="n">problems</span><span class="o">/</span><span class="n">stage</span><span class="o">-</span><span class="mf">1.</span><span class="o">.</span><span class="mf">7.j</span><span class="n">son</span><span class="w">   </span><span class="err">题库（阶段一</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="err">阶段七）</span>
+<span class="err">├─</span><span class="w"> </span><span class="n">store</span><span class="o">/</span><span class="n">useProgressStore</span><span class="o">.</span><span class="n">ts</span><span class="w">     </span><span class="err">进度</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="err">代码草稿</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="err">开发者模式（</span><span class="n">localStorage</span><span class="err">）</span>
+<span class="err">├─</span><span class="w"> </span><span class="n">pages</span><span class="o">/</span><span class="w">                </span><span class="err">三个靶场各一套页面（</span><span class="n">Home</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">Stage</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">Problem</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">Progress</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">Guide</span><span class="err">）</span>
+<span class="err">├─</span><span class="w"> </span><span class="n">components</span><span class="o">/</span><span class="w">           </span><span class="err">编辑器、输出面板、测试用例面板、</span><span class="n">Markdown</span><span class="err">、题目表格、洛谷提交面板等</span>
+<span class="err">├─</span><span class="w"> </span><span class="n">hooks</span><span class="o">/</span><span class="w">                </span><span class="n">useCompiler</span><span class="err">（</span><span class="n">C</span><span class="o">++</span><span class="w"> </span><span class="err">编译器状态）、</span><span class="n">useDeveloperMode</span><span class="err">（开发者模式）</span>
+<span class="err">└─</span><span class="w"> </span><span class="n">editor</span><span class="o">/</span><span class="n">monaco</span><span class="o">.</span><span class="n">ts</span><span class="w">      </span><span class="n">Monaco</span><span class="w"> </span><span class="err">本地化配置（</span><span class="n">Worker</span><span class="w"> </span><span class="err">由</span><span class="w"> </span><span class="n">Vite</span><span class="w"> </span><span class="err">打包）</span>
+
+<span class="n">public</span><span class="o">/</span>
+<span class="err">└─</span><span class="w"> </span><span class="n">oiworld</span><span class="o">-</span><span class="n">luogu</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">js</span><span class="w"> </span><span class="err">洛谷桥接脚本（油猴脚本，纯文本可审计；由</span><span class="w"> </span><span class="o">/</span><span class="n">luogu</span><span class="w"> </span><span class="err">页引导安装）</span>
+
+<span class="n">docs</span><span class="o">/</span>
+<span class="err">└─</span><span class="w"> </span><span class="n">luogu</span><span class="o">-</span><span class="n">bridge</span><span class="o">.</span><span class="n">md</span><span class="w">       </span><span class="err">洛谷远程提交桥的设计说明：实测证据、接口清单、消息协议、安全边界、排查</span>
+
+<span class="n">scripts</span><span class="o">/</span>
+<span class="err">├─</span><span class="w"> </span><span class="n">node</span><span class="o">-</span><span class="n">toolchain</span><span class="o">.</span><span class="n">mjs</span><span class="w">    </span><span class="err">在</span><span class="w"> </span><span class="n">Node</span><span class="w"> </span><span class="err">里跑同一套</span><span class="w"> </span><span class="n">clang</span><span class="o">-</span><span class="n">wasm</span><span class="w"> </span><span class="err">流程（校验题库用）</span>
+<span class="err">├─</span><span class="w"> </span><span class="n">validate</span><span class="o">-</span><span class="n">problems</span><span class="o">.</span><span class="n">mjs</span><span class="w"> </span><span class="err">题库校验：题解必须能编译并在每个用例上输出正确</span>
+<span class="err">├─</span><span class="w"> </span><span class="n">copy</span><span class="o">-</span><span class="n">toolchain</span><span class="o">.</span><span class="n">mjs</span><span class="w">    </span><span class="err">离线工具链安装（</span><span class="n">setup</span><span class="p">:</span><span class="n">toolchain</span><span class="err">）</span>
+<span class="err">├─</span><span class="w"> </span><span class="n">lib</span><span class="o">/</span><span class="n">luogu</span><span class="o">-</span><span class="n">http</span><span class="o">.</span><span class="n">mjs</span><span class="w">    </span><span class="err">访问洛谷的</span><span class="w"> </span><span class="n">Node</span><span class="w"> </span><span class="n">HTTP</span><span class="w"> </span><span class="err">客户端（</span><span class="n">Cookie</span><span class="w"> </span><span class="err">罐</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="err">跟随重定向）</span>
+<span class="err">├─</span><span class="w"> </span><span class="n">luogu</span><span class="o">-</span><span class="n">lookup</span><span class="o">.</span><span class="n">mjs</span><span class="w">      </span><span class="err">洛谷题号查询（候选搜索</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="err">核对题号）</span>
+<span class="err">├─</span><span class="w"> </span><span class="n">verify</span><span class="o">-</span><span class="n">luogu</span><span class="o">-</span><span class="n">codes</span><span class="o">.</span><span class="n">mjs</span><span class="w"> </span><span class="err">洛谷题号校验（真实访问洛谷题目页）</span>
+<span class="err">├─</span><span class="w"> </span><span class="n">test</span><span class="o">-</span><span class="n">luogu</span><span class="o">-</span><span class="n">bridge</span><span class="o">.</span><span class="n">mjs</span><span class="w"> </span><span class="err">洛谷桥接脚本测试（真实请求</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="err">模拟已登录两套）</span>
+<span class="err">├─</span><span class="w"> </span><span class="n">e2e</span><span class="o">-</span><span class="n">luogu</span><span class="o">.</span><span class="n">mjs</span><span class="w">         </span><span class="err">洛谷远程提交验收（真实桥接脚本</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="err">假扩展层</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="err">书签提交）</span>
+<span class="err">├─</span><span class="w"> </span><span class="n">e2e</span><span class="o">.</span><span class="n">mjs</span><span class="w">               </span><span class="err">浏览器端到端冒烟测试（</span><span class="n">Playwright</span><span class="err">）</span>
+<span class="err">├─</span><span class="w"> </span><span class="n">e2e</span><span class="o">-</span><span class="n">problem</span><span class="o">.</span><span class="n">mjs</span><span class="w">       </span><span class="err">单题深度验收：渲染</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="err">用参考题解提交</span>
+<span class="err">├─</span><span class="w"> </span><span class="n">e2e</span><span class="o">-</span><span class="n">beginner</span><span class="o">.</span><span class="n">mjs</span><span class="w">      </span><span class="err">零基础路径验收：新手指南</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="err">跳转</span><span class="w"> </span><span class="n">TODO</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="err">中文标点提示</span>
+<span class="err">└─</span><span class="w"> </span><span class="n">problem</span><span class="o">-</span><span class="n">sources</span><span class="o">/</span><span class="w">      </span><span class="err">题库的“源文件”：用</span><span class="w"> </span><span class="n">JS</span><span class="w"> </span><span class="err">模板字符串写题面，</span>
+<span class="w">                         </span><span class="n">node</span><span class="w"> </span><span class="n">gen</span><span class="o">-</span><span class="n">stage</span><span class="o">-</span><span class="n">N</span><span class="o">.</span><span class="n">mjs</span><span class="w"> </span><span class="err">生成本阶段的</span><span class="w"> </span><span class="n">JSON</span>
+</code></pre></div>
+
+<blockquote>
+<p>为什么不直接手写 JSON？题目描述是长 Markdown，直接写 JSON 要到处转义 <code>\n</code> 和引号，<br>
+很容易出错。<code>scripts/problem-sources/gen-stage-N.mjs</code> 用模板字符串书写题面，<br>
+再 <code>JSON.stringify(..., null, 2)</code> 输出，既能保证 JSON 合法，改题面也不用和转义符搏斗。<br>
+生成结果是幂等的：重新生成后 <code>src/data/problems/*.json</code> 内容完全一致。</p>
+</blockquote>
+<hr>
+<h2 id="_9">题库与数据结构<a class="toc-link" href="#_9" title="Permanent link"> ¶</a></h2>
+<div class="highlight"><pre><span></span><code><span class="kd">interface</span><span class="w"> </span><span class="nx">Problem</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span><span class="w">                 </span><span class="c1">// s1-p1 … s7-p6</span>
+<span class="w">  </span><span class="nx">title</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">difficulty</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;入门&#39;</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s1">&#39;简单&#39;</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s1">&#39;中等&#39;</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">knowledge_point</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">description</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span><span class="w">        </span><span class="c1">// Markdown，见下面的章节结构</span>
+<span class="w">  </span><span class="nx">starter_code</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span><span class="w">       </span><span class="c1">// 初始代码，必须能编译通过</span>
+<span class="w">  </span><span class="nx">solution_code</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span><span class="w">      </span><span class="c1">// 参考题解</span>
+<span class="w">  </span><span class="nx">test_cases</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">input</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span><span class="w"> </span><span class="nx">expected_output</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">}[];</span>
+<span class="w">  </span><span class="nx">hints</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">[];</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p><code>description</code> 的章节结构（面向零基础，逐段递进）：</p>
+<div class="highlight"><pre><span></span><code>### 题目背景          生活化的场景，说明这题要解决什么
+### 任务              一句话说清要做什么
+### 本关新知识        这道题需要的语法：大白话 + 可运行代码 + 要点表格
+### 输入格式 / 输出格式
+### 样例              输入输出代码块
+### 说明 / 小贴士     可选
+### 常见错误          新手在这道题上真实会踩的坑（表格：错误写法 / 后果 / 正确写法）
+</code></pre></div>
+
+<h3 id="_10">课程阶段<a class="toc-link" href="#_10" title="Permanent link"> ¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>主题</th>
+<th>知识点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>一</td>
+<td>让程序开口说话</td>
+<td><code>cout</code>、变量、类型、<code>cin</code></td>
+</tr>
+<tr>
+<td>二</td>
+<td>让程序学会判断</td>
+<td>运算符、<code>if / else</code>、<code>switch</code></td>
+</tr>
+<tr>
+<td>三</td>
+<td>让程序学会重复</td>
+<td><code>for</code> / <code>while</code>、嵌套循环、<code>break</code></td>
+</tr>
+<tr>
+<td>四</td>
+<td>一批数据的处理</td>
+<td>数组、遍历、最值、<code>string</code></td>
+</tr>
+<tr>
+<td>五</td>
+<td>化整为零</td>
+<td>函数、引用传参、重载、递归</td>
+</tr>
+<tr>
+<td>六</td>
+<td>自定义数据类型</td>
+<td><code>struct</code>、结构体数组、排序</td>
+</tr>
+<tr>
+<td>七</td>
+<td>键值映射</td>
+<td><code>map</code> / <code>unordered_map</code>、<code>vector</code>、综合应用</td>
+</tr>
+</tbody>
+</table>
+<p>共 <strong>42 道题</strong>，全部通过校验脚本验证（见下）。</p>
+<h3 id="_11">评测规则<a class="toc-link" href="#_11" title="Permanent link"> ¶</a></h3>
+<ul>
+<li>忽略每行的<strong>行尾空格 / 制表符</strong>、忽略输出<strong>末尾多余的空行</strong>、统一 CRLF/LF；</li>
+<li>行内空格、大小写、行数差异<strong>算错</strong>；</li>
+<li>「运行」只用标准输入框里的数据跑一次；「提交」跑完全部测试用例并逐个比对；</li>
+<li>全部通过 → 标记完成、解锁下一题（<strong>做题顺序固定为「按顺序解锁」</strong>，没有开关可关；只有开发者模式能临时解锁全部）；否则记录为「未通过」并展示第一个失败用例的期望/实际对比。</li>
+</ul>
+<h3 id="_12">新增题目<a class="toc-link" href="#_12" title="Permanent link"> ¶</a></h3>
+<ol>
+<li>在对应的 <code>src/data/problems/stage-N.json</code> 里追加一道题（字段见上）；</li>
+<li>运行校验脚本，它会用<strong>真实 clang-wasm</strong> 编译题解并把每个用例跑一遍：</li>
+</ol>
+<div class="highlight"><pre><span></span><code>npm<span class="w"> </span>run<span class="w"> </span>validate:problems<span class="w">              </span><span class="c1"># 全部阶段</span>
+node<span class="w"> </span>scripts/validate-problems.mjs<span class="w"> </span>--stage<span class="o">=</span><span class="m">6</span><span class="w">        </span><span class="c1"># 只校验阶段六</span>
+node<span class="w"> </span>scripts/validate-problems.mjs<span class="w"> </span>--problem<span class="o">=</span>s6-p4<span class="w">  </span><span class="c1"># 只校验一道题</span>
+</code></pre></div>
+
+<p>校验内容：字段完整性 → <code>solution_code</code> 能编译 → 每个 <code>test_cases</code> 输出与<br>
+<code>expected_output</code> 逐行一致 → <code>starter_code</code> 也能编译（初始代码必须能跑，只是答案不对）。</p>
+<ol start="3">
+<li>在浏览器里深度验收这道题（渲染 + 提交）：</li>
+</ol>
+<div class="highlight"><pre><span></span><code>npx<span class="w"> </span>playwright<span class="w"> </span>install<span class="w"> </span>chromium<span class="w">        </span><span class="c1"># 首次</span>
+npm<span class="w"> </span>run<span class="w"> </span>preview
+node<span class="w"> </span>scripts/e2e-problem.mjs<span class="w"> </span>http://localhost:4173<span class="w"> </span>s6-p4
+</code></pre></div>
+
+<hr>
+<h2 id="_13">沙箱限制（题库写作约束）<a class="toc-link" href="#_13" title="Permanent link"> ¶</a></h2>
+<p>浏览器 WebAssembly 沙箱里<strong>没有</strong>文件系统、网络、进程与系统调用，所以：</p>
+<ul>
+<li>✅ 只有标准输入 <code>cin</code> / 标准输出 <code>cout</code>（<code>printf</code> 也可用）</li>
+<li>❌ 文件读写、网络请求、<code>system()</code>、线程</li>
+<li>❌ C++ 异常（<code>try / catch / throw</code>）——编译参数里关闭了异常</li>
+<li>❌ 依赖运行环境的功能（时间、随机数种子、环境变量）：题目输出必须<strong>确定性</strong></li>
+</ul>
+<hr>
+<h2 id="_14">功能清单<a class="toc-link" href="#_14" title="Permanent link"> ¶</a></h2>
+<p><strong>新手指南（<code>/guide</code>）</strong>：面向零基础的&rdquo;第零课&rdquo;，带右侧目录；含环境说明、题目页导览、<br>
+逐行代码讲解、运行/提交的区别、中文标点对照表、常见报错中英对照表、英文小词典。</p>
+<p><strong>首页</strong>：阶段卡片（题目数、难度标签、完成进度）、总体进度统计、搜索（标题/知识点/题号）、<br>
+按难度与完成状态筛选、继续上次练习、零基础入口。</p>
+<p><strong>题目页</strong>：左栏题目描述（Markdown + 表格 + 代码块 + 本关新知识 + 常见错误）、可折叠提示、<br>
+上一题/下一题、通过后可查看参考题解；右栏工具栏（语言、<strong>写到哪？</strong>、重置代码、运行、提交）、<br>
+Monaco 编辑器（clang 错误红点）、标准输入框（一键填入样例）、<br>
+输出面板（通过 / 编译错误 + 零基础自查提示 / 运行错误 / 超时 / 输出过多）、<br>
+测试用例面板（逐条状态 + 展开看输入输出对比 + 运行全部测试）。</p>
+<p><strong>进度</strong>：<code>localStorage</code> 持久化已通过 / 未通过 / 最后访问 / 每题代码草稿；<br>
+进度页支持导出 / 导入 JSON、清空进度，以及开发者模式开关（做题顺序固定为按顺序解锁，不提供关闭开关）。</p>
+<p><strong>洛谷远程提交（<code>/luogu</code> + 四个靶场的题目页面板）</strong>：桥接脚本状态检测与一键安装指引、<br>
+<strong>免安装的「书签提交」</strong>、vjudge 式远程账号管理（保护 / 账号 / 状态 / 更新时间 / 操作 +<br>
+<code>__client_id</code> / <code>_uid</code> 绑定表单）、浏览器会话一键绑定、绑定前真实校验 Cookie 是否有效、解绑；<br>
+题目页可记住洛谷题号、按靶场自动选语言与 O2 开关、一键提交、<strong>实时轮询评测结果</strong>（含编译错误原文）、<br>
+拉取该题提交记录列表、以及两种降级路径（书签提交 / 复制代码手动粘贴）。<br>
+绑定凭据只存本机，桥接脚本带 origin 白名单与 5 秒提交冷却。</p>
+<p><strong>开发者模式</strong>：一键解锁全部题目、免通过查看并填入参考题解、题目页调试面板<br>
+（编译参数 / 工具链 / 耗时 / 原始 stderr / 复制下载题目 JSON）。<code>?dev=1</code>、<code>Ctrl+Shift+D</code> 或设置页开关。</p>
+<hr>
+<h2 id="_15">开发脚本<a class="toc-link" href="#_15" title="Permanent link"> ¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>npm run dev</code></td>
+<td>开发服务器（自带 <code>/toolchain</code> 中间件）</td>
+</tr>
+<tr>
+<td><code>npm run build</code></td>
+<td>类型检查 + 生产构建</td>
+</tr>
+<tr>
+<td><code>npm run preview</code></td>
+<td>预览生产构建</td>
+</tr>
+<tr>
+<td><code>npm run typecheck</code></td>
+<td>仅类型检查</td>
+</tr>
+<tr>
+<td><code>npm run validate:problems</code></td>
+<td>用真实 clang-wasm 校验全部题库</td>
+</tr>
+<tr>
+<td><code>npm run setup:toolchain</code></td>
+<td>把编译器复制到 <code>public/toolchain</code>（离线部署）</td>
+</tr>
+<tr>
+<td><code>npm run test:e2e</code></td>
+<td>端到端冒烟测试（需先启动 preview/dev）</td>
+</tr>
+<tr>
+<td><code>npm run test:problem -- &lt;url&gt; &lt;id&gt;</code></td>
+<td>单题深度验收</td>
+</tr>
+<tr>
+<td><code>npm run test:bridge</code></td>
+<td>洛谷桥接脚本测试：一半<strong>真的请求 luogu.com.cn</strong>（未登录状态验证接口地址 / csrf / 错误翻译 / origin 白名单），一半用模拟已登录的响应验证提交成功路径（请求头、请求体、<code>rid</code>、冷却、记录解析）</td>
+</tr>
+<tr>
+<td><code>npm run test:luogu -- &lt;url&gt;</code></td>
+<td>洛谷远程提交验收（注入站点上真实的桥接脚本 + 假扩展层，验证 <code>/luogu</code> 绑定页、题目页面板、书签提交、四个靶场，<code>-- hash</code> 可对线上站点跑）</td>
+</tr>
+<tr>
+<td><code>npm run validate:luogu</code></td>
+<td>校验四个靶场的洛谷题号：逐个访问洛谷题目页，确认存在且标题能取到（<strong>真实网络请求</strong>，只读）；可用 <code>--track=cpp</code> / <code>--problem=p1-1</code> 缩小范围</td>
+</tr>
+<tr>
+<td><code>node scripts/luogu-lookup.mjs &lt;关键词&gt;</code></td>
+<td>查洛谷题号：列出关键词对应的候选题目（题号 / 难度 / 通过数 / 标题），题库映射时用</td>
+</tr>
+<tr>
+<td><code>node scripts/luogu-lookup.mjs --check P5788 ...</code></td>
+<td>直接核对若干题号是否存在并打印标题</td>
+</tr>
+<tr>
+<td><code>node scripts/e2e-beginner.mjs &lt;url&gt;</code></td>
+<td>零基础路径验收（指南 / 跳转 TODO / 中文标点提示）</td>
+</tr>
+<tr>
+<td><code>node scripts/e2e-devmode.mjs &lt;url&gt;</code></td>
+<td>开发者模式验收（解锁 / 免通过看题解 / 快捷键 / 面板）</td>
+</tr>
+<tr>
+<td><code>node scripts/e2e-static.mjs &lt;base&gt;</code></td>
+<td>静态部署验收（hash 路由 / 深链刷新 / base 子路径），本地与线上站点都能跑</td>
+</tr>
+<tr>
+<td><code>node scripts/e2e-java.mjs &lt;url&gt; [hash]</code></td>
+<td>Java 靶场验收（首页 / 阶段 / 题目 / 进度 / 指南 / 闯关解锁，并真实编译运行提交一道题）</td>
+</tr>
+<tr>
+<td><code>node scripts/e2e-java-problem.mjs &lt;url&gt; &lt;id&gt; [hash]</code></td>
+<td>Java 单题抽查：开发者模式下「填入参考题解 → 提交」，用真实 Doppio JVM 验证某道题</td>
+</tr>
+<tr>
+<td><code>npm run validate:java</code></td>
+<td>用本机 JDK 校验 Java 题库：结构 + <code>javac --release 8</code> 编译题解与初始代码 + 逐用例运行比对（42 题 / 161 个测试点）</td>
+</tr>
+<tr>
+<td><code>npm run fix:java-lessons</code></td>
+<td>修正 Java 题面模板字符串里忘记转义的反引号（写题时的一个常见坑）</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="_16">已验证结果（本机实测）<a class="toc-link" href="#_16" title="Permanent link"> ¶</a></h2>
+<ul>
+<li>题库：<code>npm run validate:problems</code> → <strong>42/42 通过</strong>（题解编译 + 每个用例输出一致 + 初始代码可编译）</li>
+<li>端到端（生产构建 + 无头 Chromium）：首页 7 阶段 42 题 → 进入题目 → 编译器就绪 0.9s →<br>
+  运行输出 <code>Hello, World!</code>（2.4s）→ 提交全部通过并弹出「恭喜通过」→ 进度写入 localStorage →<br>
+  编译错误正确展示且编辑器标红 → 刷新后进度仍在，<strong>控制台无任何报错</strong></li>
+<li>零基础路径验收：新手指南 10 个章节齐全、首页与顶栏入口可达、第一题出现引导卡片、<br>
+  「写到哪？」把光标定位到第 5 行 <code>// TODO</code>、故意用中文分号写错后<strong>自动提示&rdquo;检测到中文标点&rdquo;</strong>、<br>
+  改成正确代码后提交通过，全程无控制台报错</li>
+<li>单题深度验收：阶段七 <code>s7-p6</code>（map 统计）19/19 项通过；阶段六 <code>s6-p4</code>（结构体排序）<br>
+  用参考题解提交，5 个用例全部通过</li>
+<li>开发者模式验收：默认状态确认被锁 → <code>?dev=1</code> 一键解锁并出现 DEV 标记与调试面板 →<br>
+  免通过查看题解 → 一键填入题解提交全部通过 → <code>Ctrl+Shift+D</code> 双向切换 → <code>?dev=0</code> 关闭，<br>
+  全程无控制台报错</li>
+<li>静态部署验收（GitHub Pages 线上站点 https://yhsome.github.io/OIworld/ ）：<br>
+  首屏 2.9s → 7 阶段 42 题正常渲染 → 点进题目 → 工具链从 jsDelivr 下载 45.7s 后就绪 →<br>
+  浏览器本地编译并运行成功 40.4s → 提交通过 → <strong>刷新深链仍在题目页（hash 路由）</strong> →<br>
+<code>#/guide</code> 与 <code>?dev=1</code> 深链均可用，<strong>控制台零报错、零 404 请求</strong></li>
+<li>Java 靶场验收（本地与<strong>线上</strong>各跑一遍，<code>scripts/e2e-java.mjs</code>）：首页 7 个阶段卡片 / 42 道题 →<br>
+  顶栏三个靶场切换按钮且 Java 高亮 → 阶段页 6 道题 → 题目页左右分栏、工具栏与测试用例齐全 →<br>
+  运行环境就绪 → 把 <code>// TODO</code> 改成输出语句 → <strong>提交通过并弹出「恭喜通过」</strong> →<br>
+  进度页计入 → 指南页可读 → 未通过时按顺序锁定、<code>?dev=1</code> 可直达，控制台零报错</li>
+<li>Java 题库：<code>npm run validate:java</code> → <strong>42 道题 / 161 个测试点通过</strong><br>
+  （结构检查 + <code>javac --release 8</code> 编译题解与初始代码 + 逐用例运行比对，<br>
+  用 <code>--release 8</code> 是为了和浏览器里的 Java 8 运行时对齐，任何 Java 9+ 写法都会被拦下）</li>
+<li>Java 浏览器抽查（<code>scripts/e2e-java-problem.mjs</code>，真实 Doppio JVM 里逐题「填入参考题解 → 提交」）：<br>
+<strong>9/9 通过</strong>，覆盖 <code>println</code> 打印小数（<code>32.0</code>）、<code>switch</code> + <code>char</code>、嵌套循环打印、<code>String.charAt</code>、<br>
+  递归（<code>long</code> 阶乘）、<code>printf("%.2f")</code>、类 + 手写冒泡排序 + <code>compareTo</code>、<code>HashMap</code> 计数 +<br>
+<code>Collections.sort</code>、<code>TreeMap</code> 有序输出</li>
+<li>Java 性能实测（同一浏览器会话）：<strong>首次编译约 2 分钟，每个测试用例约 1 分钟</strong>，<br>
+  一道题提交（4 个用例）约 5.5 分钟——这是 Doppio JVM 跑在 JavaScript 里的固有代价。<br>
+  题库因此刻意保持轻量（循环几千次以内、输出几十行以内），UI 在等待时也会提示预计耗时</li>
+<li>洛谷接口实测（<code>scripts/test-luogu-bridge.mjs</code>，<strong>真的请求 luogu.com.cn</strong>）：<br>
+<code>POST /fe/api/problem/submit/P1001</code> 存在且未登录时返回<br>
+<code>UserNotLoggedInException</code>（对照：随机路径返回 404），csrf-token 能从题目页 meta 抓到，<br>
+  带 <code>Origin: https://yhsome.github.io</code> 的预检请求返回 <strong>403 且没有任何 <code>Access-Control-Allow-*</code> 头</strong><br>
+  （这就是&rdquo;纯前端读不到洛谷&rdquo;的硬证据）；<code>__client_id</code> / <code>_uid</code> 是<br>
+<code>HttpOnly; Secure; SameSite=None</code></li>
+<li>洛谷桥接脚本测试：<strong>24/24 通过</strong>（live 10 项 + mock 14 项）。<br>
+  mock 部分验证了提交请求的地址、<code>X-CSRF-TOKEN</code>、<code>Referer</code>/<code>Origin</code>、请求体 <code>{lang,code,enableO2}</code>、<br>
+<code>rid</code> 解析、5 秒冷却、评测记录与提交记录解析（含 <code>records</code> 为数组或 <code>{result:[]}</code> 两种形态）、<br>
+  绑定 Cookie 会作为 <code>Cookie</code> 头发出、人机验证错误被翻译成可操作提示</li>
+<li>洛谷远程提交验收（<code>scripts/e2e-luogu.mjs</code>，<strong>本地与线上各跑一遍</strong>；注入时用的是站点上<br>
+<strong>真实的桥接脚本</strong>，只把 <code>GM_xmlhttpRequest</code> 换成假扩展层，所以同时验证了真实脚本的<br>
+  csrf 抓取、URL / 请求头 / 请求体构造与消息协议）——63 项检查：<br>
+  未装脚本时的状态与安装引导 → 装桥后状态就绪/版本号/自动检测登录 →<br>
+  绑定浏览器会话与绑定粘贴的 Cookie（<strong>绑定前会真的验证 Cookie 有效性</strong>）→ 解绑 →<br>
+  题目页提交（请求打到 <code>POST https://www.luogu.com.cn/fe/api/problem/submit/P1001</code>、<br>
+<code>lang=27</code>、带 <code>X-CSRF-TOKEN</code> 与 <code>Referer</code>/<code>Origin</code>、带上绑定的 <code>Cookie</code> 头）→<br>
+  轮询 3 次拿到 AC → 刷新提交记录出 3 行（AC / WA / CE）→<br>
+<strong>书签提交</strong>（把地址伪装成洛谷题目页跑真实的书签脚本：确实打到了提交接口、带上页面 csrf-token、<br>
+  提交地址里的代码与语言、轮询 2 次后浮层显示 <code>AC R424242</code>；不在题目页时给出引导）→<br>
+<strong>C++ / Python / Java 三个靶场的题目页都有面板且默认语言正确</strong>（C++20 / Python 3 / Java 8），<br>
+  全程零控制台报错（已排除测试为提速主动中断资源下载产生的那段噪声）</li>
+<li>洛谷题号：<code>npm run validate:luogu</code> → <strong>四个靶场 88 个不同题号全部存在且标题核对一致</strong><br>
+  （逐题访问洛谷题目页；Pro 41/42、C++ 40/42、Python 41/42、Java 41/42 标注了题号，<br>
+  留空的 5 道是「交换两个数」×3 与「反转链表」「Pro 反转链表」——洛谷确实没有对应练习）</li>
+<li>顺带修掉一个 Pro 靶场引入的串台 bug：顶栏用 <code>pathname.startsWith('/pro')</code> 判断靶场，<br>
+  而 C++ 题目页 <code>/problem/s1-p1</code> 也以 <code>/pro</code> 开头，导致 C++ 题目页显示 Pro 的标语、<br>
+  进度与高亮。现在按路径段比较（线上已验证：C++ 题目页显示 C++ 标语与 C++ 进度）</li>
+<li>Pro 靶场改为「判题在洛谷」后的验收（<code>scripts/e2e-pro.mjs</code>，41 项）：题目页确实<br>
+<strong>没有本地运行 / 提交 / 测试用例面板 / 编译器提示</strong>，用真实桥接脚本提交一次拿到 AC 后<br>
+  本题计入通过、下一题解锁、第三题仍锁着、进度页显示「已通过 1」；<br>
+  并且断言整个 Pro 流程<strong>没有任何 <code>/toolchain/</code> 或 jsDelivr 请求</strong>（不再下载 90MB 编译器）</li>
+</ul>
+<hr>
+<h2 id="_17">已知限制<a class="toc-link" href="#_17" title="Permanent link"> ¶</a></h2>
+<ul>
+<li>首次使用需下载约 90MB 编译器（之后走缓存）；<code>npm run setup:toolchain</code> 可改为同源加载。</li>
+<li>每次编译约 2 秒（clang 实例化 + 标准库写入虚拟文件系统），这是 Wasm 运行真实编译器的固有成本。</li>
+<li><strong>Java 靶场较慢</strong>：Doppio JVM 是一个用 JavaScript 实现的 Java 虚拟机，首次编译约 2 分钟、<br>
+  每个测试用例约 1 分钟（一道题提交约 5.5 分钟）。题库已按这个约束写得非常轻量，<br>
+  等待期间结果面板会提示预计耗时；后续若要提速，可以考虑换用仓库里已有的<br>
+<code>public/java-runtime</code>（B-JVM + 编译成 Wasm 的 TeaVM 编译器）。</li>
+<li>Monaco 与 Ant Design 体积较大，生产产物首屏 JS 约 4.4MB（gzip 约 1.2MB），<br>
+  适合局域网 / 教学场景；如需更小，可只引入 <code>editor.api</code> 与 C++ 语言包。</li>
+<li>编译器未启用 C++ 异常，题库与用户代码不要依赖 <code>try / catch</code>。</li>
+<li><strong>洛谷远程提交需要在下面三种方式里选一种</strong>（浏览器同源策略与 <code>Cookie</code> 禁止请求头决定的，<br>
+  见 <a href="docs/luogu-bridge.md">docs/luogu-bridge.md</a>）：装一次油猴桥接脚本、拖一个书签，<br>
+  或者手动复制代码到洛谷粘贴；洛谷的非公开接口可能变化，遇到时可用 <code>/luogu</code> 页的诊断按钮取出原始返回。</li>
+<li>洛谷侧还可能触发人机验证或提交频率限制：先在洛谷手动交一次、并别拿它刷提交。</li>
+<li>基础靶场的洛谷题号标注的是<strong>同类型练习</strong>（本站题目为自撰，不是洛谷原题的移植），<br>
+  Pro 靶场那 41 道才是按同一种算法对应的题目。</li>
+<li>阶段一「常见错误」放在「小贴士」之前，阶段二 ~ 七放在最后，属于两批作者的排版差异，不影响阅读。</li>
+</ul></div>
+            </div>
+        </details>
+        
+        <details class="drawer">
+            <summary>
+                <span class="repo-head">
+                    <span class="repo-name">ZhiXueBan</span>
+                    <span class="repo-lang">JavaScript</span>
+                    
+                </span>
+                <a class="gh-link" href="https://github.com/YHSome/ZhiXueBan" target="_blank" rel="noopener" onclick="event.stopPropagation()">在 GitHub 查看 ↗</a>
+            </summary>
+            <div class="drawer-body">
+                <div class="repo-desc">智学伴</div>
+                <div class="prose"><p align="center">
+  <strong>🎉 好消息，智学伴小程序正式上线！</strong><br/>
+  扫码进入设置，输入礼包码 <code>114514</code> 即可在手机上体验完整功能
+</p>
+
+<p align="center">
+  <img src="docs/miniprogram-qrcode.jpg" alt="智学伴小程序二维码" width="280" />
+</p>
+
+<hr>
+<p align="center">
+  <img src="docs/logo.png" alt="智学伴" width="120" />
+</p>
+
+<h1 align="center">智学伴 ZhiXueBan</h1>
+
+<p align="center">
+  <strong>基于生成式人工智能的异步学习解决方案</strong><br/>
+  数智融合 · 创赢未来 · 以 AI 之力重塑每一个学生的学习体验
+</p>
+
+<p align="center">
+  <a href="https://zhi-xue-ban.vercel.app/">🌐 在线体验</a> &nbsp;|&nbsp;
+  <a href="https://github.com/YHSome/ZhiXueBan/releases">📦 下载桌面版</a> &nbsp;|&nbsp;
+  <a href="docs/WHITEPAPER.md">📄 技术白皮书</a> &nbsp;|&nbsp;
+  <a href="docs/FEATURES.md">📸 功能展示</a> 
+</p>
+
+<blockquote>
+<p>ℹ️ 当前为<strong>完整版</strong>。只想快速了解功能和快速开始？→ <a href="docs/OVERVIEW.md">📋 精简版</a></p>
+</blockquote>
+<hr>
+<h2 id="_1">🏆 揭榜挂帅 · 命题一<a class="toc-link" href="#_1" title="Permanent link"> ¶</a></h2>
+<blockquote>
+<p><strong>广州大学第二届&rdquo;庆园杯&rdquo;人工智能创新应用大赛 — 揭榜挂帅赛道</strong></p>
+<p><strong>命题：基于生成式人工智能的异步学习解决方案</strong></p>
+</blockquote>
+<h3 id="_2">时代之问<a class="toc-link" href="#_2" title="Permanent link"> ¶</a></h3>
+<p>2024 年，教育部等五部委联合印发《&rdquo;人工智能+&rdquo;行动计划》，明确提出&rdquo;培养适应智能时代的拔尖创新人才，推进人工智能与教育深度融合&rdquo;。2025 年，《新一代人工智能发展规划》进入全面深化阶段，AI 赋能教育数字化转型已从远景蓝图走向落地攻坚。</p>
+<p>然而，审视当前在线教育现状，三大结构性矛盾依然突出：</p>
+<table>
+<thead>
+<tr>
+<th>矛盾</th>
+<th>表现</th>
+<th>深层原因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>被动灌输 vs 主动建构</strong></td>
+<td>学生反复观看录播视频、阅读电子文档，缺乏主动输出与深度加工</td>
+<td>现有平台停留在&rdquo;内容搬运&rdquo;层面，未能将认知科学理论转化为产品机制</td>
+</tr>
+<tr>
+<td><strong>千人一面 vs 个性化需求</strong></td>
+<td>固定进度、统一难度，无法适应不同学生的知识起点、学习节奏与认知风格</td>
+<td>缺乏智能化的诊断、适配与动态调整能力</td>
+</tr>
+<tr>
+<td><strong>图文割裂 vs 多维理解</strong></td>
+<td>理科内容中函数图像、几何关系与文字描述分离，学生需在多个工具间跳转</td>
+<td>AI 文本生成与数学可视化之间存在工程鸿沟</td>
+</tr>
+</tbody>
+</table>
+<p><strong>智学伴</strong>正是在这一时代背景下应运而生——它不是又一款&rdquo;AI+内容&rdquo;的浅层工具，而是从认知科学底层逻辑出发、以生成式 AI 重构学习全流程的深度解决方案。</p>
+<h3 id="_3">我们的回答<a class="toc-link" href="#_3" title="Permanent link"> ¶</a></h3>
+<p>智学伴以<strong>费曼学习法（以教促学）</strong> 为内核设计理念，构建了覆盖&rdquo;预习→测验→批改→练习→以教促学→通关&rdquo;的六阶段完整闭环。学生不是知识的被动接收者，而是需要在 AI 面前<strong>主动讲解、经受追问、证明理解</strong>的学习主体。这一设计直接将学习金字塔中留存率最高的&rdquo;教授他人&rdquo;策略系统化、产品化，实现了从&rdquo;看会了&rdquo;到&rdquo;讲清楚了&rdquo;的质变。</p>
+<h3 id="ai">真正的&rdquo;一生一案&rdquo;：AI 时代的教育公平答卷<a class="toc-link" href="#ai" title="Permanent link"> ¶</a></h3>
+<p>我们坦率地承认：当前的生成式 AI 在情感交流、临场判断、肢体语言等维度上，与真人一对一家教之间仍存在距离。</p>
+<p>但我们也坚定地看到：<strong>优质家教资源的稀缺性与不可复制性，恰恰是 AI 最能弥补的鸿沟。</strong></p>
+<p>在传统教育生态中，&rdquo;一对一因材施教&rdquo;是只有少数家庭能够负担的奢望——一线城市中学生的单科家教时薪普遍在 150-300 元之间，一个学期的辅导费用动辄数千甚至上万元。对于粤港澳大湾区内教育资源相对薄弱的地区、对于普通工薪家庭来说，这笔费用几乎等同于一道无形的教育门槛。</p>
+<p>智学伴以生成式 AI 的力量，将这道门槛降到了几乎可以忽略的程度：</p>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>传统一对一家教</th>
+<th>智学伴 AI 方案</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>单次学习成本</strong></td>
+<td>150-300 元/小时</td>
+<td>约 0.05-0.5 元（Token 费用）</td>
+</tr>
+<tr>
+<td><strong>覆盖学科</strong></td>
+<td>受限于教师本人的专业背景</td>
+<td>任意学科，从高等数学到思政理论</td>
+</tr>
+<tr>
+<td><strong>可及性</strong></td>
+<td>受地域、时间、经济条件严格限制</td>
+<td>随时随地，有浏览器即可</td>
+</tr>
+<tr>
+<td><strong>学习规划</strong></td>
+<td>依赖教师经验，难以量化追踪</td>
+<td>六阶段闭环自动诊断薄弱点，数据驱动精准出题</td>
+</tr>
+<tr>
+<td><strong>情绪压力</strong></td>
+<td>面对真人可能紧张、不敢犯错</td>
+<td>AI 无评判态度，学生敢于尝试和犯错</td>
+</tr>
+<tr>
+<td><strong>规模化</strong></td>
+<td>一位教师同时只能辅导一人</td>
+<td>理论上可同时服务无限学生</td>
+</tr>
+</tbody>
+</table>
+<p><strong>一生一案，不是口号。</strong></p>
+<p>传统课堂中，一位教师面对数十名学生，只能按照&rdquo;中等水平&rdquo;的预设节奏推进。每个学生的知识漏洞、认知节奏、兴趣方向各不相同，但在统一进度的碾压下，这些差异被一一抹平。学习快的学生被迫等待，跟不上的学生被无声抛弃。</p>
+<p>智学伴的四档自适应难度系统、薄弱点自动诊断和针对性出题机制，使得每个学生的学习路径都是<strong>唯一的、动态优化的</strong>——不是简单地&rdquo;快慢分组&rdquo;，而是基于每一次练习和批改的反馈数据，实时调整下一轮的难度、题型和侧重方向。学生 A 在&rdquo;二次函数图像&rdquo;上反复出错，系统自动增加该知识点的练习密度；学生 B 已经熟练掌握，系统直接推送更高阶的综合应用题。<strong>一个学生，一份教案，一条路径。</strong></p>
+<p><strong>低成本，不是低质量。</strong></p>
+<p>智学伴的单次学习成本仅为传统家教的千分之一到百分之一。以 DeepSeek v4-pro 为例，一次完整的学习循环（授课 + 出题 + 批改 + 练习 + 教促学）的总 Token 消耗约在 5-20 万之间，折合费用约 0.1-0.4 元人民币。这意味着一个学期的每日 AI 辅导，总费用可能不超过一杯奶茶的价格。这不是技术演示——<strong>这是真正可规模化、可持续运行的教育平权方案。</strong></p>
+<h3 id="ai_1">图文并茂：打破理工类 AI 教学的&rdquo;纯文字&rdquo;天花板<a class="toc-link" href="#ai_1" title="Permanent link"> ¶</a></h3>
+<p>传统生成式 AI 在教育领域的应用存在一个隐形的天花板——<strong>文字生成 AI 能写出漂亮的解题步骤，却画不出一条函数曲线。</strong> 当学生面对二次函数的开口方向、三角函数的周期性、双曲线的渐近线、三维曲面的空间形态时，纯文字描述如同用语言去描绘一幅画——再精确的文字也无法替代眼睛看到图像的瞬间理解。</p>
+<p>解决这个问题的常规思路是接入图像生成模型（如 DALL·E、Midjourney），但这面临两个致命缺陷：(1) <strong>成本暴涨</strong>——图像生成模型的 Token 费用是文字模型的数十倍甚至上百倍，每次出图都是一笔显著开销；(2) <strong>准确性无法保证</strong>——图像生成模型不&rdquo;理解&rdquo;数学，生成的函数图像可能存在坐标轴错位、曲线变形、标注错误等问题，在教学场景中反而会误导学生。</p>
+<p><strong>智学伴走了一条更聪明也更具创新性的路。</strong></p>
+<p>我们不使用图像生成 AI。我们让文字生成 AI 以结构化的 <code>[graph]</code> 标记输出数学表达式，然后通过自建的 <strong>Python + matplotlib 渲染引擎</strong> 将其转换为精确的函数图像。这条技术路径带来了三个突破性优势：</p>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>图像生成 AI（DALL·E 等）</th>
+<th>智学伴方案（文字AI + 数学渲染）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>单次出图成本</strong></td>
+<td>0.1-1 元/张</td>
+<td>约 0.002 元/张（仅消耗文字 Token + 本地 CPU 渲染）</td>
+</tr>
+<tr>
+<td><strong>数学精度</strong></td>
+<td>不可控，曲线可能失真</td>
+<td>精确可控，基于 numpy 数值计算</td>
+</tr>
+<tr>
+<td><strong>图像类型</strong></td>
+<td>仅能生成静态图</td>
+<td>支持显函数、隐式方程、分段函数、多函数对比、三维曲面</td>
+</tr>
+<tr>
+<td><strong>标注与标记</strong></td>
+<td>AI 自由发挥，不可靠</td>
+<td>断点开闭区间自动标注、坐标轴等比缩放</td>
+</tr>
+<tr>
+<td><strong>失败处理</strong></td>
+<td>无法调试，只能重新生成</td>
+<td>错误详情透传，AI 可自动修正</td>
+</tr>
+</tbody>
+</table>
+<p>这意味着智学伴以<strong>文字生成 AI 的成本，获得了数学可视化教学的完整体验</strong>。学生在讲义中看到的不仅是文字描述——抛物线开口向上还是向下、分段函数的跳跃间断点在哪里、三维曲面在空间中如何延展——这些抽象概念都有了直观的图像支撑。</p>
+<p><strong>这就好比吃饭：纯文字的 AI 教学是干瘪的面包，啃得动但索然无味；加入了精确数学图像的教学，则是一顿荤素搭配、营养均衡的知识大餐。</strong> 面包解决温饱，但学生需要的是一顿好饭。</p>
+<p>这一技术路线的创新意义不仅在于降本增效，更在于它为 <strong>&ldquo;文字 AI + 专业领域渲染引擎&rdquo;的复合架构</strong> 提供了一个可复用的范式——同样的思路可以推广到化学分子式渲染、物理力学示意图、地理信息可视化等更广泛的教育场景。我们不依赖更贵的模型，我们让聪明的架构弥补模型的局限。</p>
+<h3 id="_4">契合大赛五大目标<a class="toc-link" href="#_4" title="Permanent link"> ¶</a></h3>
+<h4 id="_5">目标一：实战性参与，培养拔尖创新人才<a class="toc-link" href="#_5" title="Permanent link"> ¶</a></h4>
+<p>大赛要求&rdquo;培养适应智能时代的拔尖创新人才，帮助学生开展高层次 AI 应用实战训练&rdquo;。</p>
+<p>智学伴的<strong>以教促学闭环</strong>直接回应这一目标：学生在完成练习后，必须向 AI &ldquo;学生&rdquo;讲解自己的解题思路，AI 追问验证其理解的深度与逻辑的严密性。这一过程不是简单的&rdquo;对答案&rdquo;，而是对学生<strong>批判性思维、逻辑表达与元认知能力</strong>的系统训练——这正是拔尖创新人才的核心素养。平台已覆盖数学、物理、思政、计算机等多个学科，任何知识领域皆可生成高质量的教促学对话。</p>
+<h4 id="_6">目标二：赋能教育转型，破解场景痛点<a class="toc-link" href="#_6" title="Permanent link"> ¶</a></h4>
+<p>大赛要求&rdquo;围绕真实场景，以 AI 解决教学痛点、提升管理效率&rdquo;。</p>
+<p>智学伴直击三大痛点：(1) <strong>异步教学场景下的学习质量保障</strong>——六阶段闭环确保每个环节都有 AI 的即时反馈与引导，学生脱离课堂后依然拥有&rdquo;私人 AI 导师&rdquo;；(2) <strong>练习与考试的个性化与自动化</strong>——AI 根据学生薄弱点自适应出题，四档难度（简单/基础/进阶/挑战）覆盖从入门到竞赛的完整梯度，每题标注 1-6 星难度；(3) <strong>数学与理工科内容的图文融合</strong>——内建数学图形渲染引擎，讲义与题目中直接嵌入函数图像（2D/3D），打通从符号理解到视觉直觉的认知通道。</p>
+<h4 id="_7">目标三：推动协同创新，构建融合生态<a class="toc-link" href="#_7" title="Permanent link"> ¶</a></h4>
+<p>大赛要求&rdquo;打破学科壁垒，推动人工智能与教育、管理、服务等学科交叉融合&rdquo;。</p>
+<p>智学伴本身就是跨学科融合的产物：(1) <strong>认知科学与 AI 工程</strong>——费曼学习法的认知理论指导产品设计，生成式 AI 提供技术实现；(2) <strong>多学科知识覆盖</strong>——平台支持任意学科的课程创建，从高等数学到编程基础，从大学物理到思想政治教育；(3) <strong>多模型生态兼容</strong>——支持 OpenAI、DeepSeek、通义千问、智谱 GLM 等主流大模型接入，学生可根据需求自由选择最优模型组合，体现了开放协同的技术生态理念。</p>
+<h4 id="_8">目标四：对接发展大局，服务区域建设<a class="toc-link" href="#_8" title="Permanent link"> ¶</a></h4>
+<p>大赛要求&rdquo;以粤港澳大湾区建设为牵引，聚焦智慧教育，推动 AI 从创新到实际应用&rdquo;。</p>
+<p><strong>落地场景设想：从蓝图到作战地图。</strong></p>
+<p>我们不只是描述一个宏大的愿景——我们规划了清晰的落地路径。</p>
+<blockquote>
+<p><strong>场景一：粤东西北乡村学校的&rdquo;AI 助学伙伴&rdquo;</strong></p>
+<p>在广东清远、河源、梅州等地的乡镇中学，理科师资结构性短缺是长期难题。一位物理老师可能要同时带三个年级，无法为每个学生提供个性化辅导。我们设想，智学伴可以部署在学校机房或学生自有手机上——学生课后打开浏览器，AI 自动根据当天课堂内容生成复习讲义和练习，遇到不懂的知识点随时向 AI 提问，完成练习后进入以教促学环节向 AI 讲解思路。系统自动生成学习报告，老师可据此精准掌握班级学情，把有限的精力投入到最需要帮助的学生身上。</p>
+<p><strong>场景二：大湾区社区图书馆的&rdquo;AI 自习室&rdquo;</strong></p>
+<p>在广州、深圳、东莞等城市，公共图书馆和社区服务中心遍布各区。我们设想与这些机构合作，在电子阅览室的电脑上部署智学伴，为放学后无处可去的学生提供一个&rdquo;AI 陪学&rdquo;的自习环境。无需安装任何软件，无需注册账号，打开浏览器即可使用。对于父母双职工、无人辅导功课的学生来说，这就是一个永不疲倦、永远耐心的&rdquo;数字家教&rdquo;。</p>
+<p><strong>场景三：广州大学对口帮扶学校的&rdquo;远程理科实验室&rdquo;</strong></p>
+<p>广州大学长期对口帮扶多所基础教育学校。我们设想将智学伴作为帮扶体系中的技术工具，向帮扶学校部署并提供持续的技术支持。通过数学图形渲染引擎，学生在没有专业教师的情况下也能直观理解函数图像、几何关系等抽象概念——这在师资匮乏的学校中尤为重要。</p>
+</blockquote>
+<p><strong>我们不是在等待&rdquo;被推广&rdquo;，我们准备好了&rdquo;走出去&rdquo;。</strong></p>
+<p>这不是写在纸上的愿景。智学伴的零服务端架构意味着：任何学校只需一台能上网的电脑，就能获得完整的 AI 教学能力。Windows 桌面 EXE 版本更是为网络条件不佳的地区量身打造。</p>
+<p>智学伴在设计之初就立足于<strong>教育公平与资源配置优化</strong>的现实命题。粤港澳大湾区内部教育资源分布不均——优质师资集中在核心城市，偏远地区学生难以获得个性化的学习辅导。智学伴的三大特性直接服务这一需求：(1) <strong>零服务端成本</strong>——数据完全本地存储，无需服务器运维，一台电脑即可部署；(2) <strong>跨平台全覆盖</strong>——Web 端、Vercel 一键部署、Windows 桌面 EXE 三种形态，从城市到乡镇，从电脑到手机，只要有浏览器就能用；(3) <strong>Python 可选依赖</strong>——数学图形渲染为可选功能，无 Python 环境自动降级纯文字模式，确保在任何硬件条件下均可正常使用。</p>
+<h4 id="_9">目标五：打通转化通道，搭建成长平台<a class="toc-link" href="#_9" title="Permanent link"> ¶</a></h4>
+<p>大赛要求&rdquo;对接创新大赛与创业孵化，为优秀团队提供成果展示与转化通道&rdquo;。</p>
+<p>智学伴具备完整的落地条件：(1) <strong>开源架构</strong>——完整源码 + 技术白皮书 + 开发指南 + API 文档，任何教育机构可快速二次开发与私有化部署；(2) <strong>成熟产品形态</strong>——Web 端已部署于 Vercel 全球 CDN，桌面端已通过 Electron + Inno Setup 打包为 Windows 安装程序；(3) <strong>可验证的效果</strong>——平台已支持完整的课程创建、学习闯关、AI 批改、教促学对话、试卷测评等功能闭环，具备在教学场景中实际运行的能力。</p>
+<hr>
+<p>→ 不想读长篇？<a href="docs/OVERVIEW.md">📋 一页速览：核心功能、技术创新、快速开始</a></p>
+<hr>
+<h2 id="license">📄 知识产权 · License<a class="toc-link" href="#license" title="Permanent link"> ¶</a></h2>
+<p>本项目为广州大学第二届&rdquo;庆园杯&rdquo;人工智能创新应用大赛参赛作品（揭榜挂帅赛道·命题一）。</p>
+<p>MIT © YHSome</p></div>
+            </div>
+        </details>
+        
+        <details class="drawer">
+            <summary>
+                <span class="repo-head">
+                    <span class="repo-name">NihonGooo</span>
+                    <span class="repo-lang">JavaScript</span>
+                    
+                </span>
+                <a class="gh-link" href="https://github.com/YHSome/NihonGooo" target="_blank" rel="noopener" onclick="event.stopPropagation()">在 GitHub 查看 ↗</a>
+            </summary>
+            <div class="drawer-body">
+                
+                <div class="prose"><h1 id="nihongooo">NihonGooo<a class="toc-link" href="#nihongooo" title="Permanent link"> ¶</a></h1>
+<p>一个静态日语学习工具：输入中文或日文，查看逐词对齐的日语、假名、罗马音、中文释义与助词说明。</p>
+<h2 id="_1">本地预览<a class="toc-link" href="#_1" title="Permanent link"> ¶</a></h2>
+<p>通过 HTTP 服务或 GitHub Pages 打开网站。翻译由无需登录的 MyMemory 公开 API 提供，日语词典通过网络加载。</p>
+<h2 id="android-apk">Android APK<a class="toc-link" href="#android-apk" title="Permanent link"> ¶</a></h2>
+<p>安装依赖并生成调试 APK：</p>
+<div class="highlight"><pre><span></span><code>npm<span class="w"> </span>install
+npm<span class="w"> </span>run<span class="w"> </span>android:debug
+</code></pre></div>
+
+<p>输出路径为 <code>android/app/build/outputs/apk/debug/app-debug.apk</code>。</p></div>
+            </div>
+        </details>
+        
+        <details class="drawer">
+            <summary>
+                <span class="repo-head">
+                    <span class="repo-name">SentMeGoal</span>
+                    <span class="repo-lang">Python</span>
+                    <span class="repo-stars">⭐ 1</span>
+                </span>
+                <a class="gh-link" href="https://github.com/YHSome/SentMeGoal" target="_blank" rel="noopener" onclick="event.stopPropagation()">在 GitHub 查看 ↗</a>
+            </summary>
+            <div class="drawer-body">
+                <div class="repo-desc">Codex skill: send a detailed QQ email notification after a goal/task completes.</div>
+                <div class="prose"><h1 id="sentmegoal">SentMeGoal<a class="toc-link" href="#sentmegoal" title="Permanent link"> ¶</a></h1>
+<p>一个 Codex skill：<strong>目标/任务完成后，自动向 QQ 邮箱发送详细完成摘要</strong>。</p>
+<p>当你在 Codex 里完成一个目标（goal）、任务或长时运行的工作时，说一句“完成后发 QQ 邮箱给我”，它就会自动整理一份尽可能详细的完成报告，并通过 QQ 邮箱 SMTP 发送到你的邮箱。</p>
+<h2 id="_1">功能<a class="toc-link" href="#_1" title="Permanent link"> ¶</a></h2>
+<ul>
+<li>目标完成后自动触发，无需手动操作</li>
+<li>主动提醒：对话改动大、耗时长或你可能不在电脑前时，自动发送完成邮件，无需手动提醒</li>
+<li>运行中重大突破/创新也会即时发送邮件，无需等任务完成</li>
+<li>详细的结构化摘要：目标、时间、执行过程、结果与产出、问题与解决、未完成与风险</li>
+<li>HTML 渲染：摘要以带样式的 HTML 邮件发送（自动附带纯文本兜底，兼容性更好）</li>
+<li>发件人显示名默认 <code>Codex</code>，可用 <code>--from-name</code> 或 <code>QQ_MAIL_FROM_NAME</code> 环境变量修改</li>
+<li>每封邮件末尾自动附带签名：本邮件由 Codex 的 qq-goal-email skill 自动发送</li>
+<li>使用 QQ 邮箱 SMTP（<code>smtp.qq.com:465</code>，SSL），仅依赖 Python 标准库</li>
+<li>支持配置保存、环境变量、<code>--dry-run</code> 预览</li>
+</ul>
+<h2 id="_2">目录结构<a class="toc-link" href="#_2" title="Permanent link"> ¶</a></h2>
+<div class="highlight"><pre><span></span><code>SentMeGoal/
+├── README.md
+└── qq-goal-email/            # skill 源文件夹
+    ├── SKILL.md              # skill 使用说明（Codex 触发后读取）
+    ├── agents/
+    │   └── openai.yaml       # UI 元数据
+    └── scripts/
+        └── send_qq_email.py  # 邮件发送脚本
+</code></pre></div>
+
+<h2 id="_3">安装<a class="toc-link" href="#_3" title="Permanent link"> ¶</a></h2>
+<p>把 <code>qq-goal-email</code> 文件夹复制到 Codex 的 skills 目录：</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Windows（默认路径）</span>
+copy<span class="w"> </span>/y<span class="w"> </span>qq-goal-email<span class="w"> </span>%USERPROFILE%<span class="se">\.</span>codex<span class="se">\s</span>kills<span class="se">\</span>
+
+<span class="c1"># 或 macOS/Linux</span>
+cp<span class="w"> </span>-r<span class="w"> </span>qq-goal-email<span class="w"> </span>~/.codex/skills/
+</code></pre></div>
+
+<p>重启 Codex 后，skill 会自动被发现。</p>
+<h2 id="_4">首次配置<a class="toc-link" href="#_4" title="Permanent link"> ¶</a></h2>
+<p>QQ 邮箱 SMTP 需要<strong>授权码</strong>（不是登录密码）。获取方式：QQ邮箱 → 设置 → 账户 → 开启 POP3/SMTP 服务 → 生成授权码。</p>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>qq-goal-email/scripts/send_qq_email.py<span class="w"> </span>--save-config<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--from<span class="w"> </span>me@qq.com<span class="w"> </span>--auth-code<span class="w"> </span>xxxx<span class="w"> </span>--to<span class="w"> </span>me@qq.com
+</code></pre></div>
+
+<p>配置保存在 <code>~/.config/qq-goal-email/config.json</code>。也可以改用环境变量：</p>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">QQ_MAIL_FROM</span><span class="o">=</span>me@qq.com
+<span class="nb">export</span><span class="w"> </span><span class="nv">QQ_MAIL_AUTH_CODE</span><span class="o">=</span>xxxx
+<span class="nb">export</span><span class="w"> </span><span class="nv">QQ_MAIL_TO</span><span class="o">=</span>me@qq.com
+</code></pre></div>
+
+<h2 id="_5">使用<a class="toc-link" href="#_5" title="Permanent link"> ¶</a></h2>
+<p>完成一个目标后，对 Codex 说：</p>
+<blockquote>
+<p>完成后发 QQ 邮箱给我（摘要尽量详细）</p>
+</blockquote>
+<p>或者直接手动发送：</p>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>qq-goal-email/scripts/send_qq_email.py<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--subject<span class="w"> </span><span class="s2">&quot;Goal complete: 任务名&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--html-file<span class="w"> </span>summary.html
+</code></pre></div>
+
+<p>先用 <code>--dry-run</code> 预览邮件内容：</p>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>qq-goal-email/scripts/send_qq_email.py<span class="w"> </span>--dry-run<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--subject<span class="w"> </span><span class="s2">&quot;Goal complete: 任务名&quot;</span><span class="w"> </span>--html-file<span class="w"> </span>summary.html
+</code></pre></div>
+
+<p>也支持纯文本：把 <code>--html-file</code> 换成 <code>--body-file</code> 即可。</p>
+<h2 id="_6">安全提示<a class="toc-link" href="#_6" title="Permanent link"> ¶</a></h2>
+<ul>
+<li><code>config.json</code> 包含 QQ 邮箱授权码，<strong>不要</strong>提交到任何代码仓库或分享给他人。</li>
+<li>本仓库不包含任何真实配置或授权码。</li>
+</ul>
+<h2 id="_7">说明<a class="toc-link" href="#_7" title="Permanent link"> ¶</a></h2>
+<ul>
+<li>邮件正文采用纯文本 + 结构化分节，方便在邮件客户端阅读。</li>
+<li>发送失败时，先检查授权码是否有效、SMTP 服务是否已开启。</li>
+</ul></div>
+            </div>
+        </details>
+        
+        <details class="drawer">
+            <summary>
+                <span class="repo-head">
+                    <span class="repo-name">ClashRoyale-Private-Server</span>
+                    <span class="repo-lang">C#</span>
+                    
+                </span>
+                <a class="gh-link" href="https://github.com/YHSome/ClashRoyale-Private-Server" target="_blank" rel="noopener" onclick="event.stopPropagation()">在 GitHub 查看 ↗</a>
+            </summary>
+            <div class="drawer-body">
+                <div class="repo-desc">皇室战争1.9.2逆向学习 (HashRoyale/RetroRoyale based) 以及私服与自制卡方案</div>
+                <div class="prose"><h1 id="clash-royale-192">Clash Royale 1.9.2 私服 + 自定义卡牌<a class="toc-link" href="#clash-royale-192" title="Permanent link"> ¶</a></h1>
+<p>基于 <strong>HashRoyale / RetroRoyale</strong> 搭建的 Clash Royale 1.9.2 私服，并在此基础上<br>
+通过纯数据补丁制作了多张自定义卡牌。客户端为 RetroRoyale 修补版 APK（<code>com.retrocell.clashroyale</code>）。</p>
+<blockquote>
+<p>⚠️ 本项目仅供学习与个人研究使用。客户端 APK 含 Supercell 版权资源，未包含在本仓库中；<br>
+请自行获取 RetroRoyale 客户端并按下方流程打补丁。服务端数据（<code>GameAssets</code>）来自公开的<br>
+HashRoyale 开源项目。</p>
+</blockquote>
+<h2 id="_1">功能特性<a class="toc-link" href="#_1" title="Permanent link"> ¶</a></h2>
+<ul>
+<li>完整可跑的 1.9.2 私服：主服（TCP 9339/集群 9876）+ 战斗服（UDP 9449）+ MySQL 存档</li>
+<li>匹配 Bot（<code>tools/cr_bot.py</code>）：自动排队、对局中持续下牌、可自定义卡组</li>
+<li>一键启动脚本：<code>start-server.ps1</code> / <code>stop-server.ps1</code> / <code>one-click-start.ps1</code> / <code>一键启动.bat</code></li>
+<li>自定义卡牌制作工具链：改服务端 CSV + 客户端 APK（SC/LZMA 压缩 CSV）+ 文本，再签名安装</li>
+</ul>
+<h2 id="_2">已制作的自定义卡牌<a class="toc-link" href="#_2" title="Permanent link"> ¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>卡牌</th>
+<th>数据名</th>
+<th>机制</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>觉醒冰人</td>
+<td>AwakenedIceGolem</td>
+<td>每 1.5s 在自身位置释放冰人亡语效果</td>
+</tr>
+<tr>
+<td>界炸弹兵</td>
+<td>BoundaryBomber</td>
+<td>每次攻击丢炸弹并额外发射火箭（多弹攻击）</td>
+</tr>
+<tr>
+<td>一条龙服务</td>
+<td>OneStopService</td>
+<td>原版哥布林飞桶逻辑：法术→飞桶投射物→落地爆出 2 精英野蛮人 + 3 烈焰精灵 + 狂暴</td>
+</tr>
+<tr>
+<td>界电磁炮</td>
+<td>BoundaryZapMachine</td>
+<td>电磁炮克隆；每次攻击在目标点释放雷电 + 电击（子弹伤害 0）</td>
+</tr>
+<tr>
+<td>界气球兵</td>
+<td>BoundaryBalloon</td>
+<td>气球兵 + 幻影刺客突刺特性（全图视野/突袭）</td>
+</tr>
+<tr>
+<td>界地狱飞龙</td>
+<td>BoundaryInfernoDragon</td>
+<td>攻击无伤害；每次攻击从远处以随机角度发射复仇滚木（可对空）</td>
+</tr>
+<tr>
+<td>界地狱塔</td>
+<td>BoundaryInfernoTower</td>
+<td>地狱塔克隆；每次攻击向随机位置发射火球</td>
+</tr>
+<tr>
+<td>界迫击炮</td>
+<td>BoundaryMortar</td>
+<td>0.3 秒快速攻击；炮弹在目标方向±90°内随机偏移落地，落点生成一只小骷髅</td>
+</tr>
+<tr>
+<td>界戈仑石人</td>
+<td>BoundaryGolem</td>
+<td>戈仑石人克隆；每 0.5 秒在自身施放 Zap（数据层无随机法术池，可换任意法术）</td>
+</tr>
+<tr>
+<td>一个火枪手</td>
+<td>OneMusketeer</td>
+<td>火枪手克隆；射程同公主，随机方向发射伤害 1 的迫击炮弹，落点施放治疗法术</td>
+</tr>
+<tr>
+<td>天鹰火炮</td>
+<td>EagleArtillery</td>
+<td>10 秒攻击；引导探针 7 秒倒计时跟随最近单位，同时从身后打出 3 发火箭</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_3">环境要求<a class="toc-link" href="#_3" title="Permanent link"> ¶</a></h2>
+<ul>
+<li>Windows（本项目在 Windows + PowerShell 下开发）</li>
+<li>MySQL 5.7+（本地 3306）</li>
+<li>.NET 8（运行编译好的服务端，或从 <code>HashRoyale/src</code> 重新编译）</li>
+<li>Python 3（运行 Bot 与补丁脚本）</li>
+<li>Android SDK build-tools（<code>zipalign</code>/<code>apksigner</code>，签名 APK）</li>
+<li>一台 Android 手机（真机测试；<code>adb</code> 安装 APK）</li>
+</ul>
+<h2 id="_4">快速开始<a class="toc-link" href="#_4" title="Permanent link"> ¶</a></h2>
+<h3 id="1-mysql">1. 准备 MySQL<a class="toc-link" href="#1-mysql" title="Permanent link"> ¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c"># 启动本地 MySQL（或使用现有实例）</span>
+<span class="c"># 建库</span>
+<span class="n">mysql</span> <span class="n">-u</span> <span class="n">root</span> <span class="n">-e</span> <span class="s2">&quot;CREATE DATABASE rrdb2;&quot;</span>
+</code></pre></div>
+
+<h3 id="2">2. 启动服务端<a class="toc-link" href="#2" title="Permanent link"> ¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="p">.\</span><span class="nb">start-server</span><span class="p">.</span><span class="n">ps1</span>
+<span class="c"># 主服 9339 / 集群 9876 / 战斗服 UDP 9449</span>
+</code></pre></div>
+
+<p>首次启动会自动建表。玩家/账号数据存在 <code>rrdb2</code> 库的 <code>player</code> 表。</p>
+<h3 id="3-bot">3. 启动匹配 Bot<a class="toc-link" href="#3-bot" title="Permanent link"> ¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="nb">cd </span><span class="n">tools</span>
+<span class="n">python</span> <span class="n">cr_bot</span><span class="p">.</span><span class="n">py</span> <span class="n">bot_state</span><span class="p">.</span><span class="n">json</span>
+</code></pre></div>
+
+<p>Bot 会登录账号（<code>bot_state.json</code>，格式见 <code>bot_state.example.json</code>）并进入 1v1 匹配队列，<br>
+对局中每 0.5s 下一张牌（卡组在 <code>cr_bot.py</code> 的 <code>BOT_DECK</code>，需与服务端玩家 2 的卡组一致）。</p>
+<h3 id="4">4. 客户端<a class="toc-link" href="#4" title="Permanent link"> ¶</a></h3>
+<p>客户端 APK 不包含在本仓库。获取 RetroRoyale 1.9.2 客户端后：</p>
+<ol>
+<li>用 <code>tools/make_*.py</code> 补丁脚本生成带自定义卡的 APK（脚本会同时改服务端 CSV 与客户端 APK）；</li>
+<li><code>zipalign</code> + <code>apksigner</code> 签名（使用 <code>tools/debug.keystore</code>，密码 <code>android</code>）；</li>
+<li><code>adb install -r clients\retroroyale-1.9.2-phone-modXX.apk</code> 安装；</li>
+<li>游戏内服务器地址需指向本机（192.168.x.x:9339）。</li>
+</ol>
+<blockquote>
+<p><strong>重要</strong>：客户端必须包含玩家卡组中的<strong>所有</strong>卡，否则主界面渲染未知卡会闪退。<br>
+因此每次新增自定义卡后，都要从<strong>包含全部已有自定义卡的最新 APK</strong> 为基础重新构建。</p>
+</blockquote>
+<h2 id="_5">自定义卡制作流程<a class="toc-link" href="#_5" title="Permanent link"> ¶</a></h2>
+<ol>
+<li>在服务端 <code>HashRoyale/app/GameAssets/csv_logic/*.csv</code> 加数据行（卡/角色/建筑/投射物/区域效果）；</li>
+<li>写补丁脚本（参考 <code>tools/make_boundary_zap_machine.py</code>）同步改客户端 APK 中 SC 压缩的 CSV 与文本；</li>
+<li>签名并安装，重启主服/战斗服/bot；</li>
+<li>把卡加进玩家卡组（<code>player</code> 表的 <code>Home.deck</code> JSON，classId：26=角色、27=建筑、28=法术）；</li>
+<li>训练营/1v1 实测。</li>
+</ol>
+<h2 id="_6">目录结构<a class="toc-link" href="#_6" title="Permanent link"> ¶</a></h2>
+<div class="highlight"><pre><span></span><code>HashRoyale/                服务端（源码 src/，编译产物 app/、app_battles/）
+  app/                     主服：ClashRoyale.exe + GameAssets/csv_logic（数据表）
+  app_battles/             战斗服（UDP 中继）
+  src/                     C# 源码
+tools/                     脚本与工具
+  cr_bot.py                匹配/对战 Bot
+  make_*.py                自定义卡补丁脚本
+  frida_*.py               Frida 逆向研究脚本
+  projectile_research.md   libg.so 投射物逆向研究记录
+  debug.keystore           APK 签名证书（密码 android）
+*.ps1 / *.bat              一键启动/停止脚本
+ClashRoyale私服技术文档.md  完整开发/踩坑文档
+学习路线.md                 学习笔记
+</code></pre></div>
+
+<h2 id="_7">自定义卡实现要点<a class="toc-link" href="#_7" title="Permanent link"> ¶</a></h2>
+<ul>
+<li>1.9.2 的角色投射物只有 <code>ProjectileStartRadius</code>（沿朝向偏移），没有“世界坐标出生点”，<br>
+  数据层无法把投射物出生点定位到国王塔等任意位置（见 <code>projectile_research.md</code>）。</li>
+<li>“飞桶”类卡正确做法是 <code>spells_other</code> 法术卡 + 投射物（<code>spell_goblin_barrel.sc</code>），<br>
+  命中时 <code>SpawnCharacter</code> 生成容器；不要用“角色桶”（缺动画剪辑且会闪退）。</li>
+<li>多单位/双效果可以用“容器链”：投射物 → 容器（DeployTime 引信）→ 死亡时 <code>DeathAreaEffect</code>/<code>DeathSpawnCharacter</code>。</li>
+<li>客户端数据加载器会递归展开引用字段（实测确认：<code>Projectile</code>、<code>CustomFirstProjectile</code>、<br>
+<code>SpawnCharacter</code>、<code>SpawnProjectile</code>），<strong>任何“建筑→炮弹→建筑→炮弹…”的循环都会在加载期<br>
+  栈溢出闪退</strong>（崩溃特征：libg.so 里 0x18130b / 0x1963ff 互相递归数百帧），所以 A↔B 互相<br>
+  召唤在纯数据里做不到；改造时要保证引用图是无环的（终点是角色/无引用的叶子节点）。</li>
+<li><code>DeathSpawnCharacter=建筑</code> 加载期安全但运行时被静默忽略（两轮实测不生效）；<br>
+<code>DeathAreaEffect</code> 触发自定义区域效果在进训练营时仍会被更深层加载展开，同样会崩。</li>
+<li>随机落点：<strong>建筑发射器只认 <code>RandomAngle + RandomDistance</code>（无 Homing）</strong>（界地狱塔火球实测有效）；<br>
+<code>RandomAngle</code> 是总扇区宽度：360=全方向，180=目标方向±90°；滚木那套<br>
+<code>MinDistance+RandomAngle+Homing</code> 实测迫击炮/地狱龙均不生效；<br>
+  “落点生成单位”用投射物 <code>SpawnCharacter=角色</code>（哥布林飞桶同款，稳定可用）。</li>
+<li>Frida 研究要点（模拟器实测）：模拟器可能走 <strong>ARM 翻译</strong>（加载 lib/arm/libg.so），<br>
+  投射物对象大小 272 字节、创建调用点返回地址 = libg+0x7c117（战斗 tick 链<br>
+  0xbc3a7/0x6b7f3 之下）；<code>_Znwj</code> 挂钩 + 调用点过滤即可在创建时精确计数。</li>
+<li><code>RandomAngle</code>/<code>RandomDistance</code> 只能随机投射物飞行/落点，不能随机出生点方向。</li>
+<li>版本较老：精英野蛮人 = <code>AngryBarbarian</code>，幻影刺客 = <code>Assassin</code>，狂暴 = <code>BarbarianRage</code>。</li>
+</ul>
+<h2 id="_8">版权声明<a class="toc-link" href="#_8" title="Permanent link"> ¶</a></h2>
+<p>本仓库代码基于 MIT 许可的 HashRoyale/RetroRoyale 开源项目修改。游戏客户端与美术资源版权归<br>
+Supercell 所有；本仓库不包含客户端 APK 及其版权资源。请仅用于学习研究。</p></div>
+            </div>
+        </details>
+        
+        <details class="drawer">
+            <summary>
+                <span class="repo-head">
+                    <span class="repo-name">OpenBlogger</span>
+                    <span class="repo-lang">HTML</span>
+                    
+                </span>
+                <a class="gh-link" href="https://github.com/YHSome/OpenBlogger" target="_blank" rel="noopener" onclick="event.stopPropagation()">在 GitHub 查看 ↗</a>
+            </summary>
+            <div class="drawer-body">
+                <div class="repo-desc">一个轻量级的个人博客搭建框架，配合Claude code可实现博客一键落地</div>
+                <div class="prose"><h1 id="openblogger">OpenBlogger<a class="toc-link" href="#openblogger" title="Permanent link"> ¶</a></h1>
+<p>一个轻量级静态博客渲染引擎。Markdown 写文章，Python 一键生成完整站点。</p>
+<h2 id="_1">快速开始<a class="toc-link" href="#_1" title="Permanent link"> ¶</a></h2>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>--recurse-submodules<span class="w"> </span>https://github.com/YHSome/yhsome.github.io.git
+<span class="nb">cd</span><span class="w"> </span>yhsome.github.io
+pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+双击<span class="w"> </span>控制台.bat<span class="w"> </span>→<span class="w"> </span><span class="o">[</span><span class="m">3</span><span class="o">]</span><span class="w"> </span>本地预览
+</code></pre></div>
+
+<h2 id="_2">项目结构<a class="toc-link" href="#_2" title="Permanent link"> ¶</a></h2>
+<div class="highlight"><pre><span></span><code><span class="n">OpenBlogger</span><span class="o">/</span>
+<span class="err">├──</span><span class="w"> </span><span class="n">renderer</span><span class="o">.</span><span class="n">py</span><span class="w">              </span><span class="c1"># 核心渲染引擎</span>
+<span class="err">├──</span><span class="w"> </span><span class="n">cli</span><span class="o">.</span><span class="n">py</span><span class="w">                   </span><span class="c1"># 命令行工具</span>
+<span class="err">├──</span><span class="w"> </span><span class="n">import_legacy</span><span class="o">.</span><span class="n">py</span><span class="w">         </span><span class="c1"># Hexo 旧博客导入工具</span>
+<span class="err">├──</span><span class="w"> </span><span class="n">Template</span><span class="o">/</span><span class="n">Default</span><span class="o">/</span><span class="w">        </span><span class="c1"># HTML 模板（6 页）</span>
+<span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="n">Homepage</span><span class="o">.</span><span class="n">html</span><span class="w">        </span><span class="c1"># 首页：三栏布局 + 弹幕</span>
+<span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="n">Directory</span><span class="o">.</span><span class="n">html</span><span class="w">       </span><span class="c1"># 目录：搜索 + 标签过滤 + 年月分组</span>
+<span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="n">Post</span><span class="o">.</span><span class="n">html</span><span class="w">            </span><span class="c1"># 文章：侧栏 + 正文 + 评论</span>
+<span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="n">Tag</span><span class="o">.</span><span class="n">html</span><span class="w">             </span><span class="c1"># 标签：悬停展开文章列表</span>
+<span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="n">Projects</span><span class="o">.</span><span class="n">html</span><span class="w">        </span><span class="c1"># 项目：GitHub 仓库展示</span>
+<span class="err">│</span><span class="w">   </span><span class="err">└──</span><span class="w"> </span><span class="n">Links</span><span class="o">.</span><span class="n">html</span><span class="w">           </span><span class="c1"># 友链：旧项目导航</span>
+<span class="err">└──</span><span class="w"> </span><span class="n">Plugins</span><span class="o">/</span><span class="n">Viewer</span><span class="o">/</span><span class="w">          </span><span class="c1"># 内置插件</span>
+<span class="w">    </span><span class="err">├──</span><span class="w"> </span><span class="n">js</span><span class="o">/</span><span class="w">                  </span><span class="c1"># 访问计数 + 评论系统</span>
+<span class="w">    </span><span class="err">└──</span><span class="w"> </span><span class="n">tools</span><span class="o">/</span><span class="w">               </span><span class="c1"># 页面编号管理</span>
+</code></pre></div>
+
+<h2 id="_3">功能<a class="toc-link" href="#_3" title="Permanent link"> ¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>功能</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Markdown 渲染</td>
+<td>extra/codehilite/toc/sane_lists/smarty 扩展</td>
+</tr>
+<tr>
+<td>元数据解析</td>
+<td>文章头部 <code>key: value</code> 格式，自动补全日期/标题</td>
+</tr>
+<tr>
+<td>增量构建</td>
+<td>文件哈希缓存，只重建变更页面</td>
+</tr>
+<tr>
+<td>RSS + Sitemap</td>
+<td>自动生成</td>
+</tr>
+<tr>
+<td>暗色模式</td>
+<td>零闪屏（head 同步脚本）</td>
+</tr>
+<tr>
+<td>页面转场</td>
+<td>CSS cubic-bezier 弹入飞出</td>
+</tr>
+<tr>
+<td>代码高亮</td>
+<td>Pygments</td>
+</tr>
+<tr>
+<td>友链项目</td>
+<td>构建时自动复制</td>
+</tr>
+<tr>
+<td>弹幕</td>
+<td>全站评论滚动</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_4">模板变量<a class="toc-link" href="#_4" title="Permanent link"> ¶</a></h2>
+<p>所有模板使用 Jinja2 语法。以下是各页面可用的主要变量：</p>
+<p><strong>Post.html</strong></p>
+<div class="highlight"><pre><span></span><code><span class="cp">{{</span> <span class="nv">title</span> <span class="cp">}}</span><span class="x"> </span><span class="cp">{{</span> <span class="nv">date</span> <span class="cp">}}</span><span class="x"> </span><span class="cp">{{</span> <span class="nv">tags</span> <span class="cp">}}</span><span class="x"> </span><span class="cp">{{</span> <span class="nv">content</span> <span class="cp">}}</span><span class="x"> </span><span class="cp">{{</span> <span class="nv">author</span> <span class="cp">}}</span>
+<span class="cp">{{</span> <span class="nv">prev_post</span> <span class="cp">}}</span><span class="x"> </span><span class="cp">{{</span> <span class="nv">next_post</span> <span class="cp">}}</span><span class="x"> </span><span class="cp">{{</span> <span class="nv">relative_root</span> <span class="cp">}}</span>
+<span class="cp">{{</span> <span class="nv">total_posts</span> <span class="cp">}}</span><span class="x"> </span><span class="cp">{{</span> <span class="nv">total_words</span> <span class="cp">}}</span><span class="x"> </span><span class="cp">{{</span> <span class="nv">sidebar_tags</span> <span class="cp">}}</span>
+<span class="cp">{{</span> <span class="nv">page_id</span> <span class="cp">}}</span><span class="x"> </span><span class="cp">{{</span> <span class="nv">viewer_user</span> <span class="cp">}}</span><span class="x"> </span><span class="cp">{{</span> <span class="nv">viewer_secret</span> <span class="cp">}}</span>
+</code></pre></div>
+
+<p><strong>Homepage.html</strong></p>
+<div class="highlight"><pre><span></span><code><span class="cp">{{</span> <span class="nv">site_title</span> <span class="cp">}}</span><span class="x"> </span><span class="cp">{{</span> <span class="nv">site_description</span> <span class="cp">}}</span>
+<span class="cp">{{</span> <span class="nv">recent_posts</span> <span class="cp">}}</span><span class="x"> </span><span class="cp">{{</span> <span class="nv">all_tags</span> <span class="cp">}}</span><span class="x"> </span><span class="cp">{{</span> <span class="nv">total_posts</span> <span class="cp">}}</span><span class="x"> </span><span class="cp">{{</span> <span class="nv">total_words</span> <span class="cp">}}</span>
+<span class="cp">{{</span> <span class="nv">max_page_id</span> <span class="cp">}}</span><span class="x"> </span><span class="cp">{{</span> <span class="nv">relative_root</span> <span class="cp">}}</span>
+</code></pre></div>
+
+<p><strong>Directory.html</strong></p>
+<div class="highlight"><pre><span></span><code><span class="cp">{{</span> <span class="nv">all_posts</span> <span class="cp">}}</span><span class="x"> </span><span class="cp">{{</span> <span class="nv">all_tags</span> <span class="cp">}}</span><span class="x"> </span><span class="cp">{{</span> <span class="nv">active_tag</span> <span class="cp">}}</span>
+</code></pre></div>
+
+<p><strong>Tag.html</strong></p>
+<div class="highlight"><pre><span></span><code><span class="cp">{{</span> <span class="nv">tags_with_count</span> <span class="cp">}}</span><span class="x">  ← 含 posts 列表用于悬停弹出</span>
+</code></pre></div>
+
+<p><strong>Projects.html</strong></p>
+<div class="highlight"><pre><span></span><code><span class="cp">{{</span> <span class="nv">projects</span> <span class="cp">}}</span><span class="x">  ← 从 projects.json 加载</span>
+</code></pre></div>
+
+<p><strong>Links.html</strong></p>
+<div class="highlight"><pre><span></span><code><span class="cp">{{</span> <span class="nv">link_sections</span> <span class="cp">}}</span><span class="x">  ← 硬编码在 renderer 中</span>
+</code></pre></div>
+
+<h2 id="_5">插件系统<a class="toc-link" href="#_5" title="Permanent link"> ¶</a></h2>
+<p>插件放在 <code>Plugins/</code> 目录（博客项目根），与 OpenBlogger 框架分离。</p>
+<p>内置插件：<br>
+- <strong>Viewer</strong> (<code>OpenBlogger/Plugins/Viewer/</code>)：纯前端访问计数 + 评论，基于 TinyWebDB</p>
+<p>博客专属插件示例：<br>
+- <strong>GitHubProjects</strong> (<code>Plugins/GitHubProjects/</code>)：拉取 GitHub 仓库列表展示</p>
+<h2 id="cli">CLI 命令<a class="toc-link" href="#cli" title="Permanent link"> ¶</a></h2>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>OpenBlogger.cli<span class="w"> </span>build<span class="w">                </span><span class="c1"># 构建站点</span>
+python<span class="w"> </span>-m<span class="w"> </span>OpenBlogger.cli<span class="w"> </span>build<span class="w"> </span>--force<span class="w">        </span><span class="c1"># 强制全量重建</span>
+python<span class="w"> </span>-m<span class="w"> </span>OpenBlogger.cli<span class="w"> </span>build<span class="w"> </span>--theme<span class="w"> </span>modern<span class="w"> </span><span class="c1"># 使用指定主题</span>
+python<span class="w"> </span>-m<span class="w"> </span>OpenBlogger.cli<span class="w"> </span>serve<span class="w">                </span><span class="c1"># 预览站点</span>
+python<span class="w"> </span>-m<span class="w"> </span>OpenBlogger.cli<span class="w"> </span>serve<span class="w"> </span>--port<span class="w"> </span><span class="m">9090</span><span class="w">    </span><span class="c1"># 指定端口</span>
+python<span class="w"> </span>-m<span class="w"> </span>OpenBlogger.cli<span class="w"> </span>clean<span class="w">                </span><span class="c1"># 清空输出</span>
+</code></pre></div>
+
+<h2 id="_6">部署<a class="toc-link" href="#_6" title="Permanent link"> ¶</a></h2>
+<div class="highlight"><pre><span></span><code><span class="c1"># 将 Rendered/ 推送到 GitHub Pages</span>
+git<span class="w"> </span>subtree<span class="w"> </span>push<span class="w"> </span>--prefix<span class="w"> </span>Rendered<span class="w"> </span>origin<span class="w"> </span>gh-pages
+</code></pre></div>
+
+<p>或使用博客项目自带的 <code>deploy.bat</code> 一键部署。</p>
+<h2 id="_7">依赖<a class="toc-link" href="#_7" title="Permanent link"> ¶</a></h2>
+<ul>
+<li>Python 3.9+</li>
+<li>markdown</li>
+<li>Jinja2</li>
+<li>Pygments</li>
+<li>beautifulsoup4（仅 import_legacy.py 需要）</li>
+<li>html2text（仅 import_legacy.py 需要）</li>
+</ul>
+<h2 id="_8">许可<a class="toc-link" href="#_8" title="Permanent link"> ¶</a></h2>
+<p>MIT</p></div>
+            </div>
+        </details>
+        
+        <details class="drawer">
+            <summary>
+                <span class="repo-head">
+                    <span class="repo-name">claude-final-exam-review</span>
+                    <span class="repo-lang">Python</span>
+                    <span class="repo-stars">⭐ 6</span>
+                </span>
+                <a class="gh-link" href="https://github.com/YHSome/claude-final-exam-review" target="_blank" rel="noopener" onclick="event.stopPropagation()">在 GitHub 查看 ↗</a>
+            </summary>
+            <div class="drawer-body">
+                <div class="repo-desc">一个期末复习Skill，能够让Claude识别ppt,pdf,docx等文件并生成可视化讲义的Claude Code skill。An end-of-term review Skill that enables Claude to recognize files such as ppt, pdf, and docx, and generate visualized lecture notes, known as the Claude Code skill.</div>
+                <div class="prose"><h1 id="ai-claude-code-skill">期末复习AI导师 — Claude Code Skill<a class="toc-link" href="#ai-claude-code-skill" title="Permanent link"> ¶</a></h1>
+<blockquote>
+<p>📖 <a href="README_EN.md">English version</a></p>
+</blockquote>
+<p>一个帮你从零掌握课程知识的 AI 家教。把讲义扔进去，它会像私人家教一样，在浏览器里一步一步给你讲解知识点、出题练习、批改答疑。</p>
+<h2 id="_1">📦 你需要准备什么<a class="toc-link" href="#_1" title="Permanent link"> ¶</a></h2>
+<p>在开始之前，你只需要电脑上有两样东西：</p>
+<ol>
+<li><strong>Claude Code</strong>（AI 助手软件）</li>
+<li>你上课的<strong>讲义文件</strong>（PPT、PDF、Word、甚至手机拍的板书照片都行）</li>
+</ol>
+<blockquote>
+<p>不会装 Claude Code？往下看👇</p>
+</blockquote>
+<hr>
+<h2 id="claude-code">🚀 第一步：安装 Claude Code<a class="toc-link" href="#claude-code" title="Permanent link"> ¶</a></h2>
+<ol>
+<li>打开浏览器，访问 <strong>https://claude.ai/code</strong></li>
+<li>下载对应你系统的版本（Windows/Mac）</li>
+<li>安装并登录你的 Anthropic 账号</li>
+<li>安装完成后，打开终端（Windows 按 <code>Win+R</code>，输入 <code>cmd</code> 回车），输入 <code>claude</code> 回车，看到欢迎界面就成功了</li>
+</ol>
+<blockquote>
+<p>⚠️ Claude Code 目前需要付费 API 额度。如果你是学生，可以关注 Anthropic 的学生优惠。</p>
+</blockquote>
+<hr>
+<h2 id="skill">📥 第二步：下载这个 Skill<a class="toc-link" href="#skill" title="Permanent link"> ¶</a></h2>
+<blockquote>
+<p>如果你会 git：<code>git clone https://github.com/YHSome/claude-final-exam-review.git</code></p>
+</blockquote>
+<p>如果不会 git（或者上面的命令看不懂），跟着下面做：</p>
+<ol>
+<li>打开 https://github.com/YHSome/claude-final-exam-review</li>
+<li>点击绿色的 <strong>Code</strong> 按钮 → 选择 <strong>Download ZIP</strong></li>
+<li>把下载的 ZIP 解压到你喜欢的文件夹（比如桌面上的 <code>期末复习</code> 文件夹）</li>
+<li>解压后你会看到这些文件：</li>
+</ol>
+<div class="highlight"><pre><span></span><code>期末复习/
+├── README.md                      ← 你现在看的这个文件
+├── stop-server.cmd                ← 双击可以关闭后台服务
+├── .gitignore
+└── .claude/
+    └── skills/
+        ├── final-exam-review.md   ← AI 家教的核心大脑
+        └── extract_document.py    ← 用来读取讲义的脚本
+</code></pre></div>
+
+<hr>
+<h2 id="_2">📚 第三步：放入你的讲义<a class="toc-link" href="#_2" title="Permanent link"> ¶</a></h2>
+<p>把你上课的讲义文件放到 <code>期末复习</code> 文件夹下面。建议按科目分文件夹，比如：</p>
+<div class="highlight"><pre><span></span><code>期末复习/
+├── 高等数学/
+│   ├── A-第一章 函数与极限/
+│   │   ├── 1-1 映射与函数.ppt
+│   │   └── 1-2 数列极限.ppt
+│   └── B-第二章 导数与微分/
+│       └── ...
+├── 线性代数/
+│   └── ...
+└── 大学物理/
+    └── ...
+</code></pre></div>
+
+<p><strong>支持的格式</strong>：PPT (.ppt/.pptx)、PDF、Word (.doc/.docx)、图片（会自动 OCR 识别文字）、HTML、Markdown</p>
+<blockquote>
+<p>💡 <strong>提示</strong>：文件名建议用&rdquo;章节号-节名&rdquo;格式，比如 <code>1-3 函数极限.ppt</code>，这样 AI 能更好地组织内容。</p>
+</blockquote>
+<hr>
+<h2 id="_3">🎓 第四步：开始复习！<a class="toc-link" href="#_3" title="Permanent link"> ¶</a></h2>
+<ol>
+<li>打开终端（<code>Win+R</code> → <code>cmd</code> → 回车）</li>
+<li>进入你的复习文件夹：<br>
+<code>cd C:\Users\你的用户名\Desktop\期末复习</code></li>
+<li>启动 Claude Code：<br>
+<code>claude</code></li>
+<li>输入以下命令激活家教模式：<br>
+<code>/final-exam-review</code></li>
+<li>然后像聊天一样告诉它你想复习什么：<br>
+<code>我要复习高等数学，从第一章开始</code></li>
+</ol>
+<p><strong>AI 家教会自动</strong>：<br>
+- 扫描你的讲义文件<br>
+- 在浏览器里打开一个排版精美的讲义页面（公式用 LaTeX 渲染）<br>
+- 一步一步给你讲解每个知识点<br>
+- 每讲完一节停下来问你有没有疑问<br>
+- 出练习题给你做，做完帮你批改</p>
+<blockquote>
+<p>🖥️ <strong>浏览器里看公式</strong>：讲解内容会在浏览器中显示，公式渲染效果跟教材一样清晰。终端只用来简单对话。</p>
+</blockquote>
+<hr>
+<h2 id="_4">🔧 常见问题<a class="toc-link" href="#_4" title="Permanent link"> ¶</a></h2>
+<h3 id="q">Q: 浏览器里公式显示不出来，全是乱码？<a class="toc-link" href="#q" title="Permanent link"> ¶</a></h3>
+<p>A: 这是 MathJax 没加载成功。试试：<br>
+1. 检查网络连接（MathJax 需要从 CDN 加载一次）<br>
+2. 刷新浏览器页面（<code>F5</code>）<br>
+3. 如果还不行，确认你是通过 <code>http://localhost:8888/...</code> 打开的，不是双击 <code>.html</code> 文件</p>
+<h3 id="q-stop-servercmd">Q: 双击了 <code>stop-server.cmd</code> 后浏览器打不开了？<a class="toc-link" href="#q-stop-servercmd" title="Permanent link"> ¶</a></h3>
+<p>A: 这个文件会关闭后台服务。如果不小心双击了，在 Claude Code 里说&rdquo;重启服务器&rdquo;就行。</p>
+<h3 id="q-pip-install-unstructured">Q: 提示 &ldquo;pip install unstructured&rdquo; 失败？<a class="toc-link" href="#q-pip-install-unstructured" title="Permanent link"> ¶</a></h3>
+<p>A: 这是讲义提取脚本的依赖。如果你不需要自动提取 PPT/PDF 文字（比如你用的是纯文本笔记），可以不装。否则，在终端输入：</p>
+<div class="highlight"><pre><span></span><code>pip install unstructured
+</code></pre></div>
+
+<h3 id="q-claude-code">Q: Claude Code 的终端对话是纯文字的，怎么看公式？<a class="toc-link" href="#q-claude-code" title="Permanent link"> ¶</a></h3>
+<p>A: <strong>所有公式都在浏览器里</strong>！终端只用来简短对话（&rdquo;懂了&rdquo;&ldquo;继续&rdquo;&ldquo;出几道题&rdquo;），真正的讲解内容、公式推导、例题都在浏览器页面里。这是设计好的双屏模式。</p>
+<h3 id="q_1">Q: 我没有讲义文件，能直接用吗？<a class="toc-link" href="#q_1" title="Permanent link"> ¶</a></h3>
+<p>A: 可以！AI 家教会用自己的知识给你讲解。但建议至少放一份目录或考试大纲，这样它知道要讲哪些内容。</p>
+<hr>
+<h2 id="_5">📁 项目文件说明<a class="toc-link" href="#_5" title="Permanent link"> ¶</a></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">文件</th>
+<th style="text-align: left;">用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>.claude/skills/final-exam-review.md</code></td>
+<td style="text-align: left;">Skill 的核心定义（AI 家教的&rdquo;大脑&rdquo;）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>.claude/skills/extract_document.py</code></td>
+<td style="text-align: left;">文档提取脚本（读取你的 PPT/PDF）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>stop-server.cmd</code></td>
+<td style="text-align: left;">一键关闭后台 HTTP 服务（复习完双击即可）</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="_6">🧑‍💻 给想自己修改的人<a class="toc-link" href="#_6" title="Permanent link"> ¶</a></h2>
+<p>如果你会一点点编程，可以自己改 Skill：</p>
+<ul>
+<li>编辑 <code>.claude/skills/final-exam-review.md</code> 来调整 AI 的行为</li>
+<li>比如：让它更啰嗦/更简洁、调整题目难度、增加新的科目支持</li>
+<li>改完后在 Claude Code 里说 <code>reload</code> 就能生效</li>
+</ul>
+<hr>
+<h2 id="_7">👨‍💻 面向计算机专业学生（简洁版）<a class="toc-link" href="#_7" title="Permanent link"> ¶</a></h2>
+<div class="highlight"><pre><span></span><code><span class="c1"># 1. 克隆仓库</span>
+git<span class="w"> </span>clone<span class="w"> </span>https://github.com/YHSome/claude-final-exam-review.git
+<span class="nb">cd</span><span class="w"> </span>claude-final-exam-review
+
+<span class="c1"># 2. 放入讲义（支持 ppt/pptx/pdf/docx/html/md/txt/csv + 图片OCR）</span>
+mkdir<span class="w"> </span>高等数学<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="c1"># 把你的课件扔进去</span>
+
+<span class="c1"># 3. 可选：安装文档提取依赖</span>
+pip<span class="w"> </span>install<span class="w"> </span>unstructured
+
+<span class="c1"># 4. 启动 Claude Code</span>
+claude
+
+<span class="c1"># 在 Claude Code 中：</span>
+/final-exam-review
+我要复习高等数学第八章第四节
+</code></pre></div>
+
+<p><strong>Skill 结构</strong>：<br>
+- <code>final-exam-review.md</code> — Skill 定义（Markdown frontmatter + 完整教学流水线）<br>
+- <code>extract_document.py</code> — 基于 <code>unstructured</code> 库的文档提取，自动识别格式、保留结构、图片 OCR<br>
+- Skill 输出所有教学内容到 <code>_extracted/科目/章/xxx.讲义.html</code>（MathJax 渲染），通过本地 HTTP 服务器 <code>localhost:8888</code> 在浏览器展示<br>
+- 追加内容（Q&amp;A、练习、答案）用 Edit 工具直接操作 HTML，避免 bash/Python 转义 LaTeX</p>
+<p><strong>技术文档</strong>：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">文档</th>
+<th style="text-align: left;">链接</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Claude Code 官方文档</td>
+<td style="text-align: left;">https://docs.anthropic.com/en/docs/claude-code</td>
+</tr>
+<tr>
+<td style="text-align: left;">Claude Code Skill 开发指南</td>
+<td style="text-align: left;">https://docs.anthropic.com/en/docs/claude-code/skills</td>
+</tr>
+<tr>
+<td style="text-align: left;">Skill 最佳实践</td>
+<td style="text-align: left;">https://docs.anthropic.com/en/docs/claude-code/skills#skill-best-practices</td>
+</tr>
+<tr>
+<td style="text-align: left;">Claude API / Anthropic SDK</td>
+<td style="text-align: left;">https://docs.anthropic.com/en/api</td>
+</tr>
+<tr>
+<td style="text-align: left;">MathJax 3 文档</td>
+<td style="text-align: left;">https://docs.mathjax.org/en/latest/</td>
+</tr>
+<tr>
+<td style="text-align: left;">Unstructured 库文档</td>
+<td style="text-align: left;">https://docs.unstructured.io/</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="_8">📄 免责声明<a class="toc-link" href="#_8" title="Permanent link"> ¶</a></h2>
+<p>本 Skill 仅供学习辅助。课程讲义版权归原作者所有，请勿将老师的讲义文件上传到公开仓库。</p></div>
+            </div>
+        </details>
+        
+        <details class="drawer">
+            <summary>
+                <span class="repo-head">
+                    <span class="repo-name">Notelet</span>
+                    <span class="repo-lang">TypeScript</span>
+                    
+                </span>
+                <a class="gh-link" href="https://github.com/YHSome/Notelet" target="_blank" rel="noopener" onclick="event.stopPropagation()">在 GitHub 查看 ↗</a>
+            </summary>
+            <div class="drawer-body">
+                <div class="repo-desc">轻量、顺手、专注的 Windows 笔记编辑器与临时便签 · A lightweight, straightforward Windows note editor and quick note app</div>
+                <div class="prose"><p align="center"><a href="README.en.md">English</a></p>
+
+<div align="center">
+  <img src="assets/app-icon.png" width="96" alt="Notelet icon">
+  <h1>Notelet</h1>
+  <p><strong>轻量、顺手、专注的 Windows 笔记编辑器与临时便签</strong></p>
+  <p>
+    <img alt="Windows" src="https://img.shields.io/badge/Windows-10%20%7C%2011-0078D4?logo=windows11&logoColor=white">
+    <img alt="Version" src="https://img.shields.io/badge/version-0.8.3-f28c28">
+    <img alt="Tauri" src="https://img.shields.io/badge/Tauri-2-24C8DB?logo=tauri&logoColor=white">
+    <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white">
+    <a href="LICENSE"><img alt="MIT License" src="https://img.shields.io/badge/License-MIT-yellow.svg"></a>
+  </p>
+</div>
+
+<p><img alt="Notelet 流光花境主题" src="assets/readme/zh-CN/theme-liv.png"></p>
+<p>Notelet 面向 Windows 桌面，适合随手记录、整理本地 Markdown 与编辑常见文本文件。它使用系统 WebView2 渲染界面，不捆绑完整的 Electron 运行时；当前构建的便携版约 <strong>5.2 MiB</strong>，安装包约 <strong>3.1 MiB</strong>，下载后即可使用。</p>
+<h2 id="notelet">为什么选择 Notelet<a class="toc-link" href="#notelet" title="Permanent link"> ¶</a></h2>
+<ul>
+<li><strong>轻量</strong>：Tauri 2 + Rust 后端，便携版约 5.2 MiB，NSIS 安装包约 3.1 MiB。</li>
+<li><strong>直接</strong>：既可安装，也可单文件运行；打开本地文件即可开始编辑。</li>
+<li><strong>专注</strong>：全局快捷键一按呼出临时便签，长按只触发一次，不连续生成窗口。</li>
+<li><strong>本地优先</strong>：笔记读取与写入由 Rust 完成；删除记录只从界面列表移除，不删除原文本文件，只有保存操作会修改文件内容。</li>
+<li><strong>完整但不过载</strong>：多标签、全文搜索、Markdown / LaTeX 预览、代码高亮、主题与窗口行为设置都保留在简洁界面中。</li>
+<li><strong>中英双语</strong>：默认使用简体中文，可在“设置 → 界面外观”中切换英文界面。</li>
+</ul>
+<h2 id="_1">三种主题<a class="toc-link" href="#_1" title="Permanent link"> ¶</a></h2>
+<p>经典暖橙、Dark 2026 与流光花境均为完整主题，不只是更换背景。前景组件、窗口底色、选区强调色、背景图片与透明度可继续独立微调。</p>
+<p>流光花境主题使用的壁纸来源于 <a href="https://wallhaven.cc/w/mlgeo1">Wallhaven</a>。</p>
+<table>
+  <tr>
+    <th width="33%">经典暖橙</th>
+    <th width="33%">Dark 2026</th>
+    <th width="33%">流光花境</th>
+  </tr>
+  <tr>
+    <td><img src="assets/readme/zh-CN/theme-classic.png" alt="经典暖橙主题"></td>
+    <td><img src="assets/readme/zh-CN/theme-dark.png" alt="Dark 2026 主题"></td>
+    <td><img src="assets/readme/zh-CN/theme-liv.png" alt="流光花境主题"></td>
+  </tr>
+</table>
+
+<h2 id="_2">临时便签：一按即用<a class="toc-link" href="#_2" title="Permanent link"> ¶</a></h2>
+<p>默认使用 <code>Ctrl + Alt</code> 呼出独立临时便签。一次按键只创建一个窗口，持续按住也只计作一次；便签关闭前可选择保存或放弃。</p>
+<p align="center">
+  <img src="assets/readme/zh-CN/quick-note-demo.gif" width="900" alt="Notelet 临时便签快捷键演示">
+</p>
+
+<h2 id="markdown">Markdown、代码与公式<a class="toc-link" href="#markdown" title="Permanent link"> ¶</a></h2>
+<p>编辑区保留 Markdown 源文本的语法着色，右侧实时呈现排版结果；代码块带语言高亮与行号，数学公式由 KaTeX 渲染。预览栏可随时开关、拖动调整宽度或拖至边缘收起。</p>
+<p><img alt="Markdown 语法高亮与实时预览" src="assets/readme/zh-CN/markdown-highlighting.png"></p>
+<p>支持内容包括：</p>
+<ul>
+<li>标题、引用、列表、任务列表、链接、行内代码与代码块</li>
+<li>常见编程语言语法高亮及代码行号</li>
+<li>行内与块级 LaTeX 数学公式</li>
+<li>Markdown 与普通 UTF-8 文本/代码文件</li>
+</ul>
+<h2 id="_3">可调节的外观与行为<a class="toc-link" href="#_3" title="Permanent link"> ¶</a></h2>
+<p><img alt="Notelet 设置页" src="assets/readme/zh-CN/settings.png"></p>
+<p>设置会实时预览，只有点击“保存”才会持久化；取消或直接关闭设置窗口会自动恢复。可调节项目包括：</p>
+<ul>
+<li>主题预设、前景、背景与选中背景色</li>
+<li>JPG、PNG、WebP、GIF、BMP 背景图片</li>
+<li>背景适配方式、位置、图片透明度与组件透明度</li>
+<li>编辑器字号、主窗口与临时便签初始尺寸</li>
+<li>全局快捷键、默认侧栏、默认预览、临时便签置顶</li>
+<li>Windows 开机自启动</li>
+</ul>
+<h2 id="_4">功能一览<a class="toc-link" href="#_4" title="Permanent link"> ¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>编辑</td>
+<td>多标签、撤销/重做、实时字数、未保存状态、另存为</td>
+</tr>
+<tr>
+<td>文件</td>
+<td>打开与保存常见 UTF-8 文本/代码文件，单文件最大 32 MiB</td>
+</tr>
+<tr>
+<td>记录</td>
+<td>当前笔记与最近文件统一展示，删除界面记录不触碰原文件</td>
+</tr>
+<tr>
+<td>搜索</td>
+<td>即时匹配标题、路径与正文，无需按回车</td>
+</tr>
+<tr>
+<td>Markdown</td>
+<td>源文本语法着色、实时预览、LaTeX、代码高亮与行号</td>
+</tr>
+<tr>
+<td>布局</td>
+<td>左侧记录栏与右侧预览栏可拖动、折叠并记忆宽度</td>
+</tr>
+<tr>
+<td>临时便签</td>
+<td>全局快捷键呼出、独立窗口、关闭前保存确认</td>
+</tr>
+<tr>
+<td>外观</td>
+<td>三种主题、背景图、颜色、透明度与字号实时预览</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_5">直接使用<a class="toc-link" href="#_5" title="Permanent link"> ¶</a></h2>
+<p>github上提供两种 Windows x64 成品：</p>
+<ol>
+<li><strong>安装版</strong>：运行 <a href="https://github.com/Mkrari/Notelet/releases/tag/v0.8.3"><code>Notelet_0.8.3_x64-setup.exe</code></a>，按向导完成安装。</li>
+<li><strong>便携版</strong>：直接运行 <a href="https://github.com/Mkrari/Notelet/releases/tag/v0.8.3"><code>notelet.exe</code></a>，无需安装。</li>
+</ol>
+<p>系统需要 Windows 10/11 与 Microsoft Edge WebView2 Runtime。常规 Windows 10/11 环境通常已包含 WebView2；若程序无法启动，请先安装或更新该运行时。</p>
+<h2 id="_6">快捷键<a class="toc-link" href="#_6" title="Permanent link"> ¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Ctrl + Alt</code></td>
+<td>呼出临时便签（可在设置中修改）</td>
+</tr>
+<tr>
+<td><code>Ctrl + N</code></td>
+<td>新建笔记</td>
+</tr>
+<tr>
+<td><code>Ctrl + O</code></td>
+<td>打开笔记</td>
+</tr>
+<tr>
+<td><code>Ctrl + S</code></td>
+<td>保存</td>
+</tr>
+<tr>
+<td><code>Ctrl + Shift + S</code></td>
+<td>另存为</td>
+</tr>
+<tr>
+<td><code>Ctrl + W</code></td>
+<td>关闭当前标签</td>
+</tr>
+<tr>
+<td><code>Ctrl + \</code></td>
+<td>切换 Markdown 预览</td>
+</tr>
+<tr>
+<td><code>Ctrl + Shift + B</code></td>
+<td>切换左侧记录栏</td>
+</tr>
+<tr>
+<td><code>Ctrl + ,</code></td>
+<td>打开设置</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_7">开发与构建<a class="toc-link" href="#_7" title="Permanent link"> ¶</a></h2>
+<h3 id="_8">环境要求<a class="toc-link" href="#_8" title="Permanent link"> ¶</a></h3>
+<ul>
+<li>Node.js 20+</li>
+<li>Rust stable（MSVC toolchain）</li>
+<li>Microsoft Edge WebView2 Runtime</li>
+<li>Visual Studio Build Tools，并安装“使用 C++ 的桌面开发”工作负载</li>
+</ul>
+<h3 id="_9">本地开发<a class="toc-link" href="#_9" title="Permanent link"> ¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">npm</span> <span class="n">install</span>
+<span class="n">npm</span> <span class="n">run</span> <span class="n">tauri</span> <span class="p">--</span> <span class="n">dev</span>
+</code></pre></div>
+
+<p>只调试前端界面时可运行：</p>
+<div class="highlight"><pre><span></span><code><span class="n">npm</span> <span class="n">run</span> <span class="n">dev</span>
+</code></pre></div>
+
+<h3 id="windows">构建 Windows 成品<a class="toc-link" href="#windows" title="Permanent link"> ¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">npm</span> <span class="n">install</span>
+<span class="n">npm</span> <span class="n">run</span> <span class="n">build</span><span class="p">:</span><span class="n">windows</span>
+</code></pre></div>
+
+<p>主要输出位置：</p>
+<div class="highlight"><pre><span></span><code>src-tauri/target/release/notelet.exe
+src-tauri/target/release/Notelet_0.8.3_x64-setup.exe
+</code></pre></div>
+
+<p>如需更新应用图标后重新生成 Windows 图标资源：</p>
+<div class="highlight"><pre><span></span><code><span class="n">npm</span> <span class="n">run</span> <span class="n">tauri</span> <span class="p">--</span> <span class="n">icon</span> <span class="n">app-icon</span><span class="p">.</span><span class="n">svg</span>
+<span class="n">npm</span> <span class="n">run</span> <span class="n">build</span><span class="p">:</span><span class="n">windows</span>
+</code></pre></div>
+
+<h2 id="_10">技术栈<a class="toc-link" href="#_10" title="Permanent link"> ¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>组件</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tauri 2 / Rust</td>
+<td>原生窗口、文件读写、快捷键与安装包</td>
+</tr>
+<tr>
+<td>TypeScript / Vite</td>
+<td>界面逻辑、类型检查与前端构建</td>
+</tr>
+<tr>
+<td>marked</td>
+<td>Markdown 解析</td>
+</tr>
+<tr>
+<td>highlight.js / marked-highlight</td>
+<td>代码语法高亮</td>
+</tr>
+<tr>
+<td>KaTeX / marked-katex-extension</td>
+<td>LaTeX 公式渲染</td>
+</tr>
+<tr>
+<td>Windows WebView2</td>
+<td>轻量桌面界面运行时</td>
+</tr>
+</tbody>
+</table>
+<p>Release 构建启用了 LTO、体积优化与符号剥离，以控制成品大小。</p>
+<h2 id="_11">数据与文件安全<a class="toc-link" href="#_11" title="Permanent link"> ¶</a></h2>
+<ul>
+<li>当前只接受 UTF-8 文本；UTF-8 BOM 会在读取时自动处理。</li>
+<li>单文件最大 32 MiB，避免误将大型二进制文件作为文本载入。</li>
+<li>“删除笔记记录”仅移除 Notelet 界面中的记录，不删除磁盘上的原文件。</li>
+<li>只有明确保存时才会写回文件；未保存内容在关闭前会提示处理。</li>
+</ul>
+<h2 id="mit">MIT许可证<a class="toc-link" href="#mit" title="Permanent link"> ¶</a></h2>
+<p><a href="LICENSE">LICENSE</a></p></div>
+            </div>
+        </details>
+        
+        <details class="drawer">
+            <summary>
+                <span class="repo-head">
+                    <span class="repo-name">fl_space</span>
+                    <span class="repo-lang">Python</span>
+                    
+                </span>
+                <a class="gh-link" href="https://github.com/YHSome/fl_space" target="_blank" rel="noopener" onclick="event.stopPropagation()">在 GitHub 查看 ↗</a>
+            </summary>
+            <div class="drawer-body">
+                <div class="repo-desc">fl_space</div>
+                <div class="prose"><h1 id="spacefl">SpaceFL — 太空联邦学习研究框架<a class="toc-link" href="#spacefl" title="Permanent link"> ¶</a></h1>
+<p><a href="https://python.org"><img alt="Python" src="https://img.shields.io/badge/Python-3.9%2B-blue"></a><br>
+<a href="LICENSE"><img alt="License" src="https://img.shields.io/badge/License-MIT-green"></a><br>
+<a href="https://github.com/astral-sh/ruff"><img alt="Ruff" src="https://img.shields.io/badge/Linting-Ruff-ok"></a></p>
+<p>模块化、可扩展的开源框架，用于研究太空联邦学习中的轨道环境模拟、卫星通信与FL算法。</p>
+<hr>
+<h2 id="_1">架构<a class="toc-link" href="#_1" title="Permanent link"> ¶</a></h2>
+<div class="highlight"><pre><span></span><code>fl_space/
+├── environment/   # 环境模拟层 — 天体、大气、地面站、坐标工具
+├── orbit/         # 轨道力学层 — Kepler/SGP4 双后端、可见性判断
+├── simulator/     # 模拟器层 — 接触矩阵、主模拟引擎
+└── config/        # 配置层 — 预设参数、JSON 配置加载
+</code></pre></div>
+
+<p><strong>双后端设计：</strong><br>
+| 后端 | 精度 | 依赖 | 适用场景 |<br>
+|------|------|------|---------|<br>
+| <code>kepler</code> (默认) | 二体近似 | 仅 numpy | 快速原型、概念验证 |<br>
+| <code>skyfield</code> | SGP4 + JPL DE421 | <code>pip install skyfield</code> | 高精度研究、真实任务规划 |</p>
+<hr>
+<h2 id="_2">快速开始<a class="toc-link" href="#_2" title="Permanent link"> ¶</a></h2>
+<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>fl-space<span class="w">           </span><span class="c1"># 核心安装</span>
+pip<span class="w"> </span>install<span class="w"> </span>fl-space<span class="o">[</span>skyfield<span class="o">]</span><span class="w"> </span><span class="c1"># 含 Skyfield 高精度后端</span>
+</code></pre></div>
+
+<h3 id="5">5 分钟示例<a class="toc-link" href="#5" title="Permanent link"> ¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">fl_space.environment</span><span class="w"> </span><span class="kn">import</span> <span class="n">CelestialBody</span><span class="p">,</span> <span class="n">create_default_network</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">fl_space.orbit</span><span class="w"> </span><span class="kn">import</span> <span class="n">KeplerOrbit</span><span class="p">,</span> <span class="n">create_circular_orbit</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">fl_space.simulator</span><span class="w"> </span><span class="kn">import</span> <span class="n">OrbitSimulator</span>
+
+<span class="c1"># 创建地球 + 3颗卫星 + 7个地面站</span>
+<span class="n">earth</span> <span class="o">=</span> <span class="n">CelestialBody</span><span class="o">.</span><span class="n">earth</span><span class="p">()</span>
+<span class="n">gss</span> <span class="o">=</span> <span class="n">create_default_network</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
+<span class="n">orbits</span> <span class="o">=</span> <span class="p">[</span><span class="n">create_circular_orbit</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="mi">53</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">i</span> <span class="o">*</span> <span class="mi">120</span><span class="p">,</span> <span class="n">earth</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)]</span>
+
+<span class="n">sim</span> <span class="o">=</span> <span class="n">OrbitSimulator</span><span class="p">(</span>
+    <span class="n">body</span><span class="o">=</span><span class="n">earth</span><span class="p">,</span>
+    <span class="n">orbits</span><span class="o">=</span><span class="n">orbits</span><span class="p">,</span>
+    <span class="n">ground_stations</span><span class="o">=</span><span class="n">gss</span><span class="p">,</span>
+    <span class="n">duration_hours</span><span class="o">=</span><span class="mi">24</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># 查看通信记录</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;接触率: </span><span class="si">{</span><span class="n">sim</span><span class="o">.</span><span class="n">contact_rate</span><span class="si">:</span><span class="s2">.1%</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sim</span><span class="o">.</span><span class="n">get_communication_record</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>  <span class="c1"># SAT-0 的完整通信记录</span>
+</code></pre></div>
+
+<h3 id="_3">切换到高精度模式<a class="toc-link" href="#_3" title="Permanent link"> ¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">sim</span> <span class="o">=</span> <span class="n">OrbitSimulator</span><span class="p">(</span>
+    <span class="n">body</span><span class="o">=</span><span class="n">earth</span><span class="p">,</span>
+    <span class="n">orbits</span><span class="o">=</span><span class="n">orbits</span><span class="p">,</span>
+    <span class="n">ground_stations</span><span class="o">=</span><span class="n">gss</span><span class="p">,</span>
+    <span class="n">duration_hours</span><span class="o">=</span><span class="mi">24</span><span class="p">,</span>
+    <span class="n">backend</span><span class="o">=</span><span class="s2">&quot;skyfield&quot;</span><span class="p">,</span>  <span class="c1"># 启用 SGP4/JPL 高精度</span>
+    <span class="n">sim_start_date</span><span class="o">=</span><span class="p">(</span><span class="mi">2025</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<hr>
+<h2 id="api">模块 API<a class="toc-link" href="#api" title="Permanent link"> ¶</a></h2>
+<h3 id="fl_spaceenvironment"><code>fl_space.environment</code><a class="toc-link" href="#fl_spaceenvironment" title="Permanent link"> ¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>类/函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>CelestialBody</code></td>
+<td>可配置天体参数，内置6个预设 (earth/mars/moon/jupiter/saturn/venus)</td>
+</tr>
+<tr>
+<td><code>CelestialBody.earth(precise=True)</code></td>
+<td>从 JPL DE421 获取高精度参数</td>
+</tr>
+<tr>
+<td><code>AtmosphereModel</code></td>
+<td>大气模型基类</td>
+</tr>
+<tr>
+<td><code>NoAtmosphere</code> / <code>ConstantHeightAtmosphere</code> / <code>ExponentialAtmosphere</code></td>
+<td>三种大气模型</td>
+</tr>
+<tr>
+<td><code>GroundStation</code></td>
+<td>单个地面站 (经纬度/海拔/最小仰角/天线增益)</td>
+</tr>
+<tr>
+<td><code>GroundStationNetwork</code></td>
+<td>地面站网络容器</td>
+</tr>
+<tr>
+<td><code>create_default_network(n)</code></td>
+<td>创建默认 n 站网络</td>
+</tr>
+<tr>
+<td><code>coordinate_utils</code></td>
+<td>Haversine/角距/可见半角等工具函数</td>
+</tr>
+</tbody>
+</table>
+<h3 id="fl_spaceorbit"><code>fl_space.orbit</code><a class="toc-link" href="#fl_spaceorbit" title="Permanent link"> ¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>类/函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>KeplerOrbit</code></td>
+<td>Kepler 二体问题轨道计算器</td>
+</tr>
+<tr>
+<td><code>OrbitalElements</code></td>
+<td>轨道六要素 dataclass</td>
+</tr>
+<tr>
+<td><code>create_circular_orbit()</code> / <code>create_polar_orbit()</code></td>
+<td>工厂函数</td>
+</tr>
+<tr>
+<td><code>ConstellationConfig</code></td>
+<td>星座配置 (Walker/Cluster/Uniform)</td>
+</tr>
+<tr>
+<td><code>generate_orbits()</code></td>
+<td>按配置生成轨道</td>
+</tr>
+<tr>
+<td><code>VisibilityEngine</code></td>
+<td>单星可见性引擎</td>
+</tr>
+<tr>
+<td><code>MultiSatVisibility</code></td>
+<td>多星批量可见性</td>
+</tr>
+<tr>
+<td><code>SkyfieldOrbitBackend</code></td>
+<td>Skyfield SGP4 高精度后端</td>
+</tr>
+<tr>
+<td><code>get_precise_body_params()</code></td>
+<td>快速获取 JPL 精确天体参数</td>
+</tr>
+</tbody>
+</table>
+<h3 id="fl_spacesimulator"><code>fl_space.simulator</code><a class="toc-link" href="#fl_spacesimulator" title="Permanent link"> ¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>类/函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>OrbitSimulator</code></td>
+<td>主模拟器，整合所有层</td>
+</tr>
+<tr>
+<td><code>create_default_simulator()</code></td>
+<td>地球默认配置工厂</td>
+</tr>
+<tr>
+<td><code>create_mars_simulator()</code></td>
+<td>火星场景工厂</td>
+</tr>
+<tr>
+<td><code>ContactMatrix</code></td>
+<td>接触矩阵 (兼容/完整双模式)</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="_4">自定义配置<a class="toc-link" href="#_4" title="Permanent link"> ¶</a></h2>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">fl_space.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_sim_config_from_dict</span><span class="p">,</span> <span class="n">EXPERIMENT_CONFIGS</span>
+
+<span class="c1"># 从预设或自定义字典加载</span>
+<span class="n">config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;body&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Earth&quot;</span><span class="p">,</span> <span class="s2">&quot;radius_km&quot;</span><span class="p">:</span> <span class="mi">6371</span><span class="p">,</span> <span class="s2">&quot;GM&quot;</span><span class="p">:</span> <span class="mf">398600.4</span><span class="p">},</span>
+    <span class="s2">&quot;constellation&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;walker&quot;</span><span class="p">,</span> <span class="s2">&quot;num_sats&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span> <span class="s2">&quot;num_planes&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">},</span>
+    <span class="s2">&quot;ground_stations&quot;</span><span class="p">:</span> <span class="p">[</span><span class="o">...</span><span class="p">],</span>
+    <span class="s2">&quot;duration_hours&quot;</span><span class="p">:</span> <span class="mi">24</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">params</span> <span class="o">=</span> <span class="n">load_sim_config_from_dict</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+<span class="n">sim</span> <span class="o">=</span> <span class="n">OrbitSimulator</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+</code></pre></div>
+
+<hr>
+<h2 id="_5">代码规范<a class="toc-link" href="#_5" title="Permanent link"> ¶</a></h2>
+<p>本项目使用 <a href="https://github.com/astral-sh/ruff">Ruff</a> 进行代码规范检查：</p>
+<div class="highlight"><pre><span></span><code>ruff<span class="w"> </span>check<span class="w"> </span>fl_space/<span class="w">   </span><span class="c1"># 检查</span>
+ruff<span class="w"> </span>check<span class="w"> </span>--fix<span class="w">       </span><span class="c1"># 自动修复</span>
+ruff<span class="w"> </span>format<span class="w"> </span>fl_space/<span class="w">  </span><span class="c1"># 格式化</span>
+</code></pre></div>
+
+<hr>
+<h2 id="_6">开发状态<a class="toc-link" href="#_6" title="Permanent link"> ¶</a></h2>
+<ul>
+<li>[x] Step 1: 环境模拟设置 (Kepler + Skyfield 双后端)</li>
+<li>[ ] Step 2: 卫星设置 (行为模式、通信方式)</li>
+<li>[ ] Step 3: FL 算法选择</li>
+<li>[ ] Step 4: 数据集集成</li>
+<li>[ ] Step 5: 地面基站设置增强</li>
+<li>[ ] Step 6: Checkpoint 机制</li>
+<li>[ ] Step 7: 信息展示增强</li>
+</ul>
+<hr>
+<h2 id="_7">许可证<a class="toc-link" href="#_7" title="Permanent link"> ¶</a></h2>
+<p>MIT License — 详见 <a href="LICENSE">LICENSE</a></p></div>
+            </div>
+        </details>
+        
+        <details class="drawer">
+            <summary>
+                <span class="repo-head">
+                    <span class="repo-name">TheFinalPuzzle</span>
+                    <span class="repo-lang">Python</span>
+                    
+                </span>
+                <a class="gh-link" href="https://github.com/YHSome/TheFinalPuzzle" target="_blank" rel="noopener" onclick="event.stopPropagation()">在 GitHub 查看 ↗</a>
+            </summary>
+            <div class="drawer-body">
+                <div class="repo-desc">【整活】一个旨在解决Vibe Coding最深入、最本质问题的工具。A tool that goes straight to the deepest, most fundamental essence of Vibe Coding.</div>
+                <div class="prose"><h1 id="thefinalpuzzle-vibe-coding">TheFinalPuzzle - Vibe Coding 的最后一块拼图<a class="toc-link" href="#thefinalpuzzle-vibe-coding" title="Permanent link"> ¶</a></h1>
+<blockquote>
+<p>Claude Auto-Responder — 自动监测 Claude Code 窗口，当出现选项提示（Yes/No、Continue? 等）时自动按下 Enter 键。</p>
+</blockquote>
+<p><strong>简体中文</strong> | <a href="README_EN.md">English</a></p>
+<blockquote>
+<p><strong>⚠️ 整活项目，仅供娱乐！</strong></p>
+<p>本项目仅为作者在考英语六级前闲的蛋疼而写，<strong>请勿在任何正式开发、生产环境或重要项目中使用</strong>。<br>
+自动按键意味着你可能在不了解具体操作的情况下盲目同意文件修改、命令执行等行为，<br>
+可能导致数据丢失、系统损坏或其他不可预知的后果。作者不承担任何使用本脚本造成的责任。</p>
+</blockquote>
+<h2 id="_1">原理<a class="toc-link" href="#_1" title="Permanent link"> ¶</a></h2>
+<div class="highlight"><pre><span></span><code>┌─────────────────────┐
+│   窗口上部 70%       │  ← 对话内容，不监控
+│   (对话历史)         │
+├─────────────────────┤
+│   窗口下部 30%       │  ← 只截取这部分做 OCR
+│   (提示区域)         │     Yes/No 选项都在这里
+└─────────────────────┘
+         ↓
+  截图 → OCR 识别文字 → 正则匹配提示词 → 自动按 Enter
+         ↓
+  刷新终端仪表盘（实时显示 OCR 结果、统计、事件日志）
+</code></pre></div>
+
+<p>只截取窗口<strong>底部 30%</strong> 的提示区域做 OCR，不扫描上部大段对话历史，减少误触发、提高识别速度。</p>
+<h2 id="_2">安装<a class="toc-link" href="#_2" title="Permanent link"> ¶</a></h2>
+<h3 id="1-python">1. Python 依赖<a class="toc-link" href="#1-python" title="Permanent link"> ¶</a></h3>
+<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>pyautogui<span class="w"> </span>pillow<span class="w"> </span>pytesseract<span class="w"> </span>pynput<span class="w"> </span>rich<span class="w"> </span>pywin32
+</code></pre></div>
+
+<h3 id="2-tesseract-ocrocr">2. Tesseract OCR（OCR 模式需要）<a class="toc-link" href="#2-tesseract-ocrocr" title="Permanent link"> ¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>平台</th>
+<th>安装方式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Windows</td>
+<td><a href="https://github.com/UB-Mannheim/tesseract/wiki">UB-Mannheim/tesseract</a></td>
+</tr>
+<tr>
+<td>macOS</td>
+<td><code>brew install tesseract</code></td>
+</tr>
+<tr>
+<td>Linux</td>
+<td><code>sudo apt install tesseract-ocr tesseract-ocr-chi-sim</code></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>盲模式（<code>--blind</code>）不需要 Tesseract，直接定时按键。</p>
+</blockquote>
+<h2 id="_3">用法<a class="toc-link" href="#_3" title="Permanent link"> ¶</a></h2>
+<div class="highlight"><pre><span></span><code><span class="c1"># OCR 智能检测（默认每 5 秒检测一次）</span>
+python<span class="w"> </span>claude_auto_responder.py
+
+<span class="c1"># 试运行：只检测不按键</span>
+python<span class="w"> </span>claude_auto_responder.py<span class="w"> </span>--dry-run
+
+<span class="c1"># 盲模式：每 10 秒按一次 Enter，不需要 OCR</span>
+python<span class="w"> </span>claude_auto_responder.py<span class="w"> </span>--blind<span class="w"> </span>--interval<span class="w"> </span><span class="m">10</span>
+
+<span class="c1"># 指定要监控的窗口标题（不区分大小写）</span>
+python<span class="w"> </span>claude_auto_responder.py<span class="w"> </span>--title<span class="w"> </span><span class="s2">&quot;claude&quot;</span>
+
+<span class="c1"># 查看所有参数</span>
+python<span class="w"> </span>claude_auto_responder.py<span class="w"> </span>--help
+</code></pre></div>
+
+<h2 id="_4">参数<a class="toc-link" href="#_4" title="Permanent link"> ¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>简写</th>
+<th>默认值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--title</code></td>
+<td><code>-t</code></td>
+<td>活动窗口</td>
+<td>窗口标题匹配</td>
+</tr>
+<tr>
+<td><code>--interval</code></td>
+<td><code>-i</code></td>
+<td><code>5</code></td>
+<td>检测间隔（秒）</td>
+</tr>
+<tr>
+<td><code>--cooldown</code></td>
+<td><code>-c</code></td>
+<td><code>5</code></td>
+<td>两次按键最小间隔（秒）</td>
+</tr>
+<tr>
+<td><code>--blind</code></td>
+<td><code>-b</code></td>
+<td>关闭</td>
+<td>盲模式，不做 OCR，定时按键</td>
+</tr>
+<tr>
+<td><code>--dry-run</code></td>
+<td><code>-n</code></td>
+<td>关闭</td>
+<td>仅检测不实际按键</td>
+</tr>
+<tr>
+<td><code>--tesseract-cmd</code></td>
+<td></td>
+<td>自动检测</td>
+<td>Tesseract 可执行文件路径</td>
+</tr>
+<tr>
+<td><code>--save-screenshots</code></td>
+<td></td>
+<td>关闭</td>
+<td>保存截图到 <code>./screenshots/</code> 用于调试</td>
+</tr>
+<tr>
+<td><code>--pause-hotkey</code></td>
+<td></td>
+<td><code>f8</code></td>
+<td>暂停/恢复热键</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_5">仪表盘<a class="toc-link" href="#_5" title="Permanent link"> ¶</a></h2>
+<p>运行后会显示实时监控面板：</p>
+<div class="highlight"><pre><span></span><code>┌──────────────────────────────────────────┐
+│<span class="w">  </span><span class="nv">TheFinalPuzzle</span><span class="w">                          </span>│
+│<span class="w">  </span><span class="o">&gt;</span><span class="w"> </span>运行中<span class="w">  </span><span class="nv">Mode</span>:<span class="w"> </span><span class="nv">OCR</span><span class="w">  </span><span class="nv">Interval</span>:<span class="w"> </span><span class="mi">5</span><span class="nv">s</span><span class="w">       </span>│
+├──────────────────────────────────────────┤
+│<span class="w">  </span><span class="nv">Checks</span>:<span class="w"> </span><span class="mi">12</span><span class="w">  </span><span class="nv">Detected</span>:<span class="w"> </span><span class="mi">3</span><span class="w">  </span><span class="nv">Enter</span>:<span class="w"> </span><span class="mi">3</span><span class="w">       </span>│
+│<span class="w">  </span><span class="nv">Last</span><span class="w"> </span><span class="nv">check</span>:<span class="w"> </span><span class="mi">2</span><span class="nv">s</span><span class="w"> </span><span class="nv">ago</span><span class="w">  </span><span class="nv">Hit</span><span class="w"> </span><span class="nv">rate</span>:<span class="w"> </span><span class="mi">25</span><span class="o">%</span><span class="w">       </span>│
+├──────────────────────────────────────────┤
+│<span class="w">  </span><span class="o">--|--</span>#<span class="o">--|--</span>#<span class="o">&gt;</span><span class="w">  </span>活动时间线（最近<span class="mi">60</span>次）<span class="w">      </span>│
+│<span class="w">  </span><span class="o">-=</span>无<span class="w">  </span><span class="o">|=</span>检测到<span class="w">  </span>#<span class="o">=</span>已按键<span class="w">  </span><span class="o">&gt;=</span>当前位置<span class="w">     </span>│
+├──────────────────┬───────────────────────┤
+│<span class="w">  </span><span class="nv">OCR</span><span class="w"> </span>识别结果<span class="w">     </span>│<span class="w">  </span>事件日志<span class="w">              </span>│
+│<span class="w">  </span>│<span class="w"> </span>[<span class="nv">y</span><span class="o">/</span><span class="nv">N</span>]<span class="w">         </span>│<span class="w">  </span><span class="mi">14</span>:<span class="mi">32</span>:<span class="mi">05</span><span class="w"> </span><span class="nv">OK</span><span class="w"> </span>已按键<span class="w">    </span>│
+│<span class="w">  </span>│<span class="w"> </span><span class="k">Do</span><span class="w"> </span><span class="nv">you</span><span class="w"> </span><span class="nv">want</span><span class="w">   </span>│<span class="w">  </span><span class="mi">14</span>:<span class="mi">31</span>:<span class="mi">55</span><span class="w"> </span><span class="nv">OK</span><span class="w"> </span>已按键<span class="w">    </span>│
+│<span class="w">  </span>│<span class="w"> </span><span class="nv">to</span><span class="w"> </span><span class="nv">proceed</span>?<span class="w">   </span>│<span class="w">  </span><span class="mi">14</span>:<span class="mi">31</span>:<span class="mi">42</span><span class="w"> </span>..<span class="w"> </span>冷却中<span class="w">    </span>│
+│<span class="w">                  </span>│<span class="w">  </span><span class="mi">14</span>:<span class="mi">31</span>:<span class="mi">39</span><span class="w"> </span><span class="o">--</span><span class="w"> </span>无匹配<span class="w">    </span>│
+├──────────────────┴───────────────────────┤
+│<span class="w">  </span><span class="nv">F8</span>:<span class="w"> </span>暂停<span class="w">  </span><span class="o">|</span><span class="w">  </span><span class="nv">Ctrl</span><span class="o">+</span><span class="nv">C</span>:<span class="w"> </span>退出<span class="w">  </span><span class="o">|</span><span class="w">  </span><span class="nv">LIVE</span><span class="w"> </span>模式<span class="w">  </span>│
+└──────────────────────────────────────────┘
+</code></pre></div>
+
+<h2 id="_6">快捷键<a class="toc-link" href="#_6" title="Permanent link"> ¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>按键</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>F8</code></td>
+<td>暂停 / 恢复监控</td>
+</tr>
+<tr>
+<td><code>Ctrl+C</code></td>
+<td>退出程序</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_7">检测逻辑<a class="toc-link" href="#_7" title="Permanent link"> ¶</a></h2>
+<p>极简规则：OCR 识别文字中<strong>同时出现 <code>Yes</code> + <code>No</code></strong>（或中文 <strong><code>是</code> + <code>否</code></strong>）即触发按键。</p>
+<table>
+<thead>
+<tr>
+<th>触发条件</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Yes</code> + <code>No</code> 同时出现</td>
+<td>覆盖所有英文选项：<code>[y/N]</code>、<code>yes/no</code>、<code>Do you want to...?</code>、<code>1. Yes / 2. No</code> 等</td>
+</tr>
+<tr>
+<td><code>是</code> + <code>否</code> 同时出现</td>
+<td>覆盖所有中文选项：<code>是/否</code>、<code>是否继续</code>、<code>确认执行</code> 等</td>
+</tr>
+<tr>
+<td><code>是否...</code></td>
+<td>如 <code>是否继续</code> <code>是否确认</code> <code>是否执行</code></td>
+</tr>
+<tr>
+<td><code>确认...</code></td>
+<td>如 <code>确认继续</code> <code>确认执行</code> <code>确认操作</code></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>无需穷举每种提示句式，只要提示区域里 yes 和 no 成对出现就触发。</p>
+</blockquote>
+<h2 id="_8">防抢键盘<a class="toc-link" href="#_8" title="Permanent link"> ¶</a></h2>
+<p>如果用户在冷却窗口内（最近 5 秒）动过键盘，脚本会<strong>跳过</strong>本次按键，不会跟用户抢键盘控制权。</p>
+<h2 id="_9">注意事项<a class="toc-link" href="#_9" title="Permanent link"> ¶</a></h2>
+<ul>
+<li><strong>终端兼容性</strong>: PowerShell / cmd 支持 <code>cls</code> 原位清屏刷新；PyCharm 内置终端忽略 <code>cls</code>，靠滚行推出旧内容</li>
+<li><strong>窗口定位</strong>: OCR 截取屏幕画面，Claude 窗口需可见且在前台，或通过 <code>--title</code> 指定窗口</li>
+<li><strong>监控区域</strong>: 默认截取窗口底部 30%，仅包含提示区域，跳过上方对话历史</li>
+<li><strong>权限</strong>: macOS 需在&rdquo;隐私与安全性&rdquo;中授权终端辅助功能权限</li>
+</ul></div>
+            </div>
+        </details>
+        
+        <details class="drawer">
+            <summary>
+                <span class="repo-head">
+                    <span class="repo-name">Viewer</span>
+                    <span class="repo-lang">HTML</span>
+                    
+                </span>
+                <a class="gh-link" href="https://github.com/YHSome/Viewer" target="_blank" rel="noopener" onclick="event.stopPropagation()">在 GitHub 查看 ↗</a>
+            </summary>
+            <div class="drawer-body">
+                <div class="repo-desc">基于TinyWebDB的纯前端页面访问计数器&amp;评论组件。A pure frontend page visit counter &amp; comment module powered by TinyWebDB. </div>
+                <div class="prose"><h1 id="viewer-js">Viewer — 计数器、评论一体化纯js组件<a class="toc-link" href="#viewer-js" title="Permanent link"> ¶</a></h1>
+<blockquote>
+<p>前记：作者在23年的时候刚开始玩纯静态网页写博客（现在已经看不见了），看到别人每一篇文章都有阅读量统计和评论，羡慕得飞起，也想给自己的博客搞一个。但是苦于当时的ai编程尚且不成熟，实现思路是有了，但是一直不会实现，因此就一直没有实现这个小愿望。最近用了ai agent之后感觉就像是开辟新大陆一样，也是终于有机会实现当年的小遗憾了。</p>
+<p>📖 <a href="README_en.md">English version</a></p>
+</blockquote>
+<p>基于 TinyWebDB 云数据库的纯前端页面访问计数器。复制 <code>counter.js</code> + 一行代码，为静态网页加上访问计数。</p>
+<blockquote>
+<p>👉 <strong>刚做完 HTML 页面？</strong> 看 <a href="tutorial.md">📖 新手教程 — 手把手教你加上计数器</a>，复制粘贴即可，五分钟搞定。</p>
+<p>🤖 <strong>不想动手？</strong> 把教程丢给 Claude，说&rdquo;帮我加上计数器&rdquo;就行。</p>
+</blockquote>
+<h2 id="_1">项目结构<a class="toc-link" href="#_1" title="Permanent link"> ¶</a></h2>
+<div class="highlight"><pre><span></span><code><span class="n">Viewer</span><span class="o">/</span>
+<span class="err">├──</span><span class="w"> </span><span class="n">index</span><span class="o">.</span><span class="n">html</span><span class="w">                    </span><span class="c1"># 演示页面</span>
+<span class="err">├──</span><span class="w"> </span><span class="n">index1</span><span class="o">.</span><span class="n">html</span><span class="w">                   </span><span class="c1"># 演示页面（第二页）</span>
+<span class="err">├──</span><span class="w"> </span><span class="n">README</span><span class="o">.</span><span class="n">md</span><span class="w">                     </span><span class="c1"># 项目说明文档</span>
+<span class="err">├──</span><span class="w"> </span><span class="n">README_en</span><span class="o">.</span><span class="n">md</span><span class="w">                  </span><span class="c1"># 英文版项目说明</span>
+<span class="err">├──</span><span class="w"> </span><span class="n">tutorial</span><span class="o">.</span><span class="n">md</span><span class="w">                   </span><span class="c1"># 新手教程（中文）</span>
+<span class="err">├──</span><span class="w"> </span><span class="n">tutorial_en</span><span class="o">.</span><span class="n">md</span><span class="w">                </span><span class="c1"># 新手教程（英文）</span>
+<span class="err">├──</span><span class="w"> </span><span class="n">js</span><span class="o">/</span><span class="w">                           </span><span class="c1"># 核心脚本</span>
+<span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="n">global</span><span class="o">.</span><span class="n">js</span><span class="w">                 </span><span class="c1"># 全站累计浏览量</span>
+<span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="n">counter</span><span class="o">.</span><span class="n">js</span><span class="w">                </span><span class="c1"># 单页累计浏览量</span>
+<span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="n">unique</span><span class="o">.</span><span class="n">js</span><span class="w">                 </span><span class="c1"># 单页独立访客数</span>
+<span class="err">│</span><span class="w">   </span><span class="err">└──</span><span class="w"> </span><span class="n">comment</span><span class="o">.</span><span class="n">js</span><span class="w">                </span><span class="c1"># 评论系统</span>
+<span class="err">└──</span><span class="w"> </span><span class="n">tools</span><span class="o">/</span><span class="w">                        </span><span class="c1"># 辅助工具</span>
+<span class="w">    </span><span class="err">└──</span><span class="w"> </span><span class="n">assign_pages</span><span class="o">.</span><span class="n">py</span><span class="w">           </span><span class="c1"># 页面编号脚本</span>
+</code></pre></div>
+
+<h2 id="_2">快速体验<a class="toc-link" href="#_2" title="Permanent link"> ¶</a></h2>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>Viewer
+python<span class="w"> </span>-m<span class="w"> </span>http.server<span class="w"> </span><span class="m">8080</span>
+<span class="c1"># 浏览器打开 http://localhost:8080/index.html</span>
+</code></pre></div>
+
+<p>每次刷新页面，计数器 +1。打开 <code>index1.html</code> 查看多页面独立计数效果。</p>
+<h2 id="_3">功能<a class="toc-link" href="#_3" title="Permanent link"> ¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>模块</th>
+<th>文件</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>全站浏览量</td>
+<td><code>js/global.js</code></td>
+<td>所有页面共享，每次刷新 +1</td>
+</tr>
+<tr>
+<td>单页浏览量</td>
+<td><code>js/counter.js</code></td>
+<td>每页独立计数，每次刷新 +1</td>
+</tr>
+<tr>
+<td>单页独立访客</td>
+<td><code>js/unique.js</code></td>
+<td>基于 localStorage 判重，同设备只计一次</td>
+</tr>
+<tr>
+<td>评论系统</td>
+<td><code>js/comment.js</code></td>
+<td>访客留言，含昵称/邮箱/内容/时间</td>
+</tr>
+</tbody>
+</table>
+<p>共同特点：零依赖、复制即用、云端持久化、不绑定 UI。</p>
+<h3 id="_4">多页面支持<a class="toc-link" href="#_4" title="Permanent link"> ¶</a></h3>
+<p>每个页面通过 <code>&lt;meta name="x-viewer-page-id" content="N"&gt;</code> 声明编号，JS 自动使用独立的数据 tag，互不干扰。</p>
+<p>使用编号脚本自动管理：</p>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>tools/assign_pages.py
+</code></pre></div>
+
+<ul>
+<li>自动扫描目录下所有 <code>.html</code> 文件</li>
+<li>为每个文件分配唯一编号并注入 meta 标签</li>
+<li>已编号的页面跳过，已删除的编号永不重用</li>
+<li>编号记录持久化在 <code>tools/.viewer_pages.json</code></li>
+</ul>
+<h3 id="_5">工作流程<a class="toc-link" href="#_5" title="Permanent link"> ¶</a></h3>
+<div class="highlight"><pre><span></span><code>页面加载 → 读取 meta 编号
+              │
+         get(&#39;watch_N&#39;) ← N 为页面编号
+              │
+    ┌─────────┴─────────┐
+    │ 有值              │ 无值 / 首次访问
+    │ old = parseInt()  │ old = NaN
+    │ new = old + 1     │ new = 1
+    └─────────┬─────────┘
+              │
+         update(&#39;watch_N&#39;, new)
+              │
+         返回 new → 页面渲染
+</code></pre></div>
+
+<h2 id="_6">部署注意<a class="toc-link" href="#_6" title="Permanent link"> ¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>环境</th>
+<th>是否可用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>http://localhost</code></td>
+<td>✅ 正常</td>
+</tr>
+<tr>
+<td>GitHub Pages（<code>https://</code>）</td>
+<td>✅ 正常（需 TinyWebDB 允许 CORS）</td>
+</tr>
+<tr>
+<td>直接双击打开（<code>file://</code>）</td>
+<td>❌ 浏览器安全策略禁止跨域 fetch</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_7">⚠️ 安全警告<a class="toc-link" href="#_7" title="Permanent link"> ¶</a></h2>
+<blockquote>
+<p><strong>静态网页的源代码对所有访问者可见。</strong></p>
+<p>任何人按 F12 即可获取 <code>user</code> 和 <code>secret</code>，从而拥有对该 TinyWebDB 数据库的<strong>完全读写权限</strong>。</p>
+<ul>
+<li>❌ <strong>不要</strong>将密码、密钥等敏感数据存入此 TinyWebDB</li>
+<li>❌ <strong>不要</strong>用同一个 <code>user/secret</code> 存放重要业务数据</li>
+<li>✅ 此计数器仅适合存放<strong>无敏感性的公开数据</strong>（如访问次数）</li>
+<li>✅ 如需存放敏感数据，应使用有后端鉴权的自建服务</li>
+</ul>
+</blockquote>
+<h2 id="tinywebdb">TinyWebDB 接口参考<a class="toc-link" href="#tinywebdb" title="Permanent link"> ¶</a></h2>
+<h3 id="_8">示例地址<a class="toc-link" href="#_8" title="Permanent link"> ¶</a></h3>
+<p>在线浏览 / 导入 / 导出数据库：</p>
+<div class="highlight"><pre><span></span><code>https://tinywebdb.appinventor.space/webdb-share1-b3280975
+</code></pre></div>
+
+<h3 id="api">API 信息<a class="toc-link" href="#api" title="Permanent link"> ¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>API 地址</td>
+<td><code>https://tinywebdb.appinventor.space/api</code></td>
+</tr>
+<tr>
+<td>请求类型</td>
+<td><code>POST</code></td>
+</tr>
+<tr>
+<td>Content-Type</td>
+<td><code>application/x-www-form-urlencoded</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="_9">必选参数<a class="toc-link" href="#_9" title="Permanent link"> ¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>user</code></td>
+<td><code>aaaaa</code></td>
+<td>用户名</td>
+</tr>
+<tr>
+<td><code>secret</code></td>
+<td><code>d1bdf09a</code></td>
+<td>密钥</td>
+</tr>
+<tr>
+<td><code>action</code></td>
+<td><code>get</code> | <code>update</code> | <code>delete</code> | <code>count</code> | <code>search</code></td>
+<td>操作类型</td>
+</tr>
+</tbody>
+</table>
+<h3 id="action">各 action 参数与返回值<a class="toc-link" href="#action" title="Permanent link"> ¶</a></h3>
+<p><strong>update</strong>（更新）</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>必填</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>tag</code></td>
+<td>是</td>
+<td>变量名</td>
+</tr>
+<tr>
+<td><code>value</code></td>
+<td>是</td>
+<td>变量值</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>无返回值。</p>
+</blockquote>
+<p><strong>get</strong>（读取）</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>必填</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>tag</code></td>
+<td>是</td>
+<td>变量名</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>返回变量的值。</p>
+</blockquote>
+<p><strong>delete</strong>（删除）</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>必填</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>tag</code></td>
+<td>是</td>
+<td>变量名</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>无返回值。</p>
+</blockquote>
+<p><strong>count</strong>（计数）</p>
+<blockquote>
+<p>无其他参数，返回数据库中保存的变量个数。</p>
+</blockquote>
+<p><strong>search</strong>（查询）</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>必填</th>
+<th>默认值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>no</code></td>
+<td>否</td>
+<td><code>1</code></td>
+<td>起始编号</td>
+</tr>
+<tr>
+<td><code>count</code></td>
+<td>否</td>
+<td><code>1</code></td>
+<td>返回的变量个数</td>
+</tr>
+<tr>
+<td><code>tag</code></td>
+<td>否</td>
+<td>空</td>
+<td>变量名包含的字符（模糊匹配）</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td>否</td>
+<td><code>both</code></td>
+<td>返回范围：<code>tag</code> / <code>value</code> / <code>both</code></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>最多返回 100 条数据。</p>
+</blockquote></div>
+            </div>
+        </details>
+        
+        <details class="drawer">
+            <summary>
+                <span class="repo-head">
+                    <span class="repo-name">xiyouspeaker</span>
+                    <span class="repo-lang">Python</span>
+                    
+                </span>
+                <a class="gh-link" href="https://github.com/YHSome/xiyouspeaker" target="_blank" rel="noopener" onclick="event.stopPropagation()">在 GitHub 查看 ↗</a>
+            </summary>
+            <div class="drawer-body">
+                <div class="repo-desc">一个可以帮你完成西柚英语中烦人的单词朗读的程序</div>
+                <div class="prose"><p>** 此文章同步保存在以下网站 ** <br>
+<a href="https://yhsome.github.io/2023/08/23/xiyouspeaker">森的神秘空间</a><br>
+<a href="https://github.com/YHSome/xiyouspeaker/">github</a></p>
+<h1 id="_1">功能简介<a class="toc-link" href="#_1" title="Permanent link"> ¶</a></h1>
+<p>该脚本可以帮助你完成 <a href="https://student.xiyouyingyu.com">西柚英语</a> 中烦人的单词朗读。</p>
+<h1 id="_2">使用方法<a class="toc-link" href="#_2" title="Permanent link"> ¶</a></h1>
+<video src="example.mp4" position= "absolute" width="100%" height="100%" controls="controls"></video>
+
+<h2 id="python">第一步，安装python以及相应库<a class="toc-link" href="#python" title="Permanent link"> ¶</a></h2>
+<p>你需要安装的python库有</p>
+<div class="highlight"><pre><span></span><code>sounddevice
+soundfile
+pyautogui
+</code></pre></div>
+
+<h2 id="_3">第二步，完成相应设置<a class="toc-link" href="#_3" title="Permanent link"> ¶</a></h2>
+<h3 id="_4">设置默认录制设备（十分重要！）<a class="toc-link" href="#_4" title="Permanent link"> ¶</a></h3>
+<p><strong>使用前请将系统默认录制设备改成“立体声混音”，否则无法录音</strong></p>
+<h3 id="configjson">打开 <code>./config.json</code> ，填写相应配置。<a class="toc-link" href="#configjson" title="Permanent link"> ¶</a></h3>
+<p>以下是配置文件的相关释义<br>
+<strong>提示：</strong>你可以使用 <code>./显示鼠标坐标.py</code> 快速定位光标所处的像素的坐标</p>
+<blockquote>
+<p>&ldquo;screensize&rdquo;: 屏幕分辨率【x,y】</p>
+<p>&ldquo;nextpos&rdquo;: &lsquo;下一个&rsquo;按钮的坐标【x,y】</p>
+<p>&ldquo;input_icon&rdquo;: 左下角&rsquo;立即录音&rsquo;按钮的坐标【x,y】</p>
+<p>&ldquo;input_icon&rdquo;: 单词下方英式发言右边的小喇叭的坐标【x,y】</p>
+</blockquote>
+<p>这个是这个是1600x900分辨率下，谷歌浏览器（左）半屏打开向右拉到底的设置示例</p>
+<div class="highlight"><pre><span></span><code>{
+  &quot;screensize&quot;: [1600,900],
+  &quot;nextpos&quot;: [1025,820],
+  &quot;input_icon&quot;: [340,800],
+  &quot;example_icon&quot;: [333,250]
+}
+</code></pre></div>
+
+<h2 id="_5">第三步，启动程序<a class="toc-link" href="#_5" title="Permanent link"> ¶</a></h2>
+<p>你可以用cmd运行，也可以用vscode等ide运行文件</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>python<span class="w"> </span>朗读练习v1.0.py
+</code></pre></div>
+
+<h1 id="_6">未来的展望<a class="toc-link" href="#_6" title="Permanent link"> ¶</a></h1>
+<p>目前只做了几个功能，会考虑以后更多功能的开发</p></div>
+            </div>
+        </details>
+        
+        <details class="drawer">
+            <summary>
+                <span class="repo-head">
+                    <span class="repo-name">xiyouchooser</span>
+                    <span class="repo-lang">Python</span>
+                    
+                </span>
+                <a class="gh-link" href="https://github.com/YHSome/xiyouchooser" target="_blank" rel="noopener" onclick="event.stopPropagation()">在 GitHub 查看 ↗</a>
+            </summary>
+            <div class="drawer-body">
+                <div class="repo-desc">一个可以帮你完成西柚英语中烦人的看词选义和看义选词的程序</div>
+                <div class="prose"><p>** 此文章同步保存在以下网站 ** <br>
+<a href="https://yhsome.github.io/2023/08/19/xiyouchooser">森的神秘空间</a><br>
+<a href="https://github.com/YHSome/xiyouchooser/">github</a></p>
+<h1 id="_1">功能简介<a class="toc-link" href="#_1" title="Permanent link"> ¶</a></h1>
+<p>该脚本可以帮助你完成 <a href="https://student.xiyouyingyu.com">西柚英语</a> 中烦人的看词选义和看义选词。</p>
+<h1 id="_2">使用方法<a class="toc-link" href="#_2" title="Permanent link"> ¶</a></h1>
+<video src="example.mp4" position= "absolute" width="100%" height="100%" controls="controls"></video>
+
+<h2 id="python">第一步，安装python以及相应库<a class="toc-link" href="#python" title="Permanent link"> ¶</a></h2>
+<p>你需要安装的python库有</p>
+<div class="highlight"><pre><span></span><code>pytesseract
+transformers
+pillow
+pyautogui
+</code></pre></div>
+
+<h2 id="_3">第二步，完成相应配置<a class="toc-link" href="#_3" title="Permanent link"> ¶</a></h2>
+<p>打开 <code>./config.json</code> ，填写相应配置。以下是配置文件的相关释义<br>
+<strong>提示：</strong>你可以使用 <code>./显示鼠标坐标.py</code> 快速定位光标所处的像素的坐标</p>
+<blockquote>
+<p>&ldquo;screensize&rdquo;: 屏幕分辨率【x,y】</p>
+<p>&ldquo;randompos&rdquo;: A选项的坐标【x,y】</p>
+<p>&ldquo;nextpos&rdquo;: 选择错误选项时，&rsquo;下一个&rsquo;按钮的坐标【x,y】</p>
+<p>&ldquo;shotrange&rdquo;: 题目单词的范围（注意，只要加粗黑字题目的信息，不要把下一行的音标也框进去了）【左上角x,左上角y,右下角x,右下角y】</p>
+<p>&ldquo;scanrange&rdquo;: 题目的范围（注意，该范围是严格的，即以a选项的上边框，d选项的下边框为范围）【左上角x,左上角y,右下角x,右下角y】</p>
+<p>&ldquo;y_dist&rdquo;: 两个选项边框间的间隙宽度【y】</p>
+<p>&ldquo;botton_dist&rdquo;: 选项按钮的宽度【y】</p>
+</blockquote>
+<p>这个是1600x900分辨率下，谷歌浏览器全屏打开的设置示例</p>
+<div class="highlight"><pre><span></span><code>{
+  &quot;screensize&quot;: [1600,900],
+  &quot;randompos&quot;: [535,565],
+  &quot;nextpos&quot;: [1215,825],
+  &quot;shotrange&quot;: [500,180,970,225],
+  &quot;scanrange&quot;: [500,470,970,820],
+  &quot;y_dist&quot;: 15,
+  &quot;botton_dist&quot;: 55
+}
+</code></pre></div>
+
+<p>这个是这个是1600x900分辨率下，谷歌浏览器（左）半屏打开向右拉到底的设置示例</p>
+<div class="highlight"><pre><span></span><code>{
+  &quot;screensize&quot;: [1600,900],
+  &quot;randompos&quot;: [350,565],
+  &quot;nextpos&quot;: [1025,825],
+  &quot;shotrange&quot;: [300,180,780,225],
+  &quot;scanrange&quot;: [300,537,780,795],
+  &quot;y_dist&quot;: 15,
+  &quot;botton_dist&quot;: 55
+}
+</code></pre></div>
+
+<h2 id="_4">第三步，启动程序<a class="toc-link" href="#_4" title="Permanent link"> ¶</a></h2>
+<p>你可以用cmd运行，也可以用vscode等ide运行文件</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>python<span class="w"> </span>看词选义v1.1.py
+</code></pre></div>
+
+<p>或者</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>python<span class="w"> </span>看义选词v1.0.py
+</code></pre></div>
+
+<p><strong>注意：首次启动时会从huggingface.com下载翻译模型，需要耐心等待，如果出现服务器拒绝连接的问题，请重新运行程序或选择适合的代理</strong></p>
+<h1 id="_5">此脚本的不足<a class="toc-link" href="#_5" title="Permanent link"> ¶</a></h1>
+<p>不幸的是，谷歌翻译在2022年9月停止了对中国大陆的翻译服务，所以我们只能采用huggingface提供的本地离线翻译模型。<br>
+由于基于本地的图像识别以及翻译模型，识别速度和准确度会随着电脑性能而有所不同。我的便携电脑cpu不太好，识别准确率只有70%左右。<br>
+~~~谁让我没钱买百度识别和百度翻译的的api呢~~~</p>
+<h1 id="_6">未来的展望<a class="toc-link" href="#_6" title="Permanent link"> ¶</a></h1>
+<p>目前只做了几个功能，会考虑以后更多功能的开发</p></div>
+            </div>
+        </details>
+        
+        <details class="drawer">
+            <summary>
+                <span class="repo-head">
+                    <span class="repo-name">my_picture_tools</span>
+                    <span class="repo-lang">Python</span>
+                    
+                </span>
+                <a class="gh-link" href="https://github.com/YHSome/my_picture_tools" target="_blank" rel="noopener" onclick="event.stopPropagation()">在 GitHub 查看 ↗</a>
+            </summary>
+            <div class="drawer-body">
+                <div class="repo-desc">处理《红楼梦》思维导图时所用的代码</div>
+                <div class="prose"><h1 id="my_picture_tools">my_picture_tools<a class="toc-link" href="#my_picture_tools" title="Permanent link"> ¶</a></h1>
+<p>处理《红楼梦》思维导图时所用的代码</p></div>
+            </div>
+        </details>
+        
+        
+    </div>
+
+    <button class="back-to-top" id="backToTop" title="返回顶部" aria-label="返回顶部">↑</button>
+
+    <footer class="footer"><p>Powered by <span>OpenBlogger</span> &copy; 2026</p></footer>
+
+    <script>
+    !function(){const c=document.getElementById('particles'),x=c.getContext('2d');let w,h,p=[],N=45,D=120;function R(){w=c.width=innerWidth;h=c.height=innerHeight}R(),addEventListener('resize',R);function G(){return getComputedStyle(document.documentElement).getPropertyValue('--particle-color').trim().split(',').map(Number)}class T{constructor(){this.reset()}reset(){this.x=Math.random()*w;this.y=Math.random()*h;this.vx=(Math.random()-.5)*.4;this.vy=(Math.random()-.5)*.4;this.r=Math.random()*2+1}update(){this.x+=this.vx;this.y+=this.vy;if(this.x<0||this.x>w)this.vx*=-1;if(this.y<0||this.y>h)this.vy*=-1}draw(){const[r,g,b]=G();x.beginPath();x.arc(this.x,this.y,this.r,0,Math.PI*2);x.fillStyle=`rgba(${r},${g},${b},0.6)`;x.fill()}}for(let i=0;i<N;i++)p.push(new T);(function A(){x.clearRect(0,0,w,h);const[r,g,b]=G();for(let i=0;i<N;i++){p[i].update();p[i].draw();for(let j=i+1;j<N;j++){const dx=p[i].x-p[j].x,dy=p[i].y-p[j].y,ds=Math.sqrt(dx*dx+dy*dy);if(ds<D){x.beginPath();x.moveTo(p[i].x,p[i].y);x.lineTo(p[j].x,p[j].y);x.strokeStyle=`rgba(${r},${g},${b},${.15*(1-ds/D)})`;x.lineWidth=.6;x.stroke()}}}requestAnimationFrame(A)})()}();
+    !function(){const t=document.getElementById('themeToggle'),b=document.documentElement,s=localStorage.getItem('blog-theme');if(s==='dark'||(!s&&matchMedia('(prefers-color-scheme:dark)').matches)){b.classList.add('dark');t.textContent='☀️'}t.addEventListener('click',()=>{const d=b.classList.toggle('dark');t.textContent=d?'☀️':'🌙';localStorage.setItem('blog-theme',d?'dark':'light')})}();
+    !function(){const b=document.getElementById('backToTop');addEventListener('scroll',()=>b.classList.toggle('visible',scrollY>400));b.addEventListener('click',()=>scrollTo({top:0,behavior:'smooth'}))}();
+    !function(){document.body.classList.add('page-entering');addEventListener('load',function(){setTimeout(function(){document.body.classList.remove('page-entering')},700)});addEventListener('pageshow',function(e){if(e.persisted){document.body.classList.remove('page-exiting','page-entering');document.querySelectorAll('*').forEach(function(el){el.style.animation='none';el.offsetHeight;el.style.animation=''})}})}();
+    if(location.protocol!=='file:')!function(){document.addEventListener('click',function(e){var a=e.target.closest('a');if(!a)return;var h=a.getAttribute('href');if(!h||h[0]==='#'||h.indexOf('://')>0||h.indexOf('//')===0||a.target==='_blank')return;e.preventDefault();document.body.classList.add('page-exiting');setTimeout(function(){location.assign(h)},360)})}();
+    </script>
+</body>
+</html>

@@ -5,8 +5,22 @@
     <link>https://example.com</link>
     <description>书山有径勤为路，学海无涯苦作舟</description>
     <language>zh-CN</language>
-    <lastBuildDate>Fri, 28 Aug 2026 22:03:25 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 30 Sep 2026 17:51:12 +0800</lastBuildDate>
     <atom:link href="https://example.com/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>算法竞赛平台操作指南</title>
+      <link>https://example.com/posts/算法竞赛平台操作指南.html</link>
+      <description>算法竞赛平台操作指南 本指南汇总了 Virtual Judge、AtCoder、洛谷和牛客网的账号注册、团队加入、账号绑定，以及在 Virtual Judge 中提交题目的操作方法。 目录 平台注册与加入团队 Virtual Judge AtCoder 洛谷 在 Virtual Judge 中做题与…</description>
+      <pubDate>Tue, 01 Sep 2026 00:00:00 +0800</pubDate>
+      <guid isPermaLink="true">https://example.com/posts/算法竞赛平台操作指南.html</guid>
+    </item>
+    <item>
+      <title>第 101 次训练 · 题解</title>
+      <link>https://example.com/posts/第101次周练.html</link>
+      <description>第 101 次训练 · 题解 共八题（A–H），难度从入门到数据结构压轴逐级递进。 每题附 C++、Java、Python 参考实现。 题目总览 题号 分值 洛谷 ID 题目 核心知识点 A 1 U722360 嗯对 字符串拼接、输入输出 B 1 U722380 嗯对2 数位和、整除性质 C 2 U…</description>
+      <pubDate>Mon, 31 Aug 2026 00:00:00 +0800</pubDate>
+      <guid isPermaLink="true">https://example.com/posts/第101次周练.html</guid>
+    </item>
     <item>
       <title>日记 2026年8月28日</title>
       <link>https://example.com/posts/2026年08月28日日记.html</link>
@@ -132,20 +146,6 @@
       <description>(除上述三行外，剩下的内容均为正文，如有更多的变量，用户须在最上方声明（另外用户页可以不输入，则渲染时自动按照当前时间作为博文时间、以及正文第一行作为标题）)</description>
       <pubDate>Thu, 18 Jun 2026 00:00:00 +0800</pubDate>
       <guid isPermaLink="true">https://example.com/posts/模板.html</guid>
-    </item>
-    <item>
-      <title>笔记-快速写简化电子排布式</title>
-      <link>https://example.com/posts/笔记-快速写简化电子排布式.html</link>
-      <description>前言 刚学选修二化学，电子排布式写得我快吐血了。两页作业做了我一个多小时。刚刚看网课时，灵光乍现，悟到了一个快速写简化电子排布式的办法。且听我娓娓道来。 正文 这里以钪(Sc)为例，叙述其办法。 首先，先写出它的核外电子排布图： （注意，这里使用了能级交错 知识） 接着，把离他最近的上一级稀有气体核…</description>
-      <pubDate>Tue, 19 Dec 2023 00:00:00 +0800</pubDate>
-      <guid isPermaLink="true">https://example.com/posts/笔记-快速写简化电子排布式.html</guid>
-    </item>
-    <item>
-      <title>免费的office全家桶</title>
-      <link>https://example.com/posts/免费的office全家桶.html</link>
-      <description>前言 如题，这个是office全家桶的下载，自动激活，真正实现一键破解 下载链接 点击下载</description>
-      <pubDate>Sat, 28 Oct 2023 00:00:00 +0800</pubDate>
-      <guid isPermaLink="true">https://example.com/posts/免费的office全家桶.html</guid>
     </item>
   </channel>
 </rss>
